@@ -27,7 +27,7 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	//modImplementation "curse.maven:fpm-333287:3152512"
+	modImplementation "curse.maven:fpm-333287:3152512"
 	modImplementation "curse.maven:cloth-319057:3102741"
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.

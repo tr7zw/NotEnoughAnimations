@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
 
@@ -21,19 +22,21 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
-		if(isBlockingFast()) { // Bring first person blocking to the third person
+		if(shouldFixateBody()) { // Bring first person blocking to the third person, fix eating/drinking
 			this.bodyYaw = headYaw;
 			this.prevBodyYaw = prevHeadYaw;
 		}
 	}
 	
-	public boolean isBlockingFast() {
+	public boolean shouldFixateBody() {
+		if(this.getMainHandStack().getItem() == Items.COMPASS || this.getOffHandStack().getItem() == Items.COMPASS)return true;
 		if (this.isUsingItem() && !this.activeItemStack.isEmpty()) {
 			Item item = this.activeItemStack.getItem();
-			if (item.getUseAction(this.activeItemStack) != UseAction.BLOCK) {
-				return false;
-			} else {
+			UseAction action = item.getUseAction(this.activeItemStack);
+			if (action == UseAction.BLOCK || action == UseAction.EAT || action == UseAction.DRINK) {
 				return item.getMaxUseTime(this.activeItemStack) > 0;
+			} else {
+				return false;
 			}
 		} else {
 			return false;
