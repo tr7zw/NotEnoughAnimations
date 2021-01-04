@@ -74,7 +74,7 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(200.0f));
 				boolean bl = arm == Arm.LEFT;
 				matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
-				renderFirstPersonMap(matrices, vertexConsumers, light, stack, !player.getOffHandStack().isEmpty());
+				renderFirstPersonMap(matrices, vertexConsumers, light, stack, !player.getOffHandStack().isEmpty(), player.getMainArm() == Arm.LEFT);
 				matrices.pop();
 				info.cancel();
 				return;
@@ -86,7 +86,7 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(200.0f));
 				boolean bl = arm == Arm.LEFT;
 				matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
-				renderFirstPersonMap(matrices, vertexConsumers, light, stack, true);
+				renderFirstPersonMap(matrices, vertexConsumers, light, stack, true, false);
 				matrices.pop();
 				info.cancel();
 				return;
@@ -157,7 +157,7 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 
 	// custom render
 	private void renderFirstPersonMap(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light,
-			ItemStack stack, boolean small) {
+			ItemStack stack, boolean small, boolean lefthanded) {
 		MinecraftClient client = MinecraftClient.getInstance();
 
 		if (small) {
@@ -168,11 +168,20 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 			matrices.translate(-0.1, -1.2, 0.0);
 			matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
 		} else {
-			matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(160.0f));
-			matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(210.0f));
-			matrices.scale(0.38f, 0.38f, 0.38f);
-			
-			matrices.translate(-1.0, -1.8, 0.0);
+			if(lefthanded) {
+				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(160.0f));
+				matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(150.0f));
+				matrices.scale(0.38f, 0.38f, 0.38f);
+				
+				matrices.translate(+0.5, -1.3, 0.0);
+			} else {
+				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(160.0f));
+				matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(210.0f));
+				matrices.scale(0.38f, 0.38f, 0.38f);
+				
+				matrices.translate(-1.0, -1.8, 0.0);
+			}
+
 			matrices.scale(0.0138125f, 0.0138125f, 0.0138125f);
 		}
 		MapState mapState = FilledMapItem.getOrCreateMapState((ItemStack) stack, (World) client.world);
