@@ -41,7 +41,8 @@ import net.minecraft.world.World;
  *
  */
 @Mixin(HeldItemFeatureRenderer.class)
-public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
+public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M extends EntityModel<T>>
+		extends FeatureRenderer<T, M> {
 
 	public HeldItemFeatureRendererMixin(FeatureRendererContext<T, M> context) {
 		super(context);
@@ -50,50 +51,67 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 	private static RenderLayer getTextNoCull(Identifier texture) {
 		return RenderLayer.of("text", VertexFormats.POSITION_COLOR_TEXTURE_LIGHT, 7, 256, false, true,
 				MultiPhaseParameters.builder().texture(new RenderPhase.Texture(texture, false, false))
-						.alpha(RenderPhaseAlternative.ONE_TENTH_ALPHA).transparency(RenderPhaseAlternative.TRANSLUCENT_TRANSPARENCY).lightmap(RenderPhaseAlternative.ENABLE_LIGHTMAP).cull(RenderPhaseAlternative.DISABLE_CULLING)
+						.alpha(RenderPhaseAlternative.ONE_TENTH_ALPHA)
+						.transparency(RenderPhaseAlternative.TRANSLUCENT_TRANSPARENCY)
+						.lightmap(RenderPhaseAlternative.ENABLE_LIGHTMAP).cull(RenderPhaseAlternative.DISABLE_CULLING)
 						.build(false));
 	}
-	
-	private static final RenderLayer MAP_BACKGROUND = getTextNoCull((Identifier) new Identifier("textures/map/map_background.png"));
-	private static final RenderLayer MAP_BACKGROUND_CHECKERBOARD = getTextNoCull((Identifier) new Identifier("textures/map/map_background_checkerboard.png"));
-	
+
+	private static final RenderLayer MAP_BACKGROUND = getTextNoCull(
+			(Identifier) new Identifier("textures/map/map_background.png"));
+	private static final RenderLayer MAP_BACKGROUND_CHECKERBOARD = getTextNoCull(
+			(Identifier) new Identifier("textures/map/map_background_checkerboard.png"));
+
 	@Inject(at = @At("HEAD"), method = "renderItem", cancellable = true)
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm,
 			MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
-		if(entity instanceof AbstractClientPlayerEntity) {
-			AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entity;	
-			if(arm == player.getMainArm() && player.getMainHandStack().getItem() == Items.FILLED_MAP) {
+		if (entity instanceof AbstractClientPlayerEntity) {
+			AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entity;
+			if (arm == player.getMainArm() && player.getMainHandStack().getItem() == Items.FILLED_MAP) { // Mainhand with or without the offhand
 				matrices.push();
 				((ModelWithArms) this.getContextModel()).setArmAngle(arm, matrices);
 				matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(-90.0f));
 				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(200.0f));
 				boolean bl = arm == Arm.LEFT;
 				matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
-				renderFirstPersonMap(matrices, vertexConsumers, light, stack);
+				renderFirstPersonMap(matrices, vertexConsumers, light, stack, !player.getOffHandStack().isEmpty());
+				matrices.pop();
+				info.cancel();
+				return;
+			}
+			if (arm != player.getMainArm() && player.getOffHandStack().getItem() == Items.FILLED_MAP) { // Only offhand
+				matrices.push();
+				((ModelWithArms) this.getContextModel()).setArmAngle(arm, matrices);
+				matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(-90.0f));
+				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(200.0f));
+				boolean bl = arm == Arm.LEFT;
+				matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
+				renderFirstPersonMap(matrices, vertexConsumers, light, stack, true);
 				matrices.pop();
 				info.cancel();
 				return;
 			}
 			ArmPose armPose = getArmPose(player, Hand.MAIN_HAND);
 			ArmPose armPose2 = getArmPose(player, Hand.OFF_HAND);
-			if(!(isUsingboothHands(armPose) || isUsingboothHands(armPose2)))return;
+			if (!(isUsingboothHands(armPose) || isUsingboothHands(armPose2)))
+				return;
 			if (armPose.method_30156()) {
 				armPose2 = player.getOffHandStack().isEmpty() ? ArmPose.EMPTY : ArmPose.ITEM;
 			}
 
 			if (player.getMainArm() == Arm.RIGHT) {
-				if(arm == Arm.RIGHT && isUsingboothHands(armPose2)) {
+				if (arm == Arm.RIGHT && isUsingboothHands(armPose2)) {
 					info.cancel();
 					return;
-				}else if(arm == Arm.LEFT && isUsingboothHands(armPose)) {
+				} else if (arm == Arm.LEFT && isUsingboothHands(armPose)) {
 					info.cancel();
 					return;
 				}
 			} else {
-				if(arm == Arm.LEFT && isUsingboothHands(armPose2)) {
+				if (arm == Arm.LEFT && isUsingboothHands(armPose2)) {
 					info.cancel();
 					return;
-				}else if(arm == Arm.RIGHT && isUsingboothHands(armPose)) {
+				} else if (arm == Arm.RIGHT && isUsingboothHands(armPose)) {
 					info.cancel();
 					return;
 				}
@@ -136,31 +154,42 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 			return ArmPose.ITEM;
 		}
 	}
-	
-	//custom render
+
+	// custom render
 	private void renderFirstPersonMap(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light,
-			ItemStack stack) {
+			ItemStack stack, boolean small) {
 		MinecraftClient client = MinecraftClient.getInstance();
-		matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(160.0f));
-		matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(210.0f));
-		matrices.scale(0.38f, 0.38f, 0.38f);
-		matrices.translate(-1.0, -1.8, 0.0);
-		matrices.scale(0.0138125f, 0.0138125f, 0.0138125f);
+
+		if (small) {
+			matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(160.0f));
+			matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0f));
+			matrices.scale(0.38f, 0.38f, 0.38f);
+			
+			matrices.translate(-0.1, -1.2, 0.0);
+			matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
+		} else {
+			matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(160.0f));
+			matrices.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(210.0f));
+			matrices.scale(0.38f, 0.38f, 0.38f);
+			
+			matrices.translate(-1.0, -1.8, 0.0);
+			matrices.scale(0.0138125f, 0.0138125f, 0.0138125f);
+		}
 		MapState mapState = FilledMapItem.getOrCreateMapState((ItemStack) stack, (World) client.world);
 		VertexConsumer vertexConsumer = vertexConsumers
 				.getBuffer(mapState == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
 		Matrix4f matrix4f = matrices.peek().getModel();
-		vertexConsumer.vertex(matrix4f, -7.0f, 135.0f, 0.0f).color(255, 255, 255, 255).texture(0.0f, 1.0f)
-				.light(light).next();
-		vertexConsumer.vertex(matrix4f, 135.0f, 135.0f, 0.0f).color(255, 255, 255, 255).texture(1.0f, 1.0f)
-				.light(light).next();
-		vertexConsumer.vertex(matrix4f, 135.0f, -7.0f, 0.0f).color(255, 255, 255, 255).texture(1.0f, 0.0f)
-				.light(light).next();
-		vertexConsumer.vertex(matrix4f, -7.0f, -7.0f, 0.0f).color(255, 255, 255, 255).texture(0.0f, 0.0f)
-				.light(light).next();
+		vertexConsumer.vertex(matrix4f, -7.0f, 135.0f, 0.0f).color(255, 255, 255, 255).texture(0.0f, 1.0f).light(light)
+				.next();
+		vertexConsumer.vertex(matrix4f, 135.0f, 135.0f, 0.0f).color(255, 255, 255, 255).texture(1.0f, 1.0f).light(light)
+				.next();
+		vertexConsumer.vertex(matrix4f, 135.0f, -7.0f, 0.0f).color(255, 255, 255, 255).texture(1.0f, 0.0f).light(light)
+				.next();
+		vertexConsumer.vertex(matrix4f, -7.0f, -7.0f, 0.0f).color(255, 255, 255, 255).texture(0.0f, 0.0f).light(light)
+				.next();
 		if (mapState != null) {
 			client.gameRenderer.getMapRenderer().draw(matrices, vertexConsumers, mapState, false, light);
 		}
 	}
-	
+
 }

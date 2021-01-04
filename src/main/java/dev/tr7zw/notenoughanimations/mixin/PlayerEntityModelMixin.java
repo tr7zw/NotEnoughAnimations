@@ -42,9 +42,12 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 				|| (itemInOtherHand.getItem() == Items.FILLED_MAP && itemInHand.isEmpty() && hand == Hand.OFF_HAND)) {
 			applyArmTransforms(arm, -(MathHelper.lerp(-1f * (livingEntity.pitch - 90f) / 180f, 0.5f, 1.5f)), -0.4f,
 					0.3f);
+		}else if(itemInHand.getItem() == Items.FILLED_MAP && hand == Hand.MAIN_HAND) {
+			applyArmTransforms(arm, -(MathHelper.lerp(-1f * (livingEntity.pitch - 90f) / 180f, 0.5f, 1.5f)), 0f,
+					0.3f);
 		}
 		if(itemInHand.getItem() == Items.FILLED_MAP && hand == Hand.OFF_HAND) {
-			applyArmTransforms(arm, -(MathHelper.lerp(-1f * (livingEntity.pitch - 90f) / 180f, 0.5f, 1.5f)), -0.2f,
+			applyArmTransforms(arm, -(MathHelper.lerp(-1f * (livingEntity.pitch - 90f) / 180f, 0.5f, 1.5f)), 0f,
 					0.3f);
 		}
 		// active animations
@@ -66,6 +69,8 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 		if (arm == Arm.LEFT) // Just mirror yaw for the left hand
 			part.yaw *= -1;
 		part.roll = roll;
+		if (arm == Arm.LEFT)
+			part.roll *= -1;
 	}
 
 }
