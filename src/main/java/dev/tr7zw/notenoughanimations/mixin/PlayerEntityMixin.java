@@ -29,7 +29,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	}
 	
 	public boolean shouldFixateBody() {
-		if(this.getMainHandStack().getItem() == Items.COMPASS || this.getOffHandStack().getItem() == Items.COMPASS)return true;
 		if (this.isUsingItem() && !this.activeItemStack.isEmpty()) {
 			Item item = this.activeItemStack.getItem();
 			UseAction action = item.getUseAction(this.activeItemStack);
