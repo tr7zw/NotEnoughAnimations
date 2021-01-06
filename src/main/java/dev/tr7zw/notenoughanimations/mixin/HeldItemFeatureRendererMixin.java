@@ -65,6 +65,10 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 	@Inject(at = @At("HEAD"), method = "renderItem", cancellable = true)
 	private void renderItem(LivingEntity entity, ItemStack stack, ModelTransformation.Mode transformationMode, Arm arm,
 			MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo info) {
+		if(entity.isSleeping()) { // Stop holding stuff in your sleep
+			info.cancel();
+			return;
+		}
 		if (entity instanceof AbstractClientPlayerEntity) {
 			AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entity;
 			if (arm == player.getMainArm() && player.getMainHandStack().getItem() == Items.FILLED_MAP) { // Mainhand with or without the offhand

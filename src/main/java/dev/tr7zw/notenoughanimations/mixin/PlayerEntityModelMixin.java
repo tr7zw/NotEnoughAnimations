@@ -52,6 +52,10 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 			applyArmTransforms(arm, -(MathHelper.lerp(-1f * (livingEntity.pitch - 90f) / 180f, 0.5f, 1.5f)), 0f,
 					0.3f);
 		}
+		if(livingEntity.isSleeping()) {
+			applyArmTransforms(arm, 0, 0f, 0f);
+			return; // Dont try to apply more
+		}
 		// active animations
 		if(livingEntity.hasVehicle()) {
 			if(livingEntity.getVehicle() instanceof BoatEntity) {
