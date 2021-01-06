@@ -28,6 +28,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	}
 	
 	public boolean shouldFixateBody() {
+		if(this.hasVehicle())return false;
 		if (this.isUsingItem() && !this.activeItemStack.isEmpty()) {
 			Item item = this.activeItemStack.getItem();
 			UseAction action = item.getUseAction(this.activeItemStack);
