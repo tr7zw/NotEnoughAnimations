@@ -9,6 +9,8 @@ import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.HorseEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Arm;
@@ -24,10 +26,10 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 	}
 
 	@Inject(method = "setAngles", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPart;copyPositionAndRotation(Lnet/minecraft/client/model/ModelPart;)V", ordinal = 0))
-	public void setAngles(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo info) {
+	public void setAngles(T livingEntity, float f, float g, float tick, float i, float j, CallbackInfo info) {
 		boolean rightHanded = livingEntity.getMainArm() == Arm.RIGHT;
-		applyAnimations(livingEntity, Arm.RIGHT, rightHanded ? Hand.MAIN_HAND : Hand.OFF_HAND, h);
-		applyAnimations(livingEntity, Arm.LEFT, !rightHanded ? Hand.MAIN_HAND : Hand.OFF_HAND, h);
+		applyAnimations(livingEntity, Arm.RIGHT, rightHanded ? Hand.MAIN_HAND : Hand.OFF_HAND, tick);
+		applyAnimations(livingEntity, Arm.LEFT, !rightHanded ? Hand.MAIN_HAND : Hand.OFF_HAND, tick);
 	}
 
 	private void applyAnimations(T livingEntity, Arm arm, Hand hand, float tick) {
@@ -51,6 +53,18 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 					0.3f);
 		}
 		// active animations
+		if(livingEntity.hasVehicle()) {
+			if(livingEntity.getVehicle() instanceof BoatEntity) {
+				BoatEntity boat = (BoatEntity) livingEntity.getVehicle();
+				float paddle = boat.interpolatePaddlePhase(arm == Arm.LEFT ? 0 : 1, tick);
+				applyArmTransforms(arm, -1.1f -MathHelper.sin(paddle) * 0.3f, 0.2f, 0.3f);
+			}
+			if(livingEntity.getVehicle() instanceof HorseEntity) {
+				float rotation = -MathHelper.cos(((HorseEntity)livingEntity.getVehicle()).limbAngle * 0.3f);
+				rotation *= 0.1;
+				applyArmTransforms(arm, -1.1f -rotation, -0.2f, 0.3f);
+			}
+		}
 		if (livingEntity.getActiveHand() == hand && livingEntity.getItemUseTime() > 0) {
 			UseAction action = itemInHand.getUseAction();
 			// Eating/Drinking
@@ -58,7 +72,6 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 				applyArmTransforms(arm, -(MathHelper.lerp(-1f * (livingEntity.pitch - 90f) / 180f, 1f, 2f))
 						+ MathHelper.sin(tick * 1.5f) * 0.1f, -0.3f, 0.3f);
 			}
-
 		}
 	}
 
