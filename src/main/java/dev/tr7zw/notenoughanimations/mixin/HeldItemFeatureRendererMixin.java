@@ -69,21 +69,20 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 			info.cancel();
 			return;
 		}
-		if (entity instanceof AbstractClientPlayerEntity) {
-			AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entity;
-			if (arm == player.getMainArm() && player.getMainHandStack().getItem() == Items.FILLED_MAP) { // Mainhand with or without the offhand
+		if(getContextModel() instanceof ModelWithArms) {
+			if (arm == entity.getMainArm() && entity.getMainHandStack().getItem() == Items.FILLED_MAP) { // Mainhand with or without the offhand
 				matrices.push();
 				((ModelWithArms) this.getContextModel()).setArmAngle(arm, matrices);
 				matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(-90.0f));
 				matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(200.0f));
 				boolean bl = arm == Arm.LEFT;
 				matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
-				renderFirstPersonMap(matrices, vertexConsumers, light, stack, !player.getOffHandStack().isEmpty(), player.getMainArm() == Arm.LEFT);
+				renderFirstPersonMap(matrices, vertexConsumers, light, stack, !entity.getOffHandStack().isEmpty(), entity.getMainArm() == Arm.LEFT);
 				matrices.pop();
 				info.cancel();
 				return;
 			}
-			if (arm != player.getMainArm() && player.getOffHandStack().getItem() == Items.FILLED_MAP) { // Only offhand
+			if (arm != entity.getMainArm() && entity.getOffHandStack().getItem() == Items.FILLED_MAP) { // Only offhand
 				matrices.push();
 				((ModelWithArms) this.getContextModel()).setArmAngle(arm, matrices);
 				matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(-90.0f));
@@ -95,6 +94,10 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 				info.cancel();
 				return;
 			}
+		}
+		
+		if (entity instanceof AbstractClientPlayerEntity) {
+			AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entity;
 			ArmPose armPose = getArmPose(player, Hand.MAIN_HAND);
 			ArmPose armPose2 = getArmPose(player, Hand.OFF_HAND);
 			if (!(isUsingboothHands(armPose) || isUsingboothHands(armPose2)))
