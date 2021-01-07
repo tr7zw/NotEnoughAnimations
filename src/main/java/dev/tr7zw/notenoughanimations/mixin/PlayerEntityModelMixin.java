@@ -37,7 +37,7 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 		ItemStack itemInOtherHand = livingEntity
 				.getStackInHand(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND);
 		// passive animations
-		if (itemInHand.getItem() == Items.COMPASS) {
+		if (itemInHand.getItem() == Items.COMPASS || itemInHand.getItem() == Items.CLOCK) {
 			applyArmTransforms(arm, -(MathHelper.lerp(-1f * (livingEntity.pitch - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
 		}
 		if ((itemInHand.getItem() == Items.FILLED_MAP && itemInOtherHand.isEmpty() && hand == Hand.MAIN_HAND)
