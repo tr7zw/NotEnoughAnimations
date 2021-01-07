@@ -56,6 +56,13 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 			applyArmTransforms(arm, 0, 0f, 0f);
 			return; // Dont try to apply more
 		}
+		// Stop here if the hands are doing something
+		if(livingEntity.getActiveHand() == hand && livingEntity.getItemUseTime() > 0) {
+			UseAction action = itemInHand.getUseAction();
+			if(action == UseAction.BLOCK || action == UseAction.SPEAR || action == UseAction.BOW || action == UseAction.CROSSBOW) {
+				return;// stop
+			}
+		}
 		// active animations
 		if(livingEntity.hasVehicle()) {
 			if(livingEntity.getVehicle() instanceof BoatEntity) {
