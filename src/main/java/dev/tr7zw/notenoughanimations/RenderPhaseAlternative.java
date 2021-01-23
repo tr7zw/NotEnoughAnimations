@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations;
+/*package dev.tr7zw.notenoughanimations;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -29,3 +29,4 @@ public class RenderPhaseAlternative {
 
 	
 }
+*/

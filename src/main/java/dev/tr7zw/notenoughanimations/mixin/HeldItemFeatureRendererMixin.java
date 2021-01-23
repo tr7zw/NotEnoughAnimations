@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations.mixin;
+/*package dev.tr7zw.notenoughanimations.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,13 +34,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.Matrix4f;
-import net.minecraft.world.World;
+import net.minecraft.world.World;*/
 
 /**
  * Stops items in the hand from rendering while using two handed items
  *
  */
-@Mixin(HeldItemFeatureRenderer.class)
+/*@Mixin(HeldItemFeatureRenderer.class)
 public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M extends EntityModel<T>>
 		extends FeatureRenderer<T, M> {
 
@@ -208,4 +208,4 @@ public abstract class HeldItemFeatureRendererMixin<T extends LivingEntity, M ext
 		}
 	}
 
-}
+}*/

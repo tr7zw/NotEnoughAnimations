@@ -22,12 +22,10 @@
       "dev.tr7zw.notenoughanimations.NEAnimationsMod"
     ]
   },
-  "mixins": [
-    "notenoughanimations.mixins.json"
-  ],
 
   "depends": {
-    "minecraft": "1.16.x"
+    "minecraft": "1.16.x",
+    "transliterationlib": "*"
   },
   "suggests": {
     "firstperson": "*"

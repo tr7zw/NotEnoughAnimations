@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations.mixin;
+/*package dev.tr7zw.notenoughanimations.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -97,4 +97,4 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Bip
 			part.roll *= -1;
 	}
 
-}
+}*/
