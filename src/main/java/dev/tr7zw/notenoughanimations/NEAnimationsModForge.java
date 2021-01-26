@@ -10,6 +10,7 @@ public class NEAnimationsModForge {
 		APIEvent.LOADED.register(() -> {
 			new RotationFixer().enable();
 			new ArmTransformer().enable();
+			new HeldItemHandler().enable();
 		});
 	}
 	

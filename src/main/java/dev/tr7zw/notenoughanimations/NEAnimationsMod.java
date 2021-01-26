@@ -9,6 +9,7 @@ public class NEAnimationsMod implements ModInitializer {
 		APIEvent.LOADED.register(() -> {
 			new RotationFixer().enable();
 			new ArmTransformer().enable();
+			new HeldItemHandler().enable();
 		});
 	}
 
