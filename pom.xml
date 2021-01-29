@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dev.tr7zw</groupId>
 	<artifactId>notenoughanimations</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 	<name>NotEnoughAnimations</name>
 	<url>https://github.com/tr7zw</url>

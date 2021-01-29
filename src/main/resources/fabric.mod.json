@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "notenoughanimations",
-  "version": "${version}",
+  "version": "1.1.0",
 
   "name": "NotEnoughAnimations",
-  "description": "Adding all the First-Person animations to Third-Person.",
+  "description": "Adding and improving animations in Third-Person.",
   "authors": [
     "tr7zw"
   ],
