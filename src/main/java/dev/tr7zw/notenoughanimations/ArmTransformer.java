@@ -2,6 +2,9 @@ package dev.tr7zw.notenoughanimations;
 
 import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import dev.tr7zw.transliterationlib.api.event.RenderEvent;
 import dev.tr7zw.transliterationlib.api.util.MathHelper;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.BoatEntity;
@@ -21,6 +24,8 @@ public class ArmTransformer {
 	private Item compass = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "compass"));
 	private Item filledMap = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "filled_map"));
 	
+	private Map<Integer, float[]> lastRotations = new HashMap<>();
+	
 	public void enable() {
 		Arm arm = transliteration.getEnumWrapper().getArm();
 		Hand hand = transliteration.getEnumWrapper().getHand();
@@ -29,7 +34,21 @@ public class ArmTransformer {
 			boolean rightHanded = entity.getMainArm() == arm.getRight();
 			applyAnimations(entity, model, arm.getRight(), rightHanded ? hand.getMainHand() : hand.getOffHand(), tick);
 			applyAnimations(entity, model, arm.getLeft(), !rightHanded ? hand.getMainHand() : hand.getOffHand(), tick);
+			
+			int id = entity.getId();
+			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
+			interpolate(model.getLeftArm(), last, 0);
+			interpolate(model.getRightArm(), last, 3);
 		});
+	}
+	
+	private void interpolate(ModelPart model, float[] last, int offset) {
+		last[offset] = (model.getPitch()+last[offset]*30)/31;
+		last[offset+1] = (model.getYaw()+last[offset+1]*30)/31;
+		last[offset+2] = (model.getRoll()+last[offset+2]*30)/31;
+		model.setPitch(last[offset]);
+		model.setYaw(last[offset+1]);
+		model.setRoll(last[offset+2]);
 	}
 	
 	private void applyAnimations(LivingEntity livingEntity, PlayerEntityModel model, Arm arm, Hand hand, float tick) {
