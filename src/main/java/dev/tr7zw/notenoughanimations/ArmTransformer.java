@@ -77,6 +77,12 @@ public class ArmTransformer {
 				applyArmTransforms(model, arm, -1.1f -rotation, -0.2f, 0.3f);
 			}
 		}
+		if(livingEntity.isClimbing()) {
+			float rotation = -MathHelper.cos((float) (livingEntity.getPos().getY()*2));
+			rotation *= 0.3;
+			if(arm.equals(arm.getLeft()))rotation *= -1;
+			applyArmTransforms(model, arm, -1.1f -rotation, -0.2f, 0.3f);
+		}
 		if (livingEntity.getActiveHand() == hand && livingEntity.getItemUseTime() > 0) {
 			UseAction action = itemInHand.getUseAction();
 			// Eating/Drinking

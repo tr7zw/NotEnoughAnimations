@@ -16,13 +16,20 @@
 		<dependency>
 			<groupId>dev.tr7zw</groupId>
 			<artifactId>TRLCore</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.fabricmc</groupId>
 			<artifactId>fabric-loader</artifactId>
 			<version>0.9.3+build.207</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.minecraftforge</groupId>
+			<artifactId>forge</artifactId>
+			<version>1.16.5-36.0.13</version>
+			<classifier>universal</classifier>
 			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
@@ -75,6 +82,10 @@
 		<repository>
 			<id>Sponge</id>
 			<url>https://repo.spongepowered.org/maven/</url>
+		</repository>
+		<repository>
+			<id>Forge</id>
+			<url>https://files.minecraftforge.net/maven</url>
 		</repository>
 	</repositories>
 	<build>
