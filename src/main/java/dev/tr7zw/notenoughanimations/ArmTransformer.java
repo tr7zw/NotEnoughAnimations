@@ -23,6 +23,7 @@ public class ArmTransformer {
 	private Item clock = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "clock"));
 	private Item compass = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "compass"));
 	private Item filledMap = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "filled_map"));
+	private Item torch = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "torch"));
 	
 	private Map<Integer, float[]> lastRotations = new HashMap<>();
 	
@@ -56,7 +57,7 @@ public class ArmTransformer {
 		ItemStack itemInOtherHand = livingEntity
 				.getStackInHand(hand == hand.getMainHand() ? hand.getOffHand() : hand.getMainHand());
 		// passive animations
-		if (itemInHand.getItem().equals(compass) || itemInHand.getItem().equals(clock)) {
+		if (itemInHand.getItem().equals(compass) || itemInHand.getItem().equals(clock) || itemInHand.getItem().equals(torch)) {
 			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
 		}
 		if ((itemInHand.getItem().equals(filledMap) && itemInOtherHand.isEmpty() && hand == hand.getMainHand())
