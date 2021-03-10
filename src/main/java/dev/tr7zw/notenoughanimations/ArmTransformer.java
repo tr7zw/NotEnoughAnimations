@@ -26,6 +26,8 @@ public class ArmTransformer {
 	private Item torch = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "torch"));
 	
 	private Map<Integer, float[]> lastRotations = new HashMap<>();
+	private Map<Integer, Long> lastUpdate = new HashMap<>();
+	private final int rotationModifier = 25;
 	
 	public void enable() {
 		Arm arm = transliteration.getEnumWrapper().getArm();
@@ -38,15 +40,24 @@ public class ArmTransformer {
 			
 			int id = entity.getId();
 			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
-			interpolate(model.getLeftArm(), last, 0);
-			interpolate(model.getRightArm(), last, 3);
+			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, System.currentTimeMillis());
+			if(timePassed == 0)
+				timePassed = 1;
+			if(timePassed > rotationModifier-1) {
+				timePassed = rotationModifier-1;
+			}
+			interpolate(model.getLeftArm(), last, 0, timePassed);
+			interpolate(model.getRightArm(), last, 3, timePassed);
+			lastUpdate.put(id, System.currentTimeMillis());
 		});
 	}
 	
-	private void interpolate(ModelPart model, float[] last, int offset) {
-		last[offset] = (model.getPitch()+last[offset]*30)/31;
-		last[offset+1] = (model.getYaw()+last[offset+1]*30)/31;
-		last[offset+2] = (model.getRoll()+last[offset+2]*30)/31;
+	private void interpolate(ModelPart model, float[] last, int offset, long timeScale) {
+		int scale = (int) (rotationModifier-timeScale);
+		int scale2 = scale+1;
+		last[offset] = (model.getPitch()+last[offset]*scale)/scale2;
+		last[offset+1] = (model.getYaw()+last[offset+1]*scale)/scale2;
+		last[offset+2] = (model.getRoll()+last[offset+2]*scale)/scale2;
 		model.setPitch(last[offset]);
 		model.setYaw(last[offset+1]);
 		model.setRoll(last[offset+2]);
