@@ -53,10 +53,10 @@ public class ArmTransformer {
 	}
 	
 	private void interpolate(ModelPart model, float[] last, int offset, long timeScale) {
-		int scale = (int) (rotationModifier-timeScale);
+		int scale = (int) (rotationModifier-timeScale); // TODO use tick delta
 		int scale2 = scale+1;
 		last[offset] = (model.getPitch()+last[offset]*scale)/scale2;
-		last[offset+1] = (model.getYaw()+last[offset+1]*scale)/scale2;
+		last[offset+1] = ((wrapDegrees(model.getYaw() / 0.017453292f)+wrapDegrees(last[offset+1] / 0.017453292f)*scale)/scale2) * 0.017453292f;// TODO clean up
 		last[offset+2] = (model.getRoll()+last[offset+2]*scale)/scale2;
 		model.setPitch(last[offset]);
 		model.setYaw(last[offset+1]);
@@ -133,6 +133,17 @@ public class ArmTransformer {
 		part.setRoll(roll);
 		if (arm == arm.getLeft())
 			part.setRoll(part.getRoll() * -1);
+	}
+	
+	private float wrapDegrees(float f) {
+		float g = f % 360.0f;
+		if (g >= 180.0f) {
+			g -= 360.0f;
+		}
+		if (g < -180.0f) {
+			g += 360.0f;
+		}
+		return g;
 	}
 
 }
