@@ -27,7 +27,8 @@ public class ArmTransformer {
 	
 	private Map<Integer, float[]> lastRotations = new HashMap<>();
 	private Map<Integer, Long> lastUpdate = new HashMap<>();
-	private final int rotationModifier = 25;
+	//private Map<Integer, Integer> lastTick = new HashMap<>();
+	private final float animationSpeed = 6f;
 	
 	public void enable() {
 		Arm arm = transliteration.getEnumWrapper().getArm();
@@ -40,24 +41,29 @@ public class ArmTransformer {
 			
 			int id = entity.getId();
 			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
+			boolean differentFrame = true;//entity.getAge() != lastTick.getOrDefault(id, 0); //TODO: check if this is a new frame, not the same frame
 			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, System.currentTimeMillis());
-			if(timePassed == 0)
+			if(timePassed < 1)
 				timePassed = 1;
-			if(timePassed > rotationModifier-1) {
-				timePassed = rotationModifier-1;
-			}
-			interpolate(model.getLeftArm(), last, 0, timePassed);
-			interpolate(model.getRightArm(), last, 3, timePassed);
+			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame);
+			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame);
 			lastUpdate.put(id, System.currentTimeMillis());
+			/*if(differentFrame) {
+				lastTick.put(id, entity.getAge());
+			}*/
 		});
 	}
 	
-	private void interpolate(ModelPart model, float[] last, int offset, long timeScale) {
-		int scale = (int) (rotationModifier-timeScale); // TODO use tick delta
-		int scale2 = scale+1;
-		last[offset] = (model.getPitch()+last[offset]*scale)/scale2;
-		last[offset+1] = ((wrapDegrees(model.getYaw() / 0.017453292f)+wrapDegrees(last[offset+1] / 0.017453292f)*scale)/scale2) * 0.017453292f;// TODO clean up
-		last[offset+2] = (model.getRoll()+last[offset+2]*scale)/scale2;
+	private void interpolate(ModelPart model, float[] last, int offset, long timeScale, boolean differentFrame) {
+		if(!differentFrame) { //Rerendering the place in the same frame
+			model.setPitch(last[offset]);
+			model.setYaw(last[offset+1]);
+			model.setRoll(last[offset+2]);
+			return;
+		}
+		last[offset] = last[offset]+((model.getPitch()-last[offset])*((1f/(1000f/timeScale)))*animationSpeed);
+		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*((1f/(1000f/timeScale)))*animationSpeed);
+		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*((1f/(1000f/timeScale)))*animationSpeed);
 		model.setPitch(last[offset]);
 		model.setYaw(last[offset+1]);
 		model.setRoll(last[offset+2]);
@@ -136,12 +142,12 @@ public class ArmTransformer {
 	}
 	
 	private float wrapDegrees(float f) {
-		float g = f % 360.0f;
-		if (g >= 180.0f) {
-			g -= 360.0f;
+		float g = f % 6.28318512f;
+		if (g >= 3.14159256f) {
+			g -= 6.28318512f;
 		}
-		if (g < -180.0f) {
-			g += 360.0f;
+		if (g < -3.14159256f) {
+			g += 6.28318512f;
 		}
 		return g;
 	}
