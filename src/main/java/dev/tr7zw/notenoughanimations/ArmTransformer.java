@@ -45,8 +45,10 @@ public class ArmTransformer {
 			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, System.currentTimeMillis());
 			if(timePassed < 1)
 				timePassed = 1;
-			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame);
-			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame);
+			boolean swordInLeftHand = entity.getStackInHand(rightHanded?hand.getOffHand():hand.getMainHand()).getItem().getKeyPath().contains("sword"); // making sure modded sword also are fast. Maybe expand to other tools too?
+			boolean swordInRightHand = entity.getStackInHand(rightHanded?hand.getMainHand():hand.getOffHand()).getItem().getKeyPath().contains("sword");
+			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, animationSpeed * (swordInLeftHand ? 5 : 1));
+			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, animationSpeed * (swordInRightHand ? 5 : 1));
 			lastUpdate.put(id, System.currentTimeMillis());
 			/*if(differentFrame) {
 				lastTick.put(id, entity.getAge());
@@ -54,16 +56,16 @@ public class ArmTransformer {
 		});
 	}
 	
-	private void interpolate(ModelPart model, float[] last, int offset, long timeScale, boolean differentFrame) {
+	private void interpolate(ModelPart model, float[] last, int offset, long timeScale, boolean differentFrame, float speed) {
 		if(!differentFrame) { //Rerendering the place in the same frame
 			model.setPitch(last[offset]);
 			model.setYaw(last[offset+1]);
 			model.setRoll(last[offset+2]);
 			return;
 		}
-		last[offset] = last[offset]+((model.getPitch()-last[offset])*((1f/(1000f/timeScale)))*animationSpeed);
-		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*((1f/(1000f/timeScale)))*animationSpeed);
-		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*((1f/(1000f/timeScale)))*animationSpeed);
+		last[offset] = last[offset]+((model.getPitch()-last[offset])*((1f/(1000f/timeScale)))*speed);
+		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*((1f/(1000f/timeScale)))*speed);
+		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*((1f/(1000f/timeScale)))*speed);
 		model.setPitch(last[offset]);
 		model.setYaw(last[offset+1]);
 		model.setRoll(last[offset+2]);
