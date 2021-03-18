@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/tr7zw/NotEnoughAnimations/issues" #optional
 license="MIT License"
 [[mods]] #mandatory
 modId="notenoughanimations" #mandatory
-version="1.2.0" #mandatory
+version="1.2.1" #mandatory
 displayName="NotEnoughAnimations Mod" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/not-enough-animations" #optional
 # A file name (in the root of the mod JAR) containing a logo for display

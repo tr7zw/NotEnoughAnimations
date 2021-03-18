@@ -56,16 +56,22 @@ public class ArmTransformer {
 		});
 	}
 	
-	private void interpolate(ModelPart model, float[] last, int offset, long timeScale, boolean differentFrame, float speed) {
+	private void interpolate(ModelPart model, float[] last, int offset, long timePassed, boolean differentFrame, float speed) {
 		if(!differentFrame) { //Rerendering the place in the same frame
 			model.setPitch(last[offset]);
 			model.setYaw(last[offset+1]);
 			model.setRoll(last[offset+2]);
 			return;
 		}
-		last[offset] = last[offset]+((model.getPitch()-last[offset])*((1f/(1000f/timeScale)))*speed);
-		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*((1f/(1000f/timeScale)))*speed);
-		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*((1f/(1000f/timeScale)))*speed);
+		if(timePassed > 200) { //Don't try to interpolate states older than 200ms
+			last[offset] = model.getPitch();
+			last[offset+1] = model.getYaw();
+			last[offset+2] = model.getRoll();
+			return;
+		}
+		last[offset] = last[offset]+((model.getPitch()-last[offset])*((1f/(1000f/timePassed)))*speed);
+		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*((1f/(1000f/timePassed)))*speed);
+		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*((1f/(1000f/timePassed)))*speed);
 		model.setPitch(last[offset]);
 		model.setYaw(last[offset+1]);
 		model.setRoll(last[offset+2]);
