@@ -3,7 +3,9 @@ package dev.tr7zw.notenoughanimations;
 import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import dev.tr7zw.transliterationlib.api.event.RenderEvent;
 import dev.tr7zw.transliterationlib.api.util.MathHelper;
@@ -20,17 +22,22 @@ import dev.tr7zw.transliterationlib.api.wrapper.model.PlayerEntityModel;
 
 public class ArmTransformer {
 
-	private Item clock = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "clock"));
-	private Item compass = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "compass"));
 	private Item filledMap = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "filled_map"));
-	private Item torch = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "torch"));
+	private Set<Item> holdingItems = new HashSet<>();
 	
 	private Map<Integer, float[]> lastRotations = new HashMap<>();
 	private Map<Integer, Long> lastUpdate = new HashMap<>();
 	//private Map<Integer, Integer> lastTick = new HashMap<>();
-	private final float animationSpeed = 6f;
 	
 	public void enable() {
+	    for(String itemId : NEAnimationsLoader.config.holdingItems) {
+	        try {
+	            holdingItems.add(transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier(itemId.split(":")[0], itemId.split(":")[1])));
+	        }catch(Exception ex) {
+	            System.err.println("Unknown item to add to the holding list: " + itemId);
+	        }
+	    }
+	    
 		Arm arm = transliteration.getEnumWrapper().getArm();
 		Hand hand = transliteration.getEnumWrapper().getHand();
 		
@@ -47,8 +54,8 @@ public class ArmTransformer {
 				timePassed = 1;
 			boolean swordInLeftHand = entity.getStackInHand(rightHanded?hand.getOffHand():hand.getMainHand()).getItem().getKeyPath().contains("sword"); // making sure modded sword also are fast. Maybe expand to other tools too?
 			boolean swordInRightHand = entity.getStackInHand(rightHanded?hand.getMainHand():hand.getOffHand()).getItem().getKeyPath().contains("sword");
-			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, animationSpeed * (swordInLeftHand ? 5 : 1));
-			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, animationSpeed * (swordInRightHand ? 5 : 1));
+			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInLeftHand ? 5 : 1));
+			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInRightHand ? 5 : 1));
 			lastUpdate.put(id, System.currentTimeMillis());
 			/*if(differentFrame) {
 				lastTick.put(id, entity.getAge());
@@ -82,7 +89,7 @@ public class ArmTransformer {
 		ItemStack itemInOtherHand = livingEntity
 				.getStackInHand(hand == hand.getMainHand() ? hand.getOffHand() : hand.getMainHand());
 		// passive animations
-		if (itemInHand.getItem().equals(compass) || itemInHand.getItem().equals(clock) || itemInHand.getItem().equals(torch)) {
+		if (holdingItems.contains(itemInHand.getItem())) {
 			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
 		}
 		if ((itemInHand.getItem().equals(filledMap) && itemInOtherHand.isEmpty() && hand == hand.getMainHand())
