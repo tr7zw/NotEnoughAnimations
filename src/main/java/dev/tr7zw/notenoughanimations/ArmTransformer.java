@@ -56,7 +56,7 @@ public class ArmTransformer {
 			int id = entity.getId();
 			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
 			boolean differentFrame = true;//entity.getAge() != lastTick.getOrDefault(id, 0); //TODO: check if this is a new frame, not the same frame
-			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, System.currentTimeMillis());
+			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, 0l);
 			if(timePassed < 1)
 				timePassed = 1;
 			boolean swordInLeftHand = entity.getStackInHand(rightHanded?hand.getOffHand():hand.getMainHand()).getItem().getKeyPath().contains("sword"); // making sure modded sword also are fast. Maybe expand to other tools too?
