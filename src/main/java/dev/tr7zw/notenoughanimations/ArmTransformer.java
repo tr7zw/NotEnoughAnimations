@@ -12,6 +12,7 @@ import dev.tr7zw.transliterationlib.api.util.MathHelper;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.BoatEntity;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.HorseEntity;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.LivingEntity;
+import dev.tr7zw.transliterationlib.api.wrapper.entity.Player;
 import dev.tr7zw.transliterationlib.api.wrapper.item.Arm;
 import dev.tr7zw.transliterationlib.api.wrapper.item.Hand;
 import dev.tr7zw.transliterationlib.api.wrapper.item.Item;
@@ -42,6 +43,12 @@ public class ArmTransformer {
 		Hand hand = transliteration.getEnumWrapper().getHand();
 		
 		RenderEvent.SET_ANGLES_END.register((entity, model, tick, info) -> {
+		    if(transliteration.getMinecraftClient().getWorld().isNull()) { // We are in a main menu or something
+		        return;
+		    }
+		    if(entity instanceof Player && ((Player)entity).isCrawling()) { // Crawling has its own animations and messing with it screws stuff up
+		        return;
+		    }
 			boolean rightHanded = entity.getMainArm() == arm.getRight();
 			applyAnimations(entity, model, arm.getRight(), rightHanded ? hand.getMainHand() : hand.getOffHand(), tick);
 			applyAnimations(entity, model, arm.getLeft(), !rightHanded ? hand.getMainHand() : hand.getOffHand(), tick);
