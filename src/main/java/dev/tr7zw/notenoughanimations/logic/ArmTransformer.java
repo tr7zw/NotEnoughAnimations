@@ -62,10 +62,8 @@ public class ArmTransformer {
     			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, 0l);
     			if(timePassed < 1)
     				timePassed = 1;
-    			boolean swordInLeftHand = entity.getStackInHand(rightHanded?hand.getOffHand():hand.getMainHand()).getItem().getKeyPath().contains("sword"); // making sure modded sword also are fast. Maybe expand to other tools too?
-    			boolean swordInRightHand = entity.getStackInHand(rightHanded?hand.getMainHand():hand.getOffHand()).getItem().getKeyPath().contains("sword");
-    			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInLeftHand ? 5 : 1));
-    			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInRightHand ? 5 : 1));
+    			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed);
+    			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed);
     			lastUpdate.put(id, System.currentTimeMillis());
     			/*if(differentFrame) {
     				lastTick.put(id, entity.getAge());
@@ -87,9 +85,11 @@ public class ArmTransformer {
 			last[offset+2] = model.getRoll();
 			return;
 		}
-		last[offset] = last[offset]+((model.getPitch()-last[offset])*((1f/(1000f/timePassed)))*speed);
-		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*((1f/(1000f/timePassed)))*speed);
-		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*((1f/(1000f/timePassed)))*speed);
+		float amount = ((1f/(1000f/timePassed)))*speed;
+		if(amount > 1)amount = 1;
+		last[offset] = last[offset]+((model.getPitch()-last[offset])*amount);
+		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*amount);
+		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*amount);
 		model.setPitch(last[offset]);
 		model.setYaw(last[offset+1]);
 		model.setRoll(last[offset+2]);
