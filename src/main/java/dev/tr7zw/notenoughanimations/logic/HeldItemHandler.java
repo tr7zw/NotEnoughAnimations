@@ -1,7 +1,8 @@
-package dev.tr7zw.notenoughanimations;
+package dev.tr7zw.notenoughanimations.logic;
 
 import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
+import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.transliterationlib.api.event.RenderEvent;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.ClientPlayer;
 import dev.tr7zw.transliterationlib.api.wrapper.item.ArmPose;
@@ -22,7 +23,7 @@ public class HeldItemHandler {
 				info.cancel();
 				return;
 			}
-			if(model instanceof ModelWithArms) {
+			if(NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ModelWithArms) {
 				if (arm == entity.getMainArm() && entity.getMainHandStack().getItem().equals(filledMap)) { // Mainhand with or without the offhand
 					matrices.push();
 					((ModelWithArms) model).setArmAngle(arm, matrices);
@@ -49,7 +50,7 @@ public class HeldItemHandler {
 				}
 			}
 			
-			if (entity instanceof ClientPlayer) {
+			if (NEAnimationsLoader.config.enableOffhandHiding && entity instanceof ClientPlayer) {
 				ClientPlayer player = (ClientPlayer) entity;
 				ArmPose armPose = getArmPose(player, transliteration.getEnumWrapper().getHand().getMainHand());
 				ArmPose armPose2 = getArmPose(player, transliteration.getEnumWrapper().getHand().getOffHand());

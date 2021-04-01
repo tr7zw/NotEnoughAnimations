@@ -1,5 +1,6 @@
-package dev.tr7zw.notenoughanimations;
+package dev.tr7zw.notenoughanimations.logic;
 
+import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.transliterationlib.api.event.PlayerEvents;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.Player;
 import dev.tr7zw.transliterationlib.api.wrapper.item.Item;
@@ -20,7 +21,7 @@ public class RotationFixer {
 	private boolean shouldFixateBody(Player player) {
 		if (player.hasVehicle())
 			return false;
-		if (player.isUsingItem() && !player.getActiveItemStack().isEmpty()) {
+		if (NEAnimationsLoader.config.enableRotationLocking && player.isUsingItem() && !player.getActiveItemStack().isEmpty()) {
 			ItemStack activeItem = player.getActiveItemStack();
 			Item item = activeItem.getItem();
 			UseAction action = item.getUseAction(activeItem);

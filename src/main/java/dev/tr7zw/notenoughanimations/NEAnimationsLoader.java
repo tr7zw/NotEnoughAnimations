@@ -8,16 +8,23 @@ import java.nio.file.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dev.tr7zw.notenoughanimations.config.Config;
+import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
+import dev.tr7zw.notenoughanimations.logic.ArmTransformer;
+import dev.tr7zw.notenoughanimations.logic.HeldItemHandler;
+import dev.tr7zw.notenoughanimations.logic.RotationFixer;
 import dev.tr7zw.transliterationlib.api.TRansliterationLib;
 import dev.tr7zw.transliterationlib.api.event.APIEvent;
 
 public abstract class NEAnimationsLoader {
 
+    public static NEAnimationsLoader INSTANCE;
     public static Config config;
     private final File settingsFile = new File("config", "notenoughanimations.json");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public void onEnable() {
+        INSTANCE = this;
         if (settingsFile.exists()) {
             try {
                 config = gson.fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
@@ -29,6 +36,10 @@ public abstract class NEAnimationsLoader {
         if (config == null) {
             config = new Config();
             writeConfig();
+        } else {
+            if(ConfigUpgrader.upgradeConfig(config)) {
+                writeConfig();
+            }
         }
         if (TRansliterationLib.transliteration != null) {
             enable();

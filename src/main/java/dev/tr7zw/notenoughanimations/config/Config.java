@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations;
+package dev.tr7zw.notenoughanimations.config;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,5 +9,9 @@ public class Config {
     public int configVersion = 1;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern"));
+    public boolean enableAnimationSmoothing = false;
+    public boolean enableInWorldMapRendering = true;
+    public boolean enableOffhandHiding = true;
+    public boolean enableRotationLocking = true;
     
 }

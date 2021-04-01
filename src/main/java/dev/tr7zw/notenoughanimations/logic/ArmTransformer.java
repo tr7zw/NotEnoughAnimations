@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations;
+package dev.tr7zw.notenoughanimations.logic;
 
 import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.transliterationlib.api.event.RenderEvent;
 import dev.tr7zw.transliterationlib.api.util.MathHelper;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.BoatEntity;
@@ -53,20 +54,23 @@ public class ArmTransformer {
 			applyAnimations(entity, model, arm.getRight(), rightHanded ? hand.getMainHand() : hand.getOffHand(), tick);
 			applyAnimations(entity, model, arm.getLeft(), !rightHanded ? hand.getMainHand() : hand.getOffHand(), tick);
 			
-			int id = entity.getId();
-			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
-			boolean differentFrame = true;//entity.getAge() != lastTick.getOrDefault(id, 0); //TODO: check if this is a new frame, not the same frame
-			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, 0l);
-			if(timePassed < 1)
-				timePassed = 1;
-			boolean swordInLeftHand = entity.getStackInHand(rightHanded?hand.getOffHand():hand.getMainHand()).getItem().getKeyPath().contains("sword"); // making sure modded sword also are fast. Maybe expand to other tools too?
-			boolean swordInRightHand = entity.getStackInHand(rightHanded?hand.getMainHand():hand.getOffHand()).getItem().getKeyPath().contains("sword");
-			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInLeftHand ? 5 : 1));
-			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInRightHand ? 5 : 1));
-			lastUpdate.put(id, System.currentTimeMillis());
-			/*if(differentFrame) {
-				lastTick.put(id, entity.getAge());
-			}*/
+			
+			if(NEAnimationsLoader.config.enableAnimationSmoothing) {
+    			int id = entity.getId();
+    			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
+    			boolean differentFrame = true;//entity.getAge() != lastTick.getOrDefault(id, 0); //TODO: check if this is a new frame, not the same frame
+    			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, 0l);
+    			if(timePassed < 1)
+    				timePassed = 1;
+    			boolean swordInLeftHand = entity.getStackInHand(rightHanded?hand.getOffHand():hand.getMainHand()).getItem().getKeyPath().contains("sword"); // making sure modded sword also are fast. Maybe expand to other tools too?
+    			boolean swordInRightHand = entity.getStackInHand(rightHanded?hand.getMainHand():hand.getOffHand()).getItem().getKeyPath().contains("sword");
+    			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInLeftHand ? 5 : 1));
+    			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed * (swordInRightHand ? 5 : 1));
+    			lastUpdate.put(id, System.currentTimeMillis());
+    			/*if(differentFrame) {
+    				lastTick.put(id, entity.getAge());
+    			}*/
+			}
 		});
 	}
 	
