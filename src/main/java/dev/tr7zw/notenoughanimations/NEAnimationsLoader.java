@@ -29,7 +29,8 @@ public abstract class NEAnimationsLoader {
             try {
                 config = gson.fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
                         Config.class);
-            } catch (IOException ex) {
+            } catch (Exception ex) {
+                System.out.println("Error while loading config! Creating a new one!");
                 ex.printStackTrace();
             }
         }
