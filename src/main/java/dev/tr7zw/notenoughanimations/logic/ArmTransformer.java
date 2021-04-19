@@ -32,9 +32,12 @@ public class ArmTransformer {
 	//private Map<Integer, Integer> lastTick = new HashMap<>();
 	
 	public void enable() {
+	    Item invalid = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "air"));
 	    for(String itemId : NEAnimationsLoader.config.holdingItems) {
 	        try {
-	            holdingItems.add(transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier(itemId.split(":")[0], itemId.split(":")[1])));
+	            Item item = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier(itemId.split(":")[0], itemId.split(":")[1]));
+	            if(invalid.getHandler() != item.getHandler())
+	                holdingItems.add(item);
 	        }catch(Exception ex) {
 	            System.err.println("Unknown item to add to the holding list: " + itemId);
 	        }
