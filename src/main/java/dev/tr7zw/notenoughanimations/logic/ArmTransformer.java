@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
+import dev.tr7zw.notenoughanimations.NEAnimationsMod;
 import dev.tr7zw.transliterationlib.api.event.RenderEvent;
 import dev.tr7zw.transliterationlib.api.util.MathHelper;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.BoatEntity;
@@ -106,17 +107,19 @@ public class ArmTransformer {
 		if (holdingItems.contains(itemInHand.getItem())) {
 			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
 		}
-		if ((itemInHand.getItem().equals(filledMap) && itemInOtherHand.isEmpty() && hand == hand.getMainHand())
-				|| (itemInOtherHand.getItem().equals(filledMap) && itemInHand.isEmpty() && hand == hand.getOffHand())) {
-			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), -0.4f,
-					0.3f);
-		}else if(itemInHand.getItem().equals(filledMap) && hand == hand.getMainHand()) {
-			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), 0f,
-					0.3f);
-		}
-		if(itemInHand.getItem().equals(filledMap) && hand == hand.getOffHand()) {
-			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), 0f,
-					0.3f);
+		if(NEAnimationsMod.config.enableInWorldMapRendering) {
+    		if ((itemInHand.getItem().equals(filledMap) && itemInOtherHand.isEmpty() && hand == hand.getMainHand())
+    				|| (itemInOtherHand.getItem().equals(filledMap) && itemInHand.isEmpty() && hand == hand.getOffHand())) {
+    			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), -0.4f,
+    					0.3f);
+    		}else if(itemInHand.getItem().equals(filledMap) && hand == hand.getMainHand()) {
+    			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), 0f,
+    					0.3f);
+    		}
+    		if(itemInHand.getItem().equals(filledMap) && hand == hand.getOffHand()) {
+    			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), 0f,
+    					0.3f);
+    		}
 		}
 		if(livingEntity.isSleeping()) {
 			applyArmTransforms(model, arm, 0, 0f, 0f);
@@ -132,24 +135,24 @@ public class ArmTransformer {
 		}
 		// active animations
 		if(livingEntity.hasVehicle()) {
-			if(livingEntity.getVehicle() instanceof BoatEntity) {
+			if(livingEntity.getVehicle() instanceof BoatEntity && NEAnimationsMod.config.enableRowBoatAnimation) {
 				BoatEntity boat = (BoatEntity) livingEntity.getVehicle();
 				float paddle = boat.interpolatePaddlePhase(arm == arm.getLeft() ? 0 : 1, tick);
 				applyArmTransforms(model, arm, -1.1f -MathHelper.sin(paddle) * 0.3f, 0.2f, 0.3f);
 			}
-			if(livingEntity.getVehicle() instanceof HorseEntity) {
+			if(livingEntity.getVehicle() instanceof HorseEntity && NEAnimationsMod.config.enableHorseAnimation) {
 				float rotation = -MathHelper.cos(((HorseEntity)livingEntity.getVehicle()).getLimbAngle() * 0.3f);
 				rotation *= 0.1;
 				applyArmTransforms(model, arm, -1.1f -rotation, -0.2f, 0.3f);
 			}
 		}
-		if(livingEntity.isClimbing()) {
+		if(livingEntity.isClimbing() && NEAnimationsMod.config.enableLadderAnimation) {
 			float rotation = -MathHelper.cos((float) (livingEntity.getPos().getY()*2));
 			rotation *= 0.3;
 			if(arm.equals(arm.getLeft()))rotation *= -1;
 			applyArmTransforms(model, arm, -1.1f -rotation, -0.2f, 0.3f);
 		}
-		if (livingEntity.getActiveHand() == hand && livingEntity.getItemUseTime() > 0) {
+		if (livingEntity.getActiveHand() == hand && livingEntity.getItemUseTime() > 0  && NEAnimationsMod.config.enableEatDrinkAnimation) {
 			UseAction action = itemInHand.getUseAction();
 			// Eating/Drinking
 			if (action.equals(action.getEat()) || action.equals(action.getDrink())) {

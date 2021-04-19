@@ -8,6 +8,10 @@ public class ConfigUpgrader {
             config.configVersion = 2;
             changed = true;
         }
+        if(config.configVersion <= 2) {
+            config.configVersion = 3;
+            changed = true;
+        }
         // check for more changes here
         
         return changed;
