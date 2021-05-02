@@ -3,7 +3,6 @@ package dev.tr7zw.notenoughanimations.logic;
 import static dev.tr7zw.transliterationlib.api.TRansliterationLib.transliteration;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
-import dev.tr7zw.notenoughanimations.NEAnimationsMod;
 import dev.tr7zw.transliterationlib.api.event.RenderEvent;
 import dev.tr7zw.transliterationlib.api.wrapper.entity.ClientPlayer;
 import dev.tr7zw.transliterationlib.api.wrapper.item.ArmPose;
@@ -24,7 +23,7 @@ public class HeldItemHandler {
 				info.cancel();
 				return;
 			}
-			if(NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ModelWithArms && NEAnimationsMod.config.enableIngameMapHolding) {
+			if(NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ModelWithArms && NEAnimationsLoader.config.enableIngameMapHolding) {
 				if (arm == entity.getMainArm() && entity.getMainHandStack().getItem().equals(filledMap)) { // Mainhand with or without the offhand
 					matrices.push();
 					((ModelWithArms) model).setArmAngle(arm, matrices);
