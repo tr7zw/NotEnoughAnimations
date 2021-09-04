@@ -24,29 +24,21 @@ import dev.tr7zw.transliterationlib.api.wrapper.model.PlayerEntityModel;
 
 public class ArmTransformer {
 
-	private Item filledMap = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "filled_map"));
+	private Set<Item> compatibleMaps = new HashSet<>();
 	private Set<Item> holdingItems = new HashSet<>();
 	
 	private Map<Integer, float[]> lastRotations = new HashMap<>();
 	private Map<Integer, Long> lastUpdate = new HashMap<>();
 	//private Map<Integer, Integer> lastTick = new HashMap<>();
+	private boolean doneLatebind = false;
 	
 	public void enable() {
-	    Item invalid = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "air"));
-	    for(String itemId : NEAnimationsLoader.config.holdingItems) {
-	        try {
-	            Item item = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier(itemId.split(":")[0], itemId.split(":")[1]));
-	            if(invalid.getHandler() != item.getHandler())
-	                holdingItems.add(item);
-	        }catch(Exception ex) {
-	            System.err.println("Unknown item to add to the holding list: " + itemId);
-	        }
-	    }
 	    
 		Arm arm = transliteration.getEnumWrapper().getArm();
 		Hand hand = transliteration.getEnumWrapper().getHand();
 		
 		RenderEvent.SET_ANGLES_END.register((entity, model, tick, info) -> {
+		    if(!doneLatebind)lateBind();
 		    if(transliteration.getMinecraftClient().getWorld().isNull()) { // We are in a main menu or something
 		        return;
 		    }
@@ -107,15 +99,15 @@ public class ArmTransformer {
 			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
 		}
 		if(NEAnimationsLoader.config.enableInWorldMapRendering) {
-    		if ((itemInHand.getItem().equals(filledMap) && itemInOtherHand.isEmpty() && hand == hand.getMainHand())
-    				|| (itemInOtherHand.getItem().equals(filledMap) && itemInHand.isEmpty() && hand == hand.getOffHand())) {
+    		if ((compatibleMaps.contains(itemInHand.getItem()) && itemInOtherHand.isEmpty() && hand == hand.getMainHand())
+    				|| compatibleMaps.contains(itemInOtherHand.getItem()) && itemInHand.isEmpty() && hand == hand.getOffHand()) {
     			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), -0.4f,
     					0.3f);
-    		}else if(itemInHand.getItem().equals(filledMap) && hand == hand.getMainHand()) {
+    		}else if(compatibleMaps.contains(itemInHand.getItem()) && hand == hand.getMainHand()) {
     			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), 0f,
     					0.3f);
     		}
-    		if(itemInHand.getItem().equals(filledMap) && hand == hand.getOffHand()) {
+    		if(compatibleMaps.contains(itemInHand.getItem()) && hand == hand.getOffHand()) {
     			applyArmTransforms(model, arm, -(MathHelper.lerp(-1f * (livingEntity.getPitch() - 90f) / 180f, 0.5f, 1.5f)), 0f,
     					0.3f);
     		}
@@ -159,6 +151,26 @@ public class ArmTransformer {
 						+ MathHelper.sin(tick * 1.5f) * 0.1f, -0.3f, 0.3f);
 			}
 		}
+	}
+	
+	private void lateBind() {
+	       Item invalid = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "air"));
+	        for(String itemId : NEAnimationsLoader.config.holdingItems) {
+	            try {
+	                Item item = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier(itemId.split(":")[0], itemId.split(":")[1]));
+	                if(invalid.getHandler() != item.getHandler())
+	                    holdingItems.add(item);
+	            }catch(Exception ex) {
+	                System.err.println("Unknown item to add to the holding list: " + itemId);
+	            }
+	        }
+	        compatibleMaps.add(transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("minecraft", "filled_map")));
+	        Item antiqueAtlas = transliteration.getEnumWrapper().getItems().getItem(transliteration.constructors().newIdentifier("antiqueatlas", "antique_atlas"));
+	        if(invalid.getHandler() != antiqueAtlas.getHandler()) {
+	            compatibleMaps.add(antiqueAtlas);
+	            System.out.println("Added AntiqueAtlas support to Not Enough Animations!");
+	        }
+	    doneLatebind = true;
 	}
 
 	private void applyArmTransforms(PlayerEntityModel model, Arm arm, float pitch, float yaw, float roll) {
