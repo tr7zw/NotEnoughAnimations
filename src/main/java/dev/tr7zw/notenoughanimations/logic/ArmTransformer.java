@@ -29,7 +29,7 @@ public class ArmTransformer {
 	
 	private Map<Integer, float[]> lastRotations = new HashMap<>();
 	private Map<Integer, Long> lastUpdate = new HashMap<>();
-	//private Map<Integer, Integer> lastTick = new HashMap<>();
+	private Set<Integer> updated = new HashSet<>();
 	private boolean doneLatebind = false;
 	
 	public void enable() {
@@ -53,17 +53,19 @@ public class ArmTransformer {
 			if(NEAnimationsLoader.config.enableAnimationSmoothing) {
     			int id = entity.getId();
     			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
-    			boolean differentFrame = true;//entity.getAge() != lastTick.getOrDefault(id, 0); //TODO: check if this is a new frame, not the same frame
+    			boolean differentFrame = updated.add(id);
     			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, 0l);
     			if(timePassed < 1)
     				timePassed = 1;
     			interpolate(model.getLeftArm(), last, 0, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed);
     			interpolate(model.getRightArm(), last, 3, timePassed, differentFrame, NEAnimationsLoader.config.animationSmoothingSpeed);
-    			lastUpdate.put(id, System.currentTimeMillis());
-    			/*if(differentFrame) {
-    				lastTick.put(id, entity.getAge());
-    			}*/
+    			if(differentFrame)
+    			    lastUpdate.put(id, System.currentTimeMillis());
 			}
+		});
+		
+		RenderEvent.START_RENDER.register(() -> {
+		    updated.clear();
 		});
 	}
 	
