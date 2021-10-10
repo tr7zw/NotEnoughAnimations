@@ -80,6 +80,7 @@ public class ArmTransformer {
 			last[offset] = model.getPitch();
 			last[offset+1] = model.getYaw();
 			last[offset+2] = model.getRoll();
+			cleanInvalidData(last, offset);
 			return;
 		}
 		float amount = ((1f/(1000f/timePassed)))*speed;
@@ -87,9 +88,22 @@ public class ArmTransformer {
 		last[offset] = last[offset]+((model.getPitch()-last[offset])*amount);
 		last[offset+1] = last[offset+1]+((wrapDegrees(model.getYaw())-wrapDegrees(last[offset+1]))*amount);
 		last[offset+2] = last[offset+2]+((model.getRoll()-last[offset+2])*amount);
+		cleanInvalidData(last, offset);
 		model.setPitch(last[offset]);
 		model.setYaw(last[offset+1]);
 		model.setRoll(last[offset+2]);
+	}
+	
+	/**
+	 * When using a quickcharge 5 crossbow it is able to cause NaN values to show up because of how broken it is.
+	 * 
+	 * @param data
+	 * @param offset
+	 */
+	private void cleanInvalidData(float[] data, int offset) {
+	    if(Float.isNaN(data[offset]))data[offset] = 0;
+	    if(Float.isNaN(data[offset+1]))data[offset+1] = 0;
+	    if(Float.isNaN(data[offset+2]))data[offset+2] = 0;
 	}
 	
 	private void applyAnimations(LivingEntity livingEntity, PlayerEntityModel model, Arm arm, Hand hand, float tick) {
