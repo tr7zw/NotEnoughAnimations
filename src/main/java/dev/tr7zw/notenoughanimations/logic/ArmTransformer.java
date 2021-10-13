@@ -51,7 +51,11 @@ public class ArmTransformer {
 			
 			
 			if(NEAnimationsLoader.config.enableAnimationSmoothing) {
-    			int id = entity.getId();
+    			if(model.getLeftArm().getPitch() == 0f && model.getLeftArm().getRoll() == -0.1f && model.getLeftArm().getYaw() == 0f) {
+    			    return; //this is rendering the first person hand, don't try to use that for interpolation
+    			}
+    			System.out.println(model.getLeftArm().getPitch() + " " + model.getLeftArm().getRoll() + " " + model.getLeftArm().getYaw());
+                int id = entity.getId();
     			float[] last = lastRotations.computeIfAbsent(id, i -> new float[6]);
     			boolean differentFrame = updated.add(id);
     			long timePassed = System.currentTimeMillis() - lastUpdate.getOrDefault(id, 0l);
