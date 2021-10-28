@@ -18,6 +18,9 @@ public class RotationFixer {
 	private boolean shouldFixateBody(Player player) {
 		if (player.isPassenger())
 			return false;
+		if(NEAnimationsLoader.config.keepBodyRotatedWithHead) {
+		    return true;
+		}
 		if (NEAnimationsLoader.config.enableRotationLocking && player.isUsingItem() && !player.getUseItem().isEmpty()) {
 			ItemStack activeItem = player.getUseItem();
 			Item item = activeItem.getItem();

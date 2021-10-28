@@ -20,5 +20,6 @@ public class Config {
     public boolean enableIngameMapHolding = true;
     public boolean dontHoldItemsInBed = true;
     public boolean freezeArmsInBed = true;
+    public boolean keepBodyRotatedWithHead = false;
     
 }
