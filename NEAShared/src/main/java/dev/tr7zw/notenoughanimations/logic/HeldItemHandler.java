@@ -30,7 +30,9 @@ public class HeldItemHandler {
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
-            info.cancel();
+            if(NEAnimationsLoader.config.dontHoldItemsInBed) {
+                info.cancel();
+            }
             return;
         }
         if (NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ArmedModel

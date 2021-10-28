@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Config {
 
-    public int configVersion = 3;
+    public int configVersion = 4;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern"));
     public boolean enableAnimationSmoothing = true;
@@ -18,5 +18,7 @@ public class Config {
     public boolean enableRowBoatAnimation = true;
     public boolean enableHorseAnimation = true;
     public boolean enableIngameMapHolding = true;
+    public boolean dontHoldItemsInBed = true;
+    public boolean freezeArmsInBed = true;
     
 }

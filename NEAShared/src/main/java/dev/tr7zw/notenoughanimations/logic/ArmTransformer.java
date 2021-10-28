@@ -126,7 +126,9 @@ public class ArmTransformer {
     		}
 		}
 		if(livingEntity.isSleeping()) {
-			applyArmTransforms(model, arm, 0, 0f, 0f);
+		    if(NEAnimationsLoader.config.freezeArmsInBed) {
+		        applyArmTransforms(model, arm, 0, 0f, 0f);
+		    }
 			return; // Dont try to apply more
 		}
 		// Stop here if the hands are doing something

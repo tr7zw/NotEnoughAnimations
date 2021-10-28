@@ -12,6 +12,12 @@ public class ConfigUpgrader {
             config.configVersion = 3;
             changed = true;
         }
+        if(config.configVersion <= 3) {
+            config.configVersion = 4;
+            config.dontHoldItemsInBed = true;
+            config.freezeArmsInBed = true;
+            changed = true;
+        }
         // check for more changes here
         
         return changed;
