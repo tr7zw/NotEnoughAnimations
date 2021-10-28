@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 @Mixin(Player.class)
 public class PlayerEntityMixin implements PlayerData {
@@ -15,6 +16,7 @@ public class PlayerEntityMixin implements PlayerData {
     private int armsUpdated = 0;
     private long lastUpdate = System.currentTimeMillis();
     private float[] lastRotations = new float[6];
+    private ItemStack sideSword = ItemStack.EMPTY;
     
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
@@ -40,6 +42,16 @@ public class PlayerEntityMixin implements PlayerData {
     @Override
     public float[] getLastRotations() {
         return lastRotations;
+    }
+
+    @Override
+    public ItemStack getSideSword() {
+        return sideSword;
+    }
+
+    @Override
+    public void setSideSword(ItemStack item) {
+        this.sideSword = item;
     }
 	
 }

@@ -9,7 +9,8 @@
     "PlayerEntityModelMixin",
     "PlayerEntityMixin",
     "LevelRendererMixin",
-    "ItemInHandLayerMixin"
+    "ItemInHandLayerMixin",
+    "PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

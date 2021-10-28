@@ -21,5 +21,7 @@ public class Config {
     public boolean dontHoldItemsInBed = true;
     public boolean freezeArmsInBed = true;
     public boolean keepBodyRotatedWithHead = false;
+    public boolean showLastUsedSword = true;
+    public Set<String> swords = new HashSet<>(Arrays.asList("minecraft:wooden_sword", "minecraft:stone_sword", "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));
     
 }
