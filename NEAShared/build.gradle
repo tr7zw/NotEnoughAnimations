@@ -1,0 +1,32 @@
+dependencies {
+	// We depend on forge loader here to use the forge @Environment annotations and get the mixin dependencies
+	// Do NOT use other classes from forge loader
+	modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+
+}
+
+// The shared project doesn't need to be built
+
+tasks.withType(JavaCompile) {
+	onlyIf {
+        false
+    }
+}
+
+tasks.named('jar') {
+	onlyIf {
+        false
+    }
+}
+
+tasks.named('remapJar') {
+	onlyIf {
+        false
+    }
+}
+
+tasks.named('runClient') {
+	onlyIf {
+        false
+    }
+}

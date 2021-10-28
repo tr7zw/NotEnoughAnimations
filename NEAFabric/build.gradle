@@ -1,0 +1,20 @@
+project.evaluationDependsOn(':NEAShared')
+
+dependencies {
+	modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
+    sourceSets.main.java.srcDirs += (project(':NEAShared').sourceSets.main.java.srcDirs)
+	sourceSets.main.resources.srcDirs += (project(':NEAShared').sourceSets.main.resources.srcDirs)
+}
+
+processResources {
+	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+	inputs.property "version", project.version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include "fabric.mod.json"
+		expand "version": project.version
+	}
+
+}

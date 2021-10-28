@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "notenoughanimations",
+  "version": "1.4.0",
+
+  "name": "NotEnoughAnimations",
+  "description": "Adding and improving animations in Third-Person.",
+  "authors": [
+    "tr7zw"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/members/tr7zw/projects",
+    "sources": "https://github.com/tr7zw"
+  },
+
+  "license": "MIT",
+  "icon": "assets/notenoughanimations/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "dev.tr7zw.notenoughanimations.NEAnimationsMod"
+    ]
+  },
+  "mixins": [
+    "notenoughanimations.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": "1.17.x"
+  },
+  "suggests": {
+    "firstperson": "*"
+  }
+}

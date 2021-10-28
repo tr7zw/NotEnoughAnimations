@@ -1,0 +1,29 @@
+modLoader="javafml" #mandatory
+loaderVersion="[28,)" #mandatory (28 is current forge version)
+issueTrackerURL="https://github.com/tr7zw/NotEnoughAnimations/issues" #optional
+
+license="MIT License"
+[[mods]] #mandatory
+modId="notenoughanimations" #mandatory
+version="1.4.0" #mandatory
+displayName="NotEnoughAnimations Mod" #mandatory
+displayURL="https://www.curseforge.com/minecraft/mc-mods/not-enough-animations" #optional
+# A file name (in the root of the mod JAR) containing a logo for display
+#logoFile="icon.png" #optional
+authors="tr7zw"
+description='''
+Brings more animations to the third-person.
+'''
+[[dependencies.notenoughanimations]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[33.0.22,)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+# Here's another dependency
+[[dependencies.notenoughanimations]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.17,)"
+    ordering="NONE"
+    side="BOTH"
