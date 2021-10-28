@@ -51,6 +51,9 @@ public class ArmTransformer {
             if(model.leftArm.xRot == 0f && model.leftArm.zRot == -0.1f && model.leftArm.yRot == 0f) {
                 return; //this is rendering the first person hand, don't try to use that for interpolation
             }
+            if(model.rightArm.xRot == 0f && model.rightArm.zRot == 0.1f && model.rightArm.yRot == 0f) {
+                return; //this is rendering the first person hand, don't try to use that for interpolation
+            }
             float[] last = data.getLastRotations();
             boolean differentFrame = !data.isUpdated(frameId);
             long timePassed = System.currentTimeMillis() - data.lastUpdate();
