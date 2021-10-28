@@ -12,9 +12,9 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-          11
+          16    # Minimum supported by Minecraft
         ]
-        # and run on both Linux and Windows
+        # and run on Linux
         os: [ubuntu-20.04]
     runs-on: ${{ matrix.os }}
     steps:
@@ -32,8 +32,10 @@ jobs:
       - name: build
         run: ./gradlew build
       - name: capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '11' }} # Only upload artifacts built from LTS java on one OS
+        if: ${{ runner.os == 'Linux' && matrix.java == '16' }} # Only upload artifacts built from latest java on one OS
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
-          path: build/libs/
+          path: |
+            NEAFabric/build/libs/
+            NEAForge/build/libs/
