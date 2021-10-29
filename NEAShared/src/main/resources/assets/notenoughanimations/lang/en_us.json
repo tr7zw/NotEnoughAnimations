@@ -1,0 +1,19 @@
+{
+    "text.nea.title": "Not enough animations Settings",
+
+    "text.nea.enable.animationsmoothing": "Animation smoothing",
+    "text.nea.smoothingSpeed": "Smoothing amount",
+    "text.nea.enable.inworldmaprendering": "Render Maps in 3rd person",
+    "text.nea.enable.offhandhiding": "Hide offhand item with Bow/Crossbow",
+    "text.nea.enable.rotationlocking": "Lock body to head during some animations",
+    "text.nea.enable.ladderanimation": "Basic ladder climbing animation",
+    "text.nea.enable.eatdringanimation": "Eat/Drink animation",
+    "text.nea.enable.rowboatanimation": "Boat rowing animation",
+    "text.nea.enable.horseanimation": "Horse riding animation",
+    "text.nea.enable.ingamemapholding": "Render Maps in 3rd person?!?",
+    "text.nea.enable.dontholditemsinbed": "Don't hold items while sleeping",
+    "text.nea.enable.freezearmsinbed": "Don't move arms while sleeping",
+    "text.nea.enable.lockbodyheadrotation": "Lock body rotation to head",
+    "text.nea.enable.showlastusedsword": "Show last used sword on the side",
+    "text.nea.enable.showlastusedtool": "Show last used tool on the back"
+  }

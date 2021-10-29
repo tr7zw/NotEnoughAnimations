@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "dev.tr7zw.notenoughanimations.NEAnimationsMod"
+    ],
+    "modmenu": [
+      "dev.tr7zw.notenoughanimations.NEAModMenu"
     ]
   },
   "mixins": [
