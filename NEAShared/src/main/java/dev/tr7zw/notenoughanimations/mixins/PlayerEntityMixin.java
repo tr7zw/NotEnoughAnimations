@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
+import dev.tr7zw.notenoughanimations.renderlayer.BackItemsRenderLayer;
+import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -17,10 +19,12 @@ public class PlayerEntityMixin implements PlayerData {
     private long lastUpdate = System.currentTimeMillis();
     private float[] lastRotations = new float[6];
     private ItemStack sideSword = ItemStack.EMPTY;
+    private ItemStack[] backTools = new ItemStack[2]; // mixin throws errors when init here
     
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
 		NEAnimationsLoader.INSTANCE.rotationFixer.onTickEnd((Player)(Object)this);
+		updateRenderLayerItems();
 	}
 
     @Override
@@ -52,6 +56,16 @@ public class PlayerEntityMixin implements PlayerData {
     @Override
     public void setSideSword(ItemStack item) {
         this.sideSword = item;
+    }
+
+    @Override
+    public ItemStack[] getBackTools() {
+        return backTools;
+    }
+    
+    private void updateRenderLayerItems() {
+        SwordRenderLayer.update((Player)(Object)this);
+        BackItemsRenderLayer.update((Player)(Object)this);
     }
 	
 }

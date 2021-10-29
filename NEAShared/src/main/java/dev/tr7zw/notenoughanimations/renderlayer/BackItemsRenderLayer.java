@@ -24,9 +24,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>{
+public class BackItemsRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>{
 
-    public SwordRenderLayer(
+    public BackItemsRenderLayer(
             RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
         super(renderLayerParent);
     }
@@ -36,11 +36,16 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
 
     public static void update(Player player) {
         PlayerData data = (PlayerData) player;
+        ItemStack[] backItems = data.getBackTools();
+        if(backItems[0] == null) {
+            backItems[0] = ItemStack.EMPTY;
+            backItems[1] = ItemStack.EMPTY;
+        }
         if(items.contains(player.getMainHandItem().getItem())) {
-            data.setSideSword(player.getMainHandItem());
+            backItems[0] = player.getMainHandItem();
         }
         if(items.contains(player.getOffhandItem().getItem())) {
-            data.setSideSword(player.getOffhandItem());
+            backItems[0] = player.getOffhandItem();
         }
     }
     
@@ -52,42 +57,52 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             lazyInit = false;
             init();
         }
-        if(!NEAnimationsLoader.config.showLastUsedSword) {
+        if(!NEAnimationsLoader.config.showLastUsedToolsOnBack) {
             return;
         }
         if(!(player instanceof PlayerData)) {
             return;
         }
-        if(player.isPassenger()) {
-            return; // sitting player in a boat/minecart/on horse pokes the vehicle with the sword
-        }
         PlayerData data = (PlayerData) player;
-        ItemStack itemStack = data.getSideSword();
-        if (itemStack.isEmpty())
+        ItemStack[] backItems = data.getBackTools();
+        if (backItems[0] == null || backItems[0].isEmpty())
             return;
-        if(player.getMainHandItem() == itemStack || player.getOffhandItem() == itemStack) {
+        if(player.getMainHandItem() == backItems[0] || player.getOffhandItem() == backItems[0]) {
             return;
         }
+        renderBackItem(poseStack, multiBufferSource, light, player, backItems[0], false);
+        renderBackItem(poseStack, multiBufferSource, light, player, backItems[0], true);
+    }
+
+
+
+    private void renderBackItem(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
+            AbstractClientPlayer player, ItemStack backItem, boolean flipped) {
         poseStack.pushPose();
         getParentModel().body.translateAndRotate(poseStack);
         boolean lefthanded = (player.getMainArm() == HumanoidArm.LEFT);
-        boolean wearingArmor = !player.getItemBySlot(EquipmentSlot.CHEST).isEmpty() || !player.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
-        double offsetX = wearingArmor ? 0.3D : 0.28D;
-        float swordRotation = -80F;
-        if(lefthanded) {
-            offsetX *= -1d;
-        }
-        poseStack.translate(offsetX, 0.85D, 0.25D);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(swordRotation));
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        boolean wearingArmor = !player.getItemBySlot(EquipmentSlot.CHEST).isEmpty();
+        double offsetX = -0.0001;
+        double offsetY = 0.5;
+        double offsetZ = flipped ? (wearingArmor ? 0.21 : 0.181) : (wearingArmor ? 0.2 : 0.18);
+        float rotationX = flipped ? 90 : -270f;
+        float rotationY = flipped ? 55 : -60;
+        float rotationZ = flipped ? 90 : 270f;
+ 
+        poseStack.translate(offsetX, offsetY, offsetZ);
+        poseStack.mulPose(Vector3f.XP.rotationDegrees(rotationX));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationY));
+        poseStack.mulPose(Vector3f.ZP.rotationDegrees(rotationZ));
         
-        Minecraft.getInstance().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
+        Minecraft.getInstance().getItemInHandRenderer().renderItem(player, backItem, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
                 poseStack, multiBufferSource, light);
         poseStack.popPose();
     }
     
+    
+    
     private void init() {
-        for(String itemKey : NEAnimationsLoader.config.sheathSwords) {
+        for(String itemKey : NEAnimationsLoader.config.backTools) {
             if(itemKey.contains(":")) {
                 Item item = Registry.ITEM.get(new ResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
                 if(item != Items.AIR) {

@@ -16,4 +16,6 @@ public interface PlayerData {
     
     public void setSideSword(ItemStack item);
     
+    public ItemStack[] getBackTools();
+    
 }

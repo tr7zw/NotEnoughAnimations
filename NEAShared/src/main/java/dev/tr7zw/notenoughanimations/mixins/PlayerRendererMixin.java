@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import dev.tr7zw.notenoughanimations.renderlayer.BackItemsRenderLayer;
 import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -22,7 +23,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onCreate(CallbackInfo info) {
         this.addLayer(new SwordRenderLayer(this));
-
+        this.addLayer(new BackItemsRenderLayer(this));
     }
 
     
