@@ -32,6 +32,7 @@ public class ArmTransformer {
 	private boolean doneLatebind = false;
 	private final Minecraft mc = Minecraft.getInstance();
 	private int frameId = 0; //ok to overflow, just used to keep track of what has been updated this frame
+	private boolean renderingFirstPersonArm = false;
 	
 	public void updateArms(Player entity, PlayerModel<AbstractClientPlayer> model, float tick, CallbackInfo info) {
         if(!doneLatebind)lateBind();
@@ -48,10 +49,7 @@ public class ArmTransformer {
         
         if(NEAnimationsLoader.config.enableAnimationSmoothing && entity instanceof PlayerData) {
             PlayerData data = (PlayerData) entity;
-            if(model.leftArm.xRot == 0f && model.leftArm.zRot == -0.1f && model.leftArm.yRot == 0f) {
-                return; //this is rendering the first person hand, don't try to use that for interpolation
-            }
-            if(model.rightArm.xRot == 0f && model.rightArm.zRot == 0.1f && model.rightArm.yRot == 0f) {
+            if(renderingFirstPersonArm) {
                 return; //this is rendering the first person hand, don't try to use that for interpolation
             }
             float[] last = data.getLastRotations();
@@ -67,6 +65,10 @@ public class ArmTransformer {
 	
 	public void nextFrame() {
 	    frameId++;
+	}
+	
+	public void renderingFirstPersonArm(boolean flag) {
+	    this.renderingFirstPersonArm = flag;
 	}
 	
 	private void interpolate(ModelPart model, float[] last, int offset, long timePassed, boolean differentFrame, float speed) {
