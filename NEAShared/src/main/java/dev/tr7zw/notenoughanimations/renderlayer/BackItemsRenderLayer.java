@@ -60,6 +60,7 @@ public class BackItemsRenderLayer extends RenderLayer<AbstractClientPlayer, Play
         if(!NEAnimationsLoader.config.showLastUsedToolsOnBack) {
             return;
         }
+        if(player.isInvisible())return;
         if(!(player instanceof PlayerData)) {
             return;
         }

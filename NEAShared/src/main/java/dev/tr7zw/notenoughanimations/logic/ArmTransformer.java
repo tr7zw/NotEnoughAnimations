@@ -124,8 +124,8 @@ public class ArmTransformer {
         model.leftLeg.xRot = Mth.lerp(swimAmount, model.leftLeg.xRot,
                 q * Mth.cos(f * r + 3.1415927F));
         model.rightLeg.xRot = Mth.lerp(swimAmount, model.rightLeg.xRot, q * Mth.cos(f * r));
-        model.rightLeg.zRot = 0.3707964F;
-        model.leftLeg.zRot = -0.3707964F;
+        model.rightLeg.zRot = 0.1507964F;
+        model.leftLeg.zRot = -0.1507964F;
     }
 
     private float rotlerpRad(float f, float g, float h) {
