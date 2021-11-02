@@ -76,10 +76,11 @@ public class ArmTransformer {
         float swimAmount = model.swimAmount;
         float attackTime = model.attackTime;
         if (swimAmount > 0.0F) {
-            float l = f*2 % 26.0F;
+            float l = f*2.5f % 26.0F;
             HumanoidArm humanoidArm = getAttackArm(entity);
             float m = (humanoidArm == HumanoidArm.RIGHT && attackTime > 0.0F) ? 0.0F : swimAmount;
             float n = (humanoidArm == HumanoidArm.LEFT && attackTime > 0.0F) ? 0.0F : swimAmount;
+            float armMoveHight = 0.3707964F;
             if (!entity.isUsingItem())
                 if (l < 14.0F) {
                     model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, 0.0F);
@@ -88,12 +89,12 @@ public class ArmTransformer {
                             3.1415927F - 1.8707964F * quadraticArmUpdate(l) / quadraticArmUpdate(14.0F));
                 } else if (l >= 14.0F && l < 22.0F) {
                     float o = (l - 14.0F) / 8.0F;
-                    model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, -0.7707964F * o);
+                    model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, -armMoveHight * o);
                     model.rightArm.yRot = Mth.lerp(m, model.rightArm.yRot, 3.1415927F);
                     model.rightArm.zRot = Mth.lerp(m, model.rightArm.zRot, 1.2707963F + 1.8707964F * o);
                 } else if (l >= 22.0F && l < 26.0F) {
                     float p = (l - 22.0F) / 4.0F;
-                    model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, -0.7707964F + 0.7707964F * p);
+                    model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, -armMoveHight + armMoveHight * p);
                     model.rightArm.yRot = Mth.lerp(m, model.rightArm.yRot, 3.1415927F);
                     model.rightArm.zRot = Mth.lerp(m, model.rightArm.zRot, 3.1415927F);
                 }
@@ -106,12 +107,12 @@ public class ArmTransformer {
                         3.1415927F + 1.8707964F * quadraticArmUpdate(l) / quadraticArmUpdate(14.0F));
             } else if (l >= 14.0F && l < 22.0F) {
                 float o = (l - 14.0F) / 8.0F;
-                model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -0.7707964F * o);
+                model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight * o);
                 model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
                 model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 5.012389F - 1.8707964F * o);
             } else if (l >= 22.0F && l < 26.0F) {
                 float p = (l - 22.0F) / 4.0F;
-                model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -0.7707964F + 0.7707964F * p);
+                model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight + armMoveHight * p);
                 model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
                 model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 3.1415927F);
             }
