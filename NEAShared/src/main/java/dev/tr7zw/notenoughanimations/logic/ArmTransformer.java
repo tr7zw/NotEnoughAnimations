@@ -75,8 +75,9 @@ public class ArmTransformer {
     private void fixSwimmingOutOfWater(Player entity, PlayerModel<AbstractClientPlayer> model, float f) {
         float swimAmount = model.swimAmount;
         float attackTime = model.attackTime;
+        float speedMul = 2.5F;
         if (swimAmount > 0.0F) {
-            float l = f*2.5f % 26.0F;
+            float l = f*speedMul % 26.0F;
             HumanoidArm humanoidArm = getAttackArm(entity);
             float m = (humanoidArm == HumanoidArm.RIGHT && attackTime > 0.0F) ? 0.0F : swimAmount;
             float n = (humanoidArm == HumanoidArm.LEFT && attackTime > 0.0F) ? 0.0F : swimAmount;
@@ -87,13 +88,13 @@ public class ArmTransformer {
                     model.rightArm.yRot = Mth.lerp(m, model.rightArm.yRot, 3.1415927F);
                     model.rightArm.zRot = Mth.lerp(m, model.rightArm.zRot,
                             3.1415927F - 1.8707964F * quadraticArmUpdate(l) / quadraticArmUpdate(14.0F));
-                } else if (l >= 14.0F && l < 22.0F) {
-                    float o = (l - 14.0F) / 8.0F;
+                } else if (l >= 14.0F && l < 24.0F) {
+                    float o = (l - 14.0F) / 10.0F;
                     model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, -armMoveHight * o);
                     model.rightArm.yRot = Mth.lerp(m, model.rightArm.yRot, 3.1415927F);
                     model.rightArm.zRot = Mth.lerp(m, model.rightArm.zRot, 1.2707963F + 1.8707964F * o);
-                } else if (l >= 22.0F && l < 26.0F) {
-                    float p = (l - 22.0F) / 4.0F;
+                } else if (l >= 24.0F && l < 26.0F) {
+                    float p = (l - 24.0F) / 2.0F;
                     model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, -armMoveHight + armMoveHight * p);
                     model.rightArm.yRot = Mth.lerp(m, model.rightArm.yRot, 3.1415927F);
                     model.rightArm.zRot = Mth.lerp(m, model.rightArm.zRot, 3.1415927F);
@@ -105,23 +106,26 @@ public class ArmTransformer {
                 model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
                 model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot,
                         3.1415927F + 1.8707964F * quadraticArmUpdate(l) / quadraticArmUpdate(14.0F));
-            } else if (l >= 14.0F && l < 22.0F) {
-                float o = (l - 14.0F) / 8.0F;
+            } else if (l >= 14.0F && l < 24.0F) {
+                float o = (l - 14.0F) / 10.0F;
                 model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight * o);
                 model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
                 model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 5.012389F - 1.8707964F * o);
-            } else if (l >= 22.0F && l < 26.0F) {
-                float p = (l - 22.0F) / 4.0F;
+            } else if (l >= 24.0F && l < 26.0F) {
+                float p = (l - 24.0F) / 2.0F;
                 model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight + armMoveHight * p);
                 model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
                 model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 3.1415927F);
             }
         }
-        float q = 0.3F;
+        float q = 0.15F;
         float r = 0.33333334F;
+        f*=speedMul;
         model.leftLeg.xRot = Mth.lerp(swimAmount, model.leftLeg.xRot,
                 q * Mth.cos(f * r + 3.1415927F));
-        model.rightLeg.xRot = Mth.lerp(swimAmount, model.rightLeg.xRot, 0.3F * Mth.cos(f * r));
+        model.rightLeg.xRot = Mth.lerp(swimAmount, model.rightLeg.xRot, q * Mth.cos(f * r));
+        model.rightLeg.zRot = 0.3707964F;
+        model.leftLeg.zRot = -0.3707964F;
     }
 
     private float rotlerpRad(float f, float g, float h) {
