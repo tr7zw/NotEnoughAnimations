@@ -252,12 +252,12 @@ public class ArmTransformer {
                 applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
             }
         }
-        if (livingEntity.onClimbable() && NEAnimationsLoader.config.enableLadderAnimation) {
+        if (livingEntity.onClimbable() && NEAnimationsLoader.config.enableLadderAnimation && !renderingFirstPersonArm) {
             float rotation = -Mth.cos((float) (livingEntity.getY() * 2));
             rotation *= 0.3;
             if (arm == HumanoidArm.LEFT)
                 rotation *= -1;
-            applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
+            applyArmTransforms(model, arm, -2.3f - rotation, -0.2f, 0.3f);
         }
         if (livingEntity.getUsedItemHand() == hand && livingEntity.getUseItemRemainingTicks() > 0
                 && NEAnimationsLoader.config.enableEatDrinkAnimation) {
