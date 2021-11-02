@@ -33,5 +33,6 @@ public class Config {
             "minecraft:netherite_shovel", "minecraft:wooden_hoe",
             "minecraft:stone_hoe", "minecraft:golden_hoe", "minecraft:iron_hoe", "minecraft:diamond_hoe",
             "minecraft:netherite_hoe"));
+    public boolean enableCrawlingAnimation = true;
 
 }

@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.notenoughanimations.config.Config;
 import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
@@ -22,7 +21,6 @@ import dev.tr7zw.notenoughanimations.logic.HeldItemHandler;
 import dev.tr7zw.notenoughanimations.logic.RotationFixer;
 import net.minecraft.client.Option;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 
 public abstract class NEAnimationsLoader {
 
@@ -109,6 +107,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.showLastUsedSword = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedtool", () -> config.showLastUsedToolsOnBack,
                         (b) -> config.showLastUsedToolsOnBack = b));
+                options.add(getOnOffOption("text.nea.enable.crawling", () -> config.enableCrawlingAnimation,
+                        (b) -> config.enableCrawlingAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));
