@@ -99,8 +99,6 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.enableRowBoatAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.horseanimation", () -> config.enableHorseAnimation,
                         (b) -> config.enableHorseAnimation = b));
-                options.add(getOnOffOption("text.nea.enable.ingamemapholding", () -> config.enableIngameMapHolding,
-                        (b) -> config.enableIngameMapHolding = b));
                 options.add(getOnOffOption("text.nea.enable.dontholditemsinbed", () -> config.dontHoldItemsInBed,
                         (b) -> config.dontHoldItemsInBed = b));
                 options.add(getOnOffOption("text.nea.enable.freezearmsinbed", () -> config.freezeArmsInBed,

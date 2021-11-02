@@ -35,8 +35,7 @@ public class HeldItemHandler {
             }
             return;
         }
-        if (NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ArmedModel
-                && NEAnimationsLoader.config.enableIngameMapHolding) {
+        if (NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ArmedModel) {
             if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(filledMap)) { // Mainhand with
                                                                                                       // or without the
                                                                                                       // offhand
