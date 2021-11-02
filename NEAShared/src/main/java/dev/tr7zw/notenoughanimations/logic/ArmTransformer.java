@@ -238,6 +238,9 @@ public class ArmTransformer {
                 return;// stop
             }
         }
+        if(renderingFirstPersonArm) {
+            return; // Don't apply 3rd person animations to the first person arm
+        }
         // active animations
         if (livingEntity.isPassenger()) {
             if (livingEntity.getVehicle() instanceof Boat && NEAnimationsLoader.config.enableRowBoatAnimation) {
@@ -252,7 +255,7 @@ public class ArmTransformer {
                 applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
             }
         }
-        if (livingEntity.onClimbable() && NEAnimationsLoader.config.enableLadderAnimation && !renderingFirstPersonArm) {
+        if (livingEntity.onClimbable() && NEAnimationsLoader.config.enableLadderAnimation) {
             float rotation = -Mth.cos((float) (livingEntity.getY() * 2));
             rotation *= 0.3;
             if (arm == HumanoidArm.LEFT)
