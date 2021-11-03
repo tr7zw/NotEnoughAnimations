@@ -15,6 +15,7 @@ public class Config {
     public boolean enableOffhandHiding = true;
     public boolean enableRotationLocking = true;
     public boolean enableLadderAnimation = true;
+    public boolean enableRotateToLadder = true;
     public boolean enableEatDrinkAnimation = true;
     public boolean enableRowBoatAnimation = true;
     public boolean enableHorseAnimation = true;

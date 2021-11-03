@@ -91,6 +91,10 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.enableRotationLocking = b));
                 options.add(getOnOffOption("text.nea.enable.ladderanimation", () -> config.enableLadderAnimation,
                         (b) -> config.enableLadderAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.rotatetoladder", () -> config.enableRotateToLadder,
+                        (b) -> config.enableRotateToLadder = b));
+                options.add(getOnOffOption("text.nea.enable.crawling", () -> config.enableCrawlingAnimation,
+                        (b) -> config.enableCrawlingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.eatdringanimation", () -> config.enableEatDrinkAnimation,
                         (b) -> config.enableEatDrinkAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.rowboatanimation", () -> config.enableRowBoatAnimation,
@@ -107,8 +111,6 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.showLastUsedSword = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedtool", () -> config.showLastUsedToolsOnBack,
                         (b) -> config.showLastUsedToolsOnBack = b));
-                options.add(getOnOffOption("text.nea.enable.crawling", () -> config.enableCrawlingAnimation,
-                        (b) -> config.enableCrawlingAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));

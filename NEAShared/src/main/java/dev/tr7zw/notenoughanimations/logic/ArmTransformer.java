@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -23,6 +24,8 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ArmTransformer {
 
@@ -77,7 +80,7 @@ public class ArmTransformer {
         float attackTime = model.attackTime;
         float speedMul = 2.5F;
         if (swimAmount > 0.0F) {
-            float l = f*speedMul % 26.0F;
+            float l = f * speedMul % 26.0F;
             HumanoidArm humanoidArm = getAttackArm(entity);
             float m = (humanoidArm == HumanoidArm.RIGHT && attackTime > 0.0F) ? 0.0F : swimAmount;
             float n = (humanoidArm == HumanoidArm.LEFT && attackTime > 0.0F) ? 0.0F : swimAmount;
@@ -120,9 +123,8 @@ public class ArmTransformer {
         }
         float q = 0.15F;
         float r = 0.33333334F;
-        f*=speedMul;
-        model.leftLeg.xRot = Mth.lerp(swimAmount, model.leftLeg.xRot,
-                q * Mth.cos(f * r + 3.1415927F));
+        f *= speedMul;
+        model.leftLeg.xRot = Mth.lerp(swimAmount, model.leftLeg.xRot, q * Mth.cos(f * r + 3.1415927F));
         model.rightLeg.xRot = Mth.lerp(swimAmount, model.rightLeg.xRot, q * Mth.cos(f * r));
         model.rightLeg.zRot = 0.1507964F;
         model.leftLeg.zRot = -0.1507964F;
@@ -140,7 +142,7 @@ public class ArmTransformer {
     private float quadraticArmUpdate(float f) {
         return -65.0F * f + f * f;
     }
-    
+
     private HumanoidArm getAttackArm(Player livingEntity) {
         HumanoidArm humanoidArm = livingEntity.getMainArm();
         return (livingEntity.swingingArm == InteractionHand.MAIN_HAND) ? humanoidArm : humanoidArm.getOpposite();
@@ -238,7 +240,7 @@ public class ArmTransformer {
                 return;// stop
             }
         }
-        if(renderingFirstPersonArm) {
+        if (renderingFirstPersonArm) {
             return; // Don't apply 3rd person animations to the first person arm
         }
         // active animations
@@ -255,7 +257,36 @@ public class ArmTransformer {
                 applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
             }
         }
-        if (livingEntity.onClimbable() && NEAnimationsLoader.config.enableLadderAnimation) {
+        if (livingEntity.onClimbable() && NEAnimationsLoader.config.enableLadderAnimation && !livingEntity.isOnGround()) {
+            if(NEAnimationsLoader.config.enableRotateToLadder) {
+                BlockState blockState = livingEntity.getFeetBlockState();
+                if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
+                    Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
+                    if(livingEntity instanceof PlayerData data) {
+                        data.disableBodyRotation(true);
+                    }
+                    switch (dir) {
+                    case NORTH:
+                        livingEntity.setYBodyRot(0);
+                        livingEntity.yBodyRotO = 0;
+                        break;
+                    case EAST:
+                        livingEntity.setYBodyRot(90);
+                        livingEntity.yBodyRotO = 90;
+                        break;
+                    case SOUTH:
+                        livingEntity.setYBodyRot(180);
+                        livingEntity.yBodyRotO = 180;
+                        break;
+                    case WEST:
+                        livingEntity.setYBodyRot(270);
+                        livingEntity.yBodyRotO = 270;
+                        break;
+                    default:
+                    }
+                    minMaxHeadRotation(livingEntity, model);
+                }
+            }
             float rotation = -Mth.cos((float) (livingEntity.getY() * 2));
             rotation *= 0.3;
             if (arm == HumanoidArm.LEFT)
@@ -272,6 +303,15 @@ public class ArmTransformer {
                         -0.3f, 0.3f);
             }
         }
+    }
+    
+    private void minMaxHeadRotation(Player livingEntity, PlayerModel<AbstractClientPlayer> model) {
+        float value = wrapDegrees(model.head.yRot);
+        float min = wrapDegrees(model.body.yRot - Mth.HALF_PI);
+        float max = wrapDegrees(model.body.yRot + Mth.HALF_PI);
+        value = Math.min(value, max);
+        value = Math.max(value, min);
+        model.head.yRot = value;
     }
 
     private void lateBind() {

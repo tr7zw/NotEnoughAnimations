@@ -20,6 +20,7 @@ public class PlayerEntityMixin implements PlayerData {
     private float[] lastRotations = new float[6];
     private ItemStack sideSword = ItemStack.EMPTY;
     private ItemStack[] backTools = new ItemStack[2]; // mixin throws errors when init here
+    private boolean disableBodyRotation = false;
     
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
@@ -66,6 +67,16 @@ public class PlayerEntityMixin implements PlayerData {
     private void updateRenderLayerItems() {
         SwordRenderLayer.update((Player)(Object)this);
         BackItemsRenderLayer.update((Player)(Object)this);
+    }
+
+    @Override
+    public void disableBodyRotation(boolean val) {
+        disableBodyRotation = val;
+    }
+
+    @Override
+    public boolean isBodyRotationDisabled() {
+        return disableBodyRotation;
     }
 	
 }

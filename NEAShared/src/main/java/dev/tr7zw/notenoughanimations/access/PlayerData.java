@@ -18,4 +18,8 @@ public interface PlayerData {
     
     public ItemStack[] getBackTools();
     
+    public void disableBodyRotation(boolean val);
+    
+    public boolean isBodyRotationDisabled();
+    
 }
