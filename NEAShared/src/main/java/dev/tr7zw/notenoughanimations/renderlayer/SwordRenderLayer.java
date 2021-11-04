@@ -55,7 +55,7 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         if(!NEAnimationsLoader.config.showLastUsedSword) {
             return;
         }
-        if(player.isInvisible())return;
+        if(player.isInvisible() || player.isSleeping())return;
         if(!(player instanceof PlayerData)) {
             return;
         }
