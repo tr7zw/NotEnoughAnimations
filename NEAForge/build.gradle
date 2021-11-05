@@ -1,5 +1,7 @@
 project.evaluationDependsOn(':NEAShared')
 
+archivesBaseName = rootProject.archives_base_name + "-forge"
+
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
 

@@ -1,5 +1,7 @@
 project.evaluationDependsOn(':NEAShared')
 
+archivesBaseName = rootProject.archives_base_name + "-fabric"
+
 dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
