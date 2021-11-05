@@ -12,7 +12,7 @@ public class NEAnimationsModForge extends NEAnimationsLoader {
         try {
             Class clientClass = net.minecraft.client.Minecraft.class;
         }catch(Throwable ex) {
-            LOGGER.warn("PaperDoll Mod installed on a Server. Going to sleep.");
+            LOGGER.warn("Not Enough Animations Mod installed on a Server. Going to sleep.");
             return;
         }
 	    onEnable();
