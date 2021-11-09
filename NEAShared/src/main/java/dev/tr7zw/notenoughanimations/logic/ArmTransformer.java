@@ -299,7 +299,7 @@ public class ArmTransformer {
             // Eating/Drinking
             if (action == UseAnim.EAT || action == UseAnim.DRINK) {
                 applyArmTransforms(model, arm,
-                        -(Mth.lerp(-1f * (livingEntity.getXRot() - 90f) / 180f, 1f, 2f)) + Mth.sin(tick * 1.5f) * 0.1f,
+                        -(Mth.lerp(-1f * (livingEntity.getXRot() - 90f) / 180f, 1f, 2f)) + Mth.sin((System.currentTimeMillis() % 20000) / 30f) * 0.1f,
                         -0.3f, 0.3f);
             }
         }
