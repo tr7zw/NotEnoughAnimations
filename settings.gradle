@@ -9,6 +9,6 @@ pluginManagement {
 
 include("NEAShared")
 include("NEAFabric")
-include("NEAForge")
+//include("NEAForge")
 
 rootProject.name = "NotEnoughAnimations"
