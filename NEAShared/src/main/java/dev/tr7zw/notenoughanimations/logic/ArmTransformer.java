@@ -312,6 +312,7 @@ public class ArmTransformer {
         value = Math.min(value, max);
         value = Math.max(value, min);
         model.head.yRot = value;
+        model.hat.yRot = value;
     }
 
     private void lateBind() {
