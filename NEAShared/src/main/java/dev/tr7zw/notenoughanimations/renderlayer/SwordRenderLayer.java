@@ -33,6 +33,7 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
     
     private boolean lazyInit = true;
     private static Set<Item> items = new HashSet<>();
+    private boolean disabled = false;
 
     public static void update(Player player) {
         PlayerData data = (PlayerData) player;
@@ -48,6 +49,9 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
             AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
             float paramFloat5, float paramFloat6) {
+        if(disabled) {
+            return;
+        }
         if(lazyInit) {
             lazyInit = false;
             init();
@@ -95,6 +99,13 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
                     items.add(item);
                 }
             }
+        }
+        try {
+            // Disable when backslot is installed
+            Class.forName("net.backslot.BackSlotMain");
+            disabled = true;
+        }catch(Throwable th) {
+            
         }
     }
 
