@@ -2,7 +2,7 @@ modLoader="javafml" #mandatory
 loaderVersion="[28,)" #mandatory (28 is current forge version)
 issueTrackerURL="https://github.com/tr7zw/NotEnoughAnimations/issues" #optional
 
-license="MIT License"
+license="tr7zw Protective License"
 [[mods]] #mandatory
 modId="notenoughanimations" #mandatory
 version="1.4.0" #mandatory

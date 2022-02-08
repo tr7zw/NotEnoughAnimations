@@ -54,4 +54,8 @@ allprojects {
 	java {
 		withSourcesJar()
 	}
+
+	jar {
+		from "${project.rootDir}/LICENSE"
+	}
 }
