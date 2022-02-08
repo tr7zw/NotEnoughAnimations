@@ -6,10 +6,10 @@ import java.util.Set;
 
 public class Config {
 
-    public int configVersion = 4;
+    public int configVersion = 5;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(
-            Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern"));
+            Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern"));
     public boolean enableAnimationSmoothing = true;
     public boolean enableInWorldMapRendering = true;
     public boolean enableOffhandHiding = true;

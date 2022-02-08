@@ -18,6 +18,12 @@ public class ConfigUpgrader {
             config.freezeArmsInBed = true;
             changed = true;
         }
+        if(config.configVersion <= 4) {
+            config.configVersion = 5;
+            config.holdingItems.add("minecraft:soul_torch");
+            config.holdingItems.add("minecraft:soul_lantern");
+            changed = true;
+        }
         // check for more changes here
         
         return changed;
