@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
-import dev.tr7zw.notenoughanimations.renderlayer.BackItemsRenderLayer;
 import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -66,7 +65,6 @@ public class PlayerEntityMixin implements PlayerData {
     
     private void updateRenderLayerItems() {
         SwordRenderLayer.update((Player)(Object)this);
-        BackItemsRenderLayer.update((Player)(Object)this);
     }
 
     @Override
