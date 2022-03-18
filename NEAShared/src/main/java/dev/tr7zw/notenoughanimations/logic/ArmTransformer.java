@@ -77,7 +77,7 @@ public class ArmTransformer {
         }
     }
 
-    private void fixSwimmingOutOfWater(Player entity, PlayerModel<AbstractClientPlayer> model, float f) {
+    private void fixSwimmingOutOfWater(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float f) {
         float swimAmount = model.swimAmount;
         float attackTime = model.attackTime;
         float speedMul = 2.5F;
@@ -87,7 +87,9 @@ public class ArmTransformer {
             float m = (humanoidArm == HumanoidArm.RIGHT && attackTime > 0.0F) ? 0.0F : swimAmount;
             float n = (humanoidArm == HumanoidArm.LEFT && attackTime > 0.0F) ? 0.0F : swimAmount;
             float armMoveHight = 0.3707964F;
-            if (!entity.isUsingItem())
+            ArmPose rightArmPose = VanillaAnimationUtil.getArmPose(entity, entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+            ArmPose leftArmPose = VanillaAnimationUtil.getArmPose(entity, entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+            if ((rightArmPose == ArmPose.BLOCK || rightArmPose == ArmPose.ITEM || rightArmPose == ArmPose.EMPTY) && leftArmPose != ArmPose.CROSSBOW_CHARGE && leftArmPose != ArmPose.BOW_AND_ARROW)
                 if (l < 14.0F) {
                     model.rightArm.xRot = Mth.lerp(m, model.rightArm.xRot, 0.0F);
                     model.rightArm.yRot = Mth.lerp(m, model.rightArm.yRot, 3.1415927F);
@@ -106,7 +108,7 @@ public class ArmTransformer {
                 }
             l += 13F;
             l %= 26F;
-            if (!entity.isUsingItem())
+            if ((leftArmPose == ArmPose.BLOCK || leftArmPose == ArmPose.ITEM || leftArmPose == ArmPose.EMPTY) && rightArmPose != ArmPose.CROSSBOW_CHARGE && rightArmPose != ArmPose.BOW_AND_ARROW)
                 if (l < 14.0F) {
                     model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, 0.0F);
                     model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
