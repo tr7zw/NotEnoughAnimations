@@ -93,6 +93,18 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.enableLadderAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.rotatetoladder", () -> config.enableRotateToLadder,
                         (b) -> config.enableRotateToLadder = b));
+                options.add(getDoubleOption("text.nea.ladderAnimationAmplifier", 0.1f, 0.5f, 0.01f,
+                        () -> (double) config.ladderAnimationAmplifier, (i) -> {
+                            config.ladderAnimationAmplifier = i.floatValue();
+                        }));
+                options.add(getDoubleOption("text.nea.ladderAnimationArmHeight", 1f, 3f, 0.1f,
+                        () -> (double) config.ladderAnimationArmHeight, (i) -> {
+                            config.ladderAnimationArmHeight = i.floatValue();
+                        }));
+                options.add(getDoubleOption("text.nea.ladderAnimationArmSpeed", 1f, 4f, 0.1f,
+                        () -> (double) config.ladderAnimationArmSpeed, (i) -> {
+                            config.ladderAnimationArmSpeed = i.floatValue();
+                        }));
                 options.add(getOnOffOption("text.nea.enable.crawling", () -> config.enableCrawlingAnimation,
                         (b) -> config.enableCrawlingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.eatdringanimation", () -> config.enableEatDrinkAnimation,

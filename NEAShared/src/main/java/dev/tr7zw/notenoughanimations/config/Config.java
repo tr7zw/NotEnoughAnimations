@@ -15,6 +15,9 @@ public class Config {
     public boolean enableOffhandHiding = true;
     public boolean enableRotationLocking = true;
     public boolean enableLadderAnimation = true;
+    public float ladderAnimationAmplifier = 0.35f;
+    public float ladderAnimationArmHeight = 1.7f;
+    public float ladderAnimationArmSpeed = 2f;
     public boolean enableRotateToLadder = true;
     public boolean enableEatDrinkAnimation = true;
     public boolean enableRowBoatAnimation = true;
