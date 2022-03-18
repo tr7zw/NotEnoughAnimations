@@ -39,13 +39,14 @@ public class ArmTransformer {
     private int frameId = 0; // ok to overflow, just used to keep track of what has been updated this frame
     private boolean renderingFirstPersonArm = false;
 
-    public void updateArms(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float what, float deltaTick,
+    public void updateArms(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float what, float f,
             CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
         if (mc.level == null) { // We are in a main menu or something
             return;
         }
+        float deltaTick = Minecraft.getInstance().getDeltaFrameTime();
         if (entity.getPose() == Pose.SWIMMING) { // Crawling/Swimming has its own animations
                                                                              // and messing with it screws stuff up, same with smoothing.
             if (!entity.isInWater() && NEAnimationsLoader.config.enableCrawlingAnimation)
