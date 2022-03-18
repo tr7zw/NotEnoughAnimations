@@ -10,7 +10,6 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 @Mixin(PlayerModel.class)
 public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends HumanoidModel<T> {
@@ -22,8 +21,8 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Hum
 	@SuppressWarnings("unchecked")
     @Inject(method = "setupAnim", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;copyFrom(Lnet/minecraft/client/model/geom/ModelPart;)V", ordinal = 0))
 	public void setupAnim(T livingEntity, float f, float g, float tick, float i, float j, CallbackInfo info) {
-	    if(livingEntity instanceof Player)
-		    NEAnimationsLoader.INSTANCE.armTransformer.updateArms((Player) livingEntity, (PlayerModel<AbstractClientPlayer>)(Object)this, tick, f, info);
+	    if(livingEntity instanceof AbstractClientPlayer)
+		    NEAnimationsLoader.INSTANCE.armTransformer.updateArms((AbstractClientPlayer) livingEntity, (PlayerModel<AbstractClientPlayer>)(Object)this, tick, f, info);
 	}
 
 }

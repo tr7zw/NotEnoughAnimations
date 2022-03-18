@@ -7,7 +7,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
+import dev.tr7zw.notenoughanimations.util.VanillaAnimationUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -37,14 +39,14 @@ public class ArmTransformer {
     private int frameId = 0; // ok to overflow, just used to keep track of what has been updated this frame
     private boolean renderingFirstPersonArm = false;
 
-    public void updateArms(Player entity, PlayerModel<AbstractClientPlayer> model, float tick, float f,
+    public void updateArms(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float tick, float f,
             CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
         if (mc.level == null) { // We are in a main menu or something
             return;
         }
-        if (entity instanceof Player && entity.getPose() == Pose.SWIMMING) { // Crawling/Swimming has its own animations
+        if (entity instanceof AbstractClientPlayer && entity.getPose() == Pose.SWIMMING) { // Crawling/Swimming has its own animations
                                                                              // and messing with it screws stuff up
             if (!entity.isInWater() && NEAnimationsLoader.config.enableCrawlingAnimation)
                 fixSwimmingOutOfWater(entity, model, f);
@@ -199,16 +201,19 @@ public class ArmTransformer {
             data[offset + 2] = 0;
     }
 
-    private void applyAnimations(Player livingEntity, PlayerModel<AbstractClientPlayer> model, HumanoidArm arm,
+    private void applyAnimations(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> model, HumanoidArm arm,
             InteractionHand hand, float tick) {
         ItemStack itemInHand = livingEntity.getItemInHand(hand);
         ItemStack itemInOtherHand = livingEntity.getItemInHand(
                 hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         // passive animations
-        if ((NEAnimationsLoader.config.holdUpAllItems && !itemInHand.isEmpty() && !livingEntity.swinging) || holdingItems.contains(itemInHand.getItem())) {
-            applyArmTransforms(model, arm, -(Mth.lerp(-1f * (livingEntity.getXRot() - 90f) / 180f, 1f, 1.5f)), -0.2f,
-                    0.3f);
-        }
+        ArmPose pose = VanillaAnimationUtil.getArmPose(livingEntity, hand);
+        ArmPose poseOtherHand = VanillaAnimationUtil.getArmPose(livingEntity, hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        if((pose == ArmPose.BLOCK || pose == ArmPose.ITEM) && !poseOtherHand.isTwoHanded()) // seperated for logic, better than building a multi line if filled with ()&&||
+            if ((NEAnimationsLoader.config.holdUpAllItems && !itemInHand.isEmpty() && !livingEntity.swinging) || holdingItems.contains(itemInHand.getItem())) {
+                applyArmTransforms(model, arm, -(Mth.lerp(-1f * (livingEntity.getXRot() - 90f) / 180f, 1f, 1.5f)), -0.2f,
+                        0.3f);
+            }
         if (NEAnimationsLoader.config.enableInWorldMapRendering) {
             if ((compatibleMaps.contains(itemInHand.getItem()) && itemInOtherHand.isEmpty()
                     && hand == InteractionHand.MAIN_HAND)
