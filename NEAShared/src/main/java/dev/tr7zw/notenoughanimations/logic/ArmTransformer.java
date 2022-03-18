@@ -237,8 +237,8 @@ public class ArmTransformer {
         if(animationTick > 0 && NEAnimationsLoader.config.itemSwapAnimation) {
             float position = animationTick/10f * -1f;
             position = Mth.lerp(tick, (animationTick+1)/10f * -1f, position);
-            applyArmTransforms(model, HumanoidArm.LEFT, -0.3f, 0.2f, position);
-            applyArmTransforms(model, HumanoidArm.RIGHT, -0.3f, 0.2f, position);
+            applyArmTransforms(model, HumanoidArm.LEFT, -0.5f, 0.2f, position);
+            applyArmTransforms(model, HumanoidArm.RIGHT, -0.5f, 0.2f, position);
             return true;
         }
 
