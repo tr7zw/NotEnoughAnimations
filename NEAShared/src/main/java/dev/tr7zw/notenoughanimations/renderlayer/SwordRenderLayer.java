@@ -76,7 +76,10 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         poseStack.pushPose();
         getParentModel().body.translateAndRotate(poseStack);
         boolean lefthanded = (player.getMainArm() == HumanoidArm.LEFT);
-        boolean wearingArmor = !player.getItemBySlot(EquipmentSlot.CHEST).isEmpty() || !player.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
+        boolean wearingArmor = !player.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
+        if(!player.getItemBySlot(EquipmentSlot.CHEST).isEmpty() && player.getItemBySlot(EquipmentSlot.CHEST).getItem() != Items.ELYTRA) {
+            wearingArmor = true;
+        }
         double offsetX = wearingArmor ? 0.3D : 0.28D;
         float swordRotation = -80F;
         if(lefthanded) {
