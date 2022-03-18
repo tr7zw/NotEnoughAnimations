@@ -15,5 +15,6 @@
     "text.nea.enable.lockbodyheadrotation": "Rotation Locking",
     "text.nea.enable.showlastusedsword": "Scabbard Sword",
     "text.nea.enable.crawling": "Crawling Animation",
-    "text.nea.enable.rotatetoladder": "Snap Body To Ladder"
+    "text.nea.enable.rotatetoladder": "Snap Body To Ladder",
+    "text.nea.enable.holdupallitems": "Hold Up All Items"
   }

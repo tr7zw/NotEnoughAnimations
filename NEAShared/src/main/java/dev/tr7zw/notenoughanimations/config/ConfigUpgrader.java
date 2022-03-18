@@ -24,6 +24,10 @@ public class ConfigUpgrader {
             config.holdingItems.add("minecraft:soul_lantern");
             changed = true;
         }
+        if(config.configVersion <= 5) {
+            config.configVersion = 6;
+            changed = true;
+        }
         // check for more changes here
         
         return changed;
