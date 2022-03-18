@@ -106,22 +106,23 @@ public class ArmTransformer {
                 }
             l += 13F;
             l %= 26F;
-            if (l < 14.0F) {
-                model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, 0.0F);
-                model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
-                model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot,
-                        3.1415927F + 1.8707964F * quadraticArmUpdate(l) / quadraticArmUpdate(14.0F));
-            } else if (l >= 14.0F && l < 24.0F) {
-                float o = (l - 14.0F) / 10.0F;
-                model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight * o);
-                model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
-                model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 5.012389F - 1.8707964F * o);
-            } else if (l >= 24.0F && l < 26.0F) {
-                float p = (l - 24.0F) / 2.0F;
-                model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight + armMoveHight * p);
-                model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
-                model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 3.1415927F);
-            }
+            if (!entity.isUsingItem())
+                if (l < 14.0F) {
+                    model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, 0.0F);
+                    model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
+                    model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot,
+                            3.1415927F + 1.8707964F * quadraticArmUpdate(l) / quadraticArmUpdate(14.0F));
+                } else if (l >= 14.0F && l < 24.0F) {
+                    float o = (l - 14.0F) / 10.0F;
+                    model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight * o);
+                    model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
+                    model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 5.012389F - 1.8707964F * o);
+                } else if (l >= 24.0F && l < 26.0F) {
+                    float p = (l - 24.0F) / 2.0F;
+                    model.leftArm.xRot = rotlerpRad(n, model.leftArm.xRot, -armMoveHight + armMoveHight * p);
+                    model.leftArm.yRot = rotlerpRad(n, model.leftArm.yRot, 3.1415927F);
+                    model.leftArm.zRot = rotlerpRad(n, model.leftArm.zRot, 3.1415927F);
+                }
         }
         float q = 0.15F;
         float r = 0.33333334F;
