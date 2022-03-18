@@ -109,6 +109,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.keepBodyRotatedWithHead = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> config.showLastUsedSword,
                         (b) -> config.showLastUsedSword = b));
+                options.add(getOnOffOption("text.nea.enable.holdupallitems", () -> config.holdUpAllItems,
+                        (b) -> config.holdUpAllItems = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));

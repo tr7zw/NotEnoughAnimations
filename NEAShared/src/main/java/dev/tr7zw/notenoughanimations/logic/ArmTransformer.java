@@ -205,7 +205,7 @@ public class ArmTransformer {
         ItemStack itemInOtherHand = livingEntity.getItemInHand(
                 hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         // passive animations
-        if (holdingItems.contains(itemInHand.getItem())) {
+        if ((NEAnimationsLoader.config.holdUpAllItems && !itemInHand.isEmpty() && !livingEntity.swinging) || holdingItems.contains(itemInHand.getItem())) {
             applyArmTransforms(model, arm, -(Mth.lerp(-1f * (livingEntity.getXRot() - 90f) / 180f, 1f, 1.5f)), -0.2f,
                     0.3f);
         }

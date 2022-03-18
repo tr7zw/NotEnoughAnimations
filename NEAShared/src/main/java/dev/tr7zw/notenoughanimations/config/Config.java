@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Config {
 
-    public int configVersion = 5;
+    public int configVersion = 6;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(
             Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern"));
@@ -26,5 +26,6 @@ public class Config {
     public Set<String> sheathSwords = new HashSet<>(Arrays.asList("minecraft:wooden_sword", "minecraft:stone_sword",
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));
     public boolean enableCrawlingAnimation = true;
+    public boolean holdUpAllItems = false;
 
 }
