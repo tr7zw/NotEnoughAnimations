@@ -229,6 +229,9 @@ public class ArmTransformer {
                 }
             }
         }
+        if(renderingFirstPersonArm) {
+            return false;
+        }
         // Item swap animation
         int animationTick = data.getItemSwapAnimationTimer();
         if(animationTick > 0 && NEAnimationsLoader.config.itemSwapAnimation) {
