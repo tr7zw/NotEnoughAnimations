@@ -1,5 +1,7 @@
 package dev.tr7zw.notenoughanimations.access;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.minecraft.world.item.ItemStack;
 
 public interface PlayerData {
@@ -16,10 +18,18 @@ public interface PlayerData {
     
     public void setSideSword(ItemStack item);
     
-    public ItemStack[] getBackTools();
-    
     public void disableBodyRotation(boolean val);
     
     public boolean isBodyRotationDisabled();
+    
+    public ItemStack[] getLastHeldItems();
+    
+    public int getItemSwapAnimationTimer();
+    
+    public void setItemSwapAnimationTimer(int count);
+    
+    public int getLastAnimationSwapTick();
+    
+    public void setLastAnimationSwapTick(int count);
     
 }
