@@ -220,7 +220,7 @@ public class ArmTransformer {
                 ItemStack mainHand = livingEntity.getMainHandItem();
                 ItemStack offHand = livingEntity.getOffhandItem();
                 if((!mainHand.isEmpty() || !offHand.isEmpty()) && data.getLastHeldItems()[0].getItem() != data.getLastHeldItems()[1].getItem() && data.getLastHeldItems()[0].getItem() == offHand.getItem() && data.getLastHeldItems()[1].getItem() == mainHand.getItem()) {
-                    data.setItemSwapAnimationTimer(15);
+                    data.setItemSwapAnimationTimer(20);
                 }
                 data.getLastHeldItems()[0] = livingEntity.getMainHandItem();
                 data.getLastHeldItems()[1] = livingEntity.getOffhandItem();
@@ -229,7 +229,7 @@ public class ArmTransformer {
         // Item swap animation
         int animationTick = data.getItemSwapAnimationTimer();
         if(animationTick > 0 && NEAnimationsLoader.config.itemSwapAnimation) {
-            float position = animationTick/15f * -0.8f;
+            float position = animationTick/20f * -1f;
             applyArmTransforms(model, HumanoidArm.LEFT, -0.3f, 0.2f, position);
             applyArmTransforms(model, HumanoidArm.RIGHT, -0.3f, 0.2f, position);
             data.setItemSwapAnimationTimer(animationTick-1);
