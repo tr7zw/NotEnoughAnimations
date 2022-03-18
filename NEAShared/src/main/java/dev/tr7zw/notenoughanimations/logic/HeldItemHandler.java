@@ -7,6 +7,7 @@ import com.mojang.math.Vector3f;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.util.MapRenderer;
+import dev.tr7zw.notenoughanimations.util.VanillaAnimationUtil;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
@@ -17,15 +18,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
 
 public class HeldItemHandler {
 
     private Item filledMap = Registry.ITEM.get(new ResourceLocation("minecraft", "filled_map"));
-    private Item crossbow = Registry.ITEM.get(new ResourceLocation("minecraft", "crossbow"));
 
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
@@ -67,72 +65,32 @@ public class HeldItemHandler {
 
         if (NEAnimationsLoader.config.enableOffhandHiding && entity instanceof AbstractClientPlayer) {
             AbstractClientPlayer player = (AbstractClientPlayer) entity;
-            ArmPose armPose = getArmPose(player, InteractionHand.MAIN_HAND);
-            ArmPose armPose2 = getArmPose(player, InteractionHand.OFF_HAND);
-            if (!(isUsingboothHands(armPose) || isUsingboothHands(armPose2)))
+            ArmPose armPose = VanillaAnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
+            ArmPose armPose2 = VanillaAnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
+            if (!(VanillaAnimationUtil.isUsingboothHands(armPose) || VanillaAnimationUtil.isUsingboothHands(armPose2)))
                 return;
             if (armPose.isTwoHanded()) {
                 armPose2 = player.getOffhandItem().isEmpty() ? ArmPose.EMPTY : ArmPose.ITEM;
             }
 
             if (player.getMainArm() == HumanoidArm.RIGHT) {
-                if (arm == HumanoidArm.RIGHT && isUsingboothHands(armPose2)) {
+                if (arm == HumanoidArm.RIGHT && VanillaAnimationUtil.isUsingboothHands(armPose2)) {
                     info.cancel();
                     return;
-                } else if (arm == HumanoidArm.LEFT && isUsingboothHands(armPose)) {
+                } else if (arm == HumanoidArm.LEFT && VanillaAnimationUtil.isUsingboothHands(armPose)) {
                     info.cancel();
                     return;
                 }
             } else {
-                if (arm == HumanoidArm.LEFT && isUsingboothHands(armPose2)) {
+                if (arm == HumanoidArm.LEFT && VanillaAnimationUtil.isUsingboothHands(armPose2)) {
                     info.cancel();
                     return;
-                } else if (arm == HumanoidArm.RIGHT && isUsingboothHands(armPose)) {
+                } else if (arm == HumanoidArm.RIGHT && VanillaAnimationUtil.isUsingboothHands(armPose)) {
                     info.cancel();
                     return;
                 }
             }
         }
-    }
-
-    private boolean isUsingboothHands(ArmPose pose) {
-        return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
-    }
-
-    private ArmPose getArmPose(AbstractClientPlayer abstractClientPlayerEntity, InteractionHand hand) {
-        ItemStack itemStack = abstractClientPlayerEntity.getItemInHand(hand);
-        if (itemStack.isEmpty()) {
-            return ArmPose.EMPTY;
-        } else {
-            if (abstractClientPlayerEntity.getUsedItemHand() == hand
-                    && abstractClientPlayerEntity.getUseItemRemainingTicks() > 0) {
-                UseAnim useAction = itemStack.getUseAnimation();
-                if (useAction == UseAnim.BLOCK) {
-                    return ArmPose.BLOCK;
-                }
-
-                if (useAction == UseAnim.BOW) {
-                    return ArmPose.BOW_AND_ARROW;
-                }
-
-                if (useAction == UseAnim.SPEAR) {
-                    return ArmPose.THROW_SPEAR;
-                }
-
-                if (useAction == UseAnim.CROSSBOW && hand.equals(abstractClientPlayerEntity.getUsedItemHand())) {
-                    return ArmPose.CROSSBOW_CHARGE;
-                }
-            } else if (!abstractClientPlayerEntity.swinging && itemStack.getItem().equals(crossbow)
-                    && isChargedCrossbow(itemStack)) {
-                return ArmPose.CROSSBOW_HOLD;
-            }
-
-            return ArmPose.ITEM;
-        }
-    }
-
-    private boolean isChargedCrossbow(ItemStack item) {
-        return CrossbowItem.isCharged(item);
     }
 
 }
