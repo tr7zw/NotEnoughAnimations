@@ -46,8 +46,8 @@ public class ArmTransformer {
         if (mc.level == null) { // We are in a main menu or something
             return;
         }
-        if (entity instanceof AbstractClientPlayer && entity.getPose() == Pose.SWIMMING) { // Crawling/Swimming has its own animations
-                                                                             // and messing with it screws stuff up
+        if (entity.getPose() == Pose.SWIMMING) { // Crawling/Swimming has its own animations
+                                                                             // and messing with it screws stuff up, same with smoothing.
             if (!entity.isInWater() && NEAnimationsLoader.config.enableCrawlingAnimation)
                 fixSwimmingOutOfWater(entity, model, f);
             return;
