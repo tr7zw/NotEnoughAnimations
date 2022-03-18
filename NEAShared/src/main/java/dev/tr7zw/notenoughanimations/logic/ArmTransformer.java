@@ -39,7 +39,7 @@ public class ArmTransformer {
     private int frameId = 0; // ok to overflow, just used to keep track of what has been updated this frame
     private boolean renderingFirstPersonArm = false;
 
-    public void updateArms(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float tick, float f,
+    public void updateArms(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float what, float deltaTick,
             CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
@@ -49,16 +49,16 @@ public class ArmTransformer {
         if (entity.getPose() == Pose.SWIMMING) { // Crawling/Swimming has its own animations
                                                                              // and messing with it screws stuff up, same with smoothing.
             if (!entity.isInWater() && NEAnimationsLoader.config.enableCrawlingAnimation)
-                fixSwimmingOutOfWater(entity, model, f);
+                fixSwimmingOutOfWater(entity, model, deltaTick);
             return;
         }
-        boolean doingCustomTwoHandedAnimation = applyTwoHandedAnimations(entity, model, tick);
+        boolean doingCustomTwoHandedAnimation = applyTwoHandedAnimations(entity, model, deltaTick);
         if(!doingCustomTwoHandedAnimation) {
             boolean rightHanded = entity.getMainArm() == HumanoidArm.RIGHT;
             applyAnimations(entity, model, HumanoidArm.RIGHT,
-                    rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, tick);
+                    rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, deltaTick);
             applyAnimations(entity, model, HumanoidArm.LEFT,
-                    !rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, tick);
+                    !rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, deltaTick);
         }
 
         if (NEAnimationsLoader.config.enableAnimationSmoothing && entity instanceof PlayerData) {
@@ -69,13 +69,14 @@ public class ArmTransformer {
             }
             float[] last = data.getLastRotations();
             boolean differentFrame = !data.isUpdated(frameId);
-            long timePassed = System.currentTimeMillis() - data.lastUpdate();
-            if (timePassed < 1)
-                timePassed = 1;
+            long passedNs = System.nanoTime() - data.lastUpdate();
+            float timePassed = passedNs / 1000000f;
+            float speed = NEAnimationsLoader.config.animationSmoothingSpeed;
+
             interpolate(model.leftArm, last, 0, timePassed, differentFrame,
-                    NEAnimationsLoader.config.animationSmoothingSpeed);
+                    speed);
             interpolate(model.rightArm, last, 3, timePassed, differentFrame,
-                    NEAnimationsLoader.config.animationSmoothingSpeed);
+                    speed);
             data.setUpdated(frameId);
         }
     }
@@ -164,7 +165,7 @@ public class ArmTransformer {
         this.renderingFirstPersonArm = flag;
     }
 
-    private void interpolate(ModelPart model, float[] last, int offset, long timePassed, boolean differentFrame,
+    private void interpolate(ModelPart model, float[] last, int offset, float timePassed, boolean differentFrame,
             float speed) {
         if (!differentFrame) { // Rerendering the place in the same frame
             model.xRot = (last[offset]);
@@ -180,8 +181,6 @@ public class ArmTransformer {
             return;
         }
         float amount = ((1f / (1000f / timePassed))) * speed;
-        if (amount > 1)
-            amount = 1;
         last[offset] = last[offset] + ((model.xRot - last[offset]) * amount);
         last[offset + 1] = last[offset + 1] + ((wrapDegrees(model.yRot) - wrapDegrees(last[offset + 1])) * amount);
         last[offset + 2] = last[offset + 2] + ((model.zRot - last[offset + 2]) * amount);
@@ -220,19 +219,22 @@ public class ArmTransformer {
                 ItemStack mainHand = livingEntity.getMainHandItem();
                 ItemStack offHand = livingEntity.getOffhandItem();
                 if((!mainHand.isEmpty() || !offHand.isEmpty()) && data.getLastHeldItems()[0].getItem() != data.getLastHeldItems()[1].getItem() && data.getLastHeldItems()[0].getItem() == offHand.getItem() && data.getLastHeldItems()[1].getItem() == mainHand.getItem()) {
-                    data.setItemSwapAnimationTimer(20);
+                    data.setItemSwapAnimationTimer(10);
                 }
                 data.getLastHeldItems()[0] = livingEntity.getMainHandItem();
                 data.getLastHeldItems()[1] = livingEntity.getOffhandItem();
+                if(data.getItemSwapAnimationTimer() > 0) {
+                    data.setItemSwapAnimationTimer(data.getItemSwapAnimationTimer()-1);
+                }
             }
         }
         // Item swap animation
         int animationTick = data.getItemSwapAnimationTimer();
         if(animationTick > 0 && NEAnimationsLoader.config.itemSwapAnimation) {
-            float position = animationTick/20f * -1f;
+            float position = animationTick/10f * -1f;
+            position = Mth.lerp(tick, (animationTick+1)/10f * -1f, position);
             applyArmTransforms(model, HumanoidArm.LEFT, -0.3f, 0.2f, position);
             applyArmTransforms(model, HumanoidArm.RIGHT, -0.3f, 0.2f, position);
-            data.setItemSwapAnimationTimer(animationTick-1);
             return true;
         }
 
