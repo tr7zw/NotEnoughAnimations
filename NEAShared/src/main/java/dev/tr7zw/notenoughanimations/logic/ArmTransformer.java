@@ -287,11 +287,11 @@ public class ArmTransformer {
                     minMaxHeadRotation(livingEntity, model);
                 }
             }
-            float rotation = -Mth.cos((float) (livingEntity.getY() * 2));
-            rotation *= 0.3;
+            float rotation = -Mth.cos((float) (livingEntity.getY() * NEAnimationsLoader.config.ladderAnimationArmSpeed));
+            rotation *= NEAnimationsLoader.config.ladderAnimationAmplifier;
             if (arm == HumanoidArm.LEFT)
                 rotation *= -1;
-            applyArmTransforms(model, arm, -2.3f - rotation, -0.2f, 0.3f);
+            applyArmTransforms(model, arm, -NEAnimationsLoader.config.ladderAnimationArmHeight - rotation, -0.2f, 0.3f);
         }
         if (livingEntity.getUsedItemHand() == hand && livingEntity.getUseItemRemainingTicks() > 0
                 && NEAnimationsLoader.config.enableEatDrinkAnimation) {
