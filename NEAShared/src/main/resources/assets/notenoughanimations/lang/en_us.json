@@ -19,5 +19,6 @@
     "text.nea.enable.holdupallitems": "Hold Up All Items",
     "text.nea.ladderAnimationAmplifier": "Climbing Arm Amplifier",
     "text.nea.ladderAnimationArmHeight": "Climbing Arm Height",
-    "text.nea.ladderAnimationArmSpeed": "Climbing Arm Speed"
+    "text.nea.ladderAnimationArmSpeed": "Climbing Arm Speed",
+    "text.nea.enable.itemSwapAnimation": "Item Swap Animation"
   }

@@ -30,5 +30,6 @@ public class Config {
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));
     public boolean enableCrawlingAnimation = true;
     public boolean holdUpAllItems = false;
+    public boolean itemSwapAnimation = true;
 
 }

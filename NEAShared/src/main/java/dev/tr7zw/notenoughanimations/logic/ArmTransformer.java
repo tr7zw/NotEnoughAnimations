@@ -52,11 +52,14 @@ public class ArmTransformer {
                 fixSwimmingOutOfWater(entity, model, f);
             return;
         }
-        boolean rightHanded = entity.getMainArm() == HumanoidArm.RIGHT;
-        applyAnimations(entity, model, HumanoidArm.RIGHT,
-                rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, tick);
-        applyAnimations(entity, model, HumanoidArm.LEFT,
-                !rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, tick);
+        boolean doingCustomTwoHandedAnimation = applyTwoHandedAnimations(entity, model, tick);
+        if(!doingCustomTwoHandedAnimation) {
+            boolean rightHanded = entity.getMainArm() == HumanoidArm.RIGHT;
+            applyAnimations(entity, model, HumanoidArm.RIGHT,
+                    rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, tick);
+            applyAnimations(entity, model, HumanoidArm.LEFT,
+                    !rightHanded ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, tick);
+        }
 
         if (NEAnimationsLoader.config.enableAnimationSmoothing && entity instanceof PlayerData) {
             PlayerData data = (PlayerData) entity;
@@ -204,6 +207,38 @@ public class ArmTransformer {
             data[offset + 2] = 0;
     }
 
+    private boolean applyTwoHandedAnimations(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> model, float tick) {
+        PlayerData data = (PlayerData) livingEntity;
+        if(data.getLastAnimationSwapTick() != livingEntity.tickCount) { // run data updates
+            data.setLastAnimationSwapTick(livingEntity.tickCount);
+            // Item swap animation
+            if(NEAnimationsLoader.config.itemSwapAnimation) {
+                if(data.getLastHeldItems()[0] == null) { // init vars
+                    data.getLastHeldItems()[0] = livingEntity.getMainHandItem();
+                    data.getLastHeldItems()[1] = livingEntity.getOffhandItem();
+                }
+                ItemStack mainHand = livingEntity.getMainHandItem();
+                ItemStack offHand = livingEntity.getOffhandItem();
+                if((!mainHand.isEmpty() || !offHand.isEmpty()) && data.getLastHeldItems()[0].getItem() != data.getLastHeldItems()[1].getItem() && data.getLastHeldItems()[0].getItem() == offHand.getItem() && data.getLastHeldItems()[1].getItem() == mainHand.getItem()) {
+                    data.setItemSwapAnimationTimer(15);
+                }
+                data.getLastHeldItems()[0] = livingEntity.getMainHandItem();
+                data.getLastHeldItems()[1] = livingEntity.getOffhandItem();
+            }
+        }
+        // Item swap animation
+        int animationTick = data.getItemSwapAnimationTimer();
+        if(animationTick > 0 && NEAnimationsLoader.config.itemSwapAnimation) {
+            float position = animationTick/15f * -0.8f;
+            applyArmTransforms(model, HumanoidArm.LEFT, -0.3f, 0.2f, position);
+            applyArmTransforms(model, HumanoidArm.RIGHT, -0.3f, 0.2f, position);
+            data.setItemSwapAnimationTimer(animationTick-1);
+            return true;
+        }
+
+        return false;
+    }
+    
     private void applyAnimations(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> model, HumanoidArm arm,
             InteractionHand hand, float tick) {
         ItemStack itemInHand = livingEntity.getItemInHand(hand);

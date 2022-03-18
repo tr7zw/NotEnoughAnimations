@@ -123,6 +123,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.showLastUsedSword = b));
                 options.add(getOnOffOption("text.nea.enable.holdupallitems", () -> config.holdUpAllItems,
                         (b) -> config.holdUpAllItems = b));
+                options.add(getOnOffOption("text.nea.enable.itemSwapAnimation", () -> config.itemSwapAnimation,
+                        (b) -> config.itemSwapAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));

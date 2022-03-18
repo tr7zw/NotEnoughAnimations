@@ -18,8 +18,10 @@ public class PlayerEntityMixin implements PlayerData {
     private long lastUpdate = System.currentTimeMillis();
     private float[] lastRotations = new float[6];
     private ItemStack sideSword = ItemStack.EMPTY;
-    private ItemStack[] backTools = new ItemStack[2]; // mixin throws errors when init here
+    private ItemStack[] lastHeldItems = new ItemStack[2];
     private boolean disableBodyRotation = false;
+    private int itemSwapAnimationTimer = 0;
+    private int lastAnimationSwapTick = -1;
     
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
@@ -57,11 +59,6 @@ public class PlayerEntityMixin implements PlayerData {
     public void setSideSword(ItemStack item) {
         this.sideSword = item;
     }
-
-    @Override
-    public ItemStack[] getBackTools() {
-        return backTools;
-    }
     
     private void updateRenderLayerItems() {
         SwordRenderLayer.update((Player)(Object)this);
@@ -75,6 +72,31 @@ public class PlayerEntityMixin implements PlayerData {
     @Override
     public boolean isBodyRotationDisabled() {
         return disableBodyRotation;
+    }
+
+    @Override
+    public ItemStack[] getLastHeldItems() {
+        return lastHeldItems;
+    }
+
+    @Override
+    public int getItemSwapAnimationTimer() {
+        return itemSwapAnimationTimer;
+    }
+
+    @Override
+    public void setItemSwapAnimationTimer(int count) {
+        this.itemSwapAnimationTimer = count;
+    }
+
+    @Override
+    public int getLastAnimationSwapTick() {
+        return lastAnimationSwapTick;
+    }
+
+    @Override
+    public void setLastAnimationSwapTick(int count) {
+        this.lastAnimationSwapTick = count;
     }
 	
 }
