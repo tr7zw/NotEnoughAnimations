@@ -10,6 +10,7 @@ import dev.tr7zw.notenoughanimations.util.MapRenderer;
 import dev.tr7zw.notenoughanimations.util.VanillaAnimationUtil;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -33,33 +34,37 @@ public class HeldItemHandler {
             }
             return;
         }
-        if (NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ArmedModel) {
-            if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(filledMap)) { // Mainhand with
-                                                                                                      // or without the
-                                                                                                      // offhand
-                matrices.pushPose();
-                ((ArmedModel) model).translateToHand(arm, matrices);
-                matrices.mulPose(Vector3f.XP.rotationDegrees(-90.0f));
-                matrices.mulPose(Vector3f.YP.rotationDegrees(200.0f));
-                boolean bl = arm == HumanoidArm.LEFT;
-                matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
-                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,
-                        !entity.getOffhandItem().isEmpty(), entity.getMainArm() == HumanoidArm.LEFT);
-                matrices.popPose();
-                info.cancel();
-                return;
-            }
-            if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only offhand
-                matrices.pushPose();
-                ((ArmedModel) model).translateToHand(arm, matrices);
-                matrices.mulPose(Vector3f.XP.rotationDegrees(-90.0f));
-                matrices.mulPose(Vector3f.YP.rotationDegrees(200.0f));
-                boolean bl = arm == HumanoidArm.LEFT;
-                matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
-                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true, false);
-                matrices.popPose();
-                info.cancel();
-                return;
+        if (NEAnimationsLoader.config.enableInWorldMapRendering && model instanceof ArmedModel && model instanceof HumanoidModel) {
+            ArmedModel armedModel = (ArmedModel) model;
+            HumanoidModel<?> humanoid = (HumanoidModel<?>) model;
+            if((arm == HumanoidArm.RIGHT && humanoid.rightArm.visible) || (arm == HumanoidArm.LEFT && humanoid.leftArm.visible)) {
+                if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(filledMap)) { // Mainhand with
+                                                                                                          // or without the
+                                                                                                          // offhand
+                    matrices.pushPose();
+                    armedModel.translateToHand(arm, matrices);
+                    matrices.mulPose(Vector3f.XP.rotationDegrees(-90.0f));
+                    matrices.mulPose(Vector3f.YP.rotationDegrees(200.0f));
+                    boolean bl = arm == HumanoidArm.LEFT;
+                    matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
+                    MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,
+                            !entity.getOffhandItem().isEmpty(), entity.getMainArm() == HumanoidArm.LEFT);
+                    matrices.popPose();
+                    info.cancel();
+                    return;
+                }
+                if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only offhand
+                    matrices.pushPose();
+                    armedModel.translateToHand(arm, matrices);
+                    matrices.mulPose(Vector3f.XP.rotationDegrees(-90.0f));
+                    matrices.mulPose(Vector3f.YP.rotationDegrees(200.0f));
+                    boolean bl = arm == HumanoidArm.LEFT;
+                    matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
+                    MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true, false);
+                    matrices.popPose();
+                    info.cancel();
+                    return;
+                }
             }
         }
 
