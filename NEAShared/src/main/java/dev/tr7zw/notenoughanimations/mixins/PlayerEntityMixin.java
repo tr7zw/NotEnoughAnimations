@@ -37,7 +37,7 @@ public class PlayerEntityMixin implements PlayerData {
     @Override
     public void setUpdated(int frameId) {
         armsUpdated = frameId;
-        lastUpdate = System.currentTimeMillis();
+        lastUpdate = System.nanoTime();
     }
 
     @Override
