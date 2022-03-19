@@ -296,14 +296,20 @@ public class ArmTransformer {
         if (livingEntity.isPassenger()) {
             if (livingEntity.getVehicle() instanceof Boat && NEAnimationsLoader.config.enableRowBoatAnimation) {
                 Boat boat = (Boat) livingEntity.getVehicle();
-                float paddle = boat.getRowingTime(arm == HumanoidArm.LEFT ? 0 : 1, tick);
-                applyArmTransforms(model, arm, -1.1f - Mth.sin(paddle) * 0.3f, 0.2f, 0.3f);
+                int id = boat.getPassengers().indexOf(livingEntity);
+                if(id == 0) {
+                    float paddle = boat.getRowingTime(arm == HumanoidArm.LEFT ? 0 : 1, tick);
+                    applyArmTransforms(model, arm, -1.1f - Mth.sin(paddle) * 0.3f, 0.2f, 0.3f);
+                }
             }
             if (livingEntity.getVehicle() instanceof AbstractHorse && NEAnimationsLoader.config.enableHorseAnimation) {
                 AbstractHorse horse = (AbstractHorse) livingEntity.getVehicle();
-                float rotation = -Mth.cos(horse.animationPosition * 0.3f);
-                rotation *= 0.1;
-                applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
+                int id = horse.getPassengers().indexOf(livingEntity);
+                if(id == 0) {
+                    float rotation = -Mth.cos(horse.animationPosition * 0.3f);
+                    rotation *= 0.1;
+                    applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
+                }
             }
         }
         if (livingEntity.onClimbable() && NEAnimationsLoader.config.enableLadderAnimation && !livingEntity.isOnGround()) {
