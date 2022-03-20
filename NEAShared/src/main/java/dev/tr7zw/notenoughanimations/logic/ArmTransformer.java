@@ -43,7 +43,7 @@ public class ArmTransformer {
             CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
-        if (mc.level == null) { // We are in a main menu or something
+        if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the first person model hand
             return;
         }
         float deltaTick = Minecraft.getInstance().getDeltaFrameTime();
@@ -182,6 +182,7 @@ public class ArmTransformer {
             return;
         }
         float amount = ((1f / (1000f / timePassed))) * speed;
+        amount = Math.min(amount, 1);
         last[offset] = last[offset] + ((model.xRot - last[offset]) * amount);
         last[offset + 1] = last[offset + 1] + ((wrapDegrees(model.yRot) - wrapDegrees(last[offset + 1])) * amount);
         last[offset + 2] = last[offset + 2] + ((model.zRot - last[offset + 2]) * amount);
