@@ -16,7 +16,7 @@ public class PlayerEntityMixin implements PlayerData {
 	
     private int armsUpdated = 0;
     private long lastUpdate = System.currentTimeMillis();
-    private float[] lastRotations = new float[12];
+    private float[] lastRotations = new float[13];
     private ItemStack sideSword = ItemStack.EMPTY;
     private ItemStack[] lastHeldItems = new ItemStack[2];
     private boolean disableBodyRotation = false;
