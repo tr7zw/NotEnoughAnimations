@@ -10,14 +10,14 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 
-public class ArmTransformer {
+public class PlayerTransformer {
 
     private boolean doneLatebind = false;
     private final Minecraft mc = Minecraft.getInstance();
     private int frameId = 0; // ok to overflow, just used to keep track of what has been updated this frame
     private boolean renderingFirstPersonArm = false;
 
-    public void updateArms(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float idk, float swing,
+    public void updateModel(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float idk, float swing,
             CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
