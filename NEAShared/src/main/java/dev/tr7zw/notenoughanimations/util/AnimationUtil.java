@@ -1,5 +1,6 @@
 package dev.tr7zw.notenoughanimations.util;
 
+import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.model.geom.ModelPart;
@@ -70,6 +71,36 @@ public class AnimationUtil {
             part.yRot *= -1;
         part.zRot = roll;
         if (arm == HumanoidArm.LEFT)
+            part.zRot *= -1;
+    }
+    
+    public static void applyTransforms(PlayerModel<AbstractClientPlayer> model, BodyPart bodyPart, float pitch, float yaw, float roll) {
+        ModelPart part;
+        boolean mirror = false;
+        switch(bodyPart) {
+        case LEFT_ARM:
+            mirror = true;
+            part = model.leftArm;
+            break;
+        case RIGHT_ARM:
+            part = model.rightArm;
+            break;
+        case LEFT_LEG:
+            mirror = true;
+            part = model.leftLeg;
+            break;
+        case RIGHT_LEG:
+            part = model.rightLeg;
+            break;
+        default:
+            return;
+        }
+        part.xRot = pitch;
+        part.yRot = yaw;
+        if (mirror) // Just mirror yaw for the left body parts
+            part.yRot *= -1;
+        part.zRot = roll;
+        if (mirror)
             part.zRot *= -1;
     }
     

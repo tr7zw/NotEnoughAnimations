@@ -26,11 +26,23 @@ public class ClimbingAnimation extends BasicAnimation {
         return entity.onClimbable() && !entity.isOnGround();
     }
 
-    private final BodyPart[] parts = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY};
-    
+    private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY,
+            BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG };
+    private final BodyPart[] partsSneakingRight = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY, BodyPart.LEFT_LEG,
+            BodyPart.RIGHT_LEG };
+    private final BodyPart[] partsSneakingLeft = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY, BodyPart.LEFT_LEG,
+            BodyPart.RIGHT_LEG };
+
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
-        return parts; // legs later too?
+        if (entity.isCrouching() && entity.getDeltaMovement().y == -0.0784000015258789) { // magic value while being not moving on a ladder cause mc
+            if (entity.getMainArm() == HumanoidArm.RIGHT) {
+                return partsSneakingLeft;
+            } else {
+                return partsSneakingRight;
+            }
+        }
+        return parts;
     }
 
     @Override
@@ -41,42 +53,55 @@ public class ClimbingAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        if(part == BodyPart.BODY && NEAnimationsLoader.config.enableRotateToLadder) {
-            BlockState blockState = entity.getFeetBlockState();
-            if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
-                Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
-                data.disableBodyRotation(true);
-                switch (dir) {
-                case NORTH:
-                    entity.setYBodyRot(0);
-                    entity.yBodyRotO = 0;
-                    break;
-                case EAST:
-                    entity.setYBodyRot(90);
-                    entity.yBodyRotO = 90;
-                    break;
-                case SOUTH:
-                    entity.setYBodyRot(180);
-                    entity.yBodyRotO = 180;
-                    break;
-                case WEST:
-                    entity.setYBodyRot(270);
-                    entity.yBodyRotO = 270;
-                    break;
-                default:
+        if (part == BodyPart.BODY) {
+            if (NEAnimationsLoader.config.enableRotateToLadder) {
+                BlockState blockState = entity.getFeetBlockState();
+                if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
+                    Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
+                    data.disableBodyRotation(true);
+                    switch (dir) {
+                    case NORTH:
+                        entity.setYBodyRot(0);
+                        entity.yBodyRotO = 0;
+                        break;
+                    case EAST:
+                        entity.setYBodyRot(90);
+                        entity.yBodyRotO = 90;
+                        break;
+                    case SOUTH:
+                        entity.setYBodyRot(180);
+                        entity.yBodyRotO = 180;
+                        break;
+                    case WEST:
+                        entity.setYBodyRot(270);
+                        entity.yBodyRotO = 270;
+                        break;
+                    default:
+                    }
+                    minMaxHeadRotation(entity, model);
                 }
-                minMaxHeadRotation(entity, model);
+                return;
             }
+        }
+
+        if (part == BodyPart.LEFT_LEG || part == BodyPart.RIGHT_LEG) {
+            float rotation = -Mth.cos((float) (entity.getY() * NEAnimationsLoader.config.ladderAnimationArmSpeed));
+            rotation *= NEAnimationsLoader.config.ladderAnimationAmplifier;
+            if (part == BodyPart.LEFT_LEG) {
+                rotation *= -1;
+            }
+            AnimationUtil.applyTransforms(model, part, -1 - rotation, -0.2f, 0.3f);
             return;
         }
-        HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         float rotation = -Mth.cos((float) (entity.getY() * NEAnimationsLoader.config.ladderAnimationArmSpeed));
         rotation *= NEAnimationsLoader.config.ladderAnimationAmplifier;
-        if (arm == HumanoidArm.LEFT)
+        // arms
+        if (part == BodyPart.LEFT_ARM)
             rotation *= -1;
-        AnimationUtil.applyArmTransforms(model, arm, -NEAnimationsLoader.config.ladderAnimationArmHeight - rotation, -0.2f, 0.3f);
+        AnimationUtil.applyTransforms(model, part, -NEAnimationsLoader.config.ladderAnimationArmHeight - rotation,
+                -0.2f, 0.3f);
     }
-    
+
     private void minMaxHeadRotation(Player livingEntity, PlayerModel<AbstractClientPlayer> model) {
         float value = wrapDegrees(model.head.yRot);
         float min = wrapDegrees(model.body.yRot - Mth.HALF_PI);
@@ -86,7 +111,7 @@ public class ClimbingAnimation extends BasicAnimation {
         model.head.yRot = value;
         model.hat.yRot = value;
     }
-    
+
     private float wrapDegrees(float f) {
         float g = f % 6.28318512f;
         if (g >= 3.14159256f) {

@@ -18,13 +18,13 @@ public class ItemInHandRendererMixin {
     @Inject(method = "renderPlayerArm", at = @At("HEAD"))
     private void renderPlayerArm(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, float f, float g,
             HumanoidArm humanoidArm, CallbackInfo info) {
-        NEAnimationsLoader.INSTANCE.armTransformer.renderingFirstPersonArm(true);
+        NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(true);
     }
     
     @Inject(method = "renderPlayerArm", at = @At("RETURN"))
     private void renderPlayerArmEnd(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, float f, float g,
             HumanoidArm humanoidArm, CallbackInfo info) {
-        NEAnimationsLoader.INSTANCE.armTransformer.renderingFirstPersonArm(false);
+        NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(false);
     }
     
 }

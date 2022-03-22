@@ -22,8 +22,8 @@ public class VanillaSingleHandedAnimation extends BasicAnimation {
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
     private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_SPEAR);
-    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM};
-    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM};
+    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.BODY};
+    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM, BodyPart.BODY};
     
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {

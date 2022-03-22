@@ -29,7 +29,7 @@ public abstract class NEAnimationsLoader {
     public static Config config;
     private final File settingsFile = new File("config", "notenoughanimations.json");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    public PlayerTransformer armTransformer;
+    public PlayerTransformer playerTransformer;
     public HeldItemHandler heldItemHandler;
     public AnimationProvider animationProvider;
 
@@ -56,7 +56,7 @@ public abstract class NEAnimationsLoader {
     }
 
     private void enable() {
-        armTransformer = new PlayerTransformer();
+        playerTransformer = new PlayerTransformer();
         heldItemHandler = new HeldItemHandler();
         animationProvider = new AnimationProvider();
     }
