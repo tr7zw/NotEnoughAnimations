@@ -45,8 +45,12 @@ public class HeldItemHandler {
                     armedModel.translateToHand(arm, matrices);
                     matrices.mulPose(Vector3f.XP.rotationDegrees(-90.0f));
                     matrices.mulPose(Vector3f.YP.rotationDegrees(200.0f));
+                    float xOffset = (float) (entity.position().x % 1);
+                    float yOffset = (float) (entity.position().y % 1);
+                    float zOffset = (float) (entity.position().z % 1);
+                    System.out.println(xOffset + " " + yOffset + " " + zOffset);
                     boolean bl = arm == HumanoidArm.LEFT;
-                    matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
+                    matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125 + 0.15, -0.625);
                     MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,
                             !entity.getOffhandItem().isEmpty(), entity.getMainArm() == HumanoidArm.LEFT);
                     matrices.popPose();
