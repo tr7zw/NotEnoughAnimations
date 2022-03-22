@@ -17,7 +17,7 @@ import dev.tr7zw.notenoughanimations.config.Config;
 import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
 import dev.tr7zw.notenoughanimations.config.CustomConfigScreen;
 import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
-import dev.tr7zw.notenoughanimations.logic.ArmTransformer;
+import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
 import dev.tr7zw.notenoughanimations.logic.HeldItemHandler;
 import dev.tr7zw.notenoughanimations.logic.RotationFixer;
 import net.minecraft.client.Option;
@@ -30,7 +30,7 @@ public abstract class NEAnimationsLoader {
     public static Config config;
     private final File settingsFile = new File("config", "notenoughanimations.json");
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    public ArmTransformer armTransformer;
+    public PlayerTransformer armTransformer;
     public RotationFixer rotationFixer;
     public HeldItemHandler heldItemHandler;
     public AnimationProvider animationProvider;
@@ -59,7 +59,7 @@ public abstract class NEAnimationsLoader {
 
     private void enable() {
         rotationFixer = new RotationFixer();
-        armTransformer = new ArmTransformer();
+        armTransformer = new PlayerTransformer();
         heldItemHandler = new HeldItemHandler();
         animationProvider = new AnimationProvider();
     }
