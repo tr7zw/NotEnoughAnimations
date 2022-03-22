@@ -120,8 +120,7 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.dontHoldItemsInBed = b));
                 options.add(getOnOffOption("text.nea.enable.freezearmsinbed", () -> config.freezeArmsInBed,
                         (b) -> config.freezeArmsInBed = b));
-                options.add(getOnOffOption("text.nea.enable.lockbodyheadrotation", () -> config.keepBodyRotatedWithHead,
-                        (b) -> config.keepBodyRotatedWithHead = b));
+                options.add(getEnumOption("text.nea.rotationlock", RotationLock.class, () -> config.rotationLock, (b) -> config.rotationLock = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> config.showLastUsedSword,
                         (b) -> config.showLastUsedSword = b));
                 options.add(getOnOffOption("text.nea.enable.holdupallitems", () -> config.holdUpAllItems,

@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import dev.tr7zw.notenoughanimations.RotationLock;
+
 public class Config {
 
-    public int configVersion = 6;
+    public int configVersion = 7;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(
             Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern"));
@@ -24,7 +26,7 @@ public class Config {
     public boolean enableHorseAnimation = true;
     public boolean dontHoldItemsInBed = true;
     public boolean freezeArmsInBed = true;
-    public boolean keepBodyRotatedWithHead = false;
+    public RotationLock rotationLock = RotationLock.NONE;
     public boolean showLastUsedSword = true;
     public Set<String> sheathSwords = new HashSet<>(Arrays.asList("minecraft:wooden_sword", "minecraft:stone_sword",
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));

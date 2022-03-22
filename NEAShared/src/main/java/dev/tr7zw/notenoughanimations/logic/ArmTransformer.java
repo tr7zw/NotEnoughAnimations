@@ -3,6 +3,7 @@ package dev.tr7zw.notenoughanimations.logic;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
+import dev.tr7zw.notenoughanimations.RotationLock;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -42,6 +43,10 @@ public class ArmTransformer {
                     speed);
             interpolate(model.rightLeg, last, 9, timePassed, differentFrame,
                     speed);
+            // For now located here due to smoothing logic being here.
+            if(NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH) {
+                interpolateYawBodyHead(entity, last, 12, timePassed, differentFrame, 6);
+            }
             data.setUpdated(frameId);
         }
     }
@@ -83,6 +88,24 @@ public class ArmTransformer {
         model.xRot = (last[offset]);
         model.yRot = (last[offset + 1]);
         model.zRot = (last[offset + 2]);
+    }
+    
+    private void interpolateYawBodyHead(AbstractClientPlayer entity, float[] last, int offset, float timePassed, boolean differentFrame,
+            float speed) {
+        if (!differentFrame) { // Rerendering the place in the same frame
+            entity.yBodyRot = (last[offset]);
+            entity.yBodyRotO = entity.yBodyRot;
+            return;
+        }
+        if (timePassed > 200) { // Don't try to interpolate states older than 200ms
+            last[offset] = entity.yHeadRot;
+            return;
+        }
+        float amount = ((1f / (1000f / timePassed))) * speed;
+        amount = Math.min(amount, 1);
+        last[offset] += (entity.yHeadRot - last[offset]) * amount;
+        entity.yBodyRot = (last[offset]);
+        entity.yBodyRotO = entity.yBodyRot;
     }
 
     /**

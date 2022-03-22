@@ -1,6 +1,7 @@
 package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
+import dev.tr7zw.notenoughanimations.RotationLock;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.BodyPart;
@@ -12,7 +13,7 @@ public class RotationFixerAnimation extends BasicAnimation {
 
     @Override
     public boolean isEnabled() {
-        return NEAnimationsLoader.config.keepBodyRotatedWithHead;
+        return NEAnimationsLoader.config.rotationLock == RotationLock.FIXED;
     }
 
     @Override

@@ -28,6 +28,10 @@ public class ConfigUpgrader {
             config.configVersion = 6;
             changed = true;
         }
+        if(config.configVersion <= 6) {
+            config.configVersion = 7;
+            changed = true;
+        }
         // check for more changes here
         
         return changed;
