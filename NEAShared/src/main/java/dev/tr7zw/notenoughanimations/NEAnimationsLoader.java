@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import dev.tr7zw.notenoughanimations.config.Config;
 import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
 import dev.tr7zw.notenoughanimations.config.CustomConfigScreen;
+import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
 import dev.tr7zw.notenoughanimations.logic.ArmTransformer;
 import dev.tr7zw.notenoughanimations.logic.HeldItemHandler;
 import dev.tr7zw.notenoughanimations.logic.RotationFixer;
@@ -32,6 +33,7 @@ public abstract class NEAnimationsLoader {
     public ArmTransformer armTransformer;
     public RotationFixer rotationFixer;
     public HeldItemHandler heldItemHandler;
+    public AnimationProvider animationProvider;
 
     public void onEnable() {
         INSTANCE = this;
@@ -59,6 +61,7 @@ public abstract class NEAnimationsLoader {
         rotationFixer = new RotationFixer();
         armTransformer = new ArmTransformer();
         heldItemHandler = new HeldItemHandler();
+        animationProvider = new AnimationProvider();
     }
 
     public void writeConfig() {
@@ -134,6 +137,7 @@ public abstract class NEAnimationsLoader {
             @Override
             public void save() {
                 writeConfig();
+                animationProvider.refreshEnabledAnimations();
             }
 
         };

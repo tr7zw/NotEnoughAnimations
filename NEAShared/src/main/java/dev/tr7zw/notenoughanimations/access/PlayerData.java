@@ -1,7 +1,5 @@
 package dev.tr7zw.notenoughanimations.access;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import net.minecraft.world.item.ItemStack;
 
 public interface PlayerData {
