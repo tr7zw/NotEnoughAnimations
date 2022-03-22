@@ -38,6 +38,10 @@ public class ArmTransformer {
                     speed);
             interpolate(model.rightArm, last, 3, timePassed, differentFrame,
                     speed);
+            interpolate(model.leftLeg, last, 6, timePassed, differentFrame,
+                    speed);
+            interpolate(model.rightLeg, last, 9, timePassed, differentFrame,
+                    speed);
             data.setUpdated(frameId);
         }
     }
