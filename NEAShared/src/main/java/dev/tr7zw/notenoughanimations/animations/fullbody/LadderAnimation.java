@@ -11,10 +11,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ClimbingAnimation extends BasicAnimation {
+public class LadderAnimation extends BasicAnimation {
 
     @Override
     public boolean isEnabled() {
@@ -23,7 +24,12 @@ public class ClimbingAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.onClimbable() && !entity.isOnGround();
+        if(entity.onClimbable() && !entity.isOnGround()) {
+            if(entity.getLastClimbablePos().isPresent()) {
+                return entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock() == Blocks.LADDER;
+            }
+        }
+        return false;
     }
 
     private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY,
