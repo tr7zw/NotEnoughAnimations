@@ -6,7 +6,7 @@ import java.util.Set;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.BodyPart;
-import dev.tr7zw.notenoughanimations.animations.fullbody.ClimbingAnimation;
+import dev.tr7zw.notenoughanimations.animations.fullbody.LadderAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.CrawlingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.PassengerAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.RotationFixerAnimation;
@@ -74,7 +74,7 @@ public class AnimationProvider {
         basicAnimations.add(new MapHoldingAnimation());
         basicAnimations.add(new BoatAnimation());
         basicAnimations.add(new HorseAnimation());
-        basicAnimations.add(new ClimbingAnimation());
+        basicAnimations.add(new LadderAnimation());
         basicAnimations.add(new EatDrinkAnimation());
         basicAnimations.add(new VanillaShieldAnimation());
         basicAnimations.add(new PassengerAnimation());
