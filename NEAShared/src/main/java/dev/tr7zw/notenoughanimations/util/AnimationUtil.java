@@ -1,16 +1,19 @@
 package dev.tr7zw.notenoughanimations.util;
 
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 
-public class VanillaAnimationUtil {
+public class AnimationUtil {
 
     private static Item crossbow = Registry.ITEM.get(new ResourceLocation("minecraft", "crossbow"));
     
@@ -56,6 +59,18 @@ public class VanillaAnimationUtil {
     
     public static boolean isChargedCrossbow(ItemStack item) {
         return CrossbowItem.isCharged(item);
+    }
+    
+    public static void applyArmTransforms(PlayerModel<AbstractClientPlayer> model, HumanoidArm arm, float pitch, float yaw,
+            float roll) {
+        ModelPart part = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
+        part.xRot = pitch;
+        part.yRot = yaw;
+        if (arm == HumanoidArm.LEFT) // Just mirror yaw for the left hand
+            part.yRot *= -1;
+        part.zRot = roll;
+        if (arm == HumanoidArm.LEFT)
+            part.zRot *= -1;
     }
     
 }

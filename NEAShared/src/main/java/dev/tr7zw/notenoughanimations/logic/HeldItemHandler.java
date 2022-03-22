@@ -7,7 +7,7 @@ import com.mojang.math.Vector3f;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.util.MapRenderer;
-import dev.tr7zw.notenoughanimations.util.VanillaAnimationUtil;
+import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -70,27 +70,27 @@ public class HeldItemHandler {
 
         if (NEAnimationsLoader.config.enableOffhandHiding && entity instanceof AbstractClientPlayer) {
             AbstractClientPlayer player = (AbstractClientPlayer) entity;
-            ArmPose armPose = VanillaAnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
-            ArmPose armPose2 = VanillaAnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
-            if (!(VanillaAnimationUtil.isUsingboothHands(armPose) || VanillaAnimationUtil.isUsingboothHands(armPose2)))
+            ArmPose armPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
+            ArmPose armPose2 = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
+            if (!(AnimationUtil.isUsingboothHands(armPose) || AnimationUtil.isUsingboothHands(armPose2)))
                 return;
             if (armPose.isTwoHanded()) {
                 armPose2 = player.getOffhandItem().isEmpty() ? ArmPose.EMPTY : ArmPose.ITEM;
             }
 
             if (player.getMainArm() == HumanoidArm.RIGHT) {
-                if (arm == HumanoidArm.RIGHT && VanillaAnimationUtil.isUsingboothHands(armPose2)) {
+                if (arm == HumanoidArm.RIGHT && AnimationUtil.isUsingboothHands(armPose2)) {
                     info.cancel();
                     return;
-                } else if (arm == HumanoidArm.LEFT && VanillaAnimationUtil.isUsingboothHands(armPose)) {
+                } else if (arm == HumanoidArm.LEFT && AnimationUtil.isUsingboothHands(armPose)) {
                     info.cancel();
                     return;
                 }
             } else {
-                if (arm == HumanoidArm.LEFT && VanillaAnimationUtil.isUsingboothHands(armPose2)) {
+                if (arm == HumanoidArm.LEFT && AnimationUtil.isUsingboothHands(armPose2)) {
                     info.cancel();
                     return;
-                } else if (arm == HumanoidArm.RIGHT && VanillaAnimationUtil.isUsingboothHands(armPose)) {
+                } else if (arm == HumanoidArm.RIGHT && AnimationUtil.isUsingboothHands(armPose)) {
                     info.cancel();
                     return;
                 }
