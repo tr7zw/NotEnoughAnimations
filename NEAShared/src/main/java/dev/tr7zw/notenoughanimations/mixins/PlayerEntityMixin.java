@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +24,6 @@ public class PlayerEntityMixin implements PlayerData {
     
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
-		NEAnimationsLoader.INSTANCE.rotationFixer.onTickEnd((Player)(Object)this);
 		updateRenderLayerItems();
 	}
 
