@@ -22,7 +22,7 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Hum
     @Inject(method = "setupAnim", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;copyFrom(Lnet/minecraft/client/model/geom/ModelPart;)V", ordinal = 0))
 	public void setupAnim(T livingEntity, float swing, float g, float tick, float i, float j, CallbackInfo info) {
 	    if(livingEntity instanceof AbstractClientPlayer)
-		    NEAnimationsLoader.INSTANCE.armTransformer.updateModel((AbstractClientPlayer) livingEntity, (PlayerModel<AbstractClientPlayer>)(Object)this, tick, swing, info);
+		    NEAnimationsLoader.INSTANCE.playerTransformer.updateModel((AbstractClientPlayer) livingEntity, (PlayerModel<AbstractClientPlayer>)(Object)this, tick, swing, info);
 	}
 
 }

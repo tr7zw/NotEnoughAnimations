@@ -19,7 +19,7 @@ public class LevelRendererMixin {
 
     @Inject(method = "renderLevel", at = @At("HEAD"))
     private void beforeRender(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo ci) {
-        NEAnimationsLoader.INSTANCE.armTransformer.nextFrame();
+        NEAnimationsLoader.INSTANCE.playerTransformer.nextFrame();
     }
     
 }

@@ -22,7 +22,7 @@ public class VanillaTwoHandedAnimation extends BasicAnimation {
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
     private final EnumSet<ArmPose> twoHandedAnimatios = EnumSet.of(ArmPose.CROSSBOW_CHARGE, ArmPose.BOW_AND_ARROW, ArmPose.CROSSBOW_HOLD);
-    private final BodyPart[] parts = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM};
+    private final BodyPart[] parts = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY};
     
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
