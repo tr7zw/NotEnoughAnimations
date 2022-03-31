@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.RotationLock;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
+import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -91,7 +92,7 @@ public class PlayerTransformer {
         amount = Math.min(amount, 1);
         amount = Math.max(amount, 0); // "Should" be impossible, but just to be sure
         last[offset] = last[offset] + ((model.xRot - last[offset]) * amount);
-        last[offset + 1] = last[offset + 1] + ((wrapDegrees(model.yRot) - wrapDegrees(last[offset + 1])) * amount);
+        last[offset + 1] = last[offset + 1] + ((AnimationUtil.wrapDegrees(model.yRot) - AnimationUtil.wrapDegrees(last[offset + 1])) * amount);
         last[offset + 2] = last[offset + 2] + ((model.zRot - last[offset + 2]) * amount);
         cleanInvalidData(last, offset);
         model.xRot = (last[offset]);
@@ -131,17 +132,6 @@ public class PlayerTransformer {
             data[offset + 1] = 0;
         if (Float.isNaN(data[offset + 2]))
             data[offset + 2] = 0;
-    }
-
-    private float wrapDegrees(float f) {
-        float g = f % 6.28318512f;
-        if (g >= 3.14159256f) {
-            g -= 6.28318512f;
-        }
-        if (g < -3.14159256f) {
-            g += 6.28318512f;
-        }
-        return g;
     }
 
 }

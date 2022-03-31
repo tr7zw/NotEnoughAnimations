@@ -1,6 +1,8 @@
 package dev.tr7zw.notenoughanimations.logic;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
@@ -33,6 +35,7 @@ public class AnimationProvider {
     private Set<BasicAnimation> basicAnimations = new HashSet<>();
     private Set<BasicAnimation> enabledBasicAnimations = new HashSet<>(); 
     private Set<PoseOverwrite> enabledPoseOverwrites = new HashSet<>(); 
+    private boolean dumpPrios = false;
     
     public AnimationProvider() {
         loadAnimations();
@@ -110,6 +113,13 @@ public class AnimationProvider {
                 if(basicAnimation instanceof PoseOverwrite) {
                     enabledPoseOverwrites.add((PoseOverwrite) basicAnimation);
                 }
+            }
+        }
+        if(dumpPrios) {
+            List<BasicAnimation> list = new ArrayList<>(basicAnimations);
+            list.sort((a,b) -> Integer.compare(a.getPriority(null, null), b.getPriority(null, null)));
+            for(BasicAnimation an : list) {
+                System.out.println(an.getPriority(null, null) + " " + an.getClass().getSimpleName());
             }
         }
     }

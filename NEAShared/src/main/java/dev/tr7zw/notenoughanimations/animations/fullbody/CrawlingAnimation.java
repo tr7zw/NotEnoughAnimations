@@ -33,7 +33,7 @@ public class CrawlingAnimation extends BasicAnimation {
 
     @Override
     public int getPriority(AbstractClientPlayer entity, PlayerData data) {
-        return 300;
+        return 350;
     }
 
     private final float speedMul = 2.5F;
