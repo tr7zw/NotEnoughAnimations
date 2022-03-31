@@ -51,6 +51,14 @@ public class PlayerTransformer {
         }
     }
 
+    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel, float tick,
+            float swing, CallbackInfo info) {
+        if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the first person model hand
+            return;
+        }
+        NEAnimationsLoader.INSTANCE.animationProvider.preUpdate(livingEntity, playerModel);
+    }
+
     private void lateBind() {
         NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
         doneLatebind = true;
@@ -72,7 +80,7 @@ public class PlayerTransformer {
             model.zRot = (last[offset + 2]);
             return;
         }
-        if (timePassed > 200) { // Don't try to interpolate states older than 200ms
+        if (timePassed > 100) { // Don't try to interpolate states older than 100ms
             last[offset] = model.xRot;
             last[offset + 1] = model.yRot;
             last[offset + 2] = model.zRot;
@@ -81,6 +89,7 @@ public class PlayerTransformer {
         }
         float amount = ((1f / (1000f / timePassed))) * speed;
         amount = Math.min(amount, 1);
+        amount = Math.max(amount, 0); // "Should" be impossible, but just to be sure
         last[offset] = last[offset] + ((model.xRot - last[offset]) * amount);
         last[offset + 1] = last[offset + 1] + ((wrapDegrees(model.yRot) - wrapDegrees(last[offset + 1])) * amount);
         last[offset + 2] = last[offset + 2] + ((model.zRot - last[offset + 2]) * amount);
@@ -97,7 +106,7 @@ public class PlayerTransformer {
             entity.yBodyRotO = entity.yBodyRot;
             return;
         }
-        if (timePassed > 200) { // Don't try to interpolate states older than 200ms
+        if (timePassed > 100) { // Don't try to interpolate states older than 100ms
             last[offset] = entity.yHeadRot;
             return;
         }

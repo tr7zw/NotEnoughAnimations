@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -21,6 +22,7 @@ public class PlayerEntityMixin implements PlayerData {
     private boolean disableBodyRotation = false;
     private int itemSwapAnimationTimer = 0;
     private int lastAnimationSwapTick = -1;
+    private Pose poseOverwrite = null;
     
 	@Inject(method = "tick", at = @At("RETURN"))
 	public void tick(CallbackInfo info) {
@@ -95,6 +97,16 @@ public class PlayerEntityMixin implements PlayerData {
     @Override
     public void setLastAnimationSwapTick(int count) {
         this.lastAnimationSwapTick = count;
+    }
+
+    @Override
+    public void setPoseOverwrite(Pose state) {
+        this.poseOverwrite = state;
+    }
+
+    @Override
+    public Pose getPoseOverwrite() {
+        return poseOverwrite;
     }
 	
 }
