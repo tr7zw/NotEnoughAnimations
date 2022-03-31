@@ -4,18 +4,20 @@ import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.BodyPart;
+import dev.tr7zw.notenoughanimations.animations.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class LadderAnimation extends BasicAnimation {
+public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public boolean isEnabled() {
@@ -127,6 +129,15 @@ public class LadderAnimation extends BasicAnimation {
             g += 6.28318512f;
         }
         return g;
+    }
+
+    @Override
+    public void updateState(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> playerModel) {
+        if(entity.isCrouching() && isValid(entity, data)) {
+            data.setPoseOverwrite(entity.getPose());
+            entity.setPose(Pose.STANDING);
+            playerModel.crouching = false;
+        }
     }
 
 }

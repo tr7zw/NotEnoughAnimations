@@ -6,6 +6,7 @@ import java.util.Set;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.BodyPart;
+import dev.tr7zw.notenoughanimations.animations.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.animations.fullbody.LadderAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.CrawlingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.PassengerAnimation;
@@ -27,6 +28,7 @@ public class AnimationProvider {
 
     private Set<BasicAnimation> basicAnimations = new HashSet<>();
     private Set<BasicAnimation> enabledBasicAnimations = new HashSet<>(); 
+    private Set<PoseOverwrite> enabledPoseOverwrites = new HashSet<>(); 
     
     public AnimationProvider() {
         loadAnimations();
@@ -64,28 +66,42 @@ public class AnimationProvider {
         }
     }
     
+    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel) {
+        for(PoseOverwrite po : enabledPoseOverwrites) {
+            po.updateState(livingEntity, (PlayerData) livingEntity, playerModel);
+        }
+    }
+    
     private void loadAnimations() {
-        basicAnimations.add(new CrawlingAnimation());
-        basicAnimations.add(new VanillaSingleHandedAnimation());
-        basicAnimations.add(new VanillaTwoHandedAnimation());
-        basicAnimations.add(new ItemSwapAnimation());
-        basicAnimations.add(new LookAtItemAnimation());
-        basicAnimations.add(new SleepAnimation());
-        basicAnimations.add(new MapHoldingAnimation());
-        basicAnimations.add(new BoatAnimation());
-        basicAnimations.add(new HorseAnimation());
-        basicAnimations.add(new LadderAnimation());
-        basicAnimations.add(new EatDrinkAnimation());
-        basicAnimations.add(new VanillaShieldAnimation());
-        basicAnimations.add(new PassengerAnimation());
-        basicAnimations.add(new RotationFixerAnimation());
+        addAnimation(new CrawlingAnimation());
+        addAnimation(new VanillaSingleHandedAnimation());
+        addAnimation(new VanillaTwoHandedAnimation());
+        addAnimation(new ItemSwapAnimation());
+        addAnimation(new LookAtItemAnimation());
+        addAnimation(new SleepAnimation());
+        addAnimation(new MapHoldingAnimation());
+        addAnimation(new BoatAnimation());
+        addAnimation(new HorseAnimation());
+        addAnimation(new LadderAnimation());
+        addAnimation(new EatDrinkAnimation());
+        addAnimation(new VanillaShieldAnimation());
+        addAnimation(new PassengerAnimation());
+        addAnimation(new RotationFixerAnimation());
     }
 
+    public void addAnimation(BasicAnimation animation) {
+        basicAnimations.add(animation);
+    }
+    
     public void refreshEnabledAnimations() {
         enabledBasicAnimations.clear();
+        enabledPoseOverwrites.clear();
         for(BasicAnimation basicAnimation : basicAnimations) {
             if(basicAnimation.isEnabled()) {
                 enabledBasicAnimations.add(basicAnimation);
+                if(basicAnimation instanceof PoseOverwrite) {
+                    enabledPoseOverwrites.add((PoseOverwrite) basicAnimation);
+                }
             }
         }
     }
