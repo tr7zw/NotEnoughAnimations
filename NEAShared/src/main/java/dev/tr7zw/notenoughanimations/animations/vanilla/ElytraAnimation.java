@@ -1,43 +1,38 @@
-package dev.tr7zw.notenoughanimations.animations.hands;
+package dev.tr7zw.notenoughanimations.animations.vanilla;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.BodyPart;
-import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.Pose;
 
-public class SleepAnimation extends BasicAnimation{
+public class ElytraAnimation extends BasicAnimation {
 
     @Override
     public boolean isEnabled() {
-        return NEAnimationsLoader.config.freezeArmsInBed;
+        return true;
     }
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.isSleeping();
+        return entity.getPose() == Pose.DYING;
     }
 
-    private final BodyPart[] bothHands = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM};
-    
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
-        return bothHands;
+        return BodyPart.values();
     }
 
     @Override
     public int getPriority(AbstractClientPlayer entity, PlayerData data) {
-        return 100;
+        return 3600;
     }
 
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        AnimationUtil.applyArmTransforms(model, arm, 0, 0f, 0f);
+        // Do nothing
     }
 
 }

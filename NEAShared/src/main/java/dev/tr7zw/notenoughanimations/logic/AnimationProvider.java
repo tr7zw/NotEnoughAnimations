@@ -17,7 +17,11 @@ import dev.tr7zw.notenoughanimations.animations.hands.HorseAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.ItemSwapAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.MapHoldingAnimation;
-import dev.tr7zw.notenoughanimations.animations.hands.SleepAnimation;
+import dev.tr7zw.notenoughanimations.animations.vanilla.DeathAnimation;
+import dev.tr7zw.notenoughanimations.animations.vanilla.ElytraAnimation;
+import dev.tr7zw.notenoughanimations.animations.vanilla.RiptideAnimation;
+import dev.tr7zw.notenoughanimations.animations.vanilla.SleepAnimation;
+import dev.tr7zw.notenoughanimations.animations.vanilla.SwimAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.VanillaShieldAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.VanillaSingleHandedAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.VanillaTwoHandedAnimation;
@@ -87,6 +91,10 @@ public class AnimationProvider {
         addAnimation(new VanillaShieldAnimation());
         addAnimation(new PassengerAnimation());
         addAnimation(new RotationFixerAnimation());
+        addAnimation(new RiptideAnimation());
+        addAnimation(new DeathAnimation());
+        addAnimation(new ElytraAnimation());
+        addAnimation(new SwimAnimation());
     }
 
     public void addAnimation(BasicAnimation animation) {
