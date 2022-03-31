@@ -52,7 +52,7 @@ public class ItemSwapAnimation extends BasicAnimation {
 
     @Override
     public int getPriority(AbstractClientPlayer entity, PlayerData data) {
-        return 3700;
+        return 3500;
     }
 
     @Override

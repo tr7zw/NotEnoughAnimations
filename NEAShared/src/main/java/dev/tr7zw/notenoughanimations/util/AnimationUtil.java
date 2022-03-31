@@ -7,8 +7,10 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -102,6 +104,27 @@ public class AnimationUtil {
         part.zRot = roll;
         if (mirror)
             part.zRot *= -1;
+    }
+    
+    public static void minMaxHeadRotation(Player livingEntity, PlayerModel<AbstractClientPlayer> model) {
+        float value = wrapDegrees(model.head.yRot);
+        float min = wrapDegrees(model.body.yRot - Mth.HALF_PI);
+        float max = wrapDegrees(model.body.yRot + Mth.HALF_PI);
+        value = Math.min(value, max);
+        value = Math.max(value, min);
+        model.head.yRot = value;
+        model.hat.yRot = value;
+    }
+    
+    public static float wrapDegrees(float f) {
+        float g = f % 6.28318512f;
+        if (g >= 3.14159256f) {
+            g -= 6.28318512f;
+        }
+        if (g < -3.14159256f) {
+            g += 6.28318512f;
+        }
+        return g;
     }
     
 }

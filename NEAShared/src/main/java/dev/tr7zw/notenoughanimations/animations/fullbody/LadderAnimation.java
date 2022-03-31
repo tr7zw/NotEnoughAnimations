@@ -55,7 +55,7 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public int getPriority(AbstractClientPlayer entity, PlayerData data) {
-        return 1600;
+        return 1400;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
                         break;
                     default:
                     }
-                    minMaxHeadRotation(entity, model);
+                    AnimationUtil.minMaxHeadRotation(entity, model);
                 }
                 return;
             }
@@ -108,27 +108,6 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
             rotation *= -1;
         AnimationUtil.applyTransforms(model, part, -NEAnimationsLoader.config.ladderAnimationArmHeight - rotation,
                 -0.2f, 0.3f);
-    }
-
-    private void minMaxHeadRotation(Player livingEntity, PlayerModel<AbstractClientPlayer> model) {
-        float value = wrapDegrees(model.head.yRot);
-        float min = wrapDegrees(model.body.yRot - Mth.HALF_PI);
-        float max = wrapDegrees(model.body.yRot + Mth.HALF_PI);
-        value = Math.min(value, max);
-        value = Math.max(value, min);
-        model.head.yRot = value;
-        model.hat.yRot = value;
-    }
-
-    private float wrapDegrees(float f) {
-        float g = f % 6.28318512f;
-        if (g >= 3.14159256f) {
-            g -= 6.28318512f;
-        }
-        if (g < -3.14159256f) {
-            g += 6.28318512f;
-        }
-        return g;
     }
 
     @Override
