@@ -126,6 +126,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.itemSwapAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.tweakElytraAnimation", () -> config.tweakElytraAnimation,
                         (b) -> config.tweakElytraAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.petAnimation", () -> config.petAnimation,
+                        (b) -> config.petAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));

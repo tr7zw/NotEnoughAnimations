@@ -19,6 +19,7 @@ import dev.tr7zw.notenoughanimations.animations.hands.HorseAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.ItemSwapAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.MapHoldingAnimation;
+import dev.tr7zw.notenoughanimations.animations.hands.PetAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.DeathAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.ElytraAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.RiptideAnimation;
@@ -98,6 +99,7 @@ public class AnimationProvider {
         addAnimation(new DeathAnimation());
         addAnimation(new ElytraAnimation());
         addAnimation(new SwimAnimation());
+        addAnimation(new PetAnimation());;
     }
 
     public void addAnimation(BasicAnimation animation) {

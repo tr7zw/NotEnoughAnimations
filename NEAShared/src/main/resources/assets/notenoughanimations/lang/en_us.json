@@ -24,5 +24,6 @@
     "text.nea.ladderAnimationArmHeight": "Ladder Arm Height",
     "text.nea.ladderAnimationArmSpeed": "Ladder Arm Speed",
     "text.nea.enable.itemSwapAnimation": "Item Swap Animation",
-    "text.nea.enable.tweakElytraAnimation": "Tweak Elytra Flying"
+    "text.nea.enable.tweakElytraAnimation": "Tweak Elytra Flying",
+    "text.nea.enable.petAnimation": "Pet Wolfs/Cats"
   }
