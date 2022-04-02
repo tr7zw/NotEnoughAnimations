@@ -16,7 +16,7 @@ public class DeathAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.getPose() == Pose.FALL_FLYING;
+        return entity.getPose() == Pose.DYING;
     }
 
     @Override
