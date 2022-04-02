@@ -12,6 +12,7 @@ import dev.tr7zw.notenoughanimations.animations.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.animations.fullbody.LadderAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.CrawlingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.FallingAnimation;
+import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.PassengerAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.RotationFixerAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.BoatAnimation;
@@ -102,6 +103,7 @@ public class AnimationProvider {
         addAnimation(new SwimAnimation());
         addAnimation(new PetAnimation());
         addAnimation(new FallingAnimation());
+        addAnimation(new FreezingAnimation());
     }
 
     public void addAnimation(BasicAnimation animation) {

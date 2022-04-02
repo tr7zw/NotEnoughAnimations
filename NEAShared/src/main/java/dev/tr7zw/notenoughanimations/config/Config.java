@@ -36,5 +36,6 @@ public class Config {
     public boolean tweakElytraAnimation = true;
     public boolean petAnimation = true;
     public boolean fallingAnimation = true;
+    public boolean freezingAnimation = true;
 
 }
