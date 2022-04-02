@@ -130,6 +130,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.petAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.fallingAnimation", () -> config.fallingAnimation,
                         (b) -> config.fallingAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.freezingAnimation", () -> config.freezingAnimation,
+                        (b) -> config.freezingAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));
