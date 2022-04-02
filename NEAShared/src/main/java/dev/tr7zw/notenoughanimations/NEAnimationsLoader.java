@@ -128,6 +128,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.tweakElytraAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.petAnimation", () -> config.petAnimation,
                         (b) -> config.petAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.fallingAnimation", () -> config.fallingAnimation,
+                        (b) -> config.fallingAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));
