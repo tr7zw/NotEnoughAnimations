@@ -23,5 +23,6 @@
     "text.nea.ladderAnimationAmplifier": "Ladder Arm Amplifier",
     "text.nea.ladderAnimationArmHeight": "Ladder Arm Height",
     "text.nea.ladderAnimationArmSpeed": "Ladder Arm Speed",
-    "text.nea.enable.itemSwapAnimation": "Item Swap Animation"
+    "text.nea.enable.itemSwapAnimation": "Item Swap Animation",
+    "text.nea.enable.tweakElytraAnimation": "Tweak Elytra Flying"
   }

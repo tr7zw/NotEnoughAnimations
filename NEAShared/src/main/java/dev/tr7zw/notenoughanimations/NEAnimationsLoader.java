@@ -124,6 +124,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.holdUpAllItems = b));
                 options.add(getOnOffOption("text.nea.enable.itemSwapAnimation", () -> config.itemSwapAnimation,
                         (b) -> config.itemSwapAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.tweakElytraAnimation", () -> config.tweakElytraAnimation,
+                        (b) -> config.tweakElytraAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));

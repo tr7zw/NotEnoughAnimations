@@ -33,5 +33,6 @@ public class Config {
     public boolean enableCrawlingAnimation = true;
     public boolean holdUpAllItems = false;
     public boolean itemSwapAnimation = true;
+    public boolean tweakElytraAnimation = true;
 
 }
