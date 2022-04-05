@@ -39,5 +39,6 @@ public class Config {
     public boolean freezingAnimation = true;
     public boolean huggingAnimation = false;
     public boolean narutoRunning = false;
+    public boolean enableInWorldBookRendering = true;
 
 }
