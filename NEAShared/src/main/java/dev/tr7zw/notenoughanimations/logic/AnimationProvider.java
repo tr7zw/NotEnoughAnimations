@@ -18,6 +18,7 @@ import dev.tr7zw.notenoughanimations.animations.fullbody.RotationFixerAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.BoatAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.EatDrinkAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.HorseAnimation;
+import dev.tr7zw.notenoughanimations.animations.hands.HugAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.ItemSwapAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.MapHoldingAnimation;
@@ -104,6 +105,7 @@ public class AnimationProvider {
         addAnimation(new PetAnimation());
         addAnimation(new FallingAnimation());
         addAnimation(new FreezingAnimation());
+        addAnimation(new HugAnimation());
     }
 
     public void addAnimation(BasicAnimation animation) {

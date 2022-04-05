@@ -27,5 +27,6 @@
     "text.nea.enable.tweakElytraAnimation": "Tweak Elytra Flying",
     "text.nea.enable.petAnimation": "Pet Wolfs/Cats",
     "text.nea.enable.fallingAnimation": "[WIP]Falling Animation",
-    "text.nea.enable.freezingAnimation": "Freezing Animation"
+    "text.nea.enable.freezingAnimation": "Freezing Animation",
+    "text.nea.enable.huggingAnimation": "Simple Hugging Animation"
   }
