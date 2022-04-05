@@ -45,7 +45,7 @@ public class PlayerTransformer {
             interpolate(model.rightLeg, last, 9, timePassed, differentFrame,
                     speed);
             // For now located here due to smoothing logic being here.
-            if(NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH) {
+            if(NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
                 interpolateYawBodyHead(entity, last, 12, timePassed, differentFrame, 6);
             }
             data.setUpdated(frameId);
