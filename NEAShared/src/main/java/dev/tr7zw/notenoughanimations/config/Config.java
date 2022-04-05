@@ -38,5 +38,6 @@ public class Config {
     public boolean fallingAnimation = false;
     public boolean freezingAnimation = true;
     public boolean huggingAnimation = false;
+    public boolean narutoRunning = false;
 
 }
