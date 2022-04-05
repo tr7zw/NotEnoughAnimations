@@ -136,6 +136,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.huggingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.narutoRunning", () -> config.narutoRunning,
                         (b) -> config.narutoRunning = b));
+                options.add(getOnOffOption("text.nea.enable.enableInWorldBookRendering", () -> config.enableInWorldBookRendering,
+                        (b) -> config.enableInWorldBookRendering = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));

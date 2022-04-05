@@ -29,5 +29,6 @@
     "text.nea.enable.fallingAnimation": "[WIP]Falling Animation",
     "text.nea.enable.freezingAnimation": "Freezing Animation",
     "text.nea.enable.huggingAnimation": "Simple Hugging Animation",
-    "text.nea.enable.narutoRunning": "❝Naruto Running❞"
+    "text.nea.enable.narutoRunning": "❝Naruto Running❞",
+    "text.nea.enable.enableInWorldBookRendering": "In-World Book Rendering"
   }
