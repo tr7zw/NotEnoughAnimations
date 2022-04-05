@@ -1,5 +1,8 @@
 package dev.tr7zw.notenoughanimations.access;
 
+import java.util.function.Supplier;
+
+import dev.tr7zw.notenoughanimations.animations.DataHolder;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 
@@ -34,5 +37,7 @@ public interface PlayerData {
     public void setPoseOverwrite(Pose state);
     
     public Pose getPoseOverwrite();
+    
+    public <T> T getData(DataHolder<T> holder, Supplier<T> builder);
     
 }

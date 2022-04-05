@@ -35,7 +35,7 @@ public class Config {
     public boolean itemSwapAnimation = true;
     public boolean tweakElytraAnimation = true;
     public boolean petAnimation = true;
-    public boolean fallingAnimation = true;
+    public boolean fallingAnimation = false;
     public boolean freezingAnimation = true;
 
 }
