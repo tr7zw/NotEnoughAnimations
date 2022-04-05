@@ -22,6 +22,7 @@ import dev.tr7zw.notenoughanimations.animations.hands.HugAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.ItemSwapAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.MapHoldingAnimation;
+import dev.tr7zw.notenoughanimations.animations.hands.NarutoRunningAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.PetAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.DeathAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.ElytraAnimation;
@@ -106,6 +107,7 @@ public class AnimationProvider {
         addAnimation(new FallingAnimation());
         addAnimation(new FreezingAnimation());
         addAnimation(new HugAnimation());
+        addAnimation(new NarutoRunningAnimation());
     }
 
     public void addAnimation(BasicAnimation animation) {
