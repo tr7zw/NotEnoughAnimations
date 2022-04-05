@@ -37,5 +37,6 @@ public class Config {
     public boolean petAnimation = true;
     public boolean fallingAnimation = false;
     public boolean freezingAnimation = true;
+    public boolean huggingAnimation = false;
 
 }

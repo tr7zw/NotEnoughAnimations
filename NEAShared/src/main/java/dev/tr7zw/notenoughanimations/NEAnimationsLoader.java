@@ -132,6 +132,8 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.fallingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.freezingAnimation", () -> config.freezingAnimation,
                         (b) -> config.freezingAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.huggingAnimation", () -> config.huggingAnimation,
+                        (b) -> config.huggingAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new Option[0]));
