@@ -8,6 +8,7 @@ import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.level.block.Blocks;
 
 public class FreezingAnimation extends BasicAnimation {
 
@@ -18,7 +19,9 @@ public class FreezingAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.isInPowderSnow;
+        boolean inSnow = entity.level.getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
+        .anyMatch(blockState -> (blockState.is(Blocks.POWDER_SNOW) || blockState.is(Blocks.POWDER_SNOW_CAULDRON)));
+        return inSnow;
     }
 
     private BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM };
