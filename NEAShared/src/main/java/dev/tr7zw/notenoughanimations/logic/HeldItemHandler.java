@@ -17,10 +17,8 @@ import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.util.MapRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen.BookAccess;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen.WrittenBookAccess;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.EntityModel;
@@ -44,7 +42,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.WrittenBookItem;
 
 public class HeldItemHandler {
 
@@ -55,6 +52,7 @@ public class HeldItemHandler {
     private Item enchantedBook = Registry.ITEM.get(new ResourceLocation("minecraft", "enchanted_book"));
     private Item knowledgeBook = Registry.ITEM.get(new ResourceLocation("minecraft", "knowledge_book"));
     public Set<Item> books = new HashSet<>(Arrays.asList(writableBook, writtenBook, enchantedBook, knowledgeBook, book));
+    @SuppressWarnings("serial")
     public Map<Item, ResourceLocation> bookTextures = new HashMap<>() {
         {
             put(knowledgeBook,  new ResourceLocation("notenoughanimations", "textures/recipe_book.png"));
@@ -178,15 +176,17 @@ public class HeldItemHandler {
         
         bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         matrices.popPose();
-        /*if(item == writtenBook) {
+        if(item == writtenBook) {
             matrices.pushPose();
             armedModel.translateToHand(arm, matrices);
             renderText(entity, matrices, itemStack, armedModel, arm);
             matrices.popPose();
-        }*/
+        }
         
     }
     
+    // Broken mess, fix me
+    @SuppressWarnings("resource")
     private void renderText(LivingEntity entity, PoseStack matrices, ItemStack itemStack, ArmedModel armedModel, HumanoidArm arm) {
         BookAccess bookAccess = fromItem(itemStack);
         FormattedText formattedText = bookAccess.getPage(0);
