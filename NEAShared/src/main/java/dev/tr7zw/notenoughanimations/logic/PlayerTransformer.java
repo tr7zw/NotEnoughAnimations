@@ -40,10 +40,12 @@ public class PlayerTransformer {
                     speed);
             interpolate(model.rightArm, last, 3, timePassed, differentFrame,
                     speed);
-            interpolate(model.leftLeg, last, 6, timePassed, differentFrame,
-                    speed);
-            interpolate(model.rightLeg, last, 9, timePassed, differentFrame,
-                    speed);
+            if(!NEAnimationsLoader.config.disableLegSmoothing) {
+                interpolate(model.leftLeg, last, 6, timePassed, differentFrame,
+                        speed);
+                interpolate(model.rightLeg, last, 9, timePassed, differentFrame,
+                        speed);
+            }
             // For now located here due to smoothing logic being here.
             if(NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
                 interpolateYawBodyHead(entity, last, 12, timePassed, differentFrame, 6);

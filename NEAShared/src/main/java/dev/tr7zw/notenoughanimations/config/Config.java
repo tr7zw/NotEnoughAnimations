@@ -40,5 +40,6 @@ public class Config {
     public boolean huggingAnimation = false;
     public boolean narutoRunning = false;
     public boolean enableInWorldBookRendering = false;
+    public boolean disableLegSmoothing = false;
 
 }
