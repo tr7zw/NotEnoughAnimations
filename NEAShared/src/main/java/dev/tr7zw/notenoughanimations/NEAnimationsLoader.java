@@ -79,6 +79,8 @@ public abstract class NEAnimationsLoader {
                 List<Option> options = new ArrayList<>();
                 options.add(getOnOffOption("text.nea.enable.animationsmoothing", () -> config.enableAnimationSmoothing,
                         (b) -> config.enableAnimationSmoothing = b));
+                options.add(getOnOffOption("text.nea.disableLegSmoothing", () -> config.disableLegSmoothing,
+                        (b) -> config.disableLegSmoothing = b));
                 options.add(getDoubleOption("text.nea.smoothingSpeed", 10f, 30f, 0.1f,
                         () -> (double) config.animationSmoothingSpeed, (i) -> {
                             config.animationSmoothingSpeed = i.floatValue();
