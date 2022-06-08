@@ -1,0 +1,18 @@
+version: '0.0.1'
+source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.18.2-shared/"
+replacements:
+  group: "dev.tr7zw"
+  name: "NotEnoughAnimations"
+  id: "notenoughanimations"
+  version: "1.6.0"
+  author: "tr7zw"
+  relocationpackage: "dev.tr7zw.notenoughanimations"
+  dependencies: ""
+  licensename: "LICENSE"
+rootProject:
+  template: "."
+subProjects:
+  NEAFabric:
+    template: "Fabric"
+  NEAForge:
+    template: "Forge"

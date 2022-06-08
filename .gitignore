@@ -32,4 +32,9 @@ bin/
 
 run/
 
-readme.pdf
+# compose
+
+*.gradle
+*.properties
+gradle/wrapper
+VersionShared

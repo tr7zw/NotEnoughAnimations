@@ -13,9 +13,9 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.notenoughanimations.config.Config;
 import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
-import dev.tr7zw.notenoughanimations.config.CustomConfigScreen;
 import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
 import dev.tr7zw.notenoughanimations.logic.HeldItemHandler;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
@@ -150,6 +150,12 @@ public abstract class NEAnimationsLoader {
             public void save() {
                 writeConfig();
                 animationProvider.refreshEnabledAnimations();
+            }
+
+            @Override
+            public void reset() {
+                config = new Config();
+                writeConfig();
             }
 
         };
