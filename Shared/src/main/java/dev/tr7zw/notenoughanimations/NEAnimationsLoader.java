@@ -19,7 +19,7 @@ import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
 import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
 import dev.tr7zw.notenoughanimations.logic.HeldItemHandler;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
-import net.minecraft.client.Option;
+import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
 
 public abstract class NEAnimationsLoader {
@@ -76,7 +76,7 @@ public abstract class NEAnimationsLoader {
 
             @Override
             public void initialize() {
-                List<Option> options = new ArrayList<>();
+                List<OptionInstance<?>> options = new ArrayList<>();
                 options.add(getOnOffOption("text.nea.enable.animationsmoothing", () -> config.enableAnimationSmoothing,
                         (b) -> config.enableAnimationSmoothing = b));
                 options.add(getOnOffOption("text.nea.disableLegSmoothing", () -> config.disableLegSmoothing,
@@ -142,7 +142,7 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.enableInWorldBookRendering = b));
                 
 
-                getOptions().addSmall(options.toArray(new Option[0]));
+                getOptions().addSmall(options.toArray(new OptionInstance[0]));
 
             }
 
