@@ -8,10 +8,10 @@ import dev.tr7zw.notenoughanimations.RotationLock;
 
 public class Config {
 
-    public int configVersion = 7;
+    public int configVersion = 8;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(
-            Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern"));
+            Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern", "minecraft:recovery_compass"));
     public boolean enableAnimationSmoothing = true;
     public boolean enableInWorldMapRendering = true;
     public boolean enableOffhandHiding = true;
