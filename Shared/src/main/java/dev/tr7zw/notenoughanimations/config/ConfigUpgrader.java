@@ -32,6 +32,11 @@ public class ConfigUpgrader {
             config.configVersion = 7;
             changed = true;
         }
+        if (config.configVersion <= 7) {
+            config.configVersion = 8;
+            config.holdingItems.add("minecraft:recovery_compass");
+            changed = true;
+        }
         // check for more changes here
         
         return changed;
