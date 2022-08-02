@@ -46,9 +46,15 @@ public class PlayerTransformer {
                 interpolate(model.rightLeg, last, 9, timePassed, differentFrame,
                         speed);
             }
-            // For now located here due to smoothing logic being here.
-            if(NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
-                interpolateYawBodyHead(entity, last, 12, timePassed, differentFrame, 6);
+            if(entity == mc.cameraEntity) {
+                // For now located here due to smoothing logic being here.
+                if(NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
+                    interpolateYawBodyHead(entity, last, 12, timePassed, differentFrame, 6);
+                }
+                if(NEAnimationsLoader.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null && differentFrame) {
+                    entity.yBodyRot = entity.yHeadRot;
+                    entity.yBodyRotO = entity.yHeadRotO;
+                }
             }
             data.setUpdated(frameId);
         }
@@ -113,11 +119,18 @@ public class PlayerTransformer {
             last[offset] = entity.yHeadRot;
             return;
         }
+        if(entity.yHeadRot - last[offset] > 90) {
+            speed *= 5;
+        }
+        if(entity.yHeadRot - last[offset] < -90) {
+            speed *= 5;
+        }
         float amount = ((1f / (1000f / timePassed))) * speed;
         amount = Math.min(amount, 1);
+        entity.yBodyRotO = last[offset];
         last[offset] += (entity.yHeadRot - last[offset]) * amount;
         entity.yBodyRot = (last[offset]);
-        entity.yBodyRotO = entity.yBodyRot;
+        //entity.yBodyRotO = entity.yBodyRot;
     }
 
     /**
