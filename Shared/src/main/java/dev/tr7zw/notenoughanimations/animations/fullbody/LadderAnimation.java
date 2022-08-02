@@ -1,5 +1,8 @@
 package dev.tr7zw.notenoughanimations.animations.fullbody;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
@@ -13,8 +16,11 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
@@ -26,14 +32,23 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        if(entity.onClimbable() && !entity.isOnGround()) {
-            if(entity.getLastClimbablePos().isPresent()) {
-                return entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock() == Blocks.LADDER;
+        if(entity.onClimbable() && !entity.isOnGround() && entity.getLastClimbablePos().isPresent()) {
+            for(Class<? extends Block> blocktype : ladderLikeBlocks) {
+                if(blocktype.isAssignableFrom(entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+                    return true;
             }
+            return false;
         }
         return false;
     }
 
+    private final Set<Class<? extends Block>> ladderLikeBlocks = new HashSet<>() {
+        {
+            add(LadderBlock.class);
+            add(TrapDoorBlock.class);
+        }
+    };
+    
     private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY,
             BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG };
     private final BodyPart[] partsSneakingRight = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY, BodyPart.LEFT_LEG,
