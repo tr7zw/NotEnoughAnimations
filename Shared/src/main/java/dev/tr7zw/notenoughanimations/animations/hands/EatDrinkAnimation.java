@@ -14,6 +14,12 @@ import net.minecraft.world.item.UseAnim;
 
 public class EatDrinkAnimation extends BasicAnimation {
 
+    private BodyPart[] target;
+    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM};
+    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM};
+    private final BodyPart[] leftFixed = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.BODY};
+    private final BodyPart[] rightFixed = new BodyPart[] {BodyPart.RIGHT_ARM, BodyPart.BODY};
+    
     @Override
     public boolean isEnabled() {
         return NEAnimationsLoader.config.enableEatDrinkAnimation;
@@ -26,19 +32,23 @@ public class EatDrinkAnimation extends BasicAnimation {
             // Eating/Drinking
             if (action == UseAnim.EAT || action == UseAnim.DRINK) {
                 if(entity.getUsedItemHand() == InteractionHand.MAIN_HAND) {
-                    target = entity.getMainArm() == HumanoidArm.RIGHT ? right : left;
+                    if(entity.getMainArm() == HumanoidArm.RIGHT) {
+                        target = NEAnimationsLoader.config.enableRotationLocking ? rightFixed : right;
+                    } else {
+                        target = NEAnimationsLoader.config.enableRotationLocking ? leftFixed : left;
+                    }
                 } else {
-                    target = entity.getMainArm() == HumanoidArm.LEFT ? right : left;
+                    if(entity.getMainArm() == HumanoidArm.RIGHT) {
+                        target = NEAnimationsLoader.config.enableRotationLocking ? leftFixed : left;
+                    } else {
+                        target = NEAnimationsLoader.config.enableRotationLocking ? rightFixed : right;
+                    }
                 }
                 return true;
             }
         }
         return false;
     }
-
-    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM};
-    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM};
-    private BodyPart[] target = right;
     
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
@@ -53,6 +63,12 @@ public class EatDrinkAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
+        if(part == BodyPart.BODY) {
+            data.disableBodyRotation(true);
+            entity.setYBodyRot(entity.getYHeadRot());
+            entity.yBodyRotO = entity.yHeadRotO;
+            return;
+        }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         AnimationUtil.applyArmTransforms(model, arm,
                 -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 2f)) + Mth.sin((System.currentTimeMillis() % 20000) / 30f) * 0.1f,
