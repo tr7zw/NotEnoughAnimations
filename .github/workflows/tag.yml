@@ -1,34 +1,54 @@
 name: Create Release
 
-on: create
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
-    strategy:
-      matrix:
-        # Use these Java versions
-        java: [
-          17
-        ]
-        # and run on both Linux and Windows
-        os: [ubuntu-20.04]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: checkout repository
         uses: actions/checkout@v2
-      - name: setup jdk ${{ matrix.java }}
+      - name: setup jdk 17
         uses: actions/setup-java@v1
         with:
-          java-version: ${{ matrix.java }}
+          java-version: 17
       - name: make gradle wrapper executable
-        if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlecw
       - name: build
         run: ./gradlecw build
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             NEAFabric/build/libs/*
             NEAForge/build/libs/*
+
+      - name: Publish-Forge-Curseforge
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          curseforge-id: 433760
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}  
+          loaders: forge
+          name: ${{github.ref_name}} - Forge
+          version-type: beta
+          files: '*Forge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+      - name: Publish-Forge-Modrinth
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: MPCX6s5C
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          loaders: forge
+          name: ${{github.ref_name}} - Forge
+          files: '*Forge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+      - name: Publish-Fabric
+        uses: Kir-Antipov/mc-publish@v3.2
+        with:
+          modrinth-id: MPCX6s5C
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-id: 433760
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}  
+          loaders: fabric
+          name: ${{github.ref_name}} - Fabric
+          files: '*Fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'

@@ -1,14 +1,16 @@
 version: '0.0.1'
-source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.19.1/"
+source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.19.2-mcpublish/"
 replacements:
   group: "dev.tr7zw"
   name: "NotEnoughAnimations"
   id: "notenoughanimations"
-  version: "1.6.1"
+  version: "1.6.2"
   author: "tr7zw"
   relocationpackage: "dev.tr7zw.notenoughanimations"
   dependencies: ""
   licensename: "LICENSE"
+  modrinthid: MPCX6s5C
+  curseforgeid: 433760
 rootProject:
   template: "."
 subProjects:
