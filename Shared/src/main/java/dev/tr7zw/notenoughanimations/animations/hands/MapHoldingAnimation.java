@@ -10,7 +10,7 @@ import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -30,9 +30,9 @@ public class MapHoldingAnimation extends BasicAnimation {
     
     private void bind() {
         compatibleMaps.clear();
-        Item invalid = Registry.ITEM.get(new ResourceLocation("minecraft", "air"));
-        compatibleMaps.add(Registry.ITEM.get(new ResourceLocation("minecraft", "filled_map")));
-        Item antiqueAtlas = Registry.ITEM.get(new ResourceLocation("antiqueatlas", "antique_atlas"));
+        Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
+        compatibleMaps.add(BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "filled_map")));
+        Item antiqueAtlas = BuiltInRegistries.ITEM.get(new ResourceLocation("antiqueatlas", "antique_atlas"));
         if (invalid != antiqueAtlas) {
             compatibleMaps.add(antiqueAtlas);
             NEAnimationsLoader.LOGGER.info("Added AntiqueAtlas support to Not Enough Animations!");

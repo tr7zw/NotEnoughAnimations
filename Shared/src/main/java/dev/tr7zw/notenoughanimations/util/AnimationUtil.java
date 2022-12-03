@@ -1,11 +1,11 @@
 package dev.tr7zw.notenoughanimations.util;
 
 import dev.tr7zw.notenoughanimations.animations.BodyPart;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -18,7 +18,7 @@ import net.minecraft.world.item.UseAnim;
 
 public class AnimationUtil {
 
-    private static Item crossbow = Registry.ITEM.get(new ResourceLocation("minecraft", "crossbow"));
+    private static Item crossbow = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "crossbow"));
     
     public static boolean isUsingboothHands(ArmPose pose) {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;

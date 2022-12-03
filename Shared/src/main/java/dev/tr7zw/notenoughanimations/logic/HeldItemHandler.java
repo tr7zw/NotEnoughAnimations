@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
@@ -31,7 +31,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.EnchantTableRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -45,12 +45,12 @@ import net.minecraft.world.item.Items;
 
 public class HeldItemHandler {
 
-    private Item filledMap = Registry.ITEM.get(new ResourceLocation("minecraft", "filled_map"));
-    private Item book = Registry.ITEM.get(new ResourceLocation("minecraft", "book"));
-    private Item writtenBook = Registry.ITEM.get(new ResourceLocation("minecraft", "written_book"));
-    private Item writableBook = Registry.ITEM.get(new ResourceLocation("minecraft", "writable_book"));
-    private Item enchantedBook = Registry.ITEM.get(new ResourceLocation("minecraft", "enchanted_book"));
-    private Item knowledgeBook = Registry.ITEM.get(new ResourceLocation("minecraft", "knowledge_book"));
+    private Item filledMap = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "filled_map"));
+    private Item book = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "book"));
+    private Item writtenBook = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "written_book"));
+    private Item writableBook = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "writable_book"));
+    private Item enchantedBook = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "enchanted_book"));
+    private Item knowledgeBook = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "knowledge_book"));
     public Set<Item> books = new HashSet<>(Arrays.asList(writableBook, writtenBook, enchantedBook, knowledgeBook, book));
     @SuppressWarnings("serial")
     public Map<Item, ResourceLocation> bookTextures = new HashMap<>() {
@@ -82,8 +82,8 @@ public class HeldItemHandler {
                                                                                                               // offhand
                         matrices.pushPose();
                         armedModel.translateToHand(arm, matrices);
-                        matrices.mulPose(Vector3f.XP.rotationDegrees(-90.0f));
-                        matrices.mulPose(Vector3f.YP.rotationDegrees(200.0f));
+                        matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
+                        matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
                         matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0), -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,
@@ -95,8 +95,8 @@ public class HeldItemHandler {
                     if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only offhand
                         matrices.pushPose();
                         armedModel.translateToHand(arm, matrices);
-                        matrices.mulPose(Vector3f.XP.rotationDegrees(-90.0f));
-                        matrices.mulPose(Vector3f.YP.rotationDegrees(200.0f));
+                        matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
+                        matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
                         matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true, false);
@@ -157,8 +157,8 @@ public class HeldItemHandler {
         matrices.pushPose();
         armedModel.translateToHand(arm, matrices);
         
-        matrices.mulPose(Vector3f.YP.rotationDegrees(100));
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(-100));
+        matrices.mulPose(Axis.YP.rotationDegrees(100));
+        matrices.mulPose(Axis.ZP.rotationDegrees(-100));
         matrices.translate(-0.56,0.34, 0);//arm == HumanoidArm.RIGHT ? 0 : 0.09);
 
         float g = entity.tickCount + delta;
@@ -192,9 +192,9 @@ public class HeldItemHandler {
         FormattedText formattedText = bookAccess.getPage(0);
         matrices.scale(-0.0025f, 0.0025f, -0.0025f);
         
-        matrices.mulPose(Vector3f.XP.rotationDegrees(-90)); // tilt back
-        matrices.mulPose(Vector3f.YP.rotationDegrees(29)); // tilt left right
-        matrices.mulPose(Vector3f.ZP.rotationDegrees(14)); // rotation
+        matrices.mulPose(Axis.XP.rotationDegrees(-90)); // tilt back
+        matrices.mulPose(Axis.YP.rotationDegrees(29)); // tilt left right
+        matrices.mulPose(Axis.ZP.rotationDegrees(14)); // rotation
         //matrices.translate(entity.getX()%1*1000, -entity.getY()%1*1000, -entity.getZ()%1*1000);
         matrices.translate(-120, -230, 130);
         // y is hoch runter

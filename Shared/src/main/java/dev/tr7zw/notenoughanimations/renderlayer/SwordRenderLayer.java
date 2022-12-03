@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
@@ -86,8 +86,8 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             offsetX *= -1d;
         }
         poseStack.translate(offsetX, 0.85D, 0.25D);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(swordRotation));
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(swordRotation));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         
         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
                 poseStack, multiBufferSource, light);
@@ -97,7 +97,7 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
     private void init() {
         for(String itemKey : NEAnimationsLoader.config.sheathSwords) {
             if(itemKey.contains(":")) {
-                Item item = Registry.ITEM.get(new ResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
+                Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
                 if(item != Items.AIR) {
                     items.add(item);
                 }

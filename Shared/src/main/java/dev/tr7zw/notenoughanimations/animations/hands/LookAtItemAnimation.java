@@ -10,7 +10,7 @@ import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -30,10 +30,10 @@ public class LookAtItemAnimation extends BasicAnimation {
     
     private void bind() {
         holdingItems.clear();
-        Item invalid = Registry.ITEM.get(new ResourceLocation("minecraft", "air"));
+        Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
         for (String itemId : NEAnimationsLoader.config.holdingItems) {
             try {
-                Item item = Registry.ITEM.get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
                     holdingItems.add(item);
             } catch (Exception ex) {

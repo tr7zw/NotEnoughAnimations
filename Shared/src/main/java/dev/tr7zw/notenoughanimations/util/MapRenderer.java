@@ -1,8 +1,9 @@
 package dev.tr7zw.notenoughanimations.util;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,22 +23,22 @@ public class MapRenderer {
         Minecraft client = Minecraft.getInstance();
 
         if (small) {
-            matrices.mulPose(Vector3f.YP.rotationDegrees(160.0f));
-            matrices.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
+            matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
+            matrices.mulPose(Axis.ZP.rotationDegrees(180.0f));
             matrices.scale(0.38f, 0.38f, 0.38f);
             
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
         } else {
             if(lefthanded) {
-                matrices.mulPose(Vector3f.YP.rotationDegrees(160.0f));
-                matrices.mulPose(Vector3f.ZP.rotationDegrees(150.0f));
+                matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
+                matrices.mulPose(Axis.ZP.rotationDegrees(150.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
                 
                 matrices.translate(+0.5, -1.3, 0.0);
             } else {
-                matrices.mulPose(Vector3f.YP.rotationDegrees(160.0f));
-                matrices.mulPose(Vector3f.ZP.rotationDegrees(210.0f));
+                matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
+                matrices.mulPose(Axis.ZP.rotationDegrees(210.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
                 
                 matrices.translate(-1.0, -1.8, 0.0);
