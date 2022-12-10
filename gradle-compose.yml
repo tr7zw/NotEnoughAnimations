@@ -1,5 +1,5 @@
 version: '0.0.1'
-source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.19.3-fabriconly-mcpublish/"
+source: "https://github.com/tr7zw/ForgeFabricComposeTemplate/tree/1.19.3-mcpublish/"
 replacements:
   group: "dev.tr7zw"
   name: "NotEnoughAnimations"
@@ -16,5 +16,5 @@ rootProject:
 subProjects:
   NEAFabric:
     template: "Fabric"
-#  NEAForge:
-#    template: "Forge"
+  NEAForge:
+    template: "Forge"

@@ -24,6 +24,6 @@ Brings more animations to the third-person.
 [[dependencies.notenoughanimations]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,)"
+    versionRange="[1.19.3,)"
     ordering="NONE"
     side="CLIENT"

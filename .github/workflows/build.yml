@@ -36,3 +36,4 @@ jobs:
           name: Artifacts
           path: |
             NEAFabric/build/libs/*
+            NEAForge/build/libs/*
