@@ -70,8 +70,10 @@ public class EatDrinkAnimation extends BasicAnimation {
             return;
         }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
+        float g = entity.getUseItemRemainingTicks() - delta + 1.0F;
+        float h = g / entity.getUseItem().getUseDuration();
         AnimationUtil.applyArmTransforms(model, arm,
-                -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 2f)) + Mth.sin((System.currentTimeMillis() % 20000) / 30f) * 0.1f,
+                -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 2f)) + Mth.abs(Mth.cos(g / 4.0F * 3.1415927F) * 0.2F),
                 -0.3f, 0.3f);
     }
 
