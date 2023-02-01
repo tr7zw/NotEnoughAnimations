@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.RotationLock;
+import dev.tr7zw.notenoughanimations.animations.BowAnimation;
 
 public class Config {
 
@@ -41,5 +42,6 @@ public class Config {
     public boolean narutoRunning = false;
     public boolean enableInWorldBookRendering = false;
     public boolean disableLegSmoothing = false;
+    public BowAnimation bowAnimation = BowAnimation.VANILLA;
 
 }

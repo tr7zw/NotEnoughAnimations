@@ -15,6 +15,7 @@ import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.LadderAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.PassengerAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.BoatAnimation;
+import dev.tr7zw.notenoughanimations.animations.hands.CustomBowAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.EatDrinkAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.HorseAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.HugAnimation;
@@ -106,6 +107,7 @@ public class AnimationProvider {
         addAnimation(new FreezingAnimation());
         addAnimation(new HugAnimation());
         addAnimation(new NarutoRunningAnimation());
+        addAnimation(new CustomBowAnimation());
     }
 
     public void addAnimation(BasicAnimation animation) {
