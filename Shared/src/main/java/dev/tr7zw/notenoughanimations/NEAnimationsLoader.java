@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import dev.tr7zw.config.CustomConfigScreen;
+import dev.tr7zw.notenoughanimations.animations.BowAnimation;
 import dev.tr7zw.notenoughanimations.config.Config;
 import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
 import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
@@ -72,7 +73,7 @@ public abstract class NEAnimationsLoader {
     }
     
     public Screen createConfigScreen(Screen parent) {
-        CustomConfigScreen screen = new CustomConfigScreen(parent, "text.nea.title") {
+        return new CustomConfigScreen(parent, "text.nea.title") {
 
             @Override
             public void initialize() {
@@ -140,6 +141,7 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.narutoRunning = b));
                 options.add(getOnOffOption("text.nea.enable.enableInWorldBookRendering", () -> config.enableInWorldBookRendering,
                         (b) -> config.enableInWorldBookRendering = b));
+                options.add(getEnumOption("text.nea.enable.bowAnimation", BowAnimation.class, () -> config.bowAnimation, (b) -> config.bowAnimation = b));
                 
 
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
@@ -159,8 +161,6 @@ public abstract class NEAnimationsLoader {
             }
 
         };
-
-        return screen;
     }
 
 

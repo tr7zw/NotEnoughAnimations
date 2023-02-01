@@ -31,5 +31,8 @@
     "text.nea.enable.huggingAnimation": "Simple Hugging Animation",
     "text.nea.enable.narutoRunning": "❝Naruto Running❞",
     "text.nea.enable.enableInWorldBookRendering": "[WIP]In-World Books",
-    "text.nea.disableLegSmoothing": "Disable Leg Smoothing"
+    "text.nea.disableLegSmoothing": "Disable Leg Smoothing",
+    "text.nea.enable.bowAnimation": "Bow Animation",
+    "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
+    "text.nea.enable.bowAnimation.CUSTOM_V1": "Custom V1"
   }
