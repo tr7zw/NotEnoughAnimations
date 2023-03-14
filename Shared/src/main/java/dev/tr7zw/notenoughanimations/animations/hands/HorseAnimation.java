@@ -45,7 +45,7 @@ public class HorseAnimation extends BasicAnimation {
         AbstractHorse horse = (AbstractHorse) entity.getVehicle();
         int id = horse.getPassengers().indexOf(entity);
         if(id == 0) {
-            float rotation = -Mth.cos(horse.animationPosition * 0.3f);
+            float rotation = -Mth.cos(horse.walkAnimation.position() * 0.3f);
             rotation *= 0.1;
             AnimationUtil.applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
         }
