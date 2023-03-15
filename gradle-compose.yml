@@ -14,7 +14,7 @@ replacements:
 enabledFlags:
   - autopublish
   - publishFabric
-#  - publishForge
+  - publishForge
   - modrinth
   - curseforge
 rootProject:
@@ -22,5 +22,5 @@ rootProject:
 subProjects:
   NEAFabric:
     template: "Fabric"
-#  NEAForge:
-#    template: "Forge"
+  NEAForge:
+    template: "Forge"
