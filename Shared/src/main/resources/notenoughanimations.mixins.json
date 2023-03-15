@@ -12,8 +12,7 @@
     "ItemInHandLayerMixin",
     "PlayerRendererMixin",
     "ItemInHandRendererMixin",
-    "LivingEntityMixin",
-    "DonorAbstractClientPlayerMixin"
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
