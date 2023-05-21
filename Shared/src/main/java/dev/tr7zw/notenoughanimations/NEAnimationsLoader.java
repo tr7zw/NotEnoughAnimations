@@ -149,6 +149,10 @@ public abstract class NEAnimationsLoader {
                 options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> config.showLastUsedSword,
                         (b) -> config.showLastUsedSword = b));
                 options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class, () -> config.holdUpItemsMode, (b) -> config.holdUpItemsMode = b));
+                options.add(getDoubleOption("text.nea.holdUpItemOffset", -0.5f, 0.4f, 0.1f,
+                        () -> (double) config.holdUpItemOffset, (i) -> {
+                            config.holdUpItemOffset = i.floatValue();
+                        }));
                 options.add(getOnOffOption("text.nea.enable.itemSwapAnimation", () -> config.itemSwapAnimation,
                         (b) -> config.itemSwapAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.tweakElytraAnimation", () -> config.tweakElytraAnimation,
