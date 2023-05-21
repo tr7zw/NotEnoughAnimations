@@ -34,6 +34,7 @@ public abstract class NEAnimationsLoader {
     public PlayerTransformer playerTransformer;
     public HeldItemHandler heldItemHandler;
     public AnimationProvider animationProvider;
+    private boolean lateInitCompleted = false;
 
     public void onEnable() {
         INSTANCE = this;
@@ -61,6 +62,18 @@ public abstract class NEAnimationsLoader {
         playerTransformer = new PlayerTransformer();
         heldItemHandler = new HeldItemHandler();
         animationProvider = new AnimationProvider();
+    }
+    
+    private void lateInit() {
+        animationProvider.refreshEnabledAnimations(); // refresh once after the game is loaded, so all other mods are done initializing
+    }
+    
+    public void clientTick() {
+        // run this code later, so all other mods are done loading
+        if (!lateInitCompleted) {
+            lateInitCompleted = true;
+            lateInit();
+        }
     }
 
     public void writeConfig() {
