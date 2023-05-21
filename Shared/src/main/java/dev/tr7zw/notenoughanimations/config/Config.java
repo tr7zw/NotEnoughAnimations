@@ -34,6 +34,7 @@ public class Config {
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));
     public boolean enableCrawlingAnimation = true;
     public HoldUpModes holdUpItemsMode = HoldUpModes.CONFIG;
+    public float holdUpItemOffset = 0;
     public boolean itemSwapAnimation = true;
     public boolean tweakElytraAnimation = true;
     public boolean petAnimation = true;
