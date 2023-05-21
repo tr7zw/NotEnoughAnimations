@@ -48,15 +48,15 @@ public class LookAtItemAnimation extends BasicAnimation {
         ItemStack itemInLeftHand = entity.getItemInHand(entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         boolean rightArm = holdingItems.contains(itemInRightHand.getItem()) || (NEAnimationsLoader.config.holdUpAllItems &&  !itemInRightHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
         boolean leftArm = holdingItems.contains(itemInLeftHand.getItem()) || (NEAnimationsLoader.config.holdUpAllItems && !itemInLeftHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
-        if(rightArm && leftArm) {
+        if(rightArm && leftArm && !entity.swinging) { // can't be both hands while swinging
             target = bothHands;
             return true;
         }
-        if(rightArm) {
+        if(rightArm && !(entity.swinging && entity.swingingArm == (entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND))) {
             target = right;
             return true;
         }
-        if(leftArm) {
+        if(leftArm && !(entity.swinging && entity.swingingArm == (entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND))) {
             target = left;
             return true;
         }
