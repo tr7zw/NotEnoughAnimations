@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.notenoughanimations.animations.BowAnimation;
+import dev.tr7zw.notenoughanimations.animations.HoldUpModes;
 import dev.tr7zw.notenoughanimations.config.Config;
 import dev.tr7zw.notenoughanimations.config.ConfigUpgrader;
 import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
@@ -123,8 +124,7 @@ public abstract class NEAnimationsLoader {
                 options.add(getEnumOption("text.nea.rotationlock", RotationLock.class, () -> config.rotationLock, (b) -> config.rotationLock = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> config.showLastUsedSword,
                         (b) -> config.showLastUsedSword = b));
-                options.add(getOnOffOption("text.nea.enable.holdupallitems", () -> config.holdUpAllItems,
-                        (b) -> config.holdUpAllItems = b));
+                options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class, () -> config.holdUpItemsMode, (b) -> config.holdUpItemsMode = b));
                 options.add(getOnOffOption("text.nea.enable.itemSwapAnimation", () -> config.itemSwapAnimation,
                         (b) -> config.itemSwapAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.tweakElytraAnimation", () -> config.tweakElytraAnimation,

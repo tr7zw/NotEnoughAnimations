@@ -6,6 +6,7 @@ import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.RotationLock;
 import dev.tr7zw.notenoughanimations.animations.BowAnimation;
+import dev.tr7zw.notenoughanimations.animations.HoldUpModes;
 
 public class Config {
 
@@ -32,7 +33,7 @@ public class Config {
     public Set<String> sheathSwords = new HashSet<>(Arrays.asList("minecraft:wooden_sword", "minecraft:stone_sword",
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));
     public boolean enableCrawlingAnimation = true;
-    public boolean holdUpAllItems = false;
+    public HoldUpModes holdUpItemsMode = HoldUpModes.CONFIG;
     public boolean itemSwapAnimation = true;
     public boolean tweakElytraAnimation = true;
     public boolean petAnimation = true;

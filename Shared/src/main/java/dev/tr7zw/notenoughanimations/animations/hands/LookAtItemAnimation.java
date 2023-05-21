@@ -7,6 +7,7 @@ import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.BodyPart;
+import dev.tr7zw.notenoughanimations.animations.HoldUpModes;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -25,7 +26,7 @@ public class LookAtItemAnimation extends BasicAnimation {
     @Override
     public boolean isEnabled() {
         bind();
-        return NEAnimationsLoader.config.holdUpAllItems || !holdingItems.isEmpty();
+        return NEAnimationsLoader.config.holdUpItemsMode != HoldUpModes.NONE && !holdingItems.isEmpty();
     }
     
     private void bind() {
@@ -44,10 +45,11 @@ public class LookAtItemAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
+        boolean allItems = NEAnimationsLoader.config.holdUpItemsMode == HoldUpModes.ALL;
         ItemStack itemInRightHand = entity.getItemInHand(entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         ItemStack itemInLeftHand = entity.getItemInHand(entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        boolean rightArm = holdingItems.contains(itemInRightHand.getItem()) || (NEAnimationsLoader.config.holdUpAllItems &&  !itemInRightHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
-        boolean leftArm = holdingItems.contains(itemInLeftHand.getItem()) || (NEAnimationsLoader.config.holdUpAllItems && !itemInLeftHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
+        boolean rightArm = holdingItems.contains(itemInRightHand.getItem()) || (allItems &&  !itemInRightHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
+        boolean leftArm = holdingItems.contains(itemInLeftHand.getItem()) || (allItems && !itemInLeftHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
         if(rightArm && leftArm && !entity.swinging) { // can't be both hands while swinging
             target = bothHands;
             return true;
