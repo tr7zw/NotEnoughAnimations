@@ -49,6 +49,7 @@ public abstract class NEAnimationsLoader {
         }
         if (config == null) {
             config = new Config();
+            setupConfig();
             writeConfig();
         } else {
             if(ConfigUpgrader.upgradeConfig(config)) {
@@ -56,6 +57,16 @@ public abstract class NEAnimationsLoader {
             }
         }
         enable();
+    }
+    
+    private void setupConfig() {
+        try {
+            Class clientClass = Class.forName("dev.tr7zw.firstperson.FirstPersonModelCore");
+            // Firstperson is installed, change some default settings to fit
+            config.bowAnimation = BowAnimation.CUSTOM_V1;
+        }catch(Throwable ex) {
+            // ignored
+        }
     }
 
     private void enable() {
