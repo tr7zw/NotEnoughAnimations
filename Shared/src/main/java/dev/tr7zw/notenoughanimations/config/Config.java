@@ -9,7 +9,7 @@ import dev.tr7zw.notenoughanimations.animations.BowAnimation;
 
 public class Config {
 
-    public int configVersion = 8;
+    public int configVersion = 9;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(
             Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern", "minecraft:recovery_compass"));
@@ -28,7 +28,7 @@ public class Config {
     public boolean dontHoldItemsInBed = true;
     public boolean freezeArmsInBed = true;
     public RotationLock rotationLock = RotationLock.NONE;
-    public boolean showLastUsedSword = true;
+    public boolean showLastUsedSword = false;
     public Set<String> sheathSwords = new HashSet<>(Arrays.asList("minecraft:wooden_sword", "minecraft:stone_sword",
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));
     public boolean enableCrawlingAnimation = true;

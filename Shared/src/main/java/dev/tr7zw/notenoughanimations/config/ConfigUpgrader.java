@@ -37,6 +37,10 @@ public class ConfigUpgrader {
             config.holdingItems.add("minecraft:recovery_compass");
             changed = true;
         }
+        if (config.configVersion <= 8) {
+            config.configVersion = 9;
+            config.showLastUsedSword = false; // turning this off by default
+        }
         // check for more changes here
         
         return changed;

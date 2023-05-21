@@ -48,10 +48,6 @@ Added/fixed animations:
 
 ![](https://tr7zw.dev/nea/smootharms.gif)
 
-- Scabbard Sword while not in use
-
-![](https://tr7zw.dev/nea/ScabbardSword.gif)
-
 ## License
 
 This project is licensed under [``tr7zw Protective License``](LICENSE-EntityCulling).
