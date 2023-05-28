@@ -4,7 +4,7 @@ replacements:
   group: "dev.tr7zw"
   name: "NotEnoughAnimations"
   id: "notenoughanimations"
-  version: "1.6.3"
+  version: "1.6.4"
   author: "tr7zw"
   relocationpackage: "dev.tr7zw.notenoughanimations"
   dependencies: ""
