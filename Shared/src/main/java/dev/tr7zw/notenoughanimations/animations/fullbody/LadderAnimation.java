@@ -15,9 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.LadderBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
@@ -32,9 +30,9 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        if(entity.onClimbable() && !entity.isOnGround() && entity.getLastClimbablePos().isPresent()) {
+        if(entity.onClimbable() && !entity.onGround() && entity.getLastClimbablePos().isPresent()) {
             for(Class<? extends Block> blocktype : ladderLikeBlocks) {
-                if(blocktype.isAssignableFrom(entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+                if(blocktype.isAssignableFrom(entity.level().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
                     return true;
             }
             return false;

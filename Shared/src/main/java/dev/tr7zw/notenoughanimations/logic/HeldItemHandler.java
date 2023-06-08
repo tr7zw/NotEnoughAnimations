@@ -188,24 +188,24 @@ public class HeldItemHandler {
     // Broken mess, fix me
     @SuppressWarnings("resource")
     private void renderText(LivingEntity entity, PoseStack matrices, ItemStack itemStack, ArmedModel armedModel, HumanoidArm arm) {
-        BookAccess bookAccess = fromItem(itemStack);
-        FormattedText formattedText = bookAccess.getPage(0);
-        matrices.scale(-0.0025f, 0.0025f, -0.0025f);
-        
-        matrices.mulPose(Axis.XP.rotationDegrees(-90)); // tilt back
-        matrices.mulPose(Axis.YP.rotationDegrees(29)); // tilt left right
-        matrices.mulPose(Axis.ZP.rotationDegrees(14)); // rotation
-        //matrices.translate(entity.getX()%1*1000, -entity.getY()%1*1000, -entity.getZ()%1*1000);
-        matrices.translate(-120, -230, 130);
-        // y is hoch runter
-        
-        //System.out.println(entity.getX()%1*1000 + " " + entity.getY()%1*1000 + " " + entity.getZ()%1*1000);
-        List<FormattedCharSequence> text = Minecraft.getInstance().font.split(formattedText, 114);
-        int n = Math.min(128 / 9, text.size());
-        for (int o = 0; o < n; o++) {
-            FormattedCharSequence formattedCharSequence = text.get(o);
-            Minecraft.getInstance().font.draw(matrices, formattedCharSequence, (36), (32 + o * 9), 0);
-        }
+//        BookAccess bookAccess = fromItem(itemStack);
+//        FormattedText formattedText = bookAccess.getPage(0);
+//        matrices.scale(-0.0025f, 0.0025f, -0.0025f);
+//        
+//        matrices.mulPose(Axis.XP.rotationDegrees(-90)); // tilt back
+//        matrices.mulPose(Axis.YP.rotationDegrees(29)); // tilt left right
+//        matrices.mulPose(Axis.ZP.rotationDegrees(14)); // rotation
+//        //matrices.translate(entity.getX()%1*1000, -entity.getY()%1*1000, -entity.getZ()%1*1000);
+//        matrices.translate(-120, -230, 130);
+//        // y is hoch runter
+//        
+//        //System.out.println(entity.getX()%1*1000 + " " + entity.getY()%1*1000 + " " + entity.getZ()%1*1000);
+//        List<FormattedCharSequence> text = Minecraft.getInstance().font.split(formattedText, 114);
+//        int n = Math.min(128 / 9, text.size());
+//        for (int o = 0; o < n; o++) {
+//            FormattedCharSequence formattedCharSequence = text.get(o);
+//            Minecraft.getInstance().font.draw(matrices, formattedCharSequence, (36), (32 + o * 9), 0);
+//        }
     }
     
     private BookAccess fromItem(ItemStack itemStack) {
