@@ -3,7 +3,6 @@ package dev.tr7zw.notenoughanimations.logic;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +33,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -70,6 +68,10 @@ public class HeldItemHandler {
             if(NEAnimationsLoader.config.dontHoldItemsInBed) {
                 info.cancel();
             }
+            return;
+        }
+        if(itemStack.hasTag() && itemStack.getTag().contains("CustomModelData")) {
+            // Don't replace the model of items with a custom model
             return;
         }
         if (model instanceof ArmedModel && model instanceof HumanoidModel) {

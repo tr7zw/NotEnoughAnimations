@@ -21,13 +21,13 @@ import net.minecraft.world.item.ItemStack;
 public class MapHoldingAnimation extends BasicAnimation {
 
     private Set<Item> compatibleMaps = new HashSet<>();
-    
+
     @Override
     public boolean isEnabled() {
         bind();
         return NEAnimationsLoader.config.enableInWorldMapRendering || !compatibleMaps.isEmpty();
     }
-    
+
     private void bind() {
         compatibleMaps.clear();
         Item invalid = Registry.ITEM.get(new ResourceLocation("minecraft", "air"));
@@ -43,27 +43,40 @@ public class MapHoldingAnimation extends BasicAnimation {
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         ItemStack itemInMainHand = entity.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack itemInOffHand = entity.getItemInHand(InteractionHand.OFF_HAND);
-        if(compatibleMaps.contains(itemInMainHand.getItem()) && itemInOffHand.isEmpty()) {
-            target = bothHands;
-            return true;
+        if (compatibleMaps.contains(itemInMainHand.getItem()) && itemInOffHand.isEmpty()) {
+            if (itemInMainHand.hasTag() && itemInMainHand.getTag().contains("CustomModelData")) {
+                return false;
+            } else {
+                target = bothHands;
+                return true;
+            }
         }
-        if(compatibleMaps.contains(itemInMainHand.getItem()) && !itemInOffHand.isEmpty()) {
-            target = entity.getMainArm() == HumanoidArm.RIGHT ? right : left;
-            return true;
+        if (compatibleMaps.contains(itemInMainHand.getItem()) && !itemInOffHand.isEmpty()) {
+            if (itemInMainHand.hasTag() && itemInMainHand.getTag().contains("CustomModelData")) {
+                return false;
+            } else {
+                target = entity.getMainArm() == HumanoidArm.RIGHT ? right : left;
+                return true;
+            }
+
         }
-        if(compatibleMaps.contains(itemInOffHand.getItem()) && !itemInOffHand.isEmpty()) {
-            target = entity.getMainArm() == HumanoidArm.RIGHT ? left : right;
-            return true;
+        if (compatibleMaps.contains(itemInOffHand.getItem()) && !itemInOffHand.isEmpty()) {
+            if (itemInMainHand.hasTag() && itemInMainHand.getTag().contains("CustomModelData")) {
+                return false;
+            } else {
+                target = entity.getMainArm() == HumanoidArm.RIGHT ? left : right;
+                return true;
+            }
         }
 
         return false;
     }
 
-    private final BodyPart[] bothHands = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM};
-    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM};
-    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM};
+    private final BodyPart[] bothHands = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM };
+    private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM };
+    private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM };
     private BodyPart[] target = bothHands;
-    
+
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
         return target;
@@ -78,7 +91,7 @@ public class MapHoldingAnimation extends BasicAnimation {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        if(target == bothHands) {
+        if (target == bothHands) {
             AnimationUtil.applyArmTransforms(model, arm, -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 0.5f, 1.5f)),
                     -0.4f, 0.3f);
             return;
