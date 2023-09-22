@@ -30,7 +30,7 @@
   ],
 
   "depends": {
-    "minecraft": ">=1.20",
+    "minecraft": ">=1.20.2",
     "fabric-api": "*"
   },
   "suggests": {
