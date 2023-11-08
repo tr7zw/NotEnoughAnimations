@@ -3,7 +3,7 @@ source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.19.2/"
 replacements:
   name: "NotEnoughAnimations"
   id: "notenoughanimations"
-  version: "1.6.2"
+  version: "1.6.4"
   relocationpackage: "dev.tr7zw.notenoughanimations"
   modrinthid: MPCX6s5C
   curseforgeid: 433760
