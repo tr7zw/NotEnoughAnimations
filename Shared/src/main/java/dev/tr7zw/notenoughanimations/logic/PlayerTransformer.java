@@ -18,11 +18,12 @@ public class PlayerTransformer {
     private int frameId = 0; // ok to overflow, just used to keep track of what has been updated this frame
     private boolean renderingFirstPersonArm = false;
 
-    public void updateModel(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float idk, float swing,
-            CallbackInfo info) {
+    public void updateModel(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float idk,
+            float swing, CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
-        if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the first person model hand
+        if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the
+                                                           // first person model hand
             return;
         }
         float deltaTick = Minecraft.getInstance().getDeltaFrameTime();
@@ -36,22 +37,19 @@ public class PlayerTransformer {
             float timePassed = passedNs / 1000000f;
             float speed = NEAnimationsLoader.config.animationSmoothingSpeed;
 
-            interpolate(model.leftArm, last, 0, timePassed, differentFrame,
-                    speed);
-            interpolate(model.rightArm, last, 3, timePassed, differentFrame,
-                    speed);
-            if(!NEAnimationsLoader.config.disableLegSmoothing) {
-                interpolate(model.leftLeg, last, 6, timePassed, differentFrame,
-                        speed);
-                interpolate(model.rightLeg, last, 9, timePassed, differentFrame,
-                        speed);
+            interpolate(model.leftArm, last, 0, timePassed, differentFrame, speed);
+            interpolate(model.rightArm, last, 3, timePassed, differentFrame, speed);
+            if (!NEAnimationsLoader.config.disableLegSmoothing) {
+                interpolate(model.leftLeg, last, 6, timePassed, differentFrame, speed);
+                interpolate(model.rightLeg, last, 9, timePassed, differentFrame, speed);
             }
-            if(entity == mc.cameraEntity) {
+            if (entity == mc.cameraEntity) {
                 // For now located here due to smoothing logic being here.
-                if(NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
+                if (NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
                     interpolateYawBodyHead(entity, last, 12, timePassed, differentFrame, 6);
                 }
-                if(NEAnimationsLoader.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null && differentFrame) {
+                if (NEAnimationsLoader.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null
+                        && differentFrame) {
                     entity.yBodyRot = entity.yHeadRot;
                     entity.yBodyRotO = entity.yHeadRotO;
                 }
@@ -62,7 +60,8 @@ public class PlayerTransformer {
 
     public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel, float tick,
             float swing, CallbackInfo info) {
-        if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the first person model hand
+        if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the
+                                                           // first person model hand
             return;
         }
         NEAnimationsLoader.INSTANCE.animationProvider.preUpdate(livingEntity, playerModel);
@@ -72,7 +71,7 @@ public class PlayerTransformer {
         NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
         doneLatebind = true;
     }
-    
+
     public void nextFrame() {
         frameId++;
     }
@@ -100,16 +99,17 @@ public class PlayerTransformer {
         amount = Math.min(amount, 1);
         amount = Math.max(amount, 0); // "Should" be impossible, but just to be sure
         last[offset] = last[offset] + ((model.xRot - last[offset]) * amount);
-        last[offset + 1] = last[offset + 1] + ((AnimationUtil.wrapDegrees(model.yRot) - AnimationUtil.wrapDegrees(last[offset + 1])) * amount);
+        last[offset + 1] = last[offset + 1]
+                + ((AnimationUtil.wrapDegrees(model.yRot) - AnimationUtil.wrapDegrees(last[offset + 1])) * amount);
         last[offset + 2] = last[offset + 2] + ((model.zRot - last[offset + 2]) * amount);
         cleanInvalidData(last, offset);
         model.xRot = (last[offset]);
         model.yRot = (last[offset + 1]);
         model.zRot = (last[offset + 2]);
     }
-    
-    private void interpolateYawBodyHead(AbstractClientPlayer entity, float[] last, int offset, float timePassed, boolean differentFrame,
-            float speed) {
+
+    private void interpolateYawBodyHead(AbstractClientPlayer entity, float[] last, int offset, float timePassed,
+            boolean differentFrame, float speed) {
         if (!differentFrame) { // Rerendering the place in the same frame
             entity.yBodyRot = (last[offset]);
             entity.yBodyRotO = entity.yBodyRot;
@@ -119,10 +119,10 @@ public class PlayerTransformer {
             last[offset] = entity.yHeadRot;
             return;
         }
-        if(entity.yHeadRot - last[offset] > 90) {
+        if (entity.yHeadRot - last[offset] > 90) {
             speed *= 5;
         }
-        if(entity.yHeadRot - last[offset] < -90) {
+        if (entity.yHeadRot - last[offset] < -90) {
             speed *= 5;
         }
         float amount = ((1f / (1000f / timePassed))) * speed;
@@ -130,7 +130,7 @@ public class PlayerTransformer {
         entity.yBodyRotO = last[offset];
         last[offset] += (entity.yHeadRot - last[offset]) * amount;
         entity.yBodyRot = (last[offset]);
-        //entity.yBodyRotO = entity.yBodyRot;
+        // entity.yBodyRotO = entity.yBodyRot;
     }
 
     /**

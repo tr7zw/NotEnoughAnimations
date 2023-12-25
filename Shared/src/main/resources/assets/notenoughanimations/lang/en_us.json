@@ -1,6 +1,5 @@
 {
     "text.nea.title": "Not Enough Animations Settings",
-
     "text.nea.enable.animationsmoothing": "Animation Smoothing",
     "text.nea.enable.animationsmoothing.tooltip": "Smooths out the arm/leg animations to make them look more natural and less jumpy",
     "text.nea.smoothingSpeed": "Smoothing Amount",
@@ -69,4 +68,4 @@
     "text.nea.enable.bowAnimation.tooltip": "The type of bow animation to use",
     "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
     "text.nea.enable.bowAnimation.CUSTOM_V1": "Custom V1"
-  }
+}

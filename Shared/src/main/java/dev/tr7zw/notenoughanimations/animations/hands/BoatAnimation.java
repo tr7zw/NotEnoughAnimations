@@ -23,8 +23,8 @@ public class BoatAnimation extends BasicAnimation {
         return entity.isPassenger() && entity.getVehicle() instanceof Boat;
     }
 
-    private final BodyPart[] bothHands = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM};
-    
+    private final BodyPart[] bothHands = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM };
+
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
         return bothHands;
@@ -38,13 +38,13 @@ public class BoatAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        if(part == BodyPart.BODY) {
+        if (part == BodyPart.BODY) {
             return;
         }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         Boat boat = (Boat) entity.getVehicle();
         int id = boat.getPassengers().indexOf(entity);
-        if(id == 0) {
+        if (id == 0) {
             float paddle = boat.getRowingTime(arm == HumanoidArm.LEFT ? 0 : 1, delta);
             AnimationUtil.applyArmTransforms(model, arm, -1.1f - Mth.sin(paddle) * 0.3f, 0.2f, 0.3f);
         }

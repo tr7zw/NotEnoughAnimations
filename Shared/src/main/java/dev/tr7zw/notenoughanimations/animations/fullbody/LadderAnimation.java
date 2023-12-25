@@ -30,9 +30,10 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        if(entity.onClimbable() && !entity.onGround() && entity.getLastClimbablePos().isPresent()) {
-            for(Class<? extends Block> blocktype : ladderLikeBlocks) {
-                if(blocktype.isAssignableFrom(entity.level().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+        if (entity.onClimbable() && !entity.onGround() && entity.getLastClimbablePos().isPresent()) {
+            for (Class<? extends Block> blocktype : ladderLikeBlocks) {
+                if (blocktype.isAssignableFrom(
+                        entity.level().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
                     return true;
             }
             return false;
@@ -46,7 +47,7 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
             add(TrapDoorBlock.class);
         }
     };
-    
+
     private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY,
             BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG };
     private final BodyPart[] partsSneakingRight = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY, BodyPart.LEFT_LEG,
@@ -56,7 +57,8 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
-        if (entity.isCrouching() && entity.getDeltaMovement().y == -0.0784000015258789) { // magic value while being not moving on a ladder cause mc
+        if (entity.isCrouching() && entity.getDeltaMovement().y == -0.0784000015258789) { // magic value while being not
+                                                                                          // moving on a ladder cause mc
             if (entity.getMainArm() == HumanoidArm.RIGHT) {
                 return partsSneakingLeft;
             } else {
@@ -124,8 +126,9 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
     }
 
     @Override
-    public void updateState(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> playerModel) {
-        if(entity.isCrouching() && isValid(entity, data)) {
+    public void updateState(AbstractClientPlayer entity, PlayerData data,
+            PlayerModel<AbstractClientPlayer> playerModel) {
+        if (entity.isCrouching() && isValid(entity, data)) {
             data.setPoseOverwrite(entity.getPose());
             entity.setPose(Pose.STANDING);
             playerModel.crouching = false;

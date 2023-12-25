@@ -1,6 +1,5 @@
 {
     "text.nea.title": "Not Enough Animations 設定",
-
     "text.nea.enable.animationsmoothing": "平滑動畫",
     "text.nea.enable.animationsmoothing.tooltip": "平滑手臂和腿部的動畫，讓它們看起還更自然並更少拼湊感",
     "text.nea.smoothingSpeed": "平滑程度",

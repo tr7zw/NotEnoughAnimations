@@ -23,8 +23,8 @@ public class HorseAnimation extends BasicAnimation {
         return entity.isPassenger() && entity.getVehicle() instanceof AbstractHorse;
     }
 
-    private final BodyPart[] bothHands = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY};
-    
+    private final BodyPart[] bothHands = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY };
+
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
         return bothHands;
@@ -38,13 +38,13 @@ public class HorseAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        if(part == BodyPart.BODY) {
+        if (part == BodyPart.BODY) {
             return;
         }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         AbstractHorse horse = (AbstractHorse) entity.getVehicle();
         int id = horse.getPassengers().indexOf(entity);
-        if(id == 0) {
+        if (id == 0) {
             float rotation = -Mth.cos(horse.walkAnimation.position() * 0.3f);
             rotation *= 0.1;
             AnimationUtil.applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);

@@ -22,19 +22,20 @@ import net.minecraft.world.item.ItemStack;
 public class LookAtItemAnimation extends BasicAnimation {
 
     private Set<Item> holdingItems = new HashSet<>();
-    
+
     @Override
     public boolean isEnabled() {
         bind();
         return NEAnimationsLoader.config.holdUpItemsMode != HoldUpModes.NONE && !holdingItems.isEmpty();
     }
-    
+
     private void bind() {
         holdingItems.clear();
         Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
         for (String itemId : NEAnimationsLoader.config.holdingItems) {
             try {
-                Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = BuiltInRegistries.ITEM
+                        .get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
                     holdingItems.add(item);
             } catch (Exception ex) {
@@ -46,30 +47,38 @@ public class LookAtItemAnimation extends BasicAnimation {
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         boolean allItems = NEAnimationsLoader.config.holdUpItemsMode == HoldUpModes.ALL;
-        ItemStack itemInRightHand = entity.getItemInHand(entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        ItemStack itemInLeftHand = entity.getItemInHand(entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        boolean rightArm = holdingItems.contains(itemInRightHand.getItem()) || (allItems &&  !itemInRightHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
-        boolean leftArm = holdingItems.contains(itemInLeftHand.getItem()) || (allItems && !itemInLeftHand.isEmpty() && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
-        if(rightArm && leftArm && !entity.swinging) { // can't be both hands while swinging
+        ItemStack itemInRightHand = entity.getItemInHand(
+                entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        ItemStack itemInLeftHand = entity.getItemInHand(
+                entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        boolean rightArm = holdingItems.contains(itemInRightHand.getItem()) || (allItems && !itemInRightHand.isEmpty()
+                && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
+        boolean leftArm = holdingItems.contains(itemInLeftHand.getItem()) || (allItems && !itemInLeftHand.isEmpty()
+                && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
+        if (rightArm && leftArm && !entity.swinging) { // can't be both hands while swinging
             target = bothHands;
             return true;
         }
-        if(rightArm && !(entity.swinging && entity.swingingArm == (entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND))) {
+        if (rightArm && !(entity.swinging
+                && entity.swingingArm == (entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND
+                        : InteractionHand.MAIN_HAND))) {
             target = right;
             return true;
         }
-        if(leftArm && !(entity.swinging && entity.swingingArm == (entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND))) {
+        if (leftArm && !(entity.swinging
+                && entity.swingingArm == (entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND
+                        : InteractionHand.MAIN_HAND))) {
             target = left;
             return true;
         }
         return false;
     }
 
-    private final BodyPart[] bothHands = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM};
-    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM};
-    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM};
+    private final BodyPart[] bothHands = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM };
+    private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM };
+    private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM };
     private BodyPart[] target = bothHands;
-    
+
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
         return target;
@@ -84,8 +93,8 @@ public class LookAtItemAnimation extends BasicAnimation {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-            AnimationUtil.applyArmTransforms(model, arm, -NEAnimationsLoader.config.holdUpItemOffset -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 1.5f)), -0.2f,
-                    0.3f);
+        AnimationUtil.applyArmTransforms(model, arm, -NEAnimationsLoader.config.holdUpItemOffset
+                - (Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
     }
 
 }

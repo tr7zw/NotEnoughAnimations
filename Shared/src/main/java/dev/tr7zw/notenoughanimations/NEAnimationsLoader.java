@@ -52,19 +52,19 @@ public abstract class NEAnimationsLoader {
             setupConfig();
             writeConfig();
         } else {
-            if(ConfigUpgrader.upgradeConfig(config)) {
+            if (ConfigUpgrader.upgradeConfig(config)) {
                 writeConfig();
             }
         }
         enable();
     }
-    
+
     private void setupConfig() {
         try {
             Class clientClass = Class.forName("dev.tr7zw.firstperson.FirstPersonModelCore");
             // Firstperson is installed, change some default settings to fit
             config.bowAnimation = BowAnimation.CUSTOM_V1;
-        }catch(Throwable ex) {
+        } catch (Throwable ex) {
             // ignored
         }
     }
@@ -74,11 +74,12 @@ public abstract class NEAnimationsLoader {
         heldItemHandler = new HeldItemHandler();
         animationProvider = new AnimationProvider();
     }
-    
+
     private void lateInit() {
-        animationProvider.refreshEnabledAnimations(); // refresh once after the game is loaded, so all other mods are done initializing
+        animationProvider.refreshEnabledAnimations(); // refresh once after the game is loaded, so all other mods are
+                                                      // done initializing
     }
-    
+
     public void clientTick() {
         // run this code later, so all other mods are done loading
         if (!lateInitCompleted) {
@@ -96,7 +97,7 @@ public abstract class NEAnimationsLoader {
             e1.printStackTrace();
         }
     }
-    
+
     public Screen createConfigScreen(Screen parent) {
         return new CustomConfigScreen(parent, "text.nea.title") {
 
@@ -111,8 +112,8 @@ public abstract class NEAnimationsLoader {
                         () -> (double) config.animationSmoothingSpeed, (i) -> {
                             config.animationSmoothingSpeed = i.floatValue();
                         }));
-                options.add(getOnOffOption("text.nea.enable.inworldmaprendering", () -> config.enableInWorldMapRendering,
-                        (b) -> config.enableInWorldMapRendering = b));
+                options.add(getOnOffOption("text.nea.enable.inworldmaprendering",
+                        () -> config.enableInWorldMapRendering, (b) -> config.enableInWorldMapRendering = b));
                 options.add(getOnOffOption("text.nea.enable.offhandhiding", () -> config.enableOffhandHiding,
                         (b) -> config.enableOffhandHiding = b));
                 options.add(getOnOffOption("text.nea.enable.rotationlocking", () -> config.enableRotationLocking,
@@ -145,10 +146,12 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.dontHoldItemsInBed = b));
                 options.add(getOnOffOption("text.nea.enable.freezearmsinbed", () -> config.freezeArmsInBed,
                         (b) -> config.freezeArmsInBed = b));
-                options.add(getEnumOption("text.nea.rotationlock", RotationLock.class, () -> config.rotationLock, (b) -> config.rotationLock = b));
+                options.add(getEnumOption("text.nea.rotationlock", RotationLock.class, () -> config.rotationLock,
+                        (b) -> config.rotationLock = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> config.showLastUsedSword,
                         (b) -> config.showLastUsedSword = b));
-                options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class, () -> config.holdUpItemsMode, (b) -> config.holdUpItemsMode = b));
+                options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class, () -> config.holdUpItemsMode,
+                        (b) -> config.holdUpItemsMode = b));
                 options.add(getDoubleOption("text.nea.holdUpItemOffset", -0.5f, 0.4f, 0.1f,
                         () -> (double) config.holdUpItemOffset, (i) -> {
                             config.holdUpItemOffset = i.floatValue();
@@ -167,10 +170,10 @@ public abstract class NEAnimationsLoader {
                         (b) -> config.huggingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.narutoRunning", () -> config.narutoRunning,
                         (b) -> config.narutoRunning = b));
-                options.add(getOnOffOption("text.nea.enable.enableInWorldBookRendering", () -> config.enableInWorldBookRendering,
-                        (b) -> config.enableInWorldBookRendering = b));
-                options.add(getEnumOption("text.nea.enable.bowAnimation", BowAnimation.class, () -> config.bowAnimation, (b) -> config.bowAnimation = b));
-                
+                options.add(getOnOffOption("text.nea.enable.enableInWorldBookRendering",
+                        () -> config.enableInWorldBookRendering, (b) -> config.enableInWorldBookRendering = b));
+                options.add(getEnumOption("text.nea.enable.bowAnimation", BowAnimation.class, () -> config.bowAnimation,
+                        (b) -> config.bowAnimation = b));
 
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
 
@@ -190,6 +193,5 @@ public abstract class NEAnimationsLoader {
 
         };
     }
-
 
 }

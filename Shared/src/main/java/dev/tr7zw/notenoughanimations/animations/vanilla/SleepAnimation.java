@@ -9,7 +9,7 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class SleepAnimation extends BasicAnimation{
+public class SleepAnimation extends BasicAnimation {
 
     @Override
     public boolean isEnabled() {
@@ -22,7 +22,7 @@ public class SleepAnimation extends BasicAnimation{
     }
 
     private final BodyPart[] bothHands = BodyPart.values();
-    
+
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
         return bothHands;
@@ -36,7 +36,7 @@ public class SleepAnimation extends BasicAnimation{
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        if(NEAnimationsLoader.config.freezeArmsInBed) {
+        if (NEAnimationsLoader.config.freezeArmsInBed) {
             HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
             AnimationUtil.applyArmTransforms(model, arm, 0, 0f, 0f);
         }

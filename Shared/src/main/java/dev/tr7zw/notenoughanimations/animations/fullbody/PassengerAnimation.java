@@ -18,8 +18,8 @@ public class PassengerAnimation extends BasicAnimation {
         return entity.isPassenger();
     }
 
-    private final BodyPart[] parts = new BodyPart[] {BodyPart.BODY};
-    
+    private final BodyPart[] parts = new BodyPart[] { BodyPart.BODY };
+
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
         return parts;

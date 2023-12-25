@@ -20,7 +20,8 @@ public class FreezingAnimation extends BasicAnimation {
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         return entity.canFreeze() && entity.level().getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
-        .anyMatch(blockState -> (blockState.is(Blocks.POWDER_SNOW) || blockState.is(Blocks.POWDER_SNOW_CAULDRON)));
+                .anyMatch(blockState -> (blockState.is(Blocks.POWDER_SNOW)
+                        || blockState.is(Blocks.POWDER_SNOW_CAULDRON)));
     }
 
     private BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM };

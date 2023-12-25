@@ -25,81 +25,85 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>{
+public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
     public SwordRenderLayer(
             RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
         super(renderLayerParent);
     }
-    
+
     private boolean lazyInit = true;
     private static Set<Item> items = new HashSet<>();
     private boolean disabled = false;
 
     public static void update(Player player) {
         PlayerData data = (PlayerData) player;
-        if(items.contains(player.getMainHandItem().getItem())) {
+        if (items.contains(player.getMainHandItem().getItem())) {
             data.setSideSword(player.getMainHandItem());
         }
-        if(items.contains(player.getOffhandItem().getItem())) {
+        if (items.contains(player.getOffhandItem().getItem())) {
             data.setSideSword(player.getOffhandItem());
         }
     }
-    
+
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
-            AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
-            float paramFloat5, float paramFloat6) {
-        if(disabled) {
+    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
+            float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
+            float paramFloat6) {
+        if (disabled) {
             return;
         }
-        if(lazyInit) {
+        if (lazyInit) {
             lazyInit = false;
             init();
         }
-        if(!NEAnimationsLoader.config.showLastUsedSword) {
+        if (!NEAnimationsLoader.config.showLastUsedSword) {
             return;
         }
-        if(player.isInvisible() || player.isSleeping())return;
-        if(!(player instanceof PlayerData)) {
+        if (player.isInvisible() || player.isSleeping())
+            return;
+        if (!(player instanceof PlayerData)) {
             return;
         }
-        if(player.isPassenger()) {
+        if (player.isPassenger()) {
             return; // sitting player in a boat/minecart/on horse pokes the vehicle with the sword
         }
         PlayerData data = (PlayerData) player;
         ItemStack itemStack = data.getSideSword();
         if (itemStack.isEmpty())
             return;
-        if(player.getMainHandItem() == itemStack || player.getOffhandItem() == itemStack) {
+        if (player.getMainHandItem() == itemStack || player.getOffhandItem() == itemStack) {
             return;
         }
         poseStack.pushPose();
         getParentModel().body.translateAndRotate(poseStack);
         boolean lefthanded = (player.getMainArm() == HumanoidArm.LEFT);
         boolean wearingArmor = !player.getItemBySlot(EquipmentSlot.LEGS).isEmpty();
-        if(!player.getItemBySlot(EquipmentSlot.CHEST).isEmpty() && player.getItemBySlot(EquipmentSlot.CHEST).getItem() != Items.ELYTRA) {
+        if (!player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()
+                && player.getItemBySlot(EquipmentSlot.CHEST).getItem() != Items.ELYTRA) {
             wearingArmor = true;
         }
         double offsetX = wearingArmor ? 0.3D : 0.28D;
         float swordRotation = -80F;
-        if(lefthanded) {
+        if (lefthanded) {
             offsetX *= -1d;
         }
         poseStack.translate(offsetX, 0.85D, 0.25D);
         poseStack.mulPose(Axis.XP.rotationDegrees(swordRotation));
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        
-        Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND, lefthanded,
-                poseStack, multiBufferSource, light);
+
+        Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
+                lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+                lefthanded, poseStack, multiBufferSource, light);
         poseStack.popPose();
     }
-    
+
     private void init() {
-        for(String itemKey : NEAnimationsLoader.config.sheathSwords) {
-            if(itemKey.contains(":")) {
-                Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
-                if(item != Items.AIR) {
+        for (String itemKey : NEAnimationsLoader.config.sheathSwords) {
+            if (itemKey.contains(":")) {
+                Item item = BuiltInRegistries.ITEM
+                        .get(new ResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
+                if (item != Items.AIR) {
                     items.add(item);
                 }
             }
@@ -108,8 +112,8 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             // Disable when backslot is installed
             Class.forName("net.backslot.BackSlotMain");
             disabled = true;
-        }catch(Throwable th) {
-            
+        } catch (Throwable th) {
+
         }
     }
 

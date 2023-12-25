@@ -48,11 +48,12 @@ public class HeldItemHandler {
     private Item writableBook = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "writable_book"));
     private Item enchantedBook = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "enchanted_book"));
     private Item knowledgeBook = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "knowledge_book"));
-    public Set<Item> books = new HashSet<>(Arrays.asList(writableBook, writtenBook, enchantedBook, knowledgeBook, book));
+    public Set<Item> books = new HashSet<>(
+            Arrays.asList(writableBook, writtenBook, enchantedBook, knowledgeBook, book));
     @SuppressWarnings("serial")
     public Map<Item, ResourceLocation> bookTextures = new HashMap<>() {
         {
-            put(knowledgeBook,  new ResourceLocation("notenoughanimations", "textures/recipe_book.png"));
+            put(knowledgeBook, new ResourceLocation("notenoughanimations", "textures/recipe_book.png"));
         }
     };
     public Set<Item> glintingBooks = new HashSet<>(Arrays.asList(enchantedBook));
@@ -60,40 +61,46 @@ public class HeldItemHandler {
 
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
-        if(bookModel == null) {
+        if (bookModel == null) {
             bookModel = new BookModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.BOOK));
         }
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
-            if(NEAnimationsLoader.config.dontHoldItemsInBed) {
+            if (NEAnimationsLoader.config.dontHoldItemsInBed) {
                 info.cancel();
             }
             return;
         }
-        if(itemStack.hasTag() && itemStack.getTag().contains("CustomModelData")) {
+        if (itemStack.hasTag() && itemStack.getTag().contains("CustomModelData")) {
             // Don't replace the model of items with a custom model
             return;
         }
         if (model instanceof ArmedModel && model instanceof HumanoidModel) {
             ArmedModel armedModel = (ArmedModel) model;
             HumanoidModel<?> humanoid = (HumanoidModel<?>) model;
-            if((arm == HumanoidArm.RIGHT && humanoid.rightArm.visible) || (arm == HumanoidArm.LEFT && humanoid.leftArm.visible)) {
-                if(NEAnimationsLoader.config.enableInWorldMapRendering) {
-                    if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(filledMap)) { // Mainhand with
-                                                                                                              // or without the
+            if ((arm == HumanoidArm.RIGHT && humanoid.rightArm.visible)
+                    || (arm == HumanoidArm.LEFT && humanoid.leftArm.visible)) {
+                if (NEAnimationsLoader.config.enableInWorldMapRendering) {
+                    if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(filledMap)) { // Mainhand
+                                                                                                              // with
+                                                                                                              // or
+                                                                                                              // without
+                                                                                                              // the
                                                                                                               // offhand
                         matrices.pushPose();
                         armedModel.translateToHand(arm, matrices);
                         matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
-                        matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0), -0.625);
+                        matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f),
+                                0.125 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0), -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,
                                 !entity.getOffhandItem().isEmpty(), entity.getMainArm() == HumanoidArm.LEFT);
                         matrices.popPose();
                         info.cancel();
                         return;
                     }
-                    if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only offhand
+                    if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only
+                                                                                                             // offhand
                         matrices.pushPose();
                         armedModel.translateToHand(arm, matrices);
                         matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
@@ -106,16 +113,18 @@ public class HeldItemHandler {
                         return;
                     }
                 }
-                if(NEAnimationsLoader.config.enableInWorldBookRendering) {
+                if (NEAnimationsLoader.config.enableInWorldBookRendering) {
                     Item item = entity.getMainHandItem().getItem();
-                    if(arm == entity.getMainArm() && books.contains(item)) {
-                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers, light, armedModel, glintingBooks.contains(item), item);
+                    if (arm == entity.getMainArm() && books.contains(item)) {
+                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers, light, armedModel,
+                                glintingBooks.contains(item), item);
                         info.cancel();
                         return;
                     }
                     item = entity.getOffhandItem().getItem();
-                    if(arm != entity.getMainArm() && books.contains(item)) {
-                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers, light, armedModel, glintingBooks.contains(item), item);
+                    if (arm != entity.getMainArm() && books.contains(item)) {
+                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers, light, armedModel,
+                                glintingBooks.contains(item), item);
                         info.cancel();
                         return;
                     }
@@ -153,42 +162,46 @@ public class HeldItemHandler {
         }
     }
 
-    private void renderBook(LivingEntity entity, float delta, ItemStack itemStack, HumanoidArm arm, PoseStack matrices, MultiBufferSource vertexConsumers,
-            int light, ArmedModel armedModel, boolean glow, Item item) {
+    private void renderBook(LivingEntity entity, float delta, ItemStack itemStack, HumanoidArm arm, PoseStack matrices,
+            MultiBufferSource vertexConsumers, int light, ArmedModel armedModel, boolean glow, Item item) {
         matrices.pushPose();
         armedModel.translateToHand(arm, matrices);
-        
+
         matrices.mulPose(Axis.YP.rotationDegrees(100));
         matrices.mulPose(Axis.ZP.rotationDegrees(-100));
-        matrices.translate(-0.56,0.34, 0);//arm == HumanoidArm.RIGHT ? 0 : 0.09);
+        matrices.translate(-0.56, 0.34, 0);// arm == HumanoidArm.RIGHT ? 0 : 0.09);
 
         float g = entity.tickCount + delta;
-        float l = 0;//Mth.lerp(delta, enchantmentTableBlockEntity.oFlip, enchantmentTableBlockEntity.flip);
+        float l = 0;// Mth.lerp(delta, enchantmentTableBlockEntity.oFlip,
+                    // enchantmentTableBlockEntity.flip);
         float m = Mth.frac(l + 0.25F) * 1.6F - 0.3F;
         float n = Mth.frac(l + 0.75F) * 1.6F - 0.3F;
-        float o = 1;//Mth.lerp(delta, enchantmentTableBlockEntity.oOpen, enchantmentTableBlockEntity.open);
+        float o = 1;// Mth.lerp(delta, enchantmentTableBlockEntity.oOpen,
+                    // enchantmentTableBlockEntity.open);
         this.bookModel.setupAnim(g, Mth.clamp(m, 0.0F, 1.0F), Mth.clamp(n, 0.0F, 1.0F), o);
         VertexConsumer vertexConsumer;
-        if(bookTextures.containsKey(item)) {
-            vertexConsumer = ItemRenderer.getFoilBufferDirect(vertexConsumers, RenderType.entitySolid(bookTextures.get(item)), true, glow);
-        }else {
-            vertexConsumer= EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers,RenderType::entitySolid, glow);
+        if (bookTextures.containsKey(item)) {
+            vertexConsumer = ItemRenderer.getFoilBufferDirect(vertexConsumers,
+                    RenderType.entitySolid(bookTextures.get(item)), true, glow);
+        } else {
+            vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, glow);
         }
-        
+
         bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         matrices.popPose();
-        if(item == writtenBook) {
+        if (item == writtenBook) {
             matrices.pushPose();
             armedModel.translateToHand(arm, matrices);
             renderText(entity, matrices, itemStack, armedModel, arm);
             matrices.popPose();
         }
-        
+
     }
-    
+
     // Broken mess, fix me
     @SuppressWarnings("resource")
-    private void renderText(LivingEntity entity, PoseStack matrices, ItemStack itemStack, ArmedModel armedModel, HumanoidArm arm) {
+    private void renderText(LivingEntity entity, PoseStack matrices, ItemStack itemStack, ArmedModel armedModel,
+            HumanoidArm arm) {
 //        BookAccess bookAccess = fromItem(itemStack);
 //        FormattedText formattedText = bookAccess.getPage(0);
 //        matrices.scale(-0.0025f, 0.0025f, -0.0025f);
@@ -208,7 +221,7 @@ public class HeldItemHandler {
 //            Minecraft.getInstance().font.draw(matrices, formattedCharSequence, (36), (32 + o * 9), 0);
 //        }
     }
-    
+
     private BookAccess fromItem(ItemStack itemStack) {
         if (itemStack.is(Items.WRITTEN_BOOK))
             return new BookViewScreen.WrittenBookAccess(itemStack);

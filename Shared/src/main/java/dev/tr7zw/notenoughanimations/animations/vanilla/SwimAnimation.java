@@ -17,7 +17,8 @@ public class SwimAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.getPose() == Pose.SWIMMING && (entity.isInWater() || !NEAnimationsLoader.config.enableCrawlingAnimation);
+        return entity.getPose() == Pose.SWIMMING
+                && (entity.isInWater() || !NEAnimationsLoader.config.enableCrawlingAnimation);
     }
 
     @Override

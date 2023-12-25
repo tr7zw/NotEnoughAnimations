@@ -14,10 +14,12 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 
 public class MapRenderer {
-  
-    private static final RenderType MAP_BACKGROUND = RenderType.text(new ResourceLocation("textures/map/map_background.png"));
-    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType.text(new ResourceLocation("textures/map/map_background_checkerboard.png"));
-    
+
+    private static final RenderType MAP_BACKGROUND = RenderType
+            .text(new ResourceLocation("textures/map/map_background.png"));
+    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
+            .text(new ResourceLocation("textures/map/map_background_checkerboard.png"));
+
     public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
             ItemStack stack, boolean small, boolean lefthanded) {
         Minecraft client = Minecraft.getInstance();
@@ -26,21 +28,21 @@ public class MapRenderer {
             matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
             matrices.mulPose(Axis.ZP.rotationDegrees(180.0f));
             matrices.scale(0.38f, 0.38f, 0.38f);
-            
+
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
         } else {
-            if(lefthanded) {
+            if (lefthanded) {
                 matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
                 matrices.mulPose(Axis.ZP.rotationDegrees(150.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
-                
+
                 matrices.translate(+0.5, -1.3, 0.0);
             } else {
                 matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
                 matrices.mulPose(Axis.ZP.rotationDegrees(210.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
-                
+
                 matrices.translate(-1.0, -1.8, 0.0);
             }
 
@@ -60,20 +62,19 @@ public class MapRenderer {
         vertexConsumer.vertex(matrix4f, -7.0f, -7.0f, 0.0f).color(255, 255, 255, 255).uv(0.0f, 0.0f).uv2(light)
                 .endVertex();
         // mirrored back site
-        vertexConsumer = vertexConsumers
-                .getBuffer(MAP_BACKGROUND);
+        vertexConsumer = vertexConsumers.getBuffer(MAP_BACKGROUND);
         vertexConsumer.vertex(matrix4f, -7.0f, -7.0f, 0.0f).color(255, 255, 255, 255).uv(0.0f, 0.0f).uv2(light)
-        .endVertex();
+                .endVertex();
         vertexConsumer.vertex(matrix4f, 135.0f, -7.0f, 0.0f).color(255, 255, 255, 255).uv(1.0f, 0.0f).uv2(light)
-        .endVertex();
+                .endVertex();
         vertexConsumer.vertex(matrix4f, 135.0f, 135.0f, 0.0f).color(255, 255, 255, 255).uv(1.0f, 1.0f).uv2(light)
-        .endVertex();
+                .endVertex();
         vertexConsumer.vertex(matrix4f, -7.0f, 135.0f, 0.0f).color(255, 255, 255, 255).uv(0.0f, 1.0f).uv2(light)
-        .endVertex();
-        
+                .endVertex();
+
         if (mapState != null) {
             client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, integer, mapState, false, light);
         }
     }
-    
+
 }

@@ -20,27 +20,29 @@ public class VanillaShieldAnimation extends BasicAnimation {
 
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
-    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM};
-    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM};
-    private final BodyPart[] leftFixed = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.BODY};
-    private final BodyPart[] rightFixed = new BodyPart[] {BodyPart.RIGHT_ARM, BodyPart.BODY};
-    
+    private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM };
+    private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM };
+    private final BodyPart[] leftFixed = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY };
+    private final BodyPart[] rightFixed = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY };
+
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        rightArmPose = AnimationUtil.getArmPose(entity, entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        leftArmPose = AnimationUtil.getArmPose(entity, entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        rightArmPose = AnimationUtil.getArmPose(entity,
+                entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        leftArmPose = AnimationUtil.getArmPose(entity,
+                entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         return ArmPose.BLOCK == leftArmPose || ArmPose.BLOCK == rightArmPose;
     }
 
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
-        if(ArmPose.BLOCK == leftArmPose) {
+        if (ArmPose.BLOCK == leftArmPose) {
             return NEAnimationsLoader.config.enableRotationLocking ? leftFixed : left;
         }
-        if(ArmPose.BLOCK == rightArmPose) {
+        if (ArmPose.BLOCK == rightArmPose) {
             return NEAnimationsLoader.config.enableRotationLocking ? rightFixed : right;
         }
-        //???
+        // ???
         return new BodyPart[0];
     }
 
@@ -52,7 +54,7 @@ public class VanillaShieldAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        if(part == BodyPart.BODY) {
+        if (part == BodyPart.BODY) {
             data.disableBodyRotation(true);
             entity.setYBodyRot(entity.getYHeadRot());
             entity.yBodyRotO = entity.yHeadRotO;

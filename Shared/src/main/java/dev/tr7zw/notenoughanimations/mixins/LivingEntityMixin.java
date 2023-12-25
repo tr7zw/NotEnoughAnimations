@@ -11,11 +11,10 @@ import net.minecraft.world.entity.LivingEntity;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
 
-    
     @Inject(method = "tickHeadTurn", at = @At("HEAD"), cancellable = true)
     protected void tickHeadTurn(float f, float g, CallbackInfoReturnable<Float> info) {
-        if(this instanceof PlayerData data) {
-            if(data.isBodyRotationDisabled()) {
+        if (this instanceof PlayerData data) {
+            if (data.isBodyRotationDisabled()) {
                 data.disableBodyRotation(false);
                 info.setReturnValue(g);
                 info.cancel();
@@ -23,5 +22,5 @@ public class LivingEntityMixin {
             }
         }
     }
-    
+
 }

@@ -1,6 +1,5 @@
 {
     "text.nea.title": "Paramètres de Not Enough Animations",
-
     "text.nea.enable.animationsmoothing": "Lissage des animations",
     "text.nea.enable.animationsmoothing.tooltip": "Lisse les animations des bras/jambes pour les rendre plus naturelles et moins saccadées",
     "text.nea.smoothingSpeed": "Intensité du lissage",

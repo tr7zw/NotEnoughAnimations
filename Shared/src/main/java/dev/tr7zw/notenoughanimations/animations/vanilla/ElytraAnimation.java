@@ -31,11 +31,11 @@ public class ElytraAnimation extends BasicAnimation implements PoseOverwrite {
     public int getPriority(AbstractClientPlayer entity, PlayerData data) {
         return 3600;
     }
-    
+
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        if(!NEAnimationsLoader.config.tweakElytraAnimation) {
+        if (!NEAnimationsLoader.config.tweakElytraAnimation) {
             // Do nothing
             return;
         }
@@ -48,19 +48,19 @@ public class ElytraAnimation extends BasicAnimation implements PoseOverwrite {
         float moveOut = 0.1507964F / k;
         moveOut = Math.min(moveOut, 0.25f);
         moveOut = Math.max(moveOut, 0.1F);
-        if(part == BodyPart.LEFT_ARM) {
+        if (part == BodyPart.LEFT_ARM) {
             model.leftArm.xRot = Mth.cos(tickCounter * 0.6662F) * 0.5F / k;
             model.leftArm.zRot = -moveOut;
         }
-        if(part == BodyPart.RIGHT_ARM) {
+        if (part == BodyPart.RIGHT_ARM) {
             model.rightArm.xRot = Mth.cos(tickCounter * 0.6662F + 3.1415927F) * 0.5F / k;
             model.rightArm.zRot = moveOut;
         }
-        if(part == BodyPart.LEFT_LEG) {
+        if (part == BodyPart.LEFT_LEG) {
             model.leftLeg.xRot = Mth.cos(tickCounter * 0.6662F + 3.1415927F) * 0.7F / k;
             model.leftLeg.zRot = -moveOut;
         }
-        if(part == BodyPart.RIGHT_LEG) {
+        if (part == BodyPart.RIGHT_LEG) {
             model.rightLeg.xRot = Mth.cos(tickCounter * 0.6662F) * 0.7F / k;
             model.rightLeg.zRot = moveOut;
         }
@@ -69,7 +69,7 @@ public class ElytraAnimation extends BasicAnimation implements PoseOverwrite {
     @Override
     public void updateState(AbstractClientPlayer entity, PlayerData data,
             PlayerModel<AbstractClientPlayer> playerModel) {
-        if(isValid(entity, data)) {
+        if (isValid(entity, data)) {
             playerModel.crouching = false;
         }
     }

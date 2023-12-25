@@ -1,6 +1,5 @@
 {
     "text.nea.title": "Not Enough Animations Settings",
-
     "text.nea.enable.animationsmoothing": "Згладжування анімації",
     "text.nea.smoothingSpeed": "Значення згладжування",
     "text.nea.enable.inworldmaprendering": "Візуалізація мапи світу",
@@ -35,4 +34,4 @@
     "text.nea.enable.bowAnimation": "Анімація лука",
     "text.nea.enable.bowAnimation.VANILLA": "Ваніль",
     "text.nea.enable.bowAnimation.CUSTOM_V1": "Спеціальний V1"
-  }
+}

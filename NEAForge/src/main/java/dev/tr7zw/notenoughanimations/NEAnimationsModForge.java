@@ -22,12 +22,13 @@ public class NEAnimationsModForge extends NEAnimationsLoader {
                 () -> new IExtensionPoint.DisplayTest(
                         () -> ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString(),
                         (remote, isServer) -> true));
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class, () -> new ConfigScreenFactory((mc, screen) -> {
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class,
+                () -> new ConfigScreenFactory((mc, screen) -> {
                     return createConfigScreen(screen);
                 }));
         MinecraftForge.EVENT_BUS.addListener(this::doClientTick);
     }
-    
+
     private void doClientTick(ClientTickEvent event) {
         this.clientTick();
     }

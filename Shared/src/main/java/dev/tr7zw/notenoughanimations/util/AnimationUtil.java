@@ -19,11 +19,11 @@ import net.minecraft.world.item.UseAnim;
 public class AnimationUtil {
 
     private static Item crossbow = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "crossbow"));
-    
+
     public static boolean isUsingboothHands(ArmPose pose) {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
     }
-    
+
     public static ArmPose getArmPose(AbstractClientPlayer abstractClientPlayerEntity, InteractionHand hand) {
         ItemStack itemStack = abstractClientPlayerEntity.getItemInHand(hand);
         if (itemStack.isEmpty()) {
@@ -43,7 +43,7 @@ public class AnimationUtil {
                 if (useAction == UseAnim.SPEAR) {
                     return ArmPose.THROW_SPEAR;
                 }
-                
+
                 if (useAction == UseAnim.SPYGLASS) {
                     return ArmPose.SPYGLASS;
                 }
@@ -59,13 +59,13 @@ public class AnimationUtil {
             return ArmPose.ITEM;
         }
     }
-    
+
     public static boolean isChargedCrossbow(ItemStack item) {
         return CrossbowItem.isCharged(item);
     }
-    
-    public static void applyArmTransforms(PlayerModel<AbstractClientPlayer> model, HumanoidArm arm, float pitch, float yaw,
-            float roll) {
+
+    public static void applyArmTransforms(PlayerModel<AbstractClientPlayer> model, HumanoidArm arm, float pitch,
+            float yaw, float roll) {
         ModelPart part = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
         part.xRot = pitch;
         part.yRot = yaw;
@@ -75,11 +75,12 @@ public class AnimationUtil {
         if (arm == HumanoidArm.LEFT)
             part.zRot *= -1;
     }
-    
-    public static void applyTransforms(PlayerModel<AbstractClientPlayer> model, BodyPart bodyPart, float pitch, float yaw, float roll) {
+
+    public static void applyTransforms(PlayerModel<AbstractClientPlayer> model, BodyPart bodyPart, float pitch,
+            float yaw, float roll) {
         ModelPart part;
         boolean mirror = false;
-        switch(bodyPart) {
+        switch (bodyPart) {
         case LEFT_ARM:
             mirror = true;
             part = model.leftArm;
@@ -105,7 +106,7 @@ public class AnimationUtil {
         if (mirror)
             part.zRot *= -1;
     }
-    
+
     public static void minMaxHeadRotation(Player livingEntity, PlayerModel<AbstractClientPlayer> model) {
         float value = wrapDegrees(model.head.yRot);
         float min = wrapDegrees(model.body.yRot - Mth.HALF_PI);
@@ -115,7 +116,7 @@ public class AnimationUtil {
         model.head.yRot = value;
         model.hat.yRot = value;
     }
-    
+
     public static float wrapDegrees(float f) {
         float g = f % 6.28318512f;
         if (g >= 3.14159256f) {
@@ -126,5 +127,5 @@ public class AnimationUtil {
         }
         return g;
     }
-    
+
 }

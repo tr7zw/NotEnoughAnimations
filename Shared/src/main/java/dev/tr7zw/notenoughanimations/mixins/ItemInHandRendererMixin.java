@@ -20,11 +20,11 @@ public class ItemInHandRendererMixin {
             HumanoidArm humanoidArm, CallbackInfo info) {
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(true);
     }
-    
+
     @Inject(method = "renderPlayerArm", at = @At("RETURN"))
     private void renderPlayerArmEnd(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, float f, float g,
             HumanoidArm humanoidArm, CallbackInfo info) {
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(false);
     }
-    
+
 }

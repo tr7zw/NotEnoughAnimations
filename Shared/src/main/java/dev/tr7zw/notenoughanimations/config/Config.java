@@ -13,7 +13,8 @@ public class Config {
     public int configVersion = 9;
     public float animationSmoothingSpeed = 20f;
     public Set<String> holdingItems = new HashSet<>(
-            Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern", "minecraft:recovery_compass"));
+            Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern",
+                    "minecraft:soul_torch", "minecraft:soul_lantern", "minecraft:recovery_compass"));
     public boolean enableAnimationSmoothing = true;
     public boolean enableInWorldMapRendering = true;
     public boolean enableOffhandHiding = true;

@@ -19,16 +19,18 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 @Mixin(ItemInHandLayer.class)
-public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends EntityModel<T>>
-        extends RenderLayer<T, M> {
+public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
     public ItemInHandLayerMixin(RenderLayerParent<T, M> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
-    private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-        NEAnimationsLoader.INSTANCE.heldItemHandler.onRenderItem(livingEntity, this.getParentModel(), itemStack, humanoidArm, poseStack, multiBufferSource, i, ci);
+    private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack,
+            ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
+            MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+        NEAnimationsLoader.INSTANCE.heldItemHandler.onRenderItem(livingEntity, this.getParentModel(), itemStack,
+                humanoidArm, poseStack, multiBufferSource, i, ci);
     }
 
 }

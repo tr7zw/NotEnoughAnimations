@@ -22,25 +22,27 @@ public class VanillaSingleHandedAnimation extends BasicAnimation {
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
     private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_SPEAR);
-    private final BodyPart[] left = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.BODY};
-    private final BodyPart[] right = new BodyPart[] {BodyPart.RIGHT_ARM, BodyPart.BODY};
-    
+    private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY };
+    private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY };
+
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        rightArmPose = AnimationUtil.getArmPose(entity, entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        leftArmPose = AnimationUtil.getArmPose(entity, entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        rightArmPose = AnimationUtil.getArmPose(entity,
+                entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        leftArmPose = AnimationUtil.getArmPose(entity,
+                entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         return singleHandedAnimatios.contains(leftArmPose) || singleHandedAnimatios.contains(rightArmPose);
     }
 
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
-        if(singleHandedAnimatios.contains(leftArmPose)) {
+        if (singleHandedAnimatios.contains(leftArmPose)) {
             return left;
         }
-        if(singleHandedAnimatios.contains(rightArmPose)) {
+        if (singleHandedAnimatios.contains(rightArmPose)) {
             return right;
         }
-        //???
+        // ???
         return new BodyPart[0];
     }
 

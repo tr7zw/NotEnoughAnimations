@@ -38,25 +38,26 @@ import net.minecraft.client.player.AbstractClientPlayer;
 public class AnimationProvider {
 
     private Set<BasicAnimation> basicAnimations = new HashSet<>();
-    private Set<BasicAnimation> enabledBasicAnimations = new HashSet<>(); 
-    private Set<PoseOverwrite> enabledPoseOverwrites = new HashSet<>(); 
+    private Set<BasicAnimation> enabledBasicAnimations = new HashSet<>();
+    private Set<PoseOverwrite> enabledPoseOverwrites = new HashSet<>();
     private boolean dumpPrios = false;
-    
+
     public AnimationProvider() {
         loadAnimations();
         refreshEnabledAnimations();
     }
-    
-    public void applyAnimations(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float delta, float swing) {
+
+    public void applyAnimations(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float delta,
+            float swing) {
         PlayerData playerData = (PlayerData) entity;
         int[] priorities = new int[BodyPart.values().length];
         BasicAnimation[] animation = new BasicAnimation[priorities.length];
-        for(BasicAnimation basicAnimation : enabledBasicAnimations) {
-            if(basicAnimation.isValid(entity, playerData)) {
+        for (BasicAnimation basicAnimation : enabledBasicAnimations) {
+            if (basicAnimation.isValid(entity, playerData)) {
                 int prio = basicAnimation.getPriority(entity, playerData);
-                if(prio > 0) {
-                    for(BodyPart part : basicAnimation.getBodyParts(entity, playerData)) {
-                        if(prio > priorities[part.ordinal()]) {
+                if (prio > 0) {
+                    for (BodyPart part : basicAnimation.getBodyParts(entity, playerData)) {
+                        if (prio > priorities[part.ordinal()]) {
                             priorities[part.ordinal()] = prio;
                             animation[part.ordinal()] = basicAnimation;
                         }
@@ -64,26 +65,26 @@ public class AnimationProvider {
                 }
             }
         }
-        
-        for(int i = 0; i < priorities.length; i++) {
-            if(animation[i] != null) {
+
+        for (int i = 0; i < priorities.length; i++) {
+            if (animation[i] != null) {
                 animation[i].prepare(entity, playerData, model, delta, swing);
                 animation[i].apply(entity, playerData, model, BodyPart.values()[i], delta, swing);
             }
         }
-        for(int i = 0; i < priorities.length; i++) {
-            if(animation[i] != null) {
+        for (int i = 0; i < priorities.length; i++) {
+            if (animation[i] != null) {
                 animation[i].cleanup();
             }
         }
     }
-    
+
     public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel) {
-        for(PoseOverwrite po : enabledPoseOverwrites) {
+        for (PoseOverwrite po : enabledPoseOverwrites) {
             po.updateState(livingEntity, (PlayerData) livingEntity, playerModel);
         }
     }
-    
+
     private void loadAnimations() {
         addAnimation(new CrawlingAnimation());
         addAnimation(new VanillaSingleHandedAnimation());
@@ -113,25 +114,25 @@ public class AnimationProvider {
     public void addAnimation(BasicAnimation animation) {
         basicAnimations.add(animation);
     }
-    
+
     public void refreshEnabledAnimations() {
         enabledBasicAnimations.clear();
         enabledPoseOverwrites.clear();
-        for(BasicAnimation basicAnimation : basicAnimations) {
-            if(basicAnimation.isEnabled()) {
+        for (BasicAnimation basicAnimation : basicAnimations) {
+            if (basicAnimation.isEnabled()) {
                 enabledBasicAnimations.add(basicAnimation);
-                if(basicAnimation instanceof PoseOverwrite) {
+                if (basicAnimation instanceof PoseOverwrite) {
                     enabledPoseOverwrites.add((PoseOverwrite) basicAnimation);
                 }
             }
         }
-        if(dumpPrios) {
+        if (dumpPrios) {
             List<BasicAnimation> list = new ArrayList<>(basicAnimations);
-            list.sort((a,b) -> Integer.compare(a.getPriority(null, null), b.getPriority(null, null)));
-            for(BasicAnimation an : list) {
+            list.sort((a, b) -> Integer.compare(a.getPriority(null, null), b.getPriority(null, null)));
+            for (BasicAnimation an : list) {
                 System.out.println(an.getPriority(null, null) + " " + an.getClass().getSimpleName());
             }
         }
     }
-    
+
 }

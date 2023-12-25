@@ -10,6 +10,6 @@ public class NEAModMenu implements ModMenuApi {
         return parent -> {
             return NEAnimationsLoader.INSTANCE.createConfigScreen(parent);
         };
-    }  
-    
+    }
+
 }

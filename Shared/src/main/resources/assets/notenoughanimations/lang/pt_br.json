@@ -1,6 +1,5 @@
 {
     "text.nea.title": "Definições de Not Enough Animations",
-
     "text.nea.enable.animationsmoothing": "Suavização da Animação",
     "text.nea.smoothingSpeed": "Intensidade da Suavização",
     "text.nea.enable.inworldmaprendering": "Mostrar Mapa a Todos",
@@ -32,4 +31,4 @@
     "text.nea.enable.narutoRunning": "❝Naruto Running❞",
     "text.nea.enable.enableInWorldBookRendering": "[WIP]Mostrar Livros a Todos",
     "text.nea.disableLegSmoothing": "Desativar Suavizar Pernas"
-  }
+}

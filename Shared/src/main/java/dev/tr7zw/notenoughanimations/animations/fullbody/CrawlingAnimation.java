@@ -14,13 +14,14 @@ import net.minecraft.world.entity.player.Player;
 
 public class CrawlingAnimation extends BasicAnimation {
 
-    private BodyPart[] bodyParts = new BodyPart[] {BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG};
-    
+    private BodyPart[] bodyParts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.LEFT_LEG,
+            BodyPart.RIGHT_LEG };
+
     @Override
     public boolean isEnabled() {
         return NEAnimationsLoader.config.enableCrawlingAnimation;
-    } 
-    
+    }
+
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         return entity.getPose() == Pose.SWIMMING && !entity.isInWater();
@@ -47,7 +48,7 @@ public class CrawlingAnimation extends BasicAnimation {
     private float armMoveHight = 0.3707964F;
     private final float legPitch = 0.15F;
     private final float r = 0.33333334F;
-    
+
     @Override
     protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             float delta, float swing) {
@@ -103,11 +104,12 @@ public class CrawlingAnimation extends BasicAnimation {
                 }
         }
         tickCounter *= speedMul;
-        if(part == BodyPart.LEFT_LEG) {
-            model.leftLeg.xRot = Mth.lerp(swimAmount, model.leftLeg.xRot, legPitch * Mth.cos(tickCounter * r + 3.1415927F));
+        if (part == BodyPart.LEFT_LEG) {
+            model.leftLeg.xRot = Mth.lerp(swimAmount, model.leftLeg.xRot,
+                    legPitch * Mth.cos(tickCounter * r + 3.1415927F));
             model.leftLeg.zRot = -0.1507964F;
         }
-        if(part == BodyPart.RIGHT_LEG) {
+        if (part == BodyPart.RIGHT_LEG) {
             model.rightLeg.xRot = Mth.lerp(swimAmount, model.rightLeg.xRot, legPitch * Mth.cos(tickCounter * r));
             model.rightLeg.zRot = 0.1507964F;
         }
@@ -125,10 +127,10 @@ public class CrawlingAnimation extends BasicAnimation {
     private float quadraticArmUpdate(float f) {
         return -65.0F * f + f * f;
     }
-    
+
     private HumanoidArm getAttackArm(Player livingEntity) {
         HumanoidArm humanoidArm = livingEntity.getMainArm();
         return (livingEntity.swingingArm == InteractionHand.MAIN_HAND) ? humanoidArm : humanoidArm.getOpposite();
     }
-    
+
 }

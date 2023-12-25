@@ -15,7 +15,7 @@ jobs:
       - name: make gradle wrapper executable
         run: chmod +x ./gradlecw
       - name: build
-        run: ./gradlecw build
+        run: ./gradlecw build -Pbuild.release=true
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
@@ -31,6 +31,7 @@ jobs:
           name: ${{github.ref_name}} - Forge
           version-type: beta
           files: '*Forge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.20.2
       - name: Publish-Forge-Modrinth
         uses: Kir-Antipov/mc-publish@v3.2
         with:
@@ -39,6 +40,7 @@ jobs:
           loaders: forge
           name: ${{github.ref_name}} - Forge
           files: '*Forge/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.20.2
       - name: Publish-Fabric
         uses: Kir-Antipov/mc-publish@v3.2
         with:
@@ -49,3 +51,4 @@ jobs:
           loaders: fabric
           name: ${{github.ref_name}} - Fabric
           files: '*Fabric/build/libs/!(*-@(dev|sources|javadoc|all)).jar'
+          game-versions: 1.20.2

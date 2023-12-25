@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 
 @Mixin(Player.class)
 public class PlayerEntityMixin implements PlayerData {
-	
+
     private int armsUpdated = 0;
     private long lastUpdate = System.currentTimeMillis();
     private float[] lastRotations = new float[13];
@@ -29,11 +29,11 @@ public class PlayerEntityMixin implements PlayerData {
     private int lastAnimationSwapTick = -1;
     private Pose poseOverwrite = null;
     private Map<DataHolder<?>, Object> animationData = new HashMap<>();
-    
-	@Inject(method = "tick", at = @At("RETURN"))
-	public void tick(CallbackInfo info) {
-		updateRenderLayerItems();
-	}
+
+    @Inject(method = "tick", at = @At("RETURN"))
+    public void tick(CallbackInfo info) {
+        updateRenderLayerItems();
+    }
 
     @Override
     public boolean isUpdated(int frameId) {
@@ -65,9 +65,9 @@ public class PlayerEntityMixin implements PlayerData {
     public void setSideSword(ItemStack item) {
         this.sideSword = item;
     }
-    
+
     private void updateRenderLayerItems() {
-        SwordRenderLayer.update((Player)(Object)this);
+        SwordRenderLayer.update((Player) (Object) this);
     }
 
     @Override
@@ -120,5 +120,5 @@ public class PlayerEntityMixin implements PlayerData {
     public <T> T getData(DataHolder<T> holder, Supplier<T> builder) {
         return (T) animationData.computeIfAbsent(holder, (h) -> builder.get());
     }
-	
+
 }
