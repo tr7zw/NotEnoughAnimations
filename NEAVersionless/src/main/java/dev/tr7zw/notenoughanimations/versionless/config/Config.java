@@ -1,12 +1,12 @@
-package dev.tr7zw.notenoughanimations.config;
+package dev.tr7zw.notenoughanimations.versionless.config;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import dev.tr7zw.notenoughanimations.RotationLock;
-import dev.tr7zw.notenoughanimations.animations.BowAnimation;
-import dev.tr7zw.notenoughanimations.animations.HoldUpModes;
+import dev.tr7zw.notenoughanimations.versionless.RotationLock;
+import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
+import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 
 public class Config {
 

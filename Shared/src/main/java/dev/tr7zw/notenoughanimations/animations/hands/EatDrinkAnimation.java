@@ -1,10 +1,10 @@
 package dev.tr7zw.notenoughanimations.animations.hands;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
@@ -22,7 +22,7 @@ public class EatDrinkAnimation extends BasicAnimation {
 
     @Override
     public boolean isEnabled() {
-        return NEAnimationsLoader.config.enableEatDrinkAnimation;
+        return NEABaseMod.config.enableEatDrinkAnimation;
     }
 
     @Override
@@ -33,15 +33,15 @@ public class EatDrinkAnimation extends BasicAnimation {
             if (action == UseAnim.EAT || action == UseAnim.DRINK) {
                 if (entity.getUsedItemHand() == InteractionHand.MAIN_HAND) {
                     if (entity.getMainArm() == HumanoidArm.RIGHT) {
-                        target = NEAnimationsLoader.config.enableRotationLocking ? rightFixed : right;
+                        target = NEABaseMod.config.enableRotationLocking ? rightFixed : right;
                     } else {
-                        target = NEAnimationsLoader.config.enableRotationLocking ? leftFixed : left;
+                        target = NEABaseMod.config.enableRotationLocking ? leftFixed : left;
                     }
                 } else {
                     if (entity.getMainArm() == HumanoidArm.RIGHT) {
-                        target = NEAnimationsLoader.config.enableRotationLocking ? leftFixed : left;
+                        target = NEABaseMod.config.enableRotationLocking ? leftFixed : left;
                     } else {
-                        target = NEAnimationsLoader.config.enableRotationLocking ? rightFixed : right;
+                        target = NEABaseMod.config.enableRotationLocking ? rightFixed : right;
                     }
                 }
                 return true;

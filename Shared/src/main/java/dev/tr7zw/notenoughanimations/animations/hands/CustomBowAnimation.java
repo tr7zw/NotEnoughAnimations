@@ -2,12 +2,12 @@ package dev.tr7zw.notenoughanimations.animations.hands;
 
 import java.util.EnumSet;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
-import dev.tr7zw.notenoughanimations.animations.BowAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
+import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -19,7 +19,7 @@ public class CustomBowAnimation extends BasicAnimation {
 
     @Override
     public boolean isEnabled() {
-        return NEAnimationsLoader.config.bowAnimation == BowAnimation.CUSTOM_V1;
+        return NEABaseMod.config.bowAnimation == BowAnimation.CUSTOM_V1;
     }
 
     private ArmPose rightArmPose;

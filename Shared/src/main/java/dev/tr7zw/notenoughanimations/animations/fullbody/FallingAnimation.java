@@ -1,10 +1,10 @@
 package dev.tr7zw.notenoughanimations.animations.fullbody;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
-import dev.tr7zw.notenoughanimations.animations.DataHolder;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
+import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
@@ -15,7 +15,7 @@ public class FallingAnimation extends BasicAnimation
 
     @Override
     public boolean isEnabled() {
-        return NEAnimationsLoader.config.fallingAnimation;
+        return NEABaseMod.config.fallingAnimation;
     }
 
     @Override

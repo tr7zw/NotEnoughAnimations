@@ -1,7 +1,7 @@
 package dev.tr7zw.notenoughanimations.util;
 
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;

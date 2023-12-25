@@ -12,9 +12,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.util.MapRenderer;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen.BookAccess;
@@ -65,7 +65,7 @@ public class HeldItemHandler {
             bookModel = new BookModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.BOOK));
         }
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
-            if (NEAnimationsLoader.config.dontHoldItemsInBed) {
+            if (NEABaseMod.config.dontHoldItemsInBed) {
                 info.cancel();
             }
             return;
@@ -79,7 +79,7 @@ public class HeldItemHandler {
             HumanoidModel<?> humanoid = (HumanoidModel<?>) model;
             if ((arm == HumanoidArm.RIGHT && humanoid.rightArm.visible)
                     || (arm == HumanoidArm.LEFT && humanoid.leftArm.visible)) {
-                if (NEAnimationsLoader.config.enableInWorldMapRendering) {
+                if (NEABaseMod.config.enableInWorldMapRendering) {
                     if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(filledMap)) { // Mainhand
                                                                                                               // with
                                                                                                               // or
@@ -113,7 +113,7 @@ public class HeldItemHandler {
                         return;
                     }
                 }
-                if (NEAnimationsLoader.config.enableInWorldBookRendering) {
+                if (NEABaseMod.config.enableInWorldBookRendering) {
                     Item item = entity.getMainHandItem().getItem();
                     if (arm == entity.getMainArm() && books.contains(item)) {
                         renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers, light, armedModel,
@@ -132,7 +132,7 @@ public class HeldItemHandler {
             }
         }
 
-        if (NEAnimationsLoader.config.enableOffhandHiding && entity instanceof AbstractClientPlayer) {
+        if (NEABaseMod.config.enableOffhandHiding && entity instanceof AbstractClientPlayer) {
             AbstractClientPlayer player = (AbstractClientPlayer) entity;
             ArmPose armPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
             ArmPose armPose2 = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);

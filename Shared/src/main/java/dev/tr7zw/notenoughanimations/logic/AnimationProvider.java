@@ -7,7 +7,6 @@ import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.animations.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.animations.fullbody.CrawlingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.FallingAnimation;
@@ -32,6 +31,7 @@ import dev.tr7zw.notenoughanimations.animations.vanilla.SwimAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.VanillaShieldAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.VanillaSingleHandedAnimation;
 import dev.tr7zw.notenoughanimations.animations.vanilla.VanillaTwoHandedAnimation;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 

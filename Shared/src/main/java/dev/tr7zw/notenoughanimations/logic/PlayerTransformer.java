@@ -3,9 +3,10 @@ package dev.tr7zw.notenoughanimations.logic;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
-import dev.tr7zw.notenoughanimations.RotationLock;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.RotationLock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -29,26 +30,26 @@ public class PlayerTransformer {
         float deltaTick = Minecraft.getInstance().getDeltaFrameTime();
         NEAnimationsLoader.INSTANCE.animationProvider.applyAnimations(entity, model, deltaTick, swing);
 
-        if (NEAnimationsLoader.config.enableAnimationSmoothing && entity instanceof PlayerData) {
+        if (NEABaseMod.config.enableAnimationSmoothing && entity instanceof PlayerData) {
             PlayerData data = (PlayerData) entity;
             float[] last = data.getLastRotations();
             boolean differentFrame = !data.isUpdated(frameId);
             long passedNs = System.nanoTime() - data.lastUpdate();
             float timePassed = passedNs / 1000000f;
-            float speed = NEAnimationsLoader.config.animationSmoothingSpeed;
+            float speed = NEABaseMod.config.animationSmoothingSpeed;
 
             interpolate(model.leftArm, last, 0, timePassed, differentFrame, speed);
             interpolate(model.rightArm, last, 3, timePassed, differentFrame, speed);
-            if (!NEAnimationsLoader.config.disableLegSmoothing) {
+            if (!NEABaseMod.config.disableLegSmoothing) {
                 interpolate(model.leftLeg, last, 6, timePassed, differentFrame, speed);
                 interpolate(model.rightLeg, last, 9, timePassed, differentFrame, speed);
             }
             if (entity == mc.cameraEntity) {
                 // For now located here due to smoothing logic being here.
-                if (NEAnimationsLoader.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
+                if (NEABaseMod.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
                     interpolateYawBodyHead(entity, last, 12, timePassed, differentFrame, 6);
                 }
-                if (NEAnimationsLoader.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null
+                if (NEABaseMod.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null
                         && differentFrame) {
                     entity.yBodyRot = entity.yHeadRot;
                     entity.yBodyRotO = entity.yHeadRotO;

@@ -7,7 +7,9 @@ replacements:
   version: "1.6.4"
   author: "tr7zw"
   relocationpackage: "dev.tr7zw.notenoughanimations"
-  dependencies: ""
+  dependencies: '
+  inc project(":NEAVersionless")
+  '
   licensename: "LICENSE"
   modrinthid: MPCX6s5C
   curseforgeid: 433760
@@ -17,6 +19,7 @@ enabledFlags:
   - publishForge
   - modrinth
   - curseforge
+  - versionless
 rootProject:
   template: "."
 subProjects:
@@ -24,3 +27,11 @@ subProjects:
     template: "Fabric"
   NEAForge:
     template: "Forge"
+  NEAVersionless:
+    template: "Versionless"
+    replacements:
+      dependencies: '
+      compileOnly "com.google.code.gson:gson:2.10.1"
+
+      compileOnly "org.apache.logging.log4j:log4j-core:2.20.0"
+      '

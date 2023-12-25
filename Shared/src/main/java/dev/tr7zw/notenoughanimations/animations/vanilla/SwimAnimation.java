@@ -1,9 +1,9 @@
 package dev.tr7zw.notenoughanimations.animations.vanilla;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.Pose;
@@ -17,8 +17,7 @@ public class SwimAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.getPose() == Pose.SWIMMING
-                && (entity.isInWater() || !NEAnimationsLoader.config.enableCrawlingAnimation);
+        return entity.getPose() == Pose.SWIMMING && (entity.isInWater() || !NEABaseMod.config.enableCrawlingAnimation);
     }
 
     @Override

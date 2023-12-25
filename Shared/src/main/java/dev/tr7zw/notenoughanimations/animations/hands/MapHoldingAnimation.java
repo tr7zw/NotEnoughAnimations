@@ -3,11 +3,11 @@ package dev.tr7zw.notenoughanimations.animations.hands;
 import java.util.HashSet;
 import java.util.Set;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,7 +25,7 @@ public class MapHoldingAnimation extends BasicAnimation {
     @Override
     public boolean isEnabled() {
         bind();
-        return NEAnimationsLoader.config.enableInWorldMapRendering || !compatibleMaps.isEmpty();
+        return NEABaseMod.config.enableInWorldMapRendering || !compatibleMaps.isEmpty();
     }
 
     private void bind() {
@@ -35,7 +35,7 @@ public class MapHoldingAnimation extends BasicAnimation {
         Item antiqueAtlas = BuiltInRegistries.ITEM.get(new ResourceLocation("antiqueatlas", "antique_atlas"));
         if (invalid != antiqueAtlas) {
             compatibleMaps.add(antiqueAtlas);
-            NEAnimationsLoader.LOGGER.info("Added AntiqueAtlas support to Not Enough Animations!");
+            NEABaseMod.LOGGER.info("Added AntiqueAtlas support to Not Enough Animations!");
         }
     }
 

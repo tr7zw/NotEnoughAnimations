@@ -12,7 +12,8 @@ import org.objenesis.ObjenesisStd;
 
 import dev.tr7zw.config.CustomConfigScreen;
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
-import dev.tr7zw.notenoughanimations.config.Config;
+import dev.tr7zw.notenoughanimations.config.ConfigScreenProvider;
+import dev.tr7zw.notenoughanimations.versionless.config.Config;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.model.PlayerModel;
@@ -48,7 +49,7 @@ public class MixinTests {
         Language lang = TestUtil.loadDefault("/assets/notenoughanimations/lang/en_us.json");
         NEAnimationsLoader.INSTANCE = new TestMod();
         NEAnimationsLoader.config = new Config();
-        CustomConfigScreen screen = (CustomConfigScreen) NEAnimationsLoader.INSTANCE.createConfigScreen(null);
+        CustomConfigScreen screen = (CustomConfigScreen) ConfigScreenProvider.createConfigScreen(null);
         List<OptionInstance<?>> options = TestUtil.bootStrapCustomConfigScreen(screen);
         assertNotEquals(screen.getTitle().getString(), lang.getOrDefault(screen.getTitle().getString()));
         for (OptionInstance<?> option : options) {

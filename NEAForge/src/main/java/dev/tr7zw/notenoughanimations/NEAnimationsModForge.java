@@ -1,5 +1,6 @@
 package dev.tr7zw.notenoughanimations;
 
+import dev.tr7zw.notenoughanimations.config.ConfigScreenProvider;
 import net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
@@ -24,7 +25,7 @@ public class NEAnimationsModForge extends NEAnimationsLoader {
                         (remote, isServer) -> true));
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenFactory.class,
                 () -> new ConfigScreenFactory((mc, screen) -> {
-                    return createConfigScreen(screen);
+                    return ConfigScreenProvider.createConfigScreen(screen);
                 }));
         MinecraftForge.EVENT_BUS.addListener(this::doClientTick);
     }

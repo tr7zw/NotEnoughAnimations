@@ -2,7 +2,7 @@ package dev.tr7zw.notenoughanimations.access;
 
 import java.util.function.Supplier;
 
-import dev.tr7zw.notenoughanimations.animations.DataHolder;
+import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 

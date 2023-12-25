@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations.config;
+package dev.tr7zw.notenoughanimations.versionless.config;
 
 public class ConfigUpgrader {
 

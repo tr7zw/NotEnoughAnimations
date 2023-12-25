@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
-import dev.tr7zw.notenoughanimations.animations.DataHolder;
 import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
+import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

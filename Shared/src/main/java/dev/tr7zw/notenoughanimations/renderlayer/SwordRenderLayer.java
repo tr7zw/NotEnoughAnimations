@@ -6,13 +6,12 @@ import java.util.Set;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -57,7 +56,7 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
             lazyInit = false;
             init();
         }
-        if (!NEAnimationsLoader.config.showLastUsedSword) {
+        if (!NEABaseMod.config.showLastUsedSword) {
             return;
         }
         if (player.isInvisible() || player.isSleeping())
@@ -99,7 +98,7 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
     }
 
     private void init() {
-        for (String itemKey : NEAnimationsLoader.config.sheathSwords) {
+        for (String itemKey : NEABaseMod.config.sheathSwords) {
             if (itemKey.contains(":")) {
                 Item item = BuiltInRegistries.ITEM
                         .get(new ResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));

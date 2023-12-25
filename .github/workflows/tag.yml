@@ -22,6 +22,7 @@ jobs:
           files: |
             NEAFabric/build/libs/*
             NEAForge/build/libs/*
+            NEAVersionless/build/libs/*
       - name: Publish-Forge-Curseforge
         uses: Kir-Antipov/mc-publish@v3.2
         with:

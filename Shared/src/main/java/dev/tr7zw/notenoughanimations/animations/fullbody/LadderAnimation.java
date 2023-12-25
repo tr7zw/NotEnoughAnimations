@@ -3,12 +3,12 @@ package dev.tr7zw.notenoughanimations.animations.fullbody;
 import java.util.HashSet;
 import java.util.Set;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.animations.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Direction;
@@ -25,7 +25,7 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public boolean isEnabled() {
-        return NEAnimationsLoader.config.enableLadderAnimation;
+        return NEABaseMod.config.enableLadderAnimation;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
         if (part == BodyPart.BODY) {
-            if (NEAnimationsLoader.config.enableRotateToLadder) {
+            if (NEABaseMod.config.enableRotateToLadder) {
                 BlockState blockState = entity.getFeetBlockState();
                 if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
                     Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
@@ -108,21 +108,20 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         }
 
         if (part == BodyPart.LEFT_LEG || part == BodyPart.RIGHT_LEG) {
-            float rotation = -Mth.cos((float) (entity.getY() * NEAnimationsLoader.config.ladderAnimationArmSpeed));
-            rotation *= NEAnimationsLoader.config.ladderAnimationAmplifier;
+            float rotation = -Mth.cos((float) (entity.getY() * NEABaseMod.config.ladderAnimationArmSpeed));
+            rotation *= NEABaseMod.config.ladderAnimationAmplifier;
             if (part == BodyPart.LEFT_LEG) {
                 rotation *= -1;
             }
             AnimationUtil.applyTransforms(model, part, -1 - rotation, -0.2f, 0.3f);
             return;
         }
-        float rotation = -Mth.cos((float) (entity.getY() * NEAnimationsLoader.config.ladderAnimationArmSpeed));
-        rotation *= NEAnimationsLoader.config.ladderAnimationAmplifier;
+        float rotation = -Mth.cos((float) (entity.getY() * NEABaseMod.config.ladderAnimationArmSpeed));
+        rotation *= NEABaseMod.config.ladderAnimationAmplifier;
         // arms
         if (part == BodyPart.LEFT_ARM)
             rotation *= -1;
-        AnimationUtil.applyTransforms(model, part, -NEAnimationsLoader.config.ladderAnimationArmHeight - rotation,
-                -0.2f, 0.3f);
+        AnimationUtil.applyTransforms(model, part, -NEABaseMod.config.ladderAnimationArmHeight - rotation, -0.2f, 0.3f);
     }
 
     @Override

@@ -3,12 +3,12 @@ package dev.tr7zw.notenoughanimations.animations.hands;
 import java.util.HashSet;
 import java.util.Set;
 
-import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
-import dev.tr7zw.notenoughanimations.animations.BodyPart;
-import dev.tr7zw.notenoughanimations.animations.HoldUpModes;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
+import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
+import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -26,27 +26,27 @@ public class LookAtItemAnimation extends BasicAnimation {
     @Override
     public boolean isEnabled() {
         bind();
-        return NEAnimationsLoader.config.holdUpItemsMode != HoldUpModes.NONE && !holdingItems.isEmpty();
+        return NEABaseMod.config.holdUpItemsMode != HoldUpModes.NONE && !holdingItems.isEmpty();
     }
 
     private void bind() {
         holdingItems.clear();
         Item invalid = BuiltInRegistries.ITEM.get(new ResourceLocation("minecraft", "air"));
-        for (String itemId : NEAnimationsLoader.config.holdingItems) {
+        for (String itemId : NEABaseMod.config.holdingItems) {
             try {
                 Item item = BuiltInRegistries.ITEM
                         .get(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
                     holdingItems.add(item);
             } catch (Exception ex) {
-                NEAnimationsLoader.LOGGER.info("Unknown item to add to the holding list: " + itemId);
+                NEABaseMod.LOGGER.info("Unknown item to add to the holding list: " + itemId);
             }
         }
     }
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        boolean allItems = NEAnimationsLoader.config.holdUpItemsMode == HoldUpModes.ALL;
+        boolean allItems = NEABaseMod.config.holdUpItemsMode == HoldUpModes.ALL;
         ItemStack itemInRightHand = entity.getItemInHand(
                 entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         ItemStack itemInLeftHand = entity.getItemInHand(
@@ -93,8 +93,9 @@ public class LookAtItemAnimation extends BasicAnimation {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        AnimationUtil.applyArmTransforms(model, arm, -NEAnimationsLoader.config.holdUpItemOffset
-                - (Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
+        AnimationUtil.applyArmTransforms(model, arm,
+                -NEABaseMod.config.holdUpItemOffset - (Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 1.5f)),
+                -0.2f, 0.3f);
     }
 
 }
