@@ -1,18 +1,19 @@
 version: '0.0.2'
-source: "https://github.com/tr7zw/ModComposeTemplate/tree/1.20.2"
+source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
 replacements:
-  group: "dev.tr7zw"
   name: "NotEnoughAnimations"
   id: "notenoughanimations"
   version: "1.6.4"
-  author: "tr7zw"
+  description: "Adding and improving animations in Third-Person."
+  homepageUrl: "https://modrinth.com/mod/not-enough-animations"
+  sourcesUrl: "https://github.com/tr7zw/NotEnoughAnimations"
+  issuesUrl: "https://github.com/tr7zw/NotEnoughAnimations/issues"
+  fabric_entrypoint: "dev.tr7zw.notenoughanimations.NEAnimationsMod"
+  fabric_modmenu_entrypoint: "dev.tr7zw.notenoughanimations.NEAModMenu"
   relocationpackage: "dev.tr7zw.notenoughanimations"
-  dependencies: '
-  inc project(":NEAVersionless")
-  '
-  licensename: "LICENSE"
   modrinthid: MPCX6s5C
   curseforgeid: 433760
+  versionlessname: "NEAVersionless"
 enabledFlags:
   - autopublish
   - publishFabric
@@ -23,10 +24,6 @@ enabledFlags:
 rootProject:
   template: "."
 subProjects:
-  NEAFabric:
-    template: "Fabric"
-  NEAForge:
-    template: "Forge"
   NEAVersionless:
     template: "Versionless"
     replacements:
