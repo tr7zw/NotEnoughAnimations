@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
+import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
 import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
 import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
 import net.minecraft.world.entity.Pose;
@@ -20,8 +21,7 @@ import net.minecraft.world.item.ItemStack;
 public class PlayerEntityMixin implements PlayerData {
 
     private int armsUpdated = 0;
-    private long lastUpdate = System.currentTimeMillis();
-    private float[] lastRotations = new float[13];
+    private float[] lastRotations = new float[PlayerTransformer.ENTRY_AMOUNT*PlayerTransformer.ENTRY_SIZE];
     private ItemStack sideSword = ItemStack.EMPTY;
     private ItemStack[] lastHeldItems = new ItemStack[2];
     private boolean disableBodyRotation = false;
@@ -36,19 +36,13 @@ public class PlayerEntityMixin implements PlayerData {
     }
 
     @Override
-    public boolean isUpdated(int frameId) {
-        return armsUpdated == frameId;
+    public int isUpdated(int frameId) {
+        return Math.abs(frameId - armsUpdated);
     }
 
     @Override
     public void setUpdated(int frameId) {
         armsUpdated = frameId;
-        lastUpdate = System.nanoTime();
-    }
-
-    @Override
-    public long lastUpdate() {
-        return lastUpdate;
     }
 
     @Override

@@ -8,11 +8,9 @@ import net.minecraft.world.item.ItemStack;
 
 public interface PlayerData {
 
-    public boolean isUpdated(int frameId);
+    public int isUpdated(int frameId);
 
     public void setUpdated(int frameId);
-
-    public long lastUpdate();
 
     public float[] getLastRotations();
 

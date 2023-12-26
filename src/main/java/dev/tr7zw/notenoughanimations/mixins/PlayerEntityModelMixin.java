@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -28,18 +29,18 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Hum
 
     @SuppressWarnings("unchecked")
     @Inject(method = "setupAnim", at = @At(value = "HEAD"))
-    public void setupAnimHEAD(T livingEntity, float swing, float g, float tick, float i, float j, CallbackInfo info) {
+    public void setupAnimHEAD(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo info) {
         if (livingEntity instanceof AbstractClientPlayer)
             NEAnimationsLoader.INSTANCE.playerTransformer.preUpdate((AbstractClientPlayer) livingEntity,
-                    (PlayerModel<AbstractClientPlayer>) (Object) this, tick, swing, info);
+                    (PlayerModel<AbstractClientPlayer>) (Object) this, limbSwing, info);
     }
 
     @SuppressWarnings("unchecked")
     @Inject(method = "setupAnim", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;copyFrom(Lnet/minecraft/client/model/geom/ModelPart;)V", ordinal = 0))
-    public void setupAnim(T livingEntity, float swing, float g, float tick, float i, float j, CallbackInfo info) {
+    public void setupAnim(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo info) {
         if (livingEntity instanceof AbstractClientPlayer)
             NEAnimationsLoader.INSTANCE.playerTransformer.updateModel((AbstractClientPlayer) livingEntity,
-                    (PlayerModel<AbstractClientPlayer>) (Object) this, tick, swing, info);
+                    (PlayerModel<AbstractClientPlayer>) (Object) this, limbSwing, info);
     }
 
     @Inject(method = "setupAnim", at = @At(value = "RETURN"))

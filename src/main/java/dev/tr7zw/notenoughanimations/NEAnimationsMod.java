@@ -10,7 +10,7 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
     @Override
     public void onInitializeClient() {
         onEnable();
-        ClientTickEvents.START_CLIENT_TICK.register(event -> this.clientTick());
+        ClientTickEvents.START_WORLD_TICK.register(event -> this.clientTick());
     }
 
 }

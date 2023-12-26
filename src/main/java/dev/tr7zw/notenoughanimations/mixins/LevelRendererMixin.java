@@ -28,7 +28,8 @@ public class LevelRendererMixin {
     private void beforeRender(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline,
             Camera camera, GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f,
             CallbackInfo ci) {
-        NEAnimationsLoader.INSTANCE.playerTransformer.nextFrame();
+    	NEAnimationsLoader.INSTANCE.playerTransformer.setDeltaTick(tickDelta);
+//        NEAnimationsLoader.INSTANCE.playerTransformer.nextFrame();
     }
 
 }

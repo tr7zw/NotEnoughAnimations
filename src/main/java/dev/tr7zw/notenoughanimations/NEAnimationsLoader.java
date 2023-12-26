@@ -58,6 +58,7 @@ public abstract class NEAnimationsLoader extends NEABaseMod {
             lateInitCompleted = true;
             lateInit();
         }
+        playerTransformer.nextTick();
     }
 
 }
