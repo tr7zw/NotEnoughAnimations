@@ -1,3 +1,4 @@
+//#if MC >= 11700
 package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
@@ -57,3 +58,4 @@ public class FreezingAnimation extends BasicAnimation {
     }
 
 }
+//#endif

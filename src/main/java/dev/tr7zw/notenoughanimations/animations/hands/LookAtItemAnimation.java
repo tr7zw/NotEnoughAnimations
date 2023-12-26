@@ -92,9 +92,8 @@ public class LookAtItemAnimation extends BasicAnimation {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        AnimationUtil.applyArmTransforms(model, arm,
-                -NEABaseMod.config.holdUpItemOffset - (Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 1.5f)),
-                -0.2f, 0.3f);
+        AnimationUtil.applyArmTransforms(model, arm, -NEABaseMod.config.holdUpItemOffset
+                - (Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
     }
 
 }

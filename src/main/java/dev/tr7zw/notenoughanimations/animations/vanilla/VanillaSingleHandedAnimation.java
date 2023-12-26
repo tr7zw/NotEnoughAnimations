@@ -21,7 +21,13 @@ public class VanillaSingleHandedAnimation extends BasicAnimation {
 
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
+    // spotless:off
+    //#if MC >= 11700
     private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_SPEAR);
+    //#else
+    //$$ private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.THROW_SPEAR);
+    //#endif
+    //spotless:on
     private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY };
     private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY };
 

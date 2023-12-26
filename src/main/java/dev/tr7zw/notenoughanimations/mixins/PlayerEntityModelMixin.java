@@ -16,7 +16,14 @@ import net.minecraft.world.entity.LivingEntity;
 public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends HumanoidModel<T> {
 
     public PlayerEntityModelMixin() {
-        super(null);
+        // spotless:off
+    	//#if MC >= 11700
+    	super(null);
+		//#else
+		//$$ super(0);
+		//#endif
+		//spotless:on
+
     }
 
     @SuppressWarnings("unchecked")

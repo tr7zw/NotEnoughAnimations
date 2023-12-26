@@ -48,7 +48,7 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         return false;
     }
 
-    private final Set<Class<? extends Block>> ladderLikeBlocks = new HashSet<>() {
+    private final Set<Class<? extends Block>> ladderLikeBlocks = new HashSet<Class<? extends Block>>() {
         {
             add(LadderBlock.class);
             add(TrapDoorBlock.class);

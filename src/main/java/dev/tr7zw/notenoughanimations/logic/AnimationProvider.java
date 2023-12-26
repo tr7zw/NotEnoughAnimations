@@ -10,7 +10,6 @@ import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.animations.fullbody.CrawlingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.FallingAnimation;
-import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.LadderAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.PassengerAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.BoatAnimation;
@@ -34,6 +33,11 @@ import dev.tr7zw.notenoughanimations.animations.vanilla.VanillaTwoHandedAnimatio
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
+// spotless:off
+//#if MC >= 11700
+import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
+//#endif
+//spotless:on
 
 public class AnimationProvider {
 
@@ -105,10 +109,14 @@ public class AnimationProvider {
         addAnimation(new SwimAnimation());
         addAnimation(new PetAnimation());
         addAnimation(new FallingAnimation());
-        addAnimation(new FreezingAnimation());
         addAnimation(new HugAnimation());
         addAnimation(new NarutoRunningAnimation());
         addAnimation(new CustomBowAnimation());
+        // spotless:off
+        //#if MC >= 11700
+        addAnimation(new FreezingAnimation());
+        //#endif
+        //spotless:on
     }
 
     public void addAnimation(BasicAnimation animation) {

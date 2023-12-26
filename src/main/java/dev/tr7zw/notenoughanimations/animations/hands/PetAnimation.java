@@ -5,6 +5,7 @@ import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
@@ -72,7 +73,8 @@ public class PetAnimation extends BasicAnimation {
         if (Math.random() < 0.005)
             targetPet.handleEntityEvent((byte) 18);
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        AnimationUtil.applyArmTransforms(model, arm, -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 1f, 2f)), -0.6f,
+        AnimationUtil.applyArmTransforms(model, arm,
+                -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 1f, 2f)), -0.6f,
                 0.3f + Mth.sin((System.currentTimeMillis() % 20000) / 60f) * 0.2f);
         targetPet = null;
     }

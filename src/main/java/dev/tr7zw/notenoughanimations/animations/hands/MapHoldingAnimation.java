@@ -92,12 +92,12 @@ public class MapHoldingAnimation extends BasicAnimation {
             BodyPart part, float delta, float tickCounter) {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         if (target == bothHands) {
-            AnimationUtil.applyArmTransforms(model, arm, -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 0.5f, 1.5f)),
-                    -0.4f, 0.3f);
+            AnimationUtil.applyArmTransforms(model, arm,
+                    -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 0.5f, 1.5f)), -0.4f, 0.3f);
             return;
         }
-        AnimationUtil.applyArmTransforms(model, arm, -(Mth.lerp(-1f * (entity.getXRot() - 90f) / 180f, 0.5f, 1.5f)), 0f,
-                0.3f);
+        AnimationUtil.applyArmTransforms(model, arm,
+                -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 0.5f, 1.5f)), 0f, 0.3f);
     }
 
 }

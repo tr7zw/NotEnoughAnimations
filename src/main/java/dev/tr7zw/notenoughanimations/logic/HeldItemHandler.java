@@ -23,7 +23,6 @@ import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -39,6 +38,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+// spotless:off
+//#if MC >= 11700
+import net.minecraft.client.model.geom.ModelLayers;
+//#endif
+//spotless:on
+
 public class HeldItemHandler {
 
     private Item filledMap = NMSHelper.getItem(new ResourceLocation("minecraft", "filled_map"));
@@ -50,7 +55,7 @@ public class HeldItemHandler {
     public Set<Item> books = new HashSet<>(
             Arrays.asList(writableBook, writtenBook, enchantedBook, knowledgeBook, book));
     @SuppressWarnings("serial")
-    public Map<Item, ResourceLocation> bookTextures = new HashMap<>() {
+    public Map<Item, ResourceLocation> bookTextures = new HashMap<Item, ResourceLocation>() {
         {
             put(knowledgeBook, new ResourceLocation("notenoughanimations", "textures/recipe_book.png"));
         }
@@ -61,7 +66,13 @@ public class HeldItemHandler {
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
         if (bookModel == null) {
+            // spotless:off
+        	//#if MC >= 11700
             bookModel = new BookModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.BOOK));
+    		//#else
+    		//$$ bookModel = new BookModel();
+    		//#endif
+    		//spotless:on
         }
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
             if (NEABaseMod.config.dontHoldItemsInBed) {
@@ -222,10 +233,19 @@ public class HeldItemHandler {
     }
 
     private BookAccess fromItem(ItemStack itemStack) {
+        // spotless:off
+    	//#if MC >= 11700
         if (itemStack.is(Items.WRITTEN_BOOK))
             return new BookViewScreen.WrittenBookAccess(itemStack);
         if (itemStack.is(Items.WRITABLE_BOOK))
             return new BookViewScreen.WritableBookAccess(itemStack);
+		//#else
+        //$$ if (itemStack.getItem() == (Items.WRITTEN_BOOK))
+        //$$     return new BookViewScreen.WrittenBookAccess(itemStack);
+        //$$ if (itemStack.getItem() == (Items.WRITABLE_BOOK))
+        //$$     return new BookViewScreen.WritableBookAccess(itemStack);
+		//#endif
+		//spotless:on
         return BookViewScreen.EMPTY_ACCESS;
     }
 

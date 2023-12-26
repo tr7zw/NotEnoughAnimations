@@ -1,6 +1,7 @@
 package dev.tr7zw.util;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 
 //spotless:off
@@ -16,6 +17,8 @@ import com.mojang.math.Axis;
 //spotless:on
 
 public class NMSHelper {
+
+    public static final float HALF_PI = (float) (Math.PI / 2);
 
     // spotless:off
 	//#if MC >= 11903
@@ -43,6 +46,16 @@ public class NMSHelper {
 		//$$ return Registry.ITEM.get(key);
 		//#endif
 		//spotless:on
+    }
+
+    public static float getXRot(Entity ent) {
+        // spotless:off
+    	//#if MC >= 11700
+    	return ent.getXRot();
+    	//#else
+    	//$$ return ent.xRot;
+    	//#endif
+    	//spotless:on
     }
 
 }

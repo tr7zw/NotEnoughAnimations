@@ -79,7 +79,13 @@ public class MapRenderer {
                 .endVertex();
 
         if (mapState != null) {
+            // spotless:off
+            //#if MC >= 11700
             client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, integer, mapState, false, light);
+            //#else
+            //$$ client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapState, false, light);
+            //#endif
+            //spotless:on
         }
     }
 

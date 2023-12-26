@@ -20,7 +20,13 @@ public class FallingAnimation extends BasicAnimation
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
+        // spotless:off
+        //#if MC >= 11700
         if (!entity.isFallFlying() && !entity.onGround() && !entity.onClimbable() && !entity.getAbilities().flying
+        //#else
+        //$$ if (!entity.isFallFlying() && !entity.isOnGround() && !entity.onClimbable() && !entity.abilities.flying
+		//#endif
+        //spotless:on
                 && !entity.isSwimming()) {
             FallingData fallData = data.getData(this, () -> new FallingData(entity.getY()));
             if (entity instanceof LocalPlayer) {
