@@ -13,7 +13,8 @@ public class LivingEntityMixin {
 
     @Inject(method = "tickHeadTurn", at = @At("HEAD"), cancellable = true)
     protected void tickHeadTurn(float f, float g, CallbackInfoReturnable<Float> info) {
-        if (this instanceof PlayerData data) {
+        if (this instanceof PlayerData) {
+            PlayerData data = (PlayerData) this;
             if (data.isBodyRotationDisabled()) {
                 data.disableBodyRotation(false);
                 info.setReturnValue(g);

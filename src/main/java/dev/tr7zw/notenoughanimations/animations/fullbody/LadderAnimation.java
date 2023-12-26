@@ -33,7 +33,14 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         if (entity.onClimbable() && !entity.onGround() && entity.getLastClimbablePos().isPresent()) {
             for (Class<? extends Block> blocktype : ladderLikeBlocks) {
                 if (blocktype.isAssignableFrom(
+                        // spotless:off 
+                    	//#if MC >= 11800
                         entity.level().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+                        //#else
+                        //$$ entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+                        //#endif
+                        //spotless:on
+
                     return true;
             }
             return false;
