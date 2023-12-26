@@ -109,9 +109,12 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
                 lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
                 lefthanded, poseStack, multiBufferSource, light);
-        //#else
+        //#elseif MC >= 11900
         //$$     Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
         //$$     poseStack, multiBufferSource, light);
+        //#else
+        //$$ Minecraft.getInstance().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
+        //$$  poseStack, multiBufferSource, light);
         //#endif
         //spotless:on
         poseStack.popPose();

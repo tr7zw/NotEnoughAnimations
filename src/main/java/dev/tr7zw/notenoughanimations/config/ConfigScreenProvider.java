@@ -10,8 +10,14 @@ import dev.tr7zw.notenoughanimations.versionless.RotationLock;
 import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 import dev.tr7zw.notenoughanimations.versionless.config.Config;
-import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.screens.Screen;
+//spotless:off 
+//#if MC >= 11900
+import net.minecraft.client.OptionInstance;
+//#else
+//$$ import net.minecraft.client.Option;
+//#endif
+//spotless:on
 
 public class ConfigScreenProvider {
 
@@ -20,7 +26,7 @@ public class ConfigScreenProvider {
 
             @Override
             public void initialize() {
-                List<OptionInstance<?>> options = new ArrayList<>();
+                List<Object> options = new ArrayList<>();
                 Config config = NEABaseMod.config;
                 options.add(getOnOffOption("text.nea.enable.animationsmoothing", () -> config.enableAnimationSmoothing,
                         (b) -> config.enableAnimationSmoothing = b));
@@ -93,7 +99,13 @@ public class ConfigScreenProvider {
                 options.add(getEnumOption("text.nea.enable.bowAnimation", BowAnimation.class, () -> config.bowAnimation,
                         (b) -> config.bowAnimation = b));
 
+                // spotless:off
+                //#if MC >= 11900
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
+                //#else
+                //$$getOptions().addSmall(options.toArray(new Option[0]));
+                //#endif
+                // spotless:on
 
             }
 
