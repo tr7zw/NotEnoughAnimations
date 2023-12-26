@@ -15,17 +15,17 @@ import net.minecraft.util.Mth;
 
 public class PlayerTransformer {
 
-	public static final int ENTRY_SIZE = 9;
-	public static final int ENTRY_AMOUNT = 5;
-	
+    public static final int ENTRY_SIZE = 9;
+    public static final int ENTRY_AMOUNT = 5;
+
     private boolean doneLatebind = false;
     private final Minecraft mc = Minecraft.getInstance();
     private int tickId = 0; // ok to overflow, just used to keep track of what has been updated this tick
     private boolean renderingFirstPersonArm = false;
     private float deltaTick = 0;
 
-    public void updateModel(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model,
-            float swing, CallbackInfo info) {
+    public void updateModel(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float swing,
+            CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
         if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the
@@ -63,8 +63,8 @@ public class PlayerTransformer {
         }
     }
 
-    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel,
-            float swing, CallbackInfo info) {
+    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel, float swing,
+            CallbackInfo info) {
         if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the
                                                            // first person model hand
             return;
@@ -80,9 +80,9 @@ public class PlayerTransformer {
     public void nextTick() {
         tickId++;
     }
-    
+
     public void setDeltaTick(float delta) {
-    	this.deltaTick = delta;
+        this.deltaTick = delta;
     }
 
     public void renderingFirstPersonArm(boolean flag) {
@@ -91,13 +91,14 @@ public class PlayerTransformer {
 
     private void interpolate(ModelPart model, float[] last, int offset, float timePassed, boolean differentFrame,
             float speed, float delta) {
-    	// 0, 1, 2 = cur Target. 3,4,5 = last ticks target. 6,7,8 the last rendered target
+        // 0, 1, 2 = cur Target. 3,4,5 = last ticks target. 6,7,8 the last rendered
+        // target
         if (!differentFrame) { // Rerendering the place in the same frame
-        	last[offset + 6] = Mth.lerp(delta, last[offset + 3], last[offset]);
-        	last[offset + 7] = Mth.lerp(delta, last[offset + 4], last[offset + 1]);
-        	last[offset + 8] = Mth.lerp(delta, last[offset + 5], last[offset + 2]);
+            last[offset + 6] = Mth.lerp(delta, last[offset + 3], last[offset]);
+            last[offset + 7] = Mth.lerp(delta, last[offset + 4], last[offset + 1]);
+            last[offset + 8] = Mth.lerp(delta, last[offset + 5], last[offset + 2]);
             model.xRot = last[offset + 6];
-            model.yRot = last[offset + 7]; 
+            model.yRot = last[offset + 7];
             model.zRot = last[offset + 8];
             return;
         }
@@ -112,10 +113,10 @@ public class PlayerTransformer {
             return;
         }
         last[offset + 3] = last[offset + 6];
-        last[offset + 4] = last[offset + 7]; 
+        last[offset + 4] = last[offset + 7];
         last[offset + 5] = last[offset + 8];
         last[offset] = last[offset + 6];
-        last[offset + 1] = last[offset + 7]; 
+        last[offset + 1] = last[offset + 7];
         last[offset + 2] = last[offset + 8];
         float amount = speed;
         amount = Math.min(amount, 1);
@@ -125,11 +126,11 @@ public class PlayerTransformer {
                 + ((AnimationUtil.wrapDegrees(model.yRot) - AnimationUtil.wrapDegrees(last[offset + 1])) * amount);
         last[offset + 2] = last[offset + 2] + ((model.zRot - last[offset + 2]) * amount);
         cleanInvalidData(last, offset);
-    	last[offset + 6] = Mth.lerp(delta, last[offset + 3], last[offset]);
-    	last[offset + 7] = Mth.lerp(delta, last[offset + 4], last[offset + 1]);
-    	last[offset + 8] = Mth.lerp(delta, last[offset + 5], last[offset + 2]);
+        last[offset + 6] = Mth.lerp(delta, last[offset + 3], last[offset]);
+        last[offset + 7] = Mth.lerp(delta, last[offset + 4], last[offset + 1]);
+        last[offset + 8] = Mth.lerp(delta, last[offset + 5], last[offset + 2]);
         model.xRot = last[offset + 6];
-        model.yRot = last[offset + 7]; 
+        model.yRot = last[offset + 7];
         model.zRot = last[offset + 8];
     }
 
@@ -137,7 +138,7 @@ public class PlayerTransformer {
             boolean differentFrame, float speed) {
         if (!differentFrame) { // Rerendering the place in the same frame
             entity.yBodyRot = (last[offset]);
-            entity.yBodyRotO = last[offset+1];
+            entity.yBodyRotO = last[offset + 1];
             return;
         }
         if (timePassed > 50) { // Don't try to interpolate states older than 100ms
@@ -150,7 +151,7 @@ public class PlayerTransformer {
         if (entity.yHeadRot - last[offset] < -90) {
             speed *= 0.9f;
         }
-        last[offset +1] = last[offset];
+        last[offset + 1] = last[offset];
         float amount = speed;
         amount = Math.min(amount, 1);
         entity.yBodyRotO = last[offset];

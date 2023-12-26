@@ -21,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
 public class PlayerEntityMixin implements PlayerData {
 
     private int armsUpdated = 0;
-    private float[] lastRotations = new float[PlayerTransformer.ENTRY_AMOUNT*PlayerTransformer.ENTRY_SIZE];
+    private float[] lastRotations = new float[PlayerTransformer.ENTRY_AMOUNT * PlayerTransformer.ENTRY_SIZE];
     private ItemStack sideSword = ItemStack.EMPTY;
     private ItemStack[] lastHeldItems = new ItemStack[2];
     private boolean disableBodyRotation = false;

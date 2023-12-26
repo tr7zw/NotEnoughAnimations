@@ -29,7 +29,8 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Hum
 
     @SuppressWarnings("unchecked")
     @Inject(method = "setupAnim", at = @At(value = "HEAD"))
-    public void setupAnimHEAD(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo info) {
+    public void setupAnimHEAD(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks,
+            float netHeadYaw, float headPitch, CallbackInfo info) {
         if (livingEntity instanceof AbstractClientPlayer)
             NEAnimationsLoader.INSTANCE.playerTransformer.preUpdate((AbstractClientPlayer) livingEntity,
                     (PlayerModel<AbstractClientPlayer>) (Object) this, limbSwing, info);
@@ -37,7 +38,8 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity> extends Hum
 
     @SuppressWarnings("unchecked")
     @Inject(method = "setupAnim", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;copyFrom(Lnet/minecraft/client/model/geom/ModelPart;)V", ordinal = 0))
-    public void setupAnim(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo info) {
+    public void setupAnim(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
+            float headPitch, CallbackInfo info) {
         if (livingEntity instanceof AbstractClientPlayer)
             NEAnimationsLoader.INSTANCE.playerTransformer.updateModel((AbstractClientPlayer) livingEntity,
                     (PlayerModel<AbstractClientPlayer>) (Object) this, limbSwing, info);
