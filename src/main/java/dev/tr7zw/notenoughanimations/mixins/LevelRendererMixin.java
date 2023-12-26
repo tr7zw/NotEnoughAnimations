@@ -1,6 +1,5 @@
 package dev.tr7zw.notenoughanimations.mixins;
 
-import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,6 +12,14 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
+
+//spotless:off
+//#if MC >= 11903
+import org.joml.Matrix4f;
+//#else
+//$$ import com.mojang.math.Matrix4f;
+//#endif
+//spotless:on
 
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {

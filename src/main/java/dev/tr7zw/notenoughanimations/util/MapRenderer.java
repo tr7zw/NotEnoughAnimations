@@ -1,10 +1,8 @@
 package dev.tr7zw.notenoughanimations.util;
 
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 
+import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -12,6 +10,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+
+//spotless:off
+//#if MC >= 11903
+import org.joml.Matrix4f;
+//#else
+//$$ import com.mojang.math.Matrix4f;
+//#endif
+//spotless:on
 
 public class MapRenderer {
 
@@ -25,22 +31,22 @@ public class MapRenderer {
         Minecraft client = Minecraft.getInstance();
 
         if (small) {
-            matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
-            matrices.mulPose(Axis.ZP.rotationDegrees(180.0f));
+            matrices.mulPose(NMSHelper.YP.rotationDegrees(160.0f));
+            matrices.mulPose(NMSHelper.ZP.rotationDegrees(180.0f));
             matrices.scale(0.38f, 0.38f, 0.38f);
 
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
         } else {
             if (lefthanded) {
-                matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
-                matrices.mulPose(Axis.ZP.rotationDegrees(150.0f));
+                matrices.mulPose(NMSHelper.YP.rotationDegrees(160.0f));
+                matrices.mulPose(NMSHelper.ZP.rotationDegrees(150.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
 
                 matrices.translate(+0.5, -1.3, 0.0);
             } else {
-                matrices.mulPose(Axis.YP.rotationDegrees(160.0f));
-                matrices.mulPose(Axis.ZP.rotationDegrees(210.0f));
+                matrices.mulPose(NMSHelper.YP.rotationDegrees(160.0f));
+                matrices.mulPose(NMSHelper.ZP.rotationDegrees(210.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
 
                 matrices.translate(-1.0, -1.8, 0.0);
