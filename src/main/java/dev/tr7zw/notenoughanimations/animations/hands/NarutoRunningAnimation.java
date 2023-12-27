@@ -36,10 +36,10 @@ public class NarutoRunningAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
-        if (part == BodyPart.LEFT_ARM) {
+        if (part == BodyPart.LEFT_ARM && !AnimationUtil.isSwingingArm(entity, part)) {
             AnimationUtil.applyArmTransforms(model, HumanoidArm.LEFT, 1f, -0.2f, 0.3f);
         }
-        if (part == BodyPart.RIGHT_ARM) {
+        if (part == BodyPart.RIGHT_ARM && !AnimationUtil.isSwingingArm(entity, part)) {
             AnimationUtil.applyArmTransforms(model, HumanoidArm.RIGHT, 1f, -0.2f, 0.3f);
         }
     }

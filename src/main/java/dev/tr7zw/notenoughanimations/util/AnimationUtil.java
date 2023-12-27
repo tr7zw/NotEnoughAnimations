@@ -23,6 +23,19 @@ public class AnimationUtil {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
     }
 
+    public static boolean isSwingingArm(AbstractClientPlayer player, BodyPart arm) {
+        if (!player.swinging) {
+            return false;
+        }
+        if (arm == BodyPart.LEFT_ARM) {
+            return (player.getMainArm() == HumanoidArm.LEFT && player.swingingArm == InteractionHand.MAIN_HAND)
+                    || (player.getMainArm() == HumanoidArm.RIGHT && player.swingingArm == InteractionHand.OFF_HAND);
+        } else {
+            return (player.getMainArm() == HumanoidArm.RIGHT && player.swingingArm == InteractionHand.MAIN_HAND)
+                    || (player.getMainArm() == HumanoidArm.LEFT && player.swingingArm == InteractionHand.OFF_HAND);
+        }
+    }
+
     public static ArmPose getArmPose(AbstractClientPlayer abstractClientPlayerEntity, InteractionHand hand) {
         ItemStack itemStack = abstractClientPlayerEntity.getItemInHand(hand);
         if (itemStack.isEmpty()) {
