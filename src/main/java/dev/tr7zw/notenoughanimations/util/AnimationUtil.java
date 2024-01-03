@@ -159,14 +159,7 @@ public class AnimationUtil {
     }
     
     public static float wrapDegrees(float angle) {
-        float wrappedAngle = angle % NMSHelper.TWO_PI; // 2 * π ≈ 6.28318531
-        if (wrappedAngle >= NMSHelper.PI) {
-            wrappedAngle -= NMSHelper.TWO_PI; // 2 * π
-        }
-        if (wrappedAngle < -NMSHelper.PI) {
-            wrappedAngle += NMSHelper.TWO_PI; // 2 * π
-        }
-        return wrappedAngle;
+        return ((angle+NMSHelper.PI) % NMSHelper.TWO_PI) -NMSHelper.PI; 
     }
 
 }
