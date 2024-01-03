@@ -18,7 +18,9 @@ import com.mojang.math.Axis;
 
 public class NMSHelper {
 
-    public static final float HALF_PI = (float) (Math.PI / 2);
+	public static final float PI = (float) Math.PI;
+	public static final float HALF_PI = (float) (Math.PI / 2);
+	public static final float TWO_PI = (float) (Math.PI * 2);
 
     // spotless:off
 	//#if MC >= 11903

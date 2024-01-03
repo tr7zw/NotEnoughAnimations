@@ -133,15 +133,40 @@ public class AnimationUtil {
         model.hat.yRot = value;
     }
 
-    public static float wrapDegrees(float f) {
-        float g = f % 6.28318512f;
-        if (g >= 3.14159256f) {
-            g -= 6.28318512f;
+    public static float interpolateRotation(float start, float end, float amount) {
+        float wrappedStart = wrapDegrees(start);
+        float wrappedEnd = wrapDegrees(end);
+
+        float diff = wrappedEnd - wrappedStart;
+
+        if (diff > NMSHelper.PI) {
+            wrappedEnd -= NMSHelper.TWO_PI; // Ensure shortest path when difference is greater than PI
+        } else if (diff < -NMSHelper.PI) {
+            wrappedEnd += NMSHelper.TWO_PI; // Ensure shortest path when difference is less than -PI
         }
-        if (g < -3.14159256f) {
-            g += 6.28318512f;
+
+        return wrapDegrees(wrappedStart + (wrappedEnd - wrappedStart) * amount);
+    }
+    
+    public static float lerpAngle(float delta, float start, float end) {
+        float wrappedStart = wrapDegrees(start);
+        float wrappedEnd = wrapDegrees(end);
+        
+        float difference = wrappedEnd - wrappedStart;
+        float shortestPath = ((difference + NMSHelper.PI) % NMSHelper.TWO_PI) - NMSHelper.PI;
+        
+        return wrapDegrees(wrappedStart + shortestPath * delta);
+    }
+    
+    public static float wrapDegrees(float angle) {
+        float wrappedAngle = angle % NMSHelper.TWO_PI; // 2 * π ≈ 6.28318531
+        if (wrappedAngle >= NMSHelper.PI) {
+            wrappedAngle -= NMSHelper.TWO_PI; // 2 * π
         }
-        return g;
+        if (wrappedAngle < -NMSHelper.PI) {
+            wrappedAngle += NMSHelper.TWO_PI; // 2 * π
+        }
+        return wrappedAngle;
     }
 
 }

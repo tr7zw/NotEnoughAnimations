@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.util.Mth;
 
 public class PlayerTransformer {
 
@@ -93,42 +92,36 @@ public class PlayerTransformer {
             float speed, float delta) {
         // 0, 1, 2 = cur Target. 3,4,5 = last ticks target. 6,7,8 the last rendered
         // target
+        if (timePassed > 50) { // Don't try to interpolate states older than 1 tick
+            last[offset] = last[offset + 3] = last[offset + 6] = model.xRot;
+            last[offset + 1] = last[offset + 4] = last[offset + 7] = model.yRot;
+            last[offset + 2] = last[offset + 5] = last[offset + 8] = model.zRot;
+            cleanInvalidData(last, offset);
+            return;
+        }
         if (!differentFrame) { // Rerendering the place in the same frame
-            last[offset + 6] = Mth.lerp(delta, last[offset + 3], last[offset]);
-            last[offset + 7] = Mth.lerp(delta, last[offset + 4], last[offset + 1]);
-            last[offset + 8] = Mth.lerp(delta, last[offset + 5], last[offset + 2]);
+            last[offset + 6] = AnimationUtil.lerpAngle(delta, last[offset + 3], last[offset]);
+            last[offset + 7] = AnimationUtil.lerpAngle(delta, last[offset + 4], last[offset + 1]);
+            last[offset + 8] = AnimationUtil.lerpAngle(delta, last[offset + 5], last[offset + 2]);
             model.xRot = last[offset + 6];
             model.yRot = last[offset + 7];
             model.zRot = last[offset + 8];
             return;
         }
-        if (timePassed > 50) { // Don't try to interpolate states older than 1 tick
-            last[offset] = model.xRot;
-            last[offset + 1] = model.yRot;
-            last[offset + 2] = model.zRot;
-            last[offset + 3] = model.xRot;
-            last[offset + 4] = model.yRot;
-            last[offset + 5] = model.zRot;
-            cleanInvalidData(last, offset);
-            return;
-        }
-        last[offset + 3] = last[offset + 6];
-        last[offset + 4] = last[offset + 7];
-        last[offset + 5] = last[offset + 8];
-        last[offset] = last[offset + 6];
-        last[offset + 1] = last[offset + 7];
-        last[offset + 2] = last[offset + 8];
+        last[offset + 3] = last[offset] = last[offset + 6];
+        last[offset + 4] = last[offset + 1] = last[offset + 7];
+        last[offset + 5] = last[offset + 2] = last[offset + 8];
+
         float amount = speed;
         amount = Math.min(amount, 1);
         amount = Math.max(amount, 0); // "Should" be impossible, but just to be sure
-        last[offset] = last[offset] + ((model.xRot - last[offset]) * amount);
-        last[offset + 1] = last[offset + 1]
-                + ((AnimationUtil.wrapDegrees(model.yRot) - AnimationUtil.wrapDegrees(last[offset + 1])) * amount);
-        last[offset + 2] = last[offset + 2] + ((model.zRot - last[offset + 2]) * amount);
+        last[offset] = AnimationUtil.interpolateRotation(model.xRot, last[offset], amount);
+        last[offset + 1] = AnimationUtil.interpolateRotation(model.yRot, last[offset + 1], amount);
+        last[offset + 2] = AnimationUtil.interpolateRotation(model.zRot, last[offset + 2], amount);
         cleanInvalidData(last, offset);
-        last[offset + 6] = Mth.lerp(delta, last[offset + 3], last[offset]);
-        last[offset + 7] = Mth.lerp(delta, last[offset + 4], last[offset + 1]);
-        last[offset + 8] = Mth.lerp(delta, last[offset + 5], last[offset + 2]);
+        last[offset + 6] = AnimationUtil.lerpAngle(delta, last[offset + 3], last[offset]);
+        last[offset + 7] = AnimationUtil.lerpAngle(delta, last[offset + 4], last[offset + 1]);
+        last[offset + 8] = AnimationUtil.lerpAngle(delta, last[offset + 5], last[offset + 2]);
         model.xRot = last[offset + 6];
         model.yRot = last[offset + 7];
         model.zRot = last[offset + 8];
