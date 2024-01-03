@@ -17,12 +17,15 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //#elseif FORGE
 //$$import dev.tr7zw.notenoughanimations.config.ConfigScreenProvider;
 //$$import net.minecraftforge.common.MinecraftForge;
-//$$import net.minecraftforge.event.TickEvent.ClientTickEvent;
+//$$import net.minecraftforge.event.TickEvent;
+//$$import net.minecraftforge.event.TickEvent.Phase;
+//$$import net.minecraftforge.event.TickEvent.Type;
 //$$	
 //$$ import net.minecraftforge.fml.ModLoadingContext;
 //$$ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 //$$ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 //$$ import dev.tr7zw.config.CustomConfigScreen;
+//$$ import net.minecraftforge.fml.LogicalSide;
 //$$
 //#if MC <= 11605
 //$$ import net.minecraftforge.fml.ExtensionPoint;
@@ -69,7 +72,8 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ MinecraftForge.EVENT_BUS.addListener(this::doClientTick);
 //$$ }
 //$$
-//$$ private void doClientTick(ClientTickEvent event) {
+//$$ private void doClientTick(TickEvent event) {
+//$$ if(event.type == Type.PLAYER && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
 //$$ this.clientTick();
 //$$ }
 //$$
@@ -81,7 +85,10 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ import net.neoforged.fml.ModLoadingContext;
 //$$ import net.neoforged.neoforge.client.ConfigScreenHandler.ConfigScreenFactory;
 //$$ import net.neoforged.neoforge.common.NeoForge;
-//$$ import net.neoforged.neoforge.event.TickEvent.ClientTickEvent;
+//$$ import net.neoforged.fml.LogicalSide;
+//$$ import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
+//$$ import net.neoforged.neoforge.event.TickEvent.Phase;
+//$$ import net.neoforged.neoforge.event.TickEvent.Type;
 //$$
 //$$public class NEAnimationsMod extends NEAnimationsLoader {
 //$$
@@ -100,7 +107,8 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ NeoForge.EVENT_BUS.addListener(this::doClientTick);
 //$$ }
 //$$
-//$$    private void doClientTick(ClientTickEvent event) {
+//$$ private void doClientTick(PlayerTickEvent event) {
+//$$ if(event.type == Type.PLAYER && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
 //$$ this.clientTick();
 //$$ }
 //$$
