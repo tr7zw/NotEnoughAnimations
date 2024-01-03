@@ -20,23 +20,21 @@ jobs:
         with:
           cache-read-only: false
           gradle-home-cache-cleanup: true
-      - name: make gradle wrapper executable
-        if: ${{ runner.os != 'Windows' }}
-        run: chmod +x ./gradlecw
+# Already needs to be executable, so the dirty check is correct
+#      - name: make gradle wrapper executable
+#        if: ${{ runner.os != 'Windows' }}
+#        run: chmod +x ./gradlecw
       - name: build
         run: ./gradlecw build
       - name: capture build artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
-          path: |
-            NEAFabric/build/libs/*
-            NEAForge/build/libs/*
-            NEAVersionless/build/libs/*
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: success() || failure()
-        with:
-          name: JUnit Tests
-          path: '**/build/test-results/test/TEST-*.xml'
-          reporter: java-junit        
+          path: 'versions/**/build/libs/*.jar'
+#      - name: Test Report
+#        uses: dorny/test-reporter@v1
+#        if: success() || failure()
+#        with:
+#          name: JUnit Tests
+#          path: '**/build/test-results/test/TEST-*.xml'
+#          reporter: java-junit        
