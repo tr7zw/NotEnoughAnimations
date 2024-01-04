@@ -147,19 +147,19 @@ public class AnimationUtil {
 
         return wrapDegrees(wrappedStart + (wrappedEnd - wrappedStart) * amount);
     }
-    
+
     public static float lerpAngle(float delta, float start, float end) {
         float wrappedStart = wrapDegrees(start);
         float wrappedEnd = wrapDegrees(end);
-        
+
         float difference = wrappedEnd - wrappedStart;
         float shortestPath = ((difference + NMSHelper.PI) % NMSHelper.TWO_PI) - NMSHelper.PI;
-        
+
         return wrapDegrees(wrappedStart + shortestPath * delta);
     }
-    
+
     public static float wrapDegrees(float angle) {
-        return ((angle+NMSHelper.PI) % NMSHelper.TWO_PI) -NMSHelper.PI; 
+        return ((angle + NMSHelper.PI) % NMSHelper.TWO_PI) - NMSHelper.PI;
     }
 
 }
