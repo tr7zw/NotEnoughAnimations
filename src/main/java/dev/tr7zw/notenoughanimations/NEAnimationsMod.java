@@ -17,7 +17,7 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //#elseif FORGE
 //$$import dev.tr7zw.notenoughanimations.config.ConfigScreenProvider;
 //$$import net.minecraftforge.common.MinecraftForge;
-//$$import net.minecraftforge.event.TickEvent;
+//$$import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 //$$import net.minecraftforge.event.TickEvent.Phase;
 //$$import net.minecraftforge.event.TickEvent.Type;
 //$$	
@@ -26,6 +26,7 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 //$$ import dev.tr7zw.config.CustomConfigScreen;
 //$$ import net.minecraftforge.fml.LogicalSide;
+//$$ import net.minecraft.client.Minecraft;
 //$$
 //#if MC <= 11605
 //$$ import net.minecraftforge.fml.ExtensionPoint;
@@ -72,8 +73,8 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ MinecraftForge.EVENT_BUS.addListener(this::doClientTick);
 //$$ }
 //$$
-//$$ private void doClientTick(TickEvent event) {
-//$$ if(event.type == Type.PLAYER && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
+//$$ private void doClientTick(PlayerTickEvent event) {
+//$$ if(event.type == Type.PLAYER && event.player == Minecraft.getInstance().player && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
 //$$ this.clientTick();
 //$$ }
 //$$
@@ -89,6 +90,7 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
 //$$ import net.neoforged.neoforge.event.TickEvent.Phase;
 //$$ import net.neoforged.neoforge.event.TickEvent.Type;
+//$$ import net.minecraft.client.Minecraft;
 //$$
 //$$public class NEAnimationsMod extends NEAnimationsLoader {
 //$$
@@ -108,7 +110,7 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ }
 //$$
 //$$ private void doClientTick(PlayerTickEvent event) {
-//$$ if(event.type == Type.PLAYER && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
+//$$ if(event.type == Type.PLAYER && event.player == Minecraft.getInstance().player && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
 //$$ this.clientTick();
 //$$ }
 //$$
