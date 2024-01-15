@@ -3,12 +3,14 @@ package dev.tr7zw.notenoughanimations;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import dev.tr7zw.notenoughanimations.config.ConfigScreenProvider;
 import dev.tr7zw.notenoughanimations.logic.AnimationProvider;
 import dev.tr7zw.notenoughanimations.logic.HeldItemHandler;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.config.Config;
 import dev.tr7zw.notenoughanimations.versionless.config.ConfigUpgrader;
+import dev.tr7zw.util.ModLoaderUtil;
 
 public abstract class NEAnimationsLoader extends NEABaseMod {
 
@@ -18,8 +20,14 @@ public abstract class NEAnimationsLoader extends NEABaseMod {
     public AnimationProvider animationProvider;
     private boolean lateInitCompleted = false;
 
-    public void onEnable() {
+    protected NEAnimationsLoader() {
         INSTANCE = this;
+    	ModLoaderUtil.disableDisplayTest();
+    	ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
+    	ModLoaderUtil.registerClientSetupListener(this::onEnable);
+    }
+    
+    public void onEnable() {
         if (settingsFile.exists()) {
             try {
                 config = gson.fromJson(new String(Files.readAllBytes(settingsFile.toPath()), StandardCharsets.UTF_8),
