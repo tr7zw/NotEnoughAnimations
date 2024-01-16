@@ -22,11 +22,11 @@ public abstract class NEAnimationsLoader extends NEABaseMod {
 
     protected NEAnimationsLoader() {
         INSTANCE = this;
-    	ModLoaderUtil.disableDisplayTest();
-    	ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
-    	ModLoaderUtil.registerClientSetupListener(this::onEnable);
+        ModLoaderUtil.disableDisplayTest();
+        ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
+        ModLoaderUtil.registerClientSetupListener(this::onEnable);
     }
-    
+
     public void onEnable() {
         if (settingsFile.exists()) {
             try {
