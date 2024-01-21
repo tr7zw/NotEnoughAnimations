@@ -29,23 +29,23 @@ public class ConfigScreenProvider {
                 List<Object> options = new ArrayList<>();
                 Config config = NEABaseMod.config;
                 options.add(getOnOffOption("text.nea.enable.animationsmoothing", () -> config.enableAnimationSmoothing,
-                        (b) -> config.enableAnimationSmoothing = b));
+                        b -> config.enableAnimationSmoothing = b));
                 options.add(getOnOffOption("text.nea.disableLegSmoothing", () -> config.disableLegSmoothing,
-                        (b) -> config.disableLegSmoothing = b));
+                        b -> config.disableLegSmoothing = b));
                 options.add(getDoubleOption("text.nea.smoothingSpeed", 0.01f, 1f, 0.1f,
                         () -> (double) config.animationSmoothingSpeed, (i) -> {
                             config.animationSmoothingSpeed = i.floatValue();
                         }));
                 options.add(getOnOffOption("text.nea.enable.inworldmaprendering",
-                        () -> config.enableInWorldMapRendering, (b) -> config.enableInWorldMapRendering = b));
+                        () -> config.enableInWorldMapRendering, b -> config.enableInWorldMapRendering = b));
                 options.add(getOnOffOption("text.nea.enable.offhandhiding", () -> config.enableOffhandHiding,
-                        (b) -> config.enableOffhandHiding = b));
+                        b -> config.enableOffhandHiding = b));
                 options.add(getOnOffOption("text.nea.enable.rotationlocking", () -> config.enableRotationLocking,
-                        (b) -> config.enableRotationLocking = b));
+                        b -> config.enableRotationLocking = b));
                 options.add(getOnOffOption("text.nea.enable.ladderanimation", () -> config.enableLadderAnimation,
-                        (b) -> config.enableLadderAnimation = b));
+                        b -> config.enableLadderAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.rotatetoladder", () -> config.enableRotateToLadder,
-                        (b) -> config.enableRotateToLadder = b));
+                        b -> config.enableRotateToLadder = b));
                 options.add(getDoubleOption("text.nea.ladderAnimationAmplifier", 0.1f, 0.5f, 0.01f,
                         () -> (double) config.ladderAnimationAmplifier, (i) -> {
                             config.ladderAnimationAmplifier = i.floatValue();
@@ -59,45 +59,45 @@ public class ConfigScreenProvider {
                             config.ladderAnimationArmSpeed = i.floatValue();
                         }));
                 options.add(getOnOffOption("text.nea.enable.crawling", () -> config.enableCrawlingAnimation,
-                        (b) -> config.enableCrawlingAnimation = b));
+                        b -> config.enableCrawlingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.eatdringanimation", () -> config.enableEatDrinkAnimation,
-                        (b) -> config.enableEatDrinkAnimation = b));
+                        b -> config.enableEatDrinkAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.rowboatanimation", () -> config.enableRowBoatAnimation,
-                        (b) -> config.enableRowBoatAnimation = b));
+                        b -> config.enableRowBoatAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.horseanimation", () -> config.enableHorseAnimation,
-                        (b) -> config.enableHorseAnimation = b));
+                        b -> config.enableHorseAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.dontholditemsinbed", () -> config.dontHoldItemsInBed,
-                        (b) -> config.dontHoldItemsInBed = b));
+                        b -> config.dontHoldItemsInBed = b));
                 options.add(getOnOffOption("text.nea.enable.freezearmsinbed", () -> config.freezeArmsInBed,
-                        (b) -> config.freezeArmsInBed = b));
+                        b -> config.freezeArmsInBed = b));
                 options.add(getEnumOption("text.nea.rotationlock", RotationLock.class, () -> config.rotationLock,
-                        (b) -> config.rotationLock = b));
+                        b -> config.rotationLock = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> config.showLastUsedSword,
-                        (b) -> config.showLastUsedSword = b));
+                        b -> config.showLastUsedSword = b));
                 options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class, () -> config.holdUpItemsMode,
-                        (b) -> config.holdUpItemsMode = b));
+                        b -> config.holdUpItemsMode = b));
                 options.add(getDoubleOption("text.nea.holdUpItemOffset", -0.5f, 0.4f, 0.1f,
                         () -> (double) config.holdUpItemOffset, (i) -> {
                             config.holdUpItemOffset = i.floatValue();
                         }));
                 options.add(getOnOffOption("text.nea.enable.itemSwapAnimation", () -> config.itemSwapAnimation,
-                        (b) -> config.itemSwapAnimation = b));
+                        b -> config.itemSwapAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.tweakElytraAnimation", () -> config.tweakElytraAnimation,
-                        (b) -> config.tweakElytraAnimation = b));
+                        b -> config.tweakElytraAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.petAnimation", () -> config.petAnimation,
-                        (b) -> config.petAnimation = b));
+                        b -> config.petAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.fallingAnimation", () -> config.fallingAnimation,
-                        (b) -> config.fallingAnimation = b));
+                        b -> config.fallingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.freezingAnimation", () -> config.freezingAnimation,
-                        (b) -> config.freezingAnimation = b));
+                        b -> config.freezingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.huggingAnimation", () -> config.huggingAnimation,
-                        (b) -> config.huggingAnimation = b));
+                        b -> config.huggingAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.narutoRunning", () -> config.narutoRunning,
-                        (b) -> config.narutoRunning = b));
+                        b -> config.narutoRunning = b));
                 options.add(getOnOffOption("text.nea.enable.enableInWorldBookRendering",
-                        () -> config.enableInWorldBookRendering, (b) -> config.enableInWorldBookRendering = b));
+                        () -> config.enableInWorldBookRendering, b -> config.enableInWorldBookRendering = b));
                 options.add(getEnumOption("text.nea.enable.bowAnimation", BowAnimation.class, () -> config.bowAnimation,
-                        (b) -> config.bowAnimation = b));
+                        b -> config.bowAnimation = b));
 
                 // spotless:off
                 //#if MC >= 11900

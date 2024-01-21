@@ -1,5 +1,6 @@
 package dev.tr7zw.notenoughanimations.animations.fullbody;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,12 +35,12 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
             for (Class<? extends Block> blocktype : ladderLikeBlocks) {
                 if (blocktype.isAssignableFrom(
                         // spotless:off 
-                    	//#if MC >= 11800
+                        //#if MC >= 11800
                         entity.level().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
-                        //#else
-                        //$$ entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
-                        //#endif
-                        //spotless:on
+                    //#else
+                    //$$ entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+                    //#endif
+                    //spotless:on
 
                     return true;
             }
@@ -48,12 +49,8 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         return false;
     }
 
-    private final Set<Class<? extends Block>> ladderLikeBlocks = new HashSet<Class<? extends Block>>() {
-        {
-            add(LadderBlock.class);
-            add(TrapDoorBlock.class);
-        }
-    };
+    private final Set<Class<? extends Block>> ladderLikeBlocks = new HashSet<>(
+            Arrays.asList(LadderBlock.class, TrapDoorBlock.class));
 
     private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY,
             BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG };

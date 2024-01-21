@@ -34,8 +34,7 @@ public class PlayerTransformer {
 
         NEAnimationsLoader.INSTANCE.animationProvider.applyAnimations(entity, model, deltaTick, swing);
 
-        if (NEABaseMod.config.enableAnimationSmoothing && entity instanceof PlayerData) {
-            PlayerData data = (PlayerData) entity;
+        if (NEABaseMod.config.enableAnimationSmoothing && entity instanceof PlayerData data) {
             float[] last = data.getLastRotations();
             int passedTicks = data.isUpdated(tickId);
             boolean differentFrame = passedTicks != 0;

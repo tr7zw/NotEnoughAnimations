@@ -84,9 +84,7 @@ public class HeldItemHandler {
             // Don't replace the model of items with a custom model
             return;
         }
-        if (model instanceof ArmedModel && model instanceof HumanoidModel) {
-            ArmedModel armedModel = (ArmedModel) model;
-            HumanoidModel<?> humanoid = (HumanoidModel<?>) model;
+        if (model instanceof ArmedModel armedModel && model instanceof HumanoidModel<?> humanoid) {
             if ((arm == HumanoidArm.RIGHT && humanoid.rightArm.visible)
                     || (arm == HumanoidArm.LEFT && humanoid.leftArm.visible)) {
                 if (NEABaseMod.config.enableInWorldMapRendering) {
@@ -101,7 +99,7 @@ public class HeldItemHandler {
                         matrices.mulPose(NMSHelper.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(NMSHelper.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
-                        matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f),
+                        matrices.translate((bl ? -1 : 1) / 16.0f,
                                 0.125 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0), -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,
                                 !entity.getOffhandItem().isEmpty(), entity.getMainArm() == HumanoidArm.LEFT);
@@ -116,7 +114,7 @@ public class HeldItemHandler {
                         matrices.mulPose(NMSHelper.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(NMSHelper.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
-                        matrices.translate((double) ((float) (bl ? -1 : 1) / 16.0f), 0.125, -0.625);
+                        matrices.translate((bl ? -1 : 1) / 16.0f, 0.125, -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true, false);
                         matrices.popPose();
                         info.cancel();
@@ -142,8 +140,7 @@ public class HeldItemHandler {
             }
         }
 
-        if (NEABaseMod.config.enableOffhandHiding && entity instanceof AbstractClientPlayer) {
-            AbstractClientPlayer player = (AbstractClientPlayer) entity;
+        if (NEABaseMod.config.enableOffhandHiding && entity instanceof AbstractClientPlayer player) {
             ArmPose armPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
             ArmPose armPose2 = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
             if (!(AnimationUtil.isUsingboothHands(armPose) || AnimationUtil.isUsingboothHands(armPose2)))
