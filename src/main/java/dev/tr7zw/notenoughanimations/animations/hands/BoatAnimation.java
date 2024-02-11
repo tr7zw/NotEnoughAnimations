@@ -41,6 +41,12 @@ public class BoatAnimation extends BasicAnimation {
         if (part == BodyPart.BODY) {
             return;
         }
+        if (part == BodyPart.LEFT_ARM && AnimationUtil.isSwingingArm(entity, part)) {
+            return;
+        }
+        if (part == BodyPart.RIGHT_ARM && AnimationUtil.isSwingingArm(entity, part)) {
+            return;
+        }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         Boat boat = (Boat) entity.getVehicle();
         int id = boat.getPassengers().indexOf(entity);

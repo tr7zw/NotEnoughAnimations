@@ -20,7 +20,7 @@ public class HorseAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.isPassenger() && entity.getVehicle() instanceof AbstractHorse;
+        return entity.isPassenger() && entity.getVehicle() instanceof AbstractHorse horse && horse.isSaddled();
     }
 
     private final BodyPart[] bothHands = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY };
@@ -39,6 +39,12 @@ public class HorseAnimation extends BasicAnimation {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
             BodyPart part, float delta, float tickCounter) {
         if (part == BodyPart.BODY) {
+            return;
+        }
+        if (part == BodyPart.LEFT_ARM && AnimationUtil.isSwingingArm(entity, part)) {
+            return;
+        }
+        if (part == BodyPart.RIGHT_ARM && AnimationUtil.isSwingingArm(entity, part)) {
             return;
         }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;

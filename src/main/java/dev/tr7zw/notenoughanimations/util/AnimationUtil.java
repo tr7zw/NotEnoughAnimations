@@ -124,9 +124,9 @@ public class AnimationUtil {
     }
 
     public static void minMaxHeadRotation(Player livingEntity, PlayerModel<AbstractClientPlayer> model) {
-        float value = wrapDegrees(model.head.yRot);
-        float min = wrapDegrees(model.body.yRot - NMSHelper.HALF_PI);
-        float max = wrapDegrees(model.body.yRot + NMSHelper.HALF_PI);
+        float value = legacyWrapDegrees(model.head.yRot);
+        float min = legacyWrapDegrees(model.body.yRot - NMSHelper.HALF_PI);
+        float max = legacyWrapDegrees(model.body.yRot + NMSHelper.HALF_PI);
         value = Math.min(value, max);
         value = Math.max(value, min);
         model.head.yRot = value;
@@ -162,4 +162,16 @@ public class AnimationUtil {
         return ((angle + NMSHelper.PI) % NMSHelper.TWO_PI) - NMSHelper.PI;
     }
 
+    public static float legacyWrapDegrees(float f) {
+        float g = f % 6.28318512f;
+        if (g >= 3.14159256f) {
+            g -= 6.28318512f;
+        }
+        if (g < -3.14159256f) {
+            g += 6.28318512f;
+        }
+        return g;
+    }
+
+    
 }

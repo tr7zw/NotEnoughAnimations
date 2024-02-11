@@ -40,10 +40,17 @@ public class ConfigUpgrader {
         if (config.configVersion <= 8) {
             config.configVersion = 9;
             config.showLastUsedSword = false; // turning this off by default
+            changed = true;
         }
         if (config.configVersion <= 9) {
             config.configVersion = 10;
             config.animationSmoothingSpeed = 0.5f; // size changed
+            changed = true;
+        }
+        if (config.configVersion <= 10) {
+            config.configVersion = 11;
+            config.animationSmoothingSpeed = 0.2f; // 0.2 instead of 0.5, what was I thinking
+            changed = true;
         }
         // check for more changes here
 

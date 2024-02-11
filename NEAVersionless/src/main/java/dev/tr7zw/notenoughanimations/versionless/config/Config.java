@@ -11,7 +11,7 @@ import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 public class Config {
 
     public int configVersion = 10;
-    public float animationSmoothingSpeed = 0.5f;
+    public float animationSmoothingSpeed = 0.1f;
     public Set<String> holdingItems = new HashSet<>(
             Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern",
                     "minecraft:soul_torch", "minecraft:soul_lantern", "minecraft:recovery_compass"));
