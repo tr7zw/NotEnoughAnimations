@@ -18,6 +18,7 @@ enabledFlags:
   - autopublish
   - publishFabric
   - publishForge
+  - publishNeo
   - modrinth
   - curseforge
   - versionless
