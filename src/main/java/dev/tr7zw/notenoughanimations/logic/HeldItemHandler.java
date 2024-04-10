@@ -13,6 +13,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.util.MapRenderer;
+import dev.tr7zw.notenoughanimations.util.NMSWrapper;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
@@ -80,7 +81,7 @@ public class HeldItemHandler {
             }
             return;
         }
-        if (itemStack.hasTag() && itemStack.getTag().contains("CustomModelData")) {
+        if (NMSWrapper.hasCustomModel(itemStack)) {
             // Don't replace the model of items with a custom model
             return;
         }
@@ -232,11 +233,11 @@ public class HeldItemHandler {
     private BookAccess fromItem(ItemStack itemStack) {
         // spotless:off
     	//#if MC >= 11700
-        if (itemStack.is(Items.WRITTEN_BOOK))
-            return new BookViewScreen.WrittenBookAccess(itemStack);
-        if (itemStack.is(Items.WRITABLE_BOOK))
-            return new BookViewScreen.WritableBookAccess(itemStack);
-		//#else
+        //$$ if (itemStack.is(Items.WRITTEN_BOOK))
+        //$$    return new BookViewScreen.WrittenBookAccess(itemStack);
+        //$$ if (itemStack.is(Items.WRITABLE_BOOK))
+        //$$    return new BookViewScreen.WritableBookAccess(itemStack);
+	//$$	//#else
         //$$ if (itemStack.getItem() == (Items.WRITTEN_BOOK))
         //$$     return new BookViewScreen.WrittenBookAccess(itemStack);
         //$$ if (itemStack.getItem() == (Items.WRITABLE_BOOK))

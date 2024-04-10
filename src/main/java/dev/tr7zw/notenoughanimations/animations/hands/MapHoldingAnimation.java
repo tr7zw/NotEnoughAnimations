@@ -6,6 +6,7 @@ import java.util.Set;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.util.NMSWrapper;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.util.NMSHelper;
@@ -44,7 +45,7 @@ public class MapHoldingAnimation extends BasicAnimation {
         ItemStack itemInMainHand = entity.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack itemInOffHand = entity.getItemInHand(InteractionHand.OFF_HAND);
         if (compatibleMaps.contains(itemInMainHand.getItem()) && itemInOffHand.isEmpty()) {
-            if (itemInMainHand.hasTag() && itemInMainHand.getTag().contains("CustomModelData")) {
+            if (NMSWrapper.hasCustomModel(itemInMainHand)) {
                 return false;
             } else {
                 target = bothHands;
@@ -52,7 +53,7 @@ public class MapHoldingAnimation extends BasicAnimation {
             }
         }
         if (compatibleMaps.contains(itemInMainHand.getItem()) && !itemInOffHand.isEmpty()) {
-            if (itemInMainHand.hasTag() && itemInMainHand.getTag().contains("CustomModelData")) {
+            if (NMSWrapper.hasCustomModel(itemInMainHand)) {
                 return false;
             } else {
                 target = entity.getMainArm() == HumanoidArm.RIGHT ? right : left;
@@ -61,7 +62,7 @@ public class MapHoldingAnimation extends BasicAnimation {
 
         }
         if (compatibleMaps.contains(itemInOffHand.getItem()) && !itemInOffHand.isEmpty()) {
-            if (itemInMainHand.hasTag() && itemInMainHand.getTag().contains("CustomModelData")) {
+            if (NMSWrapper.hasCustomModel(itemInOffHand)) {
                 return false;
             } else {
                 target = entity.getMainArm() == HumanoidArm.RIGHT ? left : right;

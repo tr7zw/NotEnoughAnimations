@@ -54,7 +54,13 @@ public class MapRenderer {
 
             matrices.scale(0.0138125f, 0.0138125f, 0.0138125f);
         }
-        Integer integer = MapItem.getMapId(stack);
+        // spotless:off
+      //#if MC <= 12004
+      //$$  Integer mapid = MapItem.getMapId(stack);
+      //#else
+        net.minecraft.world.level.saveddata.maps.MapId mapid = stack.get(net.minecraft.core.component.DataComponents.MAP_ID);
+      //#endif
+      //spotless:on
         MapItemSavedData mapState = MapItem.getSavedData(stack, client.level);
         com.mojang.blaze3d.vertex.VertexConsumer vertexConsumer = vertexConsumers
                 .getBuffer(mapState == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
@@ -81,7 +87,7 @@ public class MapRenderer {
         if (mapState != null) {
             // spotless:off
             //#if MC >= 11700
-            client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, integer, mapState, false, light);
+            client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapid, mapState, false, light);
             //#else
             //$$ client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapState, false, light);
             //#endif

@@ -173,5 +173,4 @@ public class AnimationUtil {
         return g;
     }
 
-    
 }

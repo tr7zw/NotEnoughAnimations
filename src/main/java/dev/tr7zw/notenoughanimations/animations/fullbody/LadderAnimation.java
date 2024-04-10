@@ -82,7 +82,13 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
             BodyPart part, float delta, float tickCounter) {
         if (part == BodyPart.BODY) {
             if (NEABaseMod.config.enableRotateToLadder) {
-                BlockState blockState = entity.getFeetBlockState();
+                // spotless:off 
+                //#if MC >= 12005
+                BlockState blockState = entity.getInBlockState();
+                //#else
+                //$$ BlockState blockState = entity.getFeetBlockState();
+                //#endif
+                //spotless:on
                 if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
                     Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
                     data.disableBodyRotation(true);
