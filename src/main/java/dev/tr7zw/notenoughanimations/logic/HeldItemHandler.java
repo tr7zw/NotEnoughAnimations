@@ -230,21 +230,21 @@ public class HeldItemHandler {
 //        }
     }
 
-    private BookAccess fromItem(ItemStack itemStack) {
-        // spotless:off
-    	//#if MC >= 11700
-        //$$ if (itemStack.is(Items.WRITTEN_BOOK))
-        //$$    return new BookViewScreen.WrittenBookAccess(itemStack);
-        //$$ if (itemStack.is(Items.WRITABLE_BOOK))
-        //$$    return new BookViewScreen.WritableBookAccess(itemStack);
-	//$$	//#else
-        //$$ if (itemStack.getItem() == (Items.WRITTEN_BOOK))
-        //$$     return new BookViewScreen.WrittenBookAccess(itemStack);
-        //$$ if (itemStack.getItem() == (Items.WRITABLE_BOOK))
-        //$$     return new BookViewScreen.WritableBookAccess(itemStack);
-		//#endif
-		//spotless:on
-        return BookViewScreen.EMPTY_ACCESS;
-    }
+//    private BookAccess fromItem(ItemStack itemStack) {
+//        // spotless:off
+//    	//#if MC >= 11700
+//        //$$ if (itemStack.is(Items.WRITTEN_BOOK))
+//        //$$    return new BookViewScreen.WrittenBookAccess(itemStack);
+//        //$$ if (itemStack.is(Items.WRITABLE_BOOK))
+//        //$$    return new BookViewScreen.WritableBookAccess(itemStack);
+//	//$$	//#else
+//        //$$ if (itemStack.getItem() == (Items.WRITTEN_BOOK))
+//        //$$     return new BookViewScreen.WrittenBookAccess(itemStack);
+//        //$$ if (itemStack.getItem() == (Items.WRITABLE_BOOK))
+//        //$$     return new BookViewScreen.WritableBookAccess(itemStack);
+//		//#endif
+//		//spotless:on
+//        return BookViewScreen.EMPTY_ACCESS;
+//    }
 
 }

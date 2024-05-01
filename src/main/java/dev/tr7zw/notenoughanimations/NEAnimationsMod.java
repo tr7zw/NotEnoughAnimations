@@ -22,9 +22,13 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ import net.minecraftforge.event.TickEvent.Type;
 //#elseif NEOFORGE
 //$$ import net.neoforged.fml.LogicalSide;
+//#if MC < 12005
 //$$ import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
 //$$ import net.neoforged.neoforge.event.TickEvent.Phase;
 //$$ import net.neoforged.neoforge.event.TickEvent.Type;
+//#else
+//$$ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+//#endif
 //#endif
 //$$ import net.minecraft.client.Minecraft;
 //$$ import dev.tr7zw.util.ModLoaderUtil;
@@ -36,8 +40,13 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ ModLoaderUtil.registerForgeEvent(this::doClientTick);
 //$$ }
 //$$
+//#if MC >= 12005
+//$$ private void doClientTick(PlayerTickEvent.Pre event) {
+//$$ if(event.getEntity() == Minecraft.getInstance().player && event.getEntity().level().isClientSide())
+//#else
 //$$ private void doClientTick(PlayerTickEvent event) {
 //$$ if(event.type == Type.PLAYER && event.player == Minecraft.getInstance().player && event.side == LogicalSide.CLIENT && event.phase == Phase.START)
+//#endif
 //$$ this.clientTick();
 //$$ }
 //$$
