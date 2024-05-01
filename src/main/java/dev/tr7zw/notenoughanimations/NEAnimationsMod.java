@@ -40,7 +40,7 @@ public class NEAnimationsMod extends NEAnimationsLoader implements ClientModInit
 //$$ ModLoaderUtil.registerForgeEvent(this::doClientTick);
 //$$ }
 //$$
-//#if MC >= 12005
+//#if MC >= 12005 && NEOFORGE
 //$$ private void doClientTick(PlayerTickEvent.Pre event) {
 //$$ if(event.getEntity() == Minecraft.getInstance().player && event.getEntity().level().isClientSide())
 //#else
