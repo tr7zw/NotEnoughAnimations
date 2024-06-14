@@ -6,7 +6,6 @@ import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +16,7 @@ import net.minecraft.world.item.UseAnim;
 
 public class AnimationUtil {
 
-    private static Item crossbow = NMSHelper.getItem(new ResourceLocation("minecraft", "crossbow"));
+    private static Item crossbow = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "crossbow"));
 
     public static boolean isUsingboothHands(ArmPose pose) {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;

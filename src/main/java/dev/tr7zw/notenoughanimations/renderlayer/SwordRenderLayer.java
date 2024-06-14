@@ -14,7 +14,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -123,7 +122,8 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
     private void init() {
         for (String itemKey : NEABaseMod.config.sheathSwords) {
             if (itemKey.contains(":")) {
-                Item item = NMSHelper.getItem(new ResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
+                Item item = NMSHelper
+                        .getItem(NMSHelper.getResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
                 if (item != Items.AIR) {
                     items.add(item);
                 }

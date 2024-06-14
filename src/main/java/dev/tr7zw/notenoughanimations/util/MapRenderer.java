@@ -1,6 +1,7 @@
 package dev.tr7zw.notenoughanimations.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
@@ -22,9 +23,9 @@ import org.joml.Matrix4f;
 public class MapRenderer {
 
     private static final RenderType MAP_BACKGROUND = RenderType
-            .text(new ResourceLocation("textures/map/map_background.png"));
+            .text(NMSHelper.getResourceLocation("textures/map/map_background.png"));
     private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
-            .text(new ResourceLocation("textures/map/map_background_checkerboard.png"));
+            .text(NMSHelper.getResourceLocation("textures/map/map_background_checkerboard.png"));
 
     public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
             ItemStack stack, boolean small, boolean lefthanded) {
@@ -65,24 +66,16 @@ public class MapRenderer {
         com.mojang.blaze3d.vertex.VertexConsumer vertexConsumer = vertexConsumers
                 .getBuffer(mapState == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
         Matrix4f matrix4f = matrices.last().pose();
-        vertexConsumer.vertex(matrix4f, -7.0f, 135.0f, 0.0f).color(255, 255, 255, 255).uv(0.0f, 1.0f).uv2(light)
-                .endVertex();
-        vertexConsumer.vertex(matrix4f, 135.0f, 135.0f, 0.0f).color(255, 255, 255, 255).uv(1.0f, 1.0f).uv2(light)
-                .endVertex();
-        vertexConsumer.vertex(matrix4f, 135.0f, -7.0f, 0.0f).color(255, 255, 255, 255).uv(1.0f, 0.0f).uv2(light)
-                .endVertex();
-        vertexConsumer.vertex(matrix4f, -7.0f, -7.0f, 0.0f).color(255, 255, 255, 255).uv(0.0f, 0.0f).uv2(light)
-                .endVertex();
+        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 255, 255, 255, 255, 0, 1, light);
+        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 255, 255, 255, 255, 1, 1, light);
+        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 255, 255, 255, 255, 1, 0, light);
+        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 255, 255, 255, 255, 0, 0, light);
         // mirrored back site
         vertexConsumer = vertexConsumers.getBuffer(MAP_BACKGROUND);
-        vertexConsumer.vertex(matrix4f, -7.0f, -7.0f, 0.0f).color(255, 255, 255, 255).uv(0.0f, 0.0f).uv2(light)
-                .endVertex();
-        vertexConsumer.vertex(matrix4f, 135.0f, -7.0f, 0.0f).color(255, 255, 255, 255).uv(1.0f, 0.0f).uv2(light)
-                .endVertex();
-        vertexConsumer.vertex(matrix4f, 135.0f, 135.0f, 0.0f).color(255, 255, 255, 255).uv(1.0f, 1.0f).uv2(light)
-                .endVertex();
-        vertexConsumer.vertex(matrix4f, -7.0f, 135.0f, 0.0f).color(255, 255, 255, 255).uv(0.0f, 1.0f).uv2(light)
-                .endVertex();
+        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 255, 255, 255, 255, 0, 0, light);
+        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 255, 255, 255, 255, 1, 0, light);
+        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 255, 255, 255, 255, 1, 1, light);
+        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 255, 255, 255, 255, 0, 1, light);
 
         if (mapState != null) {
             // spotless:off

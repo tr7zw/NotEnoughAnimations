@@ -12,6 +12,9 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
 
 //spotless:off
+//#if MC >= 12100
+import net.minecraft.client.DeltaTracker;
+//#endif
 //#if MC <= 12004
 //$$ import com.mojang.blaze3d.vertex.PoseStack;
 //#endif
@@ -29,13 +32,16 @@ public class LevelRendererMixin {
     // spotless:off
   //#if MC <= 12004
   //$$  private void beforeRender(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline,
-  //$$          Camera camera, GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f,
+  //$$          Camera camera, GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo ci) {
+  //#elseif MC < 12100
+  //$$  private void beforeRender(float tickDelta, long l, boolean bl, Camera camera, GameRenderer gameRenderer,
+  //$$          LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
   //#else
-    private void beforeRender(float tickDelta, long l, boolean bl, Camera camera, GameRenderer gameRenderer,
-            LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2,
+     private void beforeRender(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
+             LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
+        float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
   //#endif
   //spotless:on
-            CallbackInfo ci) {
         NEAnimationsLoader.INSTANCE.playerTransformer.setDeltaTick(tickDelta);
 //        NEAnimationsLoader.INSTANCE.playerTransformer.nextFrame();
     }

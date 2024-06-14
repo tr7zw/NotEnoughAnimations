@@ -12,7 +12,6 @@ import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -31,10 +30,11 @@ public class LookAtItemAnimation extends BasicAnimation {
 
     private void bind() {
         holdingItems.clear();
-        Item invalid = NMSHelper.getItem(new ResourceLocation("minecraft", "air"));
+        Item invalid = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "air"));
         for (String itemId : NEABaseMod.config.holdingItems) {
             try {
-                Item item = NMSHelper.getItem(new ResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = NMSHelper
+                        .getItem(NMSHelper.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
                     holdingItems.add(item);
             } catch (Exception ex) {

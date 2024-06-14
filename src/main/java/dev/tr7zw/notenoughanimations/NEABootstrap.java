@@ -17,14 +17,16 @@
 //$$package dev.tr7zw.notenoughanimations;
 //$$
 //$$import net.neoforged.api.distmarker.Dist;
-//$$import net.neoforged.fml.DistExecutor;
+//$$import net.neoforged.fml.loading.FMLEnvironment;
 //$$import net.neoforged.fml.common.Mod;
 //$$
 //$$@Mod("notenoughanimations")
 //$$public class NEABootstrap {
 //$$
 //$$	public NEABootstrap() {
-//$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> NEAnimationsMod::new);
+//$$            if(FMLEnvironment.dist == Dist.CLIENT) {
+//$$                new NEAnimationsMod();
+//$$            }
 //$$	}
 //$$	
 //$$}

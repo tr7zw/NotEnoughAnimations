@@ -12,7 +12,6 @@ import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -31,9 +30,9 @@ public class MapHoldingAnimation extends BasicAnimation {
 
     private void bind() {
         compatibleMaps.clear();
-        Item invalid = NMSHelper.getItem(new ResourceLocation("minecraft", "air"));
-        compatibleMaps.add(NMSHelper.getItem(new ResourceLocation("minecraft", "filled_map")));
-        Item antiqueAtlas = NMSHelper.getItem(new ResourceLocation("antiqueatlas", "antique_atlas"));
+        Item invalid = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "air"));
+        compatibleMaps.add(NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "filled_map")));
+        Item antiqueAtlas = NMSHelper.getItem(NMSHelper.getResourceLocation("antiqueatlas", "antique_atlas"));
         if (invalid != antiqueAtlas) {
             compatibleMaps.add(antiqueAtlas);
             NEABaseMod.LOGGER.info("Added AntiqueAtlas support to Not Enough Animations!");

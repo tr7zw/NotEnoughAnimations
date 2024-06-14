@@ -17,8 +17,6 @@ import dev.tr7zw.notenoughanimations.util.NMSWrapper;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen.BookAccess;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.EntityModel;
@@ -37,8 +35,6 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-
 // spotless:off
 //#if MC >= 11700
 import net.minecraft.client.model.geom.ModelLayers;
@@ -47,18 +43,18 @@ import net.minecraft.client.model.geom.ModelLayers;
 
 public class HeldItemHandler {
 
-    private Item filledMap = NMSHelper.getItem(new ResourceLocation("minecraft", "filled_map"));
-    private Item book = NMSHelper.getItem(new ResourceLocation("minecraft", "book"));
-    private Item writtenBook = NMSHelper.getItem(new ResourceLocation("minecraft", "written_book"));
-    private Item writableBook = NMSHelper.getItem(new ResourceLocation("minecraft", "writable_book"));
-    private Item enchantedBook = NMSHelper.getItem(new ResourceLocation("minecraft", "enchanted_book"));
-    private Item knowledgeBook = NMSHelper.getItem(new ResourceLocation("minecraft", "knowledge_book"));
+    private Item filledMap = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "filled_map"));
+    private Item book = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "book"));
+    private Item writtenBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "written_book"));
+    private Item writableBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "writable_book"));
+    private Item enchantedBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "enchanted_book"));
+    private Item knowledgeBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "knowledge_book"));
     public Set<Item> books = new HashSet<>(
             Arrays.asList(writableBook, writtenBook, enchantedBook, knowledgeBook, book));
     @SuppressWarnings("serial")
     public Map<Item, ResourceLocation> bookTextures = new HashMap<Item, ResourceLocation>() {
         {
-            put(knowledgeBook, new ResourceLocation("notenoughanimations", "textures/recipe_book.png"));
+            put(knowledgeBook, NMSHelper.getResourceLocation("notenoughanimations", "textures/recipe_book.png"));
         }
     };
     public Set<Item> glintingBooks = new HashSet<>(Arrays.asList(enchantedBook));
@@ -194,8 +190,13 @@ public class HeldItemHandler {
         } else {
             vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, glow);
         }
-
-        bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        // spotless:off
+        //#if MC >= 12100
+        bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, Integer.MAX_VALUE);
+        //#else
+        //$$ bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        //#endif
+        //spotless:on
         matrices.popPose();
         if (item == writtenBook) {
             matrices.pushPose();
