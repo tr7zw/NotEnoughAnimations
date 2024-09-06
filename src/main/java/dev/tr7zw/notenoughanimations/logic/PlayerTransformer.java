@@ -34,17 +34,19 @@ public class PlayerTransformer {
 
         NEAnimationsLoader.INSTANCE.animationProvider.applyAnimations(entity, model, deltaTick, swing);
 
-        if (NEABaseMod.config.enableAnimationSmoothing && entity instanceof PlayerData data) {
+        if (entity instanceof PlayerData data) {
             float[] last = data.getLastRotations();
             int passedTicks = data.isUpdated(tickId);
             boolean differentFrame = passedTicks != 0;
             float timePassed = passedTicks * 50f;
-            float speed = NEABaseMod.config.animationSmoothingSpeed;
-            interpolate(model.leftArm, last, 0, timePassed, differentFrame, speed, deltaTick);
-            interpolate(model.rightArm, last, ENTRY_SIZE, timePassed, differentFrame, speed, deltaTick);
-            if (!NEABaseMod.config.disableLegSmoothing) {
-                interpolate(model.leftLeg, last, ENTRY_SIZE * 2, timePassed, differentFrame, speed, deltaTick);
-                interpolate(model.rightLeg, last, ENTRY_SIZE * 3, timePassed, differentFrame, speed, deltaTick);
+            if (NEABaseMod.config.enableAnimationSmoothing) {
+                float speed = NEABaseMod.config.animationSmoothingSpeed;
+                interpolate(model.leftArm, last, 0, timePassed, differentFrame, speed, deltaTick);
+                interpolate(model.rightArm, last, ENTRY_SIZE, timePassed, differentFrame, speed, deltaTick);
+                if (!NEABaseMod.config.disableLegSmoothing) {
+                    interpolate(model.leftLeg, last, ENTRY_SIZE * 2, timePassed, differentFrame, speed, deltaTick);
+                    interpolate(model.rightLeg, last, ENTRY_SIZE * 3, timePassed, differentFrame, speed, deltaTick);
+                }
             }
             if (entity == mc.cameraEntity) {
                 // For now located here due to smoothing logic being here.
