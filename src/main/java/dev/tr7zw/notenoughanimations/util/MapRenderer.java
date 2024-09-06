@@ -7,7 +7,6 @@ import dev.tr7zw.util.NMSHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
@@ -66,16 +65,16 @@ public class MapRenderer {
         com.mojang.blaze3d.vertex.VertexConsumer vertexConsumer = vertexConsumers
                 .getBuffer(mapState == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
         Matrix4f matrix4f = matrices.last().pose();
-        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 255, 255, 255, 255, 0, 1, light);
-        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 255, 255, 255, 255, 1, 1, light);
-        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 255, 255, 255, 255, 1, 0, light);
-        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 255, 255, 255, 255, 0, 0, light);
+        addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 0, 1, light);
+        addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 1, 1, light);
+        addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 1, 0, light);
+        addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 0, 0, light);
         // mirrored back site
         vertexConsumer = vertexConsumers.getBuffer(MAP_BACKGROUND);
-        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 255, 255, 255, 255, 0, 0, light);
-        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 255, 255, 255, 255, 1, 0, light);
-        NMSHelper.addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 255, 255, 255, 255, 1, 1, light);
-        NMSHelper.addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 255, 255, 255, 255, 0, 1, light);
+        addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 0, 0, light);
+        addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 1, 0, light);
+        addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 1, 1, light);
+        addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 0, 1, light);
 
         if (mapState != null) {
             // spotless:off
@@ -86,6 +85,17 @@ public class MapRenderer {
             //#endif
             //spotless:on
         }
+    }
+    
+    public static void addVertex(VertexConsumer cons, Matrix4f matrix4f, float x, float y, float z, float u, float v, int lightmapUV) {
+        // spotless:off
+        //#if MC >= 12100
+        cons.addVertex(matrix4f, x, y, z).setColor(-1).setUv(u, v).setLight(lightmapUV);
+        //#else
+        //$$ cons.vertex(matrix4f, x, y, z).color(255, 255, 255, 255).uv(u, v).uv2(lightmapUV)
+        //$$ .endVertex();
+        //#endif
+        //spotless:on
     }
 
 }
