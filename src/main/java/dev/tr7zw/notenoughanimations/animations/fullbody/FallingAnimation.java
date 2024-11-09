@@ -55,8 +55,8 @@ public class FallingAnimation extends BasicAnimation
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
         FallingData fallData = data.getData(this, () -> new FallingData(entity.getY()));
         float moveSqrt = fallData.fallingSpeed;
         float armsMove = Math.min(1, moveSqrt * 2);

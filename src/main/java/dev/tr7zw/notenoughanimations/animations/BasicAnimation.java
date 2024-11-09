@@ -36,8 +36,7 @@ public abstract class BasicAnimation {
      */
     public abstract int getPriority(AbstractClientPlayer entity, PlayerData data);
 
-    public void prepare(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            float delta, float swing) {
+    public void prepare(AbstractClientPlayer entity, PlayerData data, PlayerModel model, float delta, float swing) {
         if (!isPrepared) {
             precalculate(entity, data, model, delta, swing);
             isPrepared = true;
@@ -48,12 +47,12 @@ public abstract class BasicAnimation {
         isPrepared = false;
     }
 
-    protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            float delta, float tickCounter) {
+    protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel model, float delta,
+            float tickCounter) {
         // not used by default
     }
 
-    public abstract void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter);
+    public abstract void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part,
+            float delta, float tickCounter);
 
 }

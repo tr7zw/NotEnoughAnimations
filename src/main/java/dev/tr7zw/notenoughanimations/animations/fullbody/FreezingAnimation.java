@@ -44,8 +44,8 @@ public class FreezingAnimation extends BasicAnimation {
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
 
         if (part == BodyPart.LEFT_ARM) {
             float position = (float) (Math.random() / 10 + -1.3f);

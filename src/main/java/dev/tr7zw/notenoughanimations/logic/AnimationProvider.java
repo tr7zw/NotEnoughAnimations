@@ -51,8 +51,7 @@ public class AnimationProvider {
         refreshEnabledAnimations();
     }
 
-    public void applyAnimations(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float delta,
-            float swing) {
+    public void applyAnimations(AbstractClientPlayer entity, PlayerModel model, float delta, float swing) {
         PlayerData playerData = (PlayerData) entity;
         int[] priorities = new int[BodyPart.values().length];
         BasicAnimation[] animation = new BasicAnimation[priorities.length];
@@ -83,7 +82,7 @@ public class AnimationProvider {
         }
     }
 
-    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel) {
+    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel playerModel) {
         for (PoseOverwrite po : enabledPoseOverwrites) {
             po.updateState(livingEntity, (PlayerData) livingEntity, playerModel);
         }

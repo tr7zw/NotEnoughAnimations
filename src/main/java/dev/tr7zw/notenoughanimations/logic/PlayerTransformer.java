@@ -23,8 +23,7 @@ public class PlayerTransformer {
     private boolean renderingFirstPersonArm = false;
     private float deltaTick = 0;
 
-    public void updateModel(AbstractClientPlayer entity, PlayerModel<AbstractClientPlayer> model, float swing,
-            CallbackInfo info) {
+    public void updateModel(AbstractClientPlayer entity, PlayerModel model, float swing, CallbackInfo info) {
         if (!doneLatebind)
             lateBind();
         if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the
@@ -63,8 +62,7 @@ public class PlayerTransformer {
         }
     }
 
-    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel<AbstractClientPlayer> playerModel, float swing,
-            CallbackInfo info) {
+    public void preUpdate(AbstractClientPlayer livingEntity, PlayerModel playerModel, float swing, CallbackInfo info) {
         if (mc.level == null || renderingFirstPersonArm) { // We are in a main menu or something || don't touch the
                                                            // first person model hand
             return;
