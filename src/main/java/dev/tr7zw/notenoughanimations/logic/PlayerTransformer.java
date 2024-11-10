@@ -47,7 +47,7 @@ public class PlayerTransformer {
                     interpolate(model.rightLeg, last, ENTRY_SIZE * 3, timePassed, differentFrame, speed, deltaTick);
                 }
             }
-            if (entity == mc.cameraEntity) {
+            if (entity == mc.cameraEntity && !data.isBodyRotationDisabled()) {
                 // For now located here due to smoothing logic being here.
                 if (NEABaseMod.config.rotationLock == RotationLock.SMOOTH && entity.getVehicle() == null) {
                     interpolateYawBodyHead(entity, last, ENTRY_SIZE * 4, timePassed, differentFrame, 0.5f);
