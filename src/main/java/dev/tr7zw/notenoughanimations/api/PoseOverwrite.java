@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations.animations;
+package dev.tr7zw.notenoughanimations.api;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import net.minecraft.client.model.PlayerModel;

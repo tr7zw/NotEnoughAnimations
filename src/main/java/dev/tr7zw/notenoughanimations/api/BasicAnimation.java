@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations.animations;
+package dev.tr7zw.notenoughanimations.api;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
@@ -9,13 +9,27 @@ public abstract class BasicAnimation {
 
     private boolean isPrepared = false;
 
+    /**
+     * Check if the animation is enabled in the settings.
+     * 
+     * @return true when enabled
+     */
     public abstract boolean isEnabled();
 
+    /**
+     * Check if this animation wants to apply to the provided player right now. When
+     * true, the priorities determine if and which body parts will be assigned to
+     * this animation.
+     * 
+     * @param entity
+     * @param data
+     * @return
+     */
     public abstract boolean isValid(AbstractClientPlayer entity, PlayerData data);
 
     /**
      * Gets the body parts this animation should be applied to, expects that isValid
-     * is called before.
+     * is called before, so state can be cached from isValid to this method.
      * 
      * @param entity
      * @param data
@@ -47,11 +61,31 @@ public abstract class BasicAnimation {
         isPrepared = false;
     }
 
+    /**
+     * This method allows to precalculate data to be then used in the apply method
+     * to reduce overhead.
+     * 
+     * @param entity
+     * @param data
+     * @param model
+     * @param delta
+     * @param tickCounter
+     */
     protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel model, float delta,
             float tickCounter) {
         // not used by default
     }
 
+    /**
+     * Apply the animation to the provided bodypart.
+     * 
+     * @param entity
+     * @param data
+     * @param model
+     * @param part
+     * @param delta
+     * @param tickCounter
+     */
     public abstract void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part,
             float delta, float tickCounter);
 
