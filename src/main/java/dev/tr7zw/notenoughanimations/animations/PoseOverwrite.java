@@ -6,7 +6,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 
 public interface PoseOverwrite {
 
-    public void updateState(AbstractClientPlayer entity, PlayerData data,
-            PlayerModel<AbstractClientPlayer> playerModel);
+    public void updateState(AbstractClientPlayer entity, PlayerData data, PlayerModel playerModel);
 
 }

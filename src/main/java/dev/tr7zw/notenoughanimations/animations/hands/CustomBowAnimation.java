@@ -47,8 +47,8 @@ public class CustomBowAnimation extends BasicAnimation {
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
         model.rightArm.yRot = Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f);
         model.leftArm.yRot = Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f);
         model.rightArm.xRot = Mth.clamp(-1.5707964F + model.head.yRot, -2f, 0);

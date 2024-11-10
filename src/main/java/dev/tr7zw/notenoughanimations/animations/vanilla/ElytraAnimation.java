@@ -3,6 +3,7 @@ package dev.tr7zw.notenoughanimations.animations.vanilla;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
 import dev.tr7zw.notenoughanimations.animations.PoseOverwrite;
+import dev.tr7zw.notenoughanimations.util.RenderStateHolder;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
@@ -33,8 +34,8 @@ public class ElytraAnimation extends BasicAnimation implements PoseOverwrite {
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
         if (!NEABaseMod.config.tweakElytraAnimation) {
             // Do nothing
             return;
@@ -67,10 +68,15 @@ public class ElytraAnimation extends BasicAnimation implements PoseOverwrite {
     }
 
     @Override
-    public void updateState(AbstractClientPlayer entity, PlayerData data,
-            PlayerModel<AbstractClientPlayer> playerModel) {
+    public void updateState(AbstractClientPlayer entity, PlayerData data, PlayerModel playerModel) {
         if (isValid(entity, data)) {
-            playerModel.crouching = false;
+            //#if MC >= 12102
+            RenderStateHolder.RenderStateData stateData = data.getData(RenderStateHolder.INSTANCE,
+                    RenderStateHolder.RenderStateData::new);
+            stateData.renderState.isCrouching = false;
+            //#else
+            //$$playerModel.crouching = false;
+            //#endif
         }
     }
 

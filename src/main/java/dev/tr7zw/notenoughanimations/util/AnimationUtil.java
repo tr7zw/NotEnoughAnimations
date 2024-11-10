@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 
 public class AnimationUtil {
 
@@ -42,28 +42,29 @@ public class AnimationUtil {
         } else {
             if (abstractClientPlayerEntity.getUsedItemHand() == hand
                     && abstractClientPlayerEntity.getUseItemRemainingTicks() > 0) {
-                UseAnim useAction = itemStack.getUseAnimation();
-                if (useAction == UseAnim.BLOCK) {
+                ItemUseAnimation useAction = itemStack.getUseAnimation();
+                if (useAction == ItemUseAnimation.BLOCK) {
                     return ArmPose.BLOCK;
                 }
 
-                if (useAction == UseAnim.BOW) {
+                if (useAction == ItemUseAnimation.BOW) {
                     return ArmPose.BOW_AND_ARROW;
                 }
 
-                if (useAction == UseAnim.SPEAR) {
+                if (useAction == ItemUseAnimation.SPEAR) {
                     return ArmPose.THROW_SPEAR;
                 }
 
                 // spotless:off
               //#if MC >= 11700
-                if (useAction == UseAnim.SPYGLASS) {
+                if (useAction == ItemUseAnimation.SPYGLASS) {
                     return ArmPose.SPYGLASS;
                 }
               //#endif
               //spotless:on
 
-                if (useAction == UseAnim.CROSSBOW && hand.equals(abstractClientPlayerEntity.getUsedItemHand())) {
+                if (useAction == ItemUseAnimation.CROSSBOW
+                        && hand.equals(abstractClientPlayerEntity.getUsedItemHand())) {
                     return ArmPose.CROSSBOW_CHARGE;
                 }
             } else if (!abstractClientPlayerEntity.swinging && itemStack.getItem().equals(crossbow)
@@ -79,8 +80,7 @@ public class AnimationUtil {
         return CrossbowItem.isCharged(item);
     }
 
-    public static void applyArmTransforms(PlayerModel<AbstractClientPlayer> model, HumanoidArm arm, float pitch,
-            float yaw, float roll) {
+    public static void applyArmTransforms(PlayerModel model, HumanoidArm arm, float pitch, float yaw, float roll) {
         ModelPart part = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
         part.xRot = pitch;
         part.yRot = yaw;
@@ -91,8 +91,7 @@ public class AnimationUtil {
             part.zRot *= -1;
     }
 
-    public static void applyTransforms(PlayerModel<AbstractClientPlayer> model, BodyPart bodyPart, float pitch,
-            float yaw, float roll) {
+    public static void applyTransforms(PlayerModel model, BodyPart bodyPart, float pitch, float yaw, float roll) {
         ModelPart part;
         boolean mirror = false;
         switch (bodyPart) {
@@ -122,7 +121,7 @@ public class AnimationUtil {
             part.zRot *= -1;
     }
 
-    public static void minMaxHeadRotation(Player livingEntity, PlayerModel<AbstractClientPlayer> model) {
+    public static void minMaxHeadRotation(Player livingEntity, PlayerModel model) {
         float value = legacyWrapDegrees(model.head.yRot);
         float min = legacyWrapDegrees(model.body.yRot - NMSHelper.HALF_PI);
         float max = legacyWrapDegrees(model.body.yRot + NMSHelper.HALF_PI);

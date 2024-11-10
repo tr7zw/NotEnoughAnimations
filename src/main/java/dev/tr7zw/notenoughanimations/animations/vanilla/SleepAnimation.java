@@ -34,8 +34,8 @@ public class SleepAnimation extends BasicAnimation {
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
         if (NEABaseMod.config.freezeArmsInBed) {
             HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
             AnimationUtil.applyArmTransforms(model, arm, 0, 0f, 0f);

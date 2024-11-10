@@ -11,7 +11,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 
 public class EatDrinkAnimation extends BasicAnimation {
 
@@ -29,9 +29,9 @@ public class EatDrinkAnimation extends BasicAnimation {
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         if (entity.getUseItemRemainingTicks() > 0) {
-            UseAnim action = entity.getUseItem().getUseAnimation();
+            ItemUseAnimation action = entity.getUseItem().getUseAnimation();
             // Eating/Drinking
-            if (action == UseAnim.EAT || action == UseAnim.DRINK) {
+            if (action == ItemUseAnimation.EAT || action == ItemUseAnimation.DRINK) {
                 if (entity.getUsedItemHand() == InteractionHand.MAIN_HAND) {
                     if (entity.getMainArm() == HumanoidArm.RIGHT) {
                         target = NEABaseMod.config.enableRotationLocking ? rightFixed : right;
@@ -62,8 +62,8 @@ public class EatDrinkAnimation extends BasicAnimation {
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
         if (part == BodyPart.BODY) {
             data.disableBodyRotation(true);
             entity.setYBodyRot(entity.getYHeadRot());
@@ -72,7 +72,7 @@ public class EatDrinkAnimation extends BasicAnimation {
         }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         float g = entity.getUseItemRemainingTicks() - delta + 1.0F;
-//        float h = g / entity.getUseItem().getUseDuration();
+        //        float h = g / entity.getUseItem().getUseDuration();
         AnimationUtil.applyArmTransforms(model, arm, -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 1f, 2f))
                 + Mth.abs(Mth.cos(g / 4.0F * 3.1415927F) * 0.2F), -0.3f, 0.3f);
     }

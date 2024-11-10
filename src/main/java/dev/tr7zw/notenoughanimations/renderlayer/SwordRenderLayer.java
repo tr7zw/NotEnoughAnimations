@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import dev.tr7zw.notenoughanimations.access.ExtendedLivingRenderState;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.util.NMSHelper;
@@ -28,12 +29,25 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+//spotless:off
+//#if MC >= 12102
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel> {
+//#else
+//$$public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+//#endif
+//spotless:on
 
-    public SwordRenderLayer(
-            RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
-        super(renderLayerParent);
+    //#if MC >= 12102
+    public SwordRenderLayer(RenderLayerParent<PlayerRenderState, PlayerModel> renderer) {
+        super(renderer);
     }
+    //#else
+    //$$public SwordRenderLayer(
+    //$$        RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
+    //$$    super(renderLayerParent);
+    //$$}
+    //#endif
 
     private boolean lazyInit = true;
     private static Set<Item> items = new HashSet<>();
@@ -51,10 +65,14 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
 
     @Override
     // spotless:off
-	//#if MC >= 11904
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
-            float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
-            float paramFloat6) {
+    //#if MC >= 12102
+    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
+                       PlayerRenderState entityRenderState, float f, float g) {
+        AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState).getEntity();
+	//#elseif MC >= 11904
+    //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
+    //$$        float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
+    //$$        float paramFloat6) {
     //#else
     //$$     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
     //$$     AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
@@ -137,5 +155,4 @@ public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMo
 
         }
     }
-
 }

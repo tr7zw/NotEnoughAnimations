@@ -5,13 +5,16 @@
     "compatibilityLevel": "JAVA_8",
     "mixins": [],
     "client": [
-        "PlayerEntityModelMixin",
-        "PlayerEntityMixin",
-        "LevelRendererMixin",
         "ItemInHandLayerMixin",
-        "PlayerRendererMixin",
         "ItemInHandRendererMixin",
-        "LivingEntityMixin"
+        "LevelRendererMixin",
+        "LivingEntityMixin",
+        "LivingEntityRendererMixin",
+        "LivingRenderStateMixin",
+        "PlayerEntityMixin",
+        "PlayerEntityModelMixin",
+        "PlayerModelAccessor",
+        "PlayerRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1

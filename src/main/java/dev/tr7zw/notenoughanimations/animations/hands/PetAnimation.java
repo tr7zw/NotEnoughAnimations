@@ -21,7 +21,7 @@ import net.minecraft.world.phys.Vec3;
 public class PetAnimation extends BasicAnimation {
 
     private Entity targetPet = null;
-//    private double posDif = 0;
+    //    private double posDif = 0;
 
     @Override
     public boolean isEnabled() {
@@ -46,7 +46,7 @@ public class PetAnimation extends BasicAnimation {
             double dif = pet.getY() - entity.getY();
             if (Math.abs(dif) < 0.6) { // Making sure they are about on the same height
                 targetPet = pet;
-//                posDif = dif;
+                //                posDif = dif;
                 return true;
             }
         }
@@ -68,8 +68,8 @@ public class PetAnimation extends BasicAnimation {
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
         if (Math.random() < 0.005)
             targetPet.handleEntityEvent((byte) 18);
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;

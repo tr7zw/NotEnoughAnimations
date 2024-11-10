@@ -2,6 +2,7 @@ package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.BasicAnimation;
+import dev.tr7zw.notenoughanimations.util.RenderStateHolder;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
@@ -50,10 +51,17 @@ public class CrawlingAnimation extends BasicAnimation {
     private final float r = 0.33333334F;
 
     @Override
-    protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            float delta, float swing) {
-        swimAmount = model.swimAmount;
-        attackTime = model.attackTime;
+    protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel model, float delta,
+            float swing) {
+        //#if MC >= 12102
+        RenderStateHolder.RenderStateData stateData = data.getData(RenderStateHolder.INSTANCE,
+                RenderStateHolder.RenderStateData::new);
+        swimAmount = stateData.renderState.swimAmount;
+        attackTime = stateData.renderState.attackTime;
+        //#else
+        //$$swimAmount = model.swimAmount;
+        //$$attackTime = model.attackTime;
+        //#endif
         if (swimAmount > 0.0F) {
             animationStep = swing * speedMul % 26.0F;
             animationStep2 = animationStep + 13F;
@@ -65,8 +73,8 @@ public class CrawlingAnimation extends BasicAnimation {
     }
 
     @Override
-    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel<AbstractClientPlayer> model,
-            BodyPart part, float delta, float tickCounter) {
+    public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
+            float tickCounter) {
         if (swimAmount > 0.0F) {
             if (part == BodyPart.RIGHT_ARM)
                 if (animationStep < 14.0F) {

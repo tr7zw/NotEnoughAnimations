@@ -185,14 +185,19 @@ public class HeldItemHandler {
         this.bookModel.setupAnim(g, Mth.clamp(m, 0.0F, 1.0F), Mth.clamp(n, 0.0F, 1.0F), o);
         VertexConsumer vertexConsumer;
         if (bookTextures.containsKey(item)) {
-            vertexConsumer = ItemRenderer.getFoilBufferDirect(vertexConsumers,
-                    RenderType.entitySolid(bookTextures.get(item)), true, glow);
+            vertexConsumer = ItemRenderer.getFoilBuffer(vertexConsumers, RenderType.entitySolid(bookTextures.get(item)),
+                    true, glow);
         } else {
-            vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, glow);
+            //#if MC >= 12102
+            vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, true,
+                    glow);
+            //#else
+            //$$vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, glow);
+            //#endif
         }
         // spotless:off
         //#if MC >= 12100
-        bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, Integer.MAX_VALUE);
+        bookModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, Integer.MAX_VALUE);
         //#else
         //$$ bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         //#endif
@@ -211,28 +216,28 @@ public class HeldItemHandler {
     @SuppressWarnings("resource")
     private void renderText(LivingEntity entity, PoseStack matrices, ItemStack itemStack, ArmedModel armedModel,
             HumanoidArm arm) {
-//        BookAccess bookAccess = fromItem(itemStack);
-//        FormattedText formattedText = bookAccess.getPage(0);
-//        matrices.scale(-0.0025f, 0.0025f, -0.0025f);
-//        
-//        matrices.mulPose(Axis.XP.rotationDegrees(-90)); // tilt back
-//        matrices.mulPose(Axis.YP.rotationDegrees(29)); // tilt left right
-//        matrices.mulPose(Axis.ZP.rotationDegrees(14)); // rotation
-//        //matrices.translate(entity.getX()%1*1000, -entity.getY()%1*1000, -entity.getZ()%1*1000);
-//        matrices.translate(-120, -230, 130);
-//        // y is hoch runter
-//        
-//        //System.out.println(entity.getX()%1*1000 + " " + entity.getY()%1*1000 + " " + entity.getZ()%1*1000);
-//        List<FormattedCharSequence> text = Minecraft.getInstance().font.split(formattedText, 114);
-//        int n = Math.min(128 / 9, text.size());
-//        for (int o = 0; o < n; o++) {
-//            FormattedCharSequence formattedCharSequence = text.get(o);
-//            Minecraft.getInstance().font.draw(matrices, formattedCharSequence, (36), (32 + o * 9), 0);
-//        }
+        //        BookAccess bookAccess = fromItem(itemStack);
+        //        FormattedText formattedText = bookAccess.getPage(0);
+        //        matrices.scale(-0.0025f, 0.0025f, -0.0025f);
+        //        
+        //        matrices.mulPose(Axis.XP.rotationDegrees(-90)); // tilt back
+        //        matrices.mulPose(Axis.YP.rotationDegrees(29)); // tilt left right
+        //        matrices.mulPose(Axis.ZP.rotationDegrees(14)); // rotation
+        //        //matrices.translate(entity.getX()%1*1000, -entity.getY()%1*1000, -entity.getZ()%1*1000);
+        //        matrices.translate(-120, -230, 130);
+        //        // y is hoch runter
+        //        
+        //        //System.out.println(entity.getX()%1*1000 + " " + entity.getY()%1*1000 + " " + entity.getZ()%1*1000);
+        //        List<FormattedCharSequence> text = Minecraft.getInstance().font.split(formattedText, 114);
+        //        int n = Math.min(128 / 9, text.size());
+        //        for (int o = 0; o < n; o++) {
+        //            FormattedCharSequence formattedCharSequence = text.get(o);
+        //            Minecraft.getInstance().font.draw(matrices, formattedCharSequence, (36), (32 + o * 9), 0);
+        //        }
     }
 
-//    private BookAccess fromItem(ItemStack itemStack) {
-//        // spotless:off
+    //    private BookAccess fromItem(ItemStack itemStack) {
+    //        // spotless:off
 //    	//#if MC >= 11700
 //        //$$ if (itemStack.is(Items.WRITTEN_BOOK))
 //        //$$    return new BookViewScreen.WrittenBookAccess(itemStack);
@@ -245,7 +250,7 @@ public class HeldItemHandler {
 //        //$$     return new BookViewScreen.WritableBookAccess(itemStack);
 //		//#endif
 //		//spotless:on
-//        return BookViewScreen.EMPTY_ACCESS;
-//    }
+    //        return BookViewScreen.EMPTY_ACCESS;
+    //    }
 
 }

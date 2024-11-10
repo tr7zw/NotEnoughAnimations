@@ -34,21 +34,21 @@ public class MixinTests {
         objenesis.newInstance(LevelRenderer.class);
     }
 
-//    @Test
-//    public void langTests() throws Throwable {
-//        Language lang = TestUtil.loadDefault("/assets/notenoughanimations/lang/en_us.json");
-//        NEAnimationsLoader.INSTANCE = new TestMod();
-//        NEAnimationsLoader.config = new Config();
-//        CustomConfigScreen screen = (CustomConfigScreen) ConfigScreenProvider.createConfigScreen(null);
-//        List<OptionInstance<?>> options = TestUtil.bootStrapCustomConfigScreen(screen);
-//        assertNotEquals(screen.getTitle().getString(), lang.getOrDefault(screen.getTitle().getString()));
-//        for (OptionInstance<?> option : options) {
-//            Set<String> keys = TestUtil.getKeys(option, true);
-//            for (String key : keys) {
-//                System.out.println(key + " " + lang.getOrDefault(key));
-//                assertNotEquals(key, lang.getOrDefault(key));
-//            }
-//        }
-//    }
+    //    @Test
+    //    public void langTests() throws Throwable {
+    //        Language lang = TestUtil.loadDefault("/assets/notenoughanimations/lang/en_us.json");
+    //        NEAnimationsLoader.INSTANCE = new TestMod();
+    //        NEAnimationsLoader.config = new Config();
+    //        CustomConfigScreen screen = (CustomConfigScreen) ConfigScreenProvider.createConfigScreen(null);
+    //        List<OptionInstance<?>> options = TestUtil.bootStrapCustomConfigScreen(screen);
+    //        assertNotEquals(screen.getTitle().getString(), lang.getOrDefault(screen.getTitle().getString()));
+    //        for (OptionInstance<?> option : options) {
+    //            Set<String> keys = TestUtil.getKeys(option, true);
+    //            for (String key : keys) {
+    //                System.out.println(key + " " + lang.getOrDefault(key));
+    //                assertNotEquals(key, lang.getOrDefault(key));
+    //            }
+    //        }
+    //    }
 
 }

@@ -78,16 +78,21 @@ public class MapRenderer {
 
         if (mapState != null) {
             // spotless:off
-            //#if MC >= 11700
-            client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapid, mapState, false, light);
+            //#if MC >= 12102
+            net.minecraft.client.renderer.state.MapRenderState mapRenderState = new net.minecraft.client.renderer.state.MapRenderState();
+            client.getMapRenderer().extractRenderState(mapid, mapState, mapRenderState);
+            client.getMapRenderer().render(mapRenderState, matrices, vertexConsumers, false, light);
+            //#elseif MC >= 11700
+            //$$client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapid, mapState, false, light);
             //#else
             //$$ client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapState, false, light);
             //#endif
             //spotless:on
         }
     }
-    
-    public static void addVertex(VertexConsumer cons, Matrix4f matrix4f, float x, float y, float z, float u, float v, int lightmapUV) {
+
+    public static void addVertex(VertexConsumer cons, Matrix4f matrix4f, float x, float y, float z, float u, float v,
+            int lightmapUV) {
         // spotless:off
         //#if MC >= 12100
         cons.addVertex(matrix4f, x, y, z).setColor(-1).setUv(u, v).setLight(lightmapUV);
