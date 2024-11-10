@@ -18,9 +18,23 @@ public interface PlayerData {
 
     public void setSideSword(ItemStack item);
 
-    public void disableBodyRotation(boolean val);
+    /**
+     * Disables rotationlocking, so the animation has full controll
+     * 
+     * @param val
+     */
+    public void setDisableBodyRotation(boolean val);
 
-    public boolean isBodyRotationDisabled();
+    public boolean isDisableBodyRotation();
+    
+    /**
+     * Overwrites rotationlocking to be active
+     * 
+     * @param val
+     */
+    public void setRotateBodyToHead(boolean val);
+
+    public boolean isRotateBodyToHead();
 
     public ItemStack[] getLastHeldItems();
 

@@ -13,6 +13,8 @@ import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
 import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
 import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,10 +23,19 @@ import net.minecraft.world.item.ItemStack;
 public class PlayerEntityMixin implements PlayerData {
 
     private int armsUpdated = 0;
+    @Getter
+    @Setter
     private float[] lastRotations = new float[PlayerTransformer.ENTRY_AMOUNT * PlayerTransformer.ENTRY_SIZE];
+    @Getter
+    @Setter
     private ItemStack sideSword = ItemStack.EMPTY;
     private ItemStack[] lastHeldItems = new ItemStack[2];
+    @Getter
+    @Setter
     private boolean disableBodyRotation = false;
+    @Getter
+    @Setter
+    private boolean rotateBodyToHead = false;
     private int itemSwapAnimationTimer = 0;
     private int lastAnimationSwapTick = -1;
     private Pose poseOverwrite = null;
@@ -33,6 +44,7 @@ public class PlayerEntityMixin implements PlayerData {
     @Inject(method = "tick", at = @At("RETURN"))
     public void tick(CallbackInfo info) {
         updateRenderLayerItems();
+        setRotateBodyToHead(false);
     }
 
     @Override
@@ -45,33 +57,8 @@ public class PlayerEntityMixin implements PlayerData {
         armsUpdated = frameId;
     }
 
-    @Override
-    public float[] getLastRotations() {
-        return lastRotations;
-    }
-
-    @Override
-    public ItemStack getSideSword() {
-        return sideSword;
-    }
-
-    @Override
-    public void setSideSword(ItemStack item) {
-        this.sideSword = item;
-    }
-
     private void updateRenderLayerItems() {
         SwordRenderLayer.update((Player) (Object) this);
-    }
-
-    @Override
-    public void disableBodyRotation(boolean val) {
-        disableBodyRotation = val;
-    }
-
-    @Override
-    public boolean isBodyRotationDisabled() {
-        return disableBodyRotation;
     }
 
     @Override

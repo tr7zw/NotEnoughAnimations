@@ -92,7 +92,7 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
                 //spotless:on
                 if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
                     Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
-                    data.disableBodyRotation(true);
+                    data.setDisableBodyRotation(true);
                     switch (dir) {
                     case NORTH:
                         entity.setYBodyRot(0);

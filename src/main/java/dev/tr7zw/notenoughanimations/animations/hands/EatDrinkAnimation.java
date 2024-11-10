@@ -18,8 +18,6 @@ public class EatDrinkAnimation extends BasicAnimation {
     private BodyPart[] target;
     private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM };
     private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM };
-    private final BodyPart[] leftFixed = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY };
-    private final BodyPart[] rightFixed = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY };
 
     @Override
     public boolean isEnabled() {
@@ -34,15 +32,15 @@ public class EatDrinkAnimation extends BasicAnimation {
             if (action == ItemUseAnimation.EAT || action == ItemUseAnimation.DRINK) {
                 if (entity.getUsedItemHand() == InteractionHand.MAIN_HAND) {
                     if (entity.getMainArm() == HumanoidArm.RIGHT) {
-                        target = NEABaseMod.config.enableRotationLocking ? rightFixed : right;
+                        target = right;
                     } else {
-                        target = NEABaseMod.config.enableRotationLocking ? leftFixed : left;
+                        target = left;
                     }
                 } else {
                     if (entity.getMainArm() == HumanoidArm.RIGHT) {
-                        target = NEABaseMod.config.enableRotationLocking ? leftFixed : left;
+                        target = left;
                     } else {
-                        target = NEABaseMod.config.enableRotationLocking ? rightFixed : right;
+                        target = right;
                     }
                 }
                 return true;
@@ -64,12 +62,6 @@ public class EatDrinkAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
-        if (part == BodyPart.BODY) {
-            data.disableBodyRotation(true);
-            entity.setYBodyRot(entity.getYHeadRot());
-            entity.yBodyRotO = entity.yHeadRotO;
-            return;
-        }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         float g = entity.getUseItemRemainingTicks() - delta + 1.0F;
         //        float h = g / entity.getUseItem().getUseDuration();

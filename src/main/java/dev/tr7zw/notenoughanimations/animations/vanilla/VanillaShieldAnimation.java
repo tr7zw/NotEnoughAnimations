@@ -22,8 +22,6 @@ public class VanillaShieldAnimation extends BasicAnimation {
     private ArmPose leftArmPose;
     private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM };
     private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM };
-    private final BodyPart[] leftFixed = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY };
-    private final BodyPart[] rightFixed = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY };
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
@@ -37,10 +35,10 @@ public class VanillaShieldAnimation extends BasicAnimation {
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
         if (ArmPose.BLOCK == leftArmPose) {
-            return NEABaseMod.config.enableRotationLocking ? leftFixed : left;
+            return left;
         }
         if (ArmPose.BLOCK == rightArmPose) {
-            return NEABaseMod.config.enableRotationLocking ? rightFixed : right;
+            return right;
         }
         // ???
         return new BodyPart[0];
@@ -54,11 +52,7 @@ public class VanillaShieldAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
-        if (part == BodyPart.BODY) {
-            data.disableBodyRotation(true);
-            entity.setYBodyRot(entity.getYHeadRot());
-            entity.yBodyRotO = entity.yHeadRotO;
-        }
+
     }
 
 }

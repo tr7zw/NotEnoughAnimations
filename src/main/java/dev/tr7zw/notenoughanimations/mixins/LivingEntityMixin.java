@@ -15,8 +15,8 @@ public class LivingEntityMixin {
     protected void tickHeadTurn(float f, float g, CallbackInfoReturnable<Float> info) {
         if (this instanceof PlayerData) {
             PlayerData data = (PlayerData) this;
-            if (data.isBodyRotationDisabled()) {
-                data.disableBodyRotation(false);
+            if (data.isDisableBodyRotation()) {
+                data.setDisableBodyRotation(false);
                 info.setReturnValue(g);
                 info.cancel();
                 return;
