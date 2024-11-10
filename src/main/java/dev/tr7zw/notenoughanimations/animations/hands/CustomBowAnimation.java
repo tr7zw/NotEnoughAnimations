@@ -9,6 +9,7 @@ import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
@@ -49,12 +50,20 @@ public class CustomBowAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
-        model.rightArm.yRot = Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f);
-        model.leftArm.yRot = Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f);
-        model.rightArm.xRot = Mth.clamp(-1.5707964F + model.head.yRot, -2f, 0);
-        model.leftArm.xRot = Mth.clamp(-1.5707964F + model.head.yRot + 0.8f, -1.05f, -0.65f);
-        model.rightArm.zRot += 0.5F;
-        model.leftArm.zRot += 0.5F;
+        ModelPart mainArm = model.rightArm;
+        ModelPart offArm = model.leftArm;
+        int invert = 1;
+        if(entity.getMainArm() == HumanoidArm.LEFT) {
+            mainArm = model.leftArm;
+            offArm = model.rightArm;
+            invert = -1;
+        }
+        mainArm.yRot = invert * Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f);
+        offArm.yRot = invert * Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f);
+        mainArm.xRot = Mth.clamp(-1.5707964F + model.head.yRot, -2f, 0);
+        offArm.xRot = Mth.clamp(-1.5707964F + model.head.yRot + 0.8f, -1.05f, -0.65f);
+        mainArm.zRot += invert * 0.5F;
+        offArm.zRot += invert * 0.5F;
     }
 
 }
