@@ -41,9 +41,8 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
 
     }
 
-    @SuppressWarnings("unchecked")
-    @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "HEAD"))
     //#if MC >= 12102
+    @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "HEAD"))
     public void setupAnimHEAD(PlayerRenderState state, CallbackInfo info) {
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
         PlayerModel model = (PlayerModel) (Object) this;
@@ -59,13 +58,14 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
     }
 
     @SuppressWarnings("unchecked")
-    @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "RETURN"))
     //#if MC >= 12102
+    @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "RETURN"))
     public void setupAnim(PlayerRenderState state, CallbackInfo info) {
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
         PlayerModel model = (PlayerModel) (Object) this;
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) state).getEntity();
         //#else
+        //$$@Inject(method = "setupAnim", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;copyFrom(Lnet/minecraft/client/model/geom/ModelPart;)V", ordinal = 0))
         //$$public void setupAnim(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks,
         //$$        float netHeadYaw, float headPitch, CallbackInfo info) {
         //$$    PlayerModel<AbstractClientPlayer> model = (PlayerModel<AbstractClientPlayer>) (Object) this;
