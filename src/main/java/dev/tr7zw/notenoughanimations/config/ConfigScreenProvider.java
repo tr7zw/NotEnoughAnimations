@@ -60,7 +60,7 @@ public class ConfigScreenProvider {
                         }));
                 options.add(getOnOffOption("text.nea.enable.crawling", () -> config.enableCrawlingAnimation,
                         b -> config.enableCrawlingAnimation = b));
-                options.add(getOnOffOption("text.nea.enable.eatdringanimation", () -> config.enableEatDrinkAnimation,
+                options.add(getOnOffOption("text.nea.enable.eatdrinkanimation", () -> config.enableEatDrinkAnimation,
                         b -> config.enableEatDrinkAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.rowboatanimation", () -> config.enableRowBoatAnimation,
                         b -> config.enableRowBoatAnimation = b));
