@@ -28,7 +28,7 @@
     "text.nea.rotationlock.FIXED": "修復",
     "text.nea.rotationlock.SMOOTH": "平滑",
     "text.nea.enable.showlastusedsword": "【已棄用】收劍",
-    "text.nea.enable.showlastusedsword.tooltip": "【已棄用，將來會移除！使用其他模組實現此功能！】顯示玩家上次使用的劍。這只是一種視覺效果，並不知道實際的物品清單。請不要報告劍在丟棄／放入箱子等後仍然呈現的「錯誤」",
+    "text.nea.enable.showlastusedsword.tooltip": "【已棄用，將來會移除！使用其他模組實現此功能！】顯示玩家上次使用的劍。這只是一種視覺效果，並不知道實際的物品清單。請不要回報劍在丟棄／放入儲物箱等後仍然呈現的「錯誤」",
     "text.nea.enable.crawling": "潛行動畫",
     "text.nea.enable.crawling.tooltip": "新增潛行的動畫，取代原版的「爬行」（游泳）動畫",
     "text.nea.enable.rotatetoladder": "將身體貼合在梯子上",
