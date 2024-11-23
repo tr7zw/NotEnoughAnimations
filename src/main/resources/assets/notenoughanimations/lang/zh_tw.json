@@ -47,7 +47,7 @@
     "text.nea.ladderAnimationArmSpeed": "爬梯手臂速度",
     "text.nea.ladderAnimationArmSpeed.tooltip": "爬梯時手臂的速度",
     "text.nea.enable.itemSwapAnimation": "物品交換動畫",
-    "text.nea.enable.itemSwapAnimation.tooltip": "加入主手與副手交換物品的動畫",
+    "text.nea.enable.itemSwapAnimation.tooltip": "加入慣用手與非慣用手交換物品的動畫",
     "text.nea.enable.tweakElytraAnimation": "調整鞘翅飛行",
     "text.nea.enable.tweakElytraAnimation.tooltip": "調整滑翔翼的飛行動畫，使其看起來更自然",
     "text.nea.enable.petAnimation": "寵物貓狼",
