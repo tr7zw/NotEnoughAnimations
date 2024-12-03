@@ -53,7 +53,7 @@ public class CustomBowAnimation extends BasicAnimation {
         ModelPart mainArm = model.rightArm;
         ModelPart offArm = model.leftArm;
         int invert = 1;
-        if(entity.getMainArm() == HumanoidArm.LEFT) {
+        if (entity.getMainArm() == HumanoidArm.LEFT) {
             mainArm = model.leftArm;
             offArm = model.rightArm;
             invert = -1;

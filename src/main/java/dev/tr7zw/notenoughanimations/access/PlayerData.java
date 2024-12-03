@@ -26,7 +26,7 @@ public interface PlayerData {
     public void setDisableBodyRotation(boolean val);
 
     public boolean isDisableBodyRotation();
-    
+
     /**
      * Overwrites rotationlocking to be active
      * 

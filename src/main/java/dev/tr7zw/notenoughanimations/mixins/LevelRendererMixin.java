@@ -46,7 +46,11 @@ public class LevelRendererMixin {
     //#else
 
     private void beforeRender(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker,
-            boolean bl, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f matrix4f,
+            boolean bl, Camera camera, GameRenderer gameRenderer, 
+            //#if MC <= 12103
+            //$$LightTexture lightTexture, 
+            //#endif
+            Matrix4f matrix4f,
             Matrix4f matrix4f2, CallbackInfo ci) {
         float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
   //#endif

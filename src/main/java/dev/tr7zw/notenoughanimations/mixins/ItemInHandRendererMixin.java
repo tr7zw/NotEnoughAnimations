@@ -16,14 +16,14 @@ import net.minecraft.world.entity.HumanoidArm;
 public class ItemInHandRendererMixin {
 
     @Inject(method = "renderPlayerArm", at = @At("HEAD"))
-    private void renderPlayerArm(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, float f, float g,
-            HumanoidArm humanoidArm, CallbackInfo info) {
+    private void renderPlayerArm(PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight,
+            float equippedProgress, float swingProgress, HumanoidArm humanoidArm, CallbackInfo info) {
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(true);
     }
 
     @Inject(method = "renderPlayerArm", at = @At("RETURN"))
-    private void renderPlayerArmEnd(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, float f, float g,
-            HumanoidArm humanoidArm, CallbackInfo info) {
+    private void renderPlayerArmEnd(PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight,
+            float equippedProgress, float swingProgress, HumanoidArm humanoidArm, CallbackInfo info) {
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(false);
     }
 

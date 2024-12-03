@@ -54,7 +54,7 @@ public class PlayerTransformer {
                         || (NEABaseMod.config.rotationLock == RotationLock.NONE && data.isRotateBodyToHead()))
                         && entity.getVehicle() == null) {
                     interpolateYawBodyHead(entity, last, ENTRY_SIZE * 4, timePassed, differentFrame, 0.5f);
-                }else if (NEABaseMod.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null
+                } else if (NEABaseMod.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null
                         && differentFrame) {
                     entity.yBodyRot = entity.yHeadRot;
                     entity.yBodyRotO = entity.yHeadRotO;

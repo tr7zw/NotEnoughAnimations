@@ -17,6 +17,11 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 // spotless:off
+//#if MC >= 12104
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import dev.tr7zw.notenoughanimations.access.ExtendedItemStackRenderState;
+import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
+//#endif
 //#if MC >= 12102
 import dev.tr7zw.notenoughanimations.access.ExtendedLivingRenderState;
 import net.minecraft.client.model.ArmedModel;
@@ -45,20 +50,29 @@ public abstract class ItemInHandLayerMixin<S extends LivingEntityRenderState, M 
     //#endif
 
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
-    // spotless:off
-	//#if MC >= 12102
-    private void renderArmWithItem(LivingEntityRenderState livingEntityRenderState, BakedModel bakedModel,
-            ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
+    //#if MC >= 12104
+    private void renderArmWithItem(ArmedEntityRenderState livingEntityRenderState,
+            ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack,
             MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
         LivingEntity livingEntity = ((ExtendedLivingRenderState) livingEntityRenderState).getEntity();
-    //#elseif MC >= 11904
-    //$$private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack,
-    //$$      ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
-    //$$      MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-    //#else
-    //$$ private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, TransformType transformType, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-    //#endif
-    //spotless:on
+        ItemStack itemStack = null;
+        if (itemStackRenderState instanceof ExtendedItemStackRenderState ext && ext.getItemStack() != null) {
+            itemStack = ext.getItemStack();
+        } else {
+            return;
+        }
+        //#elseif MC >= 12102
+        //$$private void renderArmWithItem(LivingEntityRenderState livingEntityRenderState, BakedModel bakedModel,
+        //$$        ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
+        //$$        MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+        //$$    LivingEntity livingEntity = ((ExtendedLivingRenderState) livingEntityRenderState).getEntity();
+        //#elseif MC >= 11904
+        //$$private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack,
+        //$$      ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack,
+        //$$      MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+        //#else
+        //$$ private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, TransformType transformType, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
+        //#endif
         NEAnimationsLoader.INSTANCE.heldItemHandler.onRenderItem(livingEntity, this.getParentModel(), itemStack,
                 humanoidArm, poseStack, multiBufferSource, i, ci);
     }

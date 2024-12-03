@@ -22,7 +22,8 @@ public class ActionRotationLockAnimation extends BasicAnimation {
         if (entity.getUseItemRemainingTicks() > 0) {
             ItemUseAnimation action = entity.getUseItem().getUseAnimation();
             // Eating/Drinking
-            if (action == ItemUseAnimation.EAT || action == ItemUseAnimation.DRINK || action == ItemUseAnimation.BLOCK) {
+            if (action == ItemUseAnimation.EAT || action == ItemUseAnimation.DRINK
+                    || action == ItemUseAnimation.BLOCK) {
                 return true;
             }
         }
