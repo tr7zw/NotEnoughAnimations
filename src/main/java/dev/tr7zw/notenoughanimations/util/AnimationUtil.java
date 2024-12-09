@@ -128,7 +128,9 @@ public class AnimationUtil {
         value = Math.min(value, max);
         value = Math.max(value, min);
         model.head.yRot = value;
-        model.hat.yRot = value;
+        //#if MC < 12103
+        //$$ model.hat.yRot = value;
+        //#endif
     }
 
     public static float interpolateRotation(float start, float end, float amount) {
