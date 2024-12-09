@@ -41,8 +41,8 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
 
     }
 
-    //#if MC >= 12102
     @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "HEAD"))
+    //#if MC >= 12102
     public void setupAnimHEAD(PlayerRenderState state, CallbackInfo info) {
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
         PlayerModel model = (PlayerModel) (Object) this;
