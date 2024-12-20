@@ -67,5 +67,7 @@
     "text.nea.enable.bowAnimation": "Анимация лука",
     "text.nea.enable.bowAnimation.tooltip": "Тип анимации для лука",
     "text.nea.enable.bowAnimation.VANILLA": "Стандартный",
-    "text.nea.enable.bowAnimation.CUSTOM_V1": "Настройка 1"
+    "text.nea.enable.bowAnimation.CUSTOM_V1": "Настройка 1",
+    "text.nea.enable.burningAnimation": "Анимация горения",
+    "text.nea.enable.burningAnimation.tooltip": "Добавляет анимацию когда игрок находится в огне"
   }
