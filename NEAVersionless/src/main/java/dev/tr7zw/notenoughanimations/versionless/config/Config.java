@@ -46,5 +46,6 @@ public class Config {
     public boolean enableInWorldBookRendering = false;
     public boolean disableLegSmoothing = false;
     public BowAnimation bowAnimation = BowAnimation.VANILLA;
+    public boolean burningAnimation = true;
 
 }

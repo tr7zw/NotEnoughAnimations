@@ -67,5 +67,7 @@
     "text.nea.enable.bowAnimation": "Bow Animation",
     "text.nea.enable.bowAnimation.tooltip": "The type of bow animation to use",
     "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
-    "text.nea.enable.bowAnimation.CUSTOM_V1": "Custom V1"
+    "text.nea.enable.bowAnimation.CUSTOM_V1": "Custom V1",
+    "text.nea.enable.burningAnimation": "Burning Animation",
+    "text.nea.enable.burningAnimation.tooltip": "Adds an animation for when the player is on fire."
 }

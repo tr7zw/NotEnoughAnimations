@@ -7,6 +7,7 @@ import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.fullbody.ActionRotationLockAnimation;
+import dev.tr7zw.notenoughanimations.animations.fullbody.BurningAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.CrawlingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.FallingAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.LadderAnimation;
@@ -113,6 +114,7 @@ public class AnimationProvider {
         addAnimation(new NarutoRunningAnimation());
         addAnimation(new CustomBowAnimation());
         addAnimation(new ActionRotationLockAnimation());
+        addAnimation(new BurningAnimation());
         // spotless:off
         //#if MC >= 11700
         addAnimation(new FreezingAnimation());

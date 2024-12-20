@@ -127,6 +127,10 @@ public class AnimationUtil {
         float max = legacyWrapDegrees(model.body.yRot + NMSHelper.HALF_PI);
         value = Math.min(value, max);
         value = Math.max(value, min);
+        setHeadYRot(model, value);
+    }
+
+    public static void setHeadYRot(PlayerModel model, float value) {
         model.head.yRot = value;
         //#if MC < 12103
         //$$ model.hat.yRot = value;

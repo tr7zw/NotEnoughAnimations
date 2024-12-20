@@ -54,11 +54,11 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
             Arrays.asList(LadderBlock.class, TrapDoorBlock.class));
 
     private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY,
-            BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG };
+            BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG, BodyPart.HEAD };
     private final BodyPart[] partsSneakingRight = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY, BodyPart.LEFT_LEG,
-            BodyPart.RIGHT_LEG };
+            BodyPart.RIGHT_LEG, BodyPart.HEAD };
     private final BodyPart[] partsSneakingLeft = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY, BodyPart.LEFT_LEG,
-            BodyPart.RIGHT_LEG };
+            BodyPart.RIGHT_LEG, BodyPart.HEAD };
 
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
@@ -81,6 +81,10 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
+        if (part == BodyPart.HEAD) {
+            // this gets handled in the body block
+            return;
+        }
         if (part == BodyPart.BODY) {
             if (NEABaseMod.config.enableRotateToLadder) {
                 // spotless:off 

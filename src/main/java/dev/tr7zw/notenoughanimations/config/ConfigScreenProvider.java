@@ -98,6 +98,8 @@ public class ConfigScreenProvider {
                         () -> config.enableInWorldBookRendering, b -> config.enableInWorldBookRendering = b));
                 options.add(getEnumOption("text.nea.enable.bowAnimation", BowAnimation.class, () -> config.bowAnimation,
                         b -> config.bowAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.burningAnimation", () -> config.burningAnimation,
+                        b -> config.burningAnimation = b));
 
                 // spotless:off
                 //#if MC >= 11900
