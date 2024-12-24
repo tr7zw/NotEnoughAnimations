@@ -7,6 +7,7 @@ import java.util.Set;
 import dev.tr7zw.notenoughanimations.versionless.RotationLock;
 import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
+import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpTarget;
 
 public class Config {
 
@@ -35,6 +36,9 @@ public class Config {
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));
     public boolean enableCrawlingAnimation = true;
     public HoldUpModes holdUpItemsMode = HoldUpModes.CONFIG;
+    public HoldUpTarget holdUpTarget = HoldUpTarget.CAMERA;
+    public float holdUpCameraOffset = 0.1f;
+    public boolean holdUpOnlySelf = false;
     public float holdUpItemOffset = 0;
     public boolean itemSwapAnimation = true;
     public boolean tweakElytraAnimation = true;

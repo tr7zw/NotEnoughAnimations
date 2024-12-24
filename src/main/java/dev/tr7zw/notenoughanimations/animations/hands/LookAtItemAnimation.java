@@ -9,7 +9,9 @@ import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
+import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpTarget;
 import dev.tr7zw.util.NMSHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
@@ -45,6 +47,9 @@ public class LookAtItemAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
+        if (NEABaseMod.config.holdUpOnlySelf && entity != Minecraft.getInstance().player) {
+            return false;
+        }
         boolean allItems = NEABaseMod.config.holdUpItemsMode == HoldUpModes.ALL;
         ItemStack itemInRightHand = entity.getItemInHand(
                 entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
@@ -92,8 +97,20 @@ public class LookAtItemAnimation extends BasicAnimation {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        AnimationUtil.applyArmTransforms(model, arm, -NEABaseMod.config.holdUpItemOffset
-                - (Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
+        switch (NEABaseMod.config.holdUpTarget) {
+        case NONE:
+            AnimationUtil.applyArmTransforms(model, arm, -NEABaseMod.config.holdUpItemOffset
+                    - (Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
+            break;
+        case CAMERA:
+            float invert = part == BodyPart.LEFT_ARM ? -1 : 1;
+            AnimationUtil.applyArmTransforms(model, arm, Mth.clamp(-1.5707964F + model.head.xRot, -2.5f, 0),
+                    Mth.clamp(NEABaseMod.config.holdUpCameraOffset + (model.head.yRot) * invert, -0.2f,
+                            Math.max(0.2f, NEABaseMod.config.holdUpCameraOffset)),
+                    0.1f);
+            //System.out.println(Mth.clamp((NEABaseMod.config.holdUpCameraOffset + model.head.yRot) * invert, -0.2f, 0.2f));
+            break;
+        }
     }
 
 }

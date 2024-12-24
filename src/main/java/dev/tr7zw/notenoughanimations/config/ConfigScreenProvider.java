@@ -9,6 +9,7 @@ import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.RotationLock;
 import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
+import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpTarget;
 import dev.tr7zw.notenoughanimations.versionless.config.Config;
 import net.minecraft.client.gui.screens.Screen;
 //spotless:off 
@@ -80,6 +81,14 @@ public class ConfigScreenProvider {
                         () -> (double) config.holdUpItemOffset, (i) -> {
                             config.holdUpItemOffset = i.floatValue();
                         }));
+                options.add(getEnumOption("text.nea.holdUpTarget", HoldUpTarget.class, () -> config.holdUpTarget,
+                        b -> config.holdUpTarget = b));
+                options.add(getDoubleOption("text.nea.holdUpCameraOffset", -0.3f, 0.6f, 0.1f,
+                        () -> (double) config.holdUpCameraOffset, (i) -> {
+                            config.holdUpCameraOffset = i.floatValue();
+                        }));
+                options.add(getOnOffOption("text.nea.enable.holdUpOnlySelf", () -> config.holdUpOnlySelf,
+                        b -> config.holdUpOnlySelf = b));
                 options.add(getOnOffOption("text.nea.enable.itemSwapAnimation", () -> config.itemSwapAnimation,
                         b -> config.itemSwapAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.tweakElytraAnimation", () -> config.tweakElytraAnimation,

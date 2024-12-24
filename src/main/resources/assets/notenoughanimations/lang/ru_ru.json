@@ -20,7 +20,7 @@
     "text.nea.enable.horseanimation.tooltip": "Добавляет анимацию при езде на лошади",
     "text.nea.enable.dontholditemsinbed": "Прятать предметы при сне",
     "text.nea.enable.dontholditemsinbed.tooltip": "Не даёт игроку держать предметы, находясь в постели",
-    "text.nea.enable.freezearmsinbed": "Остановить движение во сне",  
+    "text.nea.enable.freezearmsinbed": "Остановить движение во сне",
     "text.nea.enable.freezearmsinbed.tooltip": "Не позволяет игроку двигать руками в кровате",
     "text.nea.rotationlock": "Блокировка вращения",
     "text.nea.rotationlock.tooltip": "Тип блокировки вращения тела игрока относительно головы",
@@ -70,4 +70,4 @@
     "text.nea.enable.bowAnimation.CUSTOM_V1": "Настройка 1",
     "text.nea.enable.burningAnimation": "Анимация горения",
     "text.nea.enable.burningAnimation.tooltip": "Добавляет анимацию когда игрок находится в огне"
-  }
+}

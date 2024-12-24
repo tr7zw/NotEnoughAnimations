@@ -69,5 +69,13 @@
     "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
     "text.nea.enable.bowAnimation.CUSTOM_V1": "Custom V1",
     "text.nea.enable.burningAnimation": "Burning Animation",
-    "text.nea.enable.burningAnimation.tooltip": "Adds an animation for when the player is on fire."
+    "text.nea.enable.burningAnimation.tooltip": "Adds an animation for when the player is on fire.",
+    "text.nea.holdUpTarget": "Hold Up Target",
+    "text.nea.holdUpTarget.tooltip": "Changes where the item points at when held up",
+    "text.nea.holdUpTarget.NONE": "None",
+    "text.nea.holdUpTarget.CAMERA": "Camera",
+    "text.nea.holdUpCameraOffset": "Hold Up Camera Offset",
+    "text.nea.holdUpCameraOffset.tooltip": "Modify how much the arm is offset to the sides when holding up items in Camera mode",
+    "text.nea.enable.holdUpOnlySelf": "Hold Up Only Self",
+    "text.nea.enable.holdUpOnlySelf.tooltip": "Only apply the hold up effect to the own player, not other players"
 }
