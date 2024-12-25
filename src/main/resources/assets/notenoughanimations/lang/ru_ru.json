@@ -69,5 +69,13 @@
     "text.nea.enable.bowAnimation.VANILLA": "Стандартный",
     "text.nea.enable.bowAnimation.CUSTOM_V1": "Настройка 1",
     "text.nea.enable.burningAnimation": "Анимация горения",
-    "text.nea.enable.burningAnimation.tooltip": "Добавляет анимацию когда игрок находится в огне"
+    "text.nea.enable.burningAnimation.tooltip": "Добавляет анимацию когда игрок находится в огне",
+    "text.nea.holdUpTarget": "Направление держания предмета",
+    "text.nea.holdUpTarget.tooltip": "Меняет то, куда будет смотреть рука с предметом",
+    "text.nea.holdUpTarget.NONE": "Прямо",
+    "text.nea.holdUpTarget.CAMERA": "Камера",
+    "text.nea.holdUpCameraOffset": "Смещение держания предметов",
+    "text.nea.holdUpCameraOffset.tooltip": "Изменет степень смещения руки в стороны при держании предметов в режиме \"Камера\"",
+    "text.nea.enable.holdUpOnlySelf": "Держать предметы только для себя",
+    "text.nea.enable.holdUpOnlySelf.tooltip": "Применяет анимацию держания предметов только к себе, а не к другим игрокам"
 }
