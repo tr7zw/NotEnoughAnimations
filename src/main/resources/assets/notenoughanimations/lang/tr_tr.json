@@ -57,10 +57,10 @@
     "text.nea.enable.freezingAnimation": "Donma Animasyonu",
     "text.nea.enable.freezingAnimation.tooltip": "Donma için bir animasyon ekler",
     "text.nea.enable.huggingAnimation": "Basit Sarılma Animasyonu",
-    "text.nea.enable.huggingAniFmation.tooltip": "Sarılmak için bir animasyon ekler. Başka bir oyuncuya 'sarılmak' için eğilirken ona bakın",
+    "text.nea.enable.huggingAnimation.tooltip": "Sarılmak için bir animasyon ekler. Başka bir oyuncuya 'sarılmak' için eğilirken ona bakın",
     "text.nea.enable.narutoRunning": "❝Naruto Koşusu❞",
     "text.nea.enable.narutoRunning.tooltip": "Naruto tarzında koşmak için bir animasyon ekler (easter egg)",
-    "text.nea.enable.enableInWorldBookRendering": "[Yapım Aşamasında]Dünya İçi Kitaplars",
+    "text.nea.enable.enableInWorldBookRendering": "[Yapım Aşamasında]Dünya İçi Kitaplar",
     "text.nea.enable.enableInWorldBookRendering.tooltip": "Dünyadaki kitapları metinleriyle birlikte işler. Bu hala yapım aşamasındadır ve düzgün çalışmayabilir",
     "text.nea.disableLegSmoothing": "Bacak Yumuşatmayı Devre Dışı Bırak",
     "text.nea.disableLegSmoothing.tooltip": "Bacakların yumuşatılmasını devre dışı bırakır",
@@ -68,4 +68,14 @@
     "text.nea.enable.bowAnimation.tooltip": "Kullanılacak yay animasyonu tipi",
     "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
     "text.nea.enable.bowAnimation.CUSTOM_V1": "Özel V1"
+    "text.nea.enable.burningAnimation": "Yanma Animasyonu",
+    "text.nea.enable.burningAnimation.tooltip": "Oyuncu yanarken bir animasyon ekler.",
+    "text.nea.holdUpTarget": "Tutma Hedefi",
+    "text.nea.holdUpTarget.tooltip": "Eşyaların tutulduğunda hangi yöne işaret edeceğini değiştirir",
+    "text.nea.holdUpTarget.NONE": "Hiçbiri",
+    "text.nea.holdUpTarget.CAMERA": "Kamera",
+    "text.nea.holdUpCameraOffset": "Tutma Hedefi Kayması",
+    "text.nea.holdUpCameraOffset.tooltip": "Kamera modunda eşyaları tutarken kolun yana ne kadar kaydırılacağını değiştirin",
+    "text.nea.enable.holdUpOnlySelf": "Yalnızca Kendine Tutma Hedefi",
+    "text.nea.enable.holdUpOnlySelf.tooltip": "Tutma hedefi efektini sadece kendi oyuncuna uygular, diğer oyunculara değil"
 }
