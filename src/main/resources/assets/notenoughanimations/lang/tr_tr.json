@@ -67,7 +67,7 @@
     "text.nea.enable.bowAnimation": "Yay Animasyonu",
     "text.nea.enable.bowAnimation.tooltip": "Kullanılacak yay animasyonu tipi",
     "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
-    "text.nea.enable.bowAnimation.CUSTOM_V1": "Özel V1"
+    "text.nea.enable.bowAnimation.CUSTOM_V1": "Özel V1",
     "text.nea.enable.burningAnimation": "Yanma Animasyonu",
     "text.nea.enable.burningAnimation.tooltip": "Oyuncu yanarken bir animasyon ekler.",
     "text.nea.holdUpTarget": "Tutma Hedefi",
