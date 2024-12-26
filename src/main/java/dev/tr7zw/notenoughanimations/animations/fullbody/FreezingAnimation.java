@@ -20,13 +20,11 @@ public class FreezingAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        // spotless:off 
-    	//#if MC >= 11800
+        //#if MC >= 11800
         return entity.canFreeze() && entity.level().getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
-        //#else
-        //$$ return entity.canFreeze() && entity.level.getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
-        //#endif
-        //spotless:on
+                //#else
+                //$$ return entity.canFreeze() && entity.level.getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
+                //#endif
                 .anyMatch(blockState -> (blockState.is(Blocks.POWDER_SNOW)
                         || blockState.is(Blocks.POWDER_SNOW_CAULDRON)));
     }

@@ -12,13 +12,11 @@ import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpTarget;
 import dev.tr7zw.notenoughanimations.versionless.config.Config;
 import net.minecraft.client.gui.screens.Screen;
-//spotless:off 
 //#if MC >= 11900
 import net.minecraft.client.OptionInstance;
 //#else
 //$$ import net.minecraft.client.Option;
 //#endif
-//spotless:on
 
 public class ConfigScreenProvider {
 
@@ -110,13 +108,11 @@ public class ConfigScreenProvider {
                 options.add(getOnOffOption("text.nea.enable.burningAnimation", () -> config.burningAnimation,
                         b -> config.burningAnimation = b));
 
-                // spotless:off
                 //#if MC >= 11900
                 getOptions().addSmall(options.toArray(new OptionInstance[0]));
                 //#else
                 //$$getOptions().addSmall(options.toArray(new Option[0]));
                 //#endif
-                // spotless:on
 
             }
 

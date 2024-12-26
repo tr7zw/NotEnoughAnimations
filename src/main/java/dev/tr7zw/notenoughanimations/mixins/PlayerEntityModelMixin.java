@@ -31,13 +31,12 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
     //#endif
 
     public PlayerEntityModelMixin() {
-        // spotless:off
-    	//#if MC >= 11700
-    	super(null);
-		//#else
-		//$$ super(0);
-		//#endif
-		//spotless:on
+        //#if MC >= 11700
+        super(null);
+        //#else
+        //$$ super(0);
+        //#endif
+        //spotless:on
 
     }
 

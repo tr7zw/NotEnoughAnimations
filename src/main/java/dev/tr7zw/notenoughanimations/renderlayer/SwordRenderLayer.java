@@ -19,24 +19,21 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-//spotless:off
 //#if MC >= 11904
 import net.minecraft.world.item.ItemDisplayContext;
 //#else
 //$$ import net.minecraft.client.renderer.block.model.ItemTransforms;
 //#endif
-//spotless:on
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-//spotless:off
 //#if MC >= 12102
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+
 public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel> {
-//#else
-//$$public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-//#endif
-//spotless:on
+    //#else
+    //$$public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+    //#endif
 
     //#if MC >= 12102
     public SwordRenderLayer(RenderLayerParent<PlayerRenderState, PlayerModel> renderer) {
@@ -64,21 +61,20 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
     }
 
     @Override
-    // spotless:off
     //#if MC >= 12102
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
-                       PlayerRenderState entityRenderState, float f, float g) {
-        AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState).getEntity();
-	//#elseif MC >= 11904
-    //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
-    //$$        float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
-    //$$        float paramFloat6) {
-    //#else
-    //$$     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
-    //$$     AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
-    //$$    float paramFloat5, float paramFloat6) {
-    //#endif
-    //spotless:on
+            PlayerRenderState entityRenderState, float f, float g) {
+        AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
+                .getEntity();
+        //#elseif MC >= 11904
+        //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
+        //$$        float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
+        //$$        float paramFloat6) {
+        //#else
+        //$$     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
+        //$$     AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
+        //$$    float paramFloat5, float paramFloat6) {
+        //#endif
         if (disabled) {
             return;
         }
@@ -121,8 +117,7 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
         poseStack.mulPose(NMSHelper.XP.rotationDegrees(swordRotation));
         poseStack.mulPose(NMSHelper.YP.rotationDegrees(180.0F));
 
-        // spotless:off
-    	//#if MC >= 11904
+        //#if MC >= 11904
         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
                 lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
                 lefthanded, poseStack, multiBufferSource, light);
@@ -133,7 +128,6 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
         //$$ Minecraft.getInstance().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
         //$$  poseStack, multiBufferSource, light);
         //#endif
-        //spotless:on
         poseStack.popPose();
     }
 

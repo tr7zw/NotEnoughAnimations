@@ -13,7 +13,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-// spotless:off
 //#if MC >= 12102
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //#endif
@@ -22,7 +21,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 //#else
 //$$ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 //#endif
-//spotless:on
 
 @Mixin(PlayerRenderer.class)
 //#if MC >= 12102
@@ -33,22 +31,21 @@ public abstract class PlayerRendererMixin
     //$$        extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     //#endif
 
-    // spotless:off
     //#if MC >= 12102
     public PlayerRendererMixin(Context context, PlayerModel model, float shadowRadius) {
         super(context, model, shadowRadius);
     }
-	//#elseif MC >= 11700
+    //#elseif MC >= 11700
     //$$public PlayerRendererMixin(Context context, PlayerModel<AbstractClientPlayer> entityModel, float f) {
     //$$    super(context, entityModel, f);
     //$$}
-	//#else
-	//$$     public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher,
-	//$$    PlayerModel<AbstractClientPlayer> entityModel, float f) {
+    //#else
+    //$$     public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher,
+    //$$    PlayerModel<AbstractClientPlayer> entityModel, float f) {
     //$$    super(entityRenderDispatcher, entityModel, f);
-	//$$    }
-	//#endif
-	//spotless:on
+    //$$    }
+    //#endif
+    //spotless:on
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onCreate(CallbackInfo info) {
