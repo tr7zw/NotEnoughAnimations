@@ -45,7 +45,6 @@ public abstract class PlayerRendererMixin
     //$$    super(entityRenderDispatcher, entityModel, f);
     //$$    }
     //#endif
-    //spotless:on
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onCreate(CallbackInfo info) {

@@ -36,7 +36,6 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
         //#else
         //$$ super(0);
         //#endif
-        //spotless:on
 
     }
 

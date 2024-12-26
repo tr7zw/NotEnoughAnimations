@@ -66,7 +66,6 @@ public class HeldItemHandler {
             //#else
             //$$ bookModel = new BookModel();
             //#endif
-            //spotless:on
         }
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
             if (NEABaseMod.config.dontHoldItemsInBed) {
