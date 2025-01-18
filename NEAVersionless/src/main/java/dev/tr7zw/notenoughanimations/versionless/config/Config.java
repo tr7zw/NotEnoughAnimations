@@ -13,10 +13,16 @@ public class Config {
 
     public int configVersion = 10;
     public float animationSmoothingSpeed = 0.1f;
-    public Set<String> holdingItems = new HashSet<>(
-            Arrays.asList("minecraft:clock", "minecraft:compass", "minecraft:torch", "minecraft:lantern",
-                    "minecraft:soul_torch", "minecraft:soul_lantern", "minecraft:recovery_compass",
-                    "quad-mstv-mtv:acacia_torch", "quad-mstv-mtv:bamboo_torch", "quad-mstv-mtv:birch_torch", "quad-mstv-mtv:cherry_torch", "quad-mstv-mtv:crimson_torch", "quad-mstv-mtv:dark_oak_torch", "quad-mstv-mtv:pale_oak_torch", "quad-mstv-mtv:jungle_torch", "quad-mstv-mtv:mangrove_torch", "quad-mstv-mtv:spruce_torch", "quad-mstv-mtv:warped_torch", "quad-mstv-mtv:acacia_soul_torch", "quad-mstv-mtv:bamboo_soul_torch", "quad-mstv-mtv:birch_soul_torch", "quad-mstv-mtv:cherry_soul_torch", "quad-mstv-mtv:crimson_soul_torch", "quad-mstv-mtv:dark_oak_soul_torch", "quad-mstv-mtv:pale_oak_soul_torch", "quad-mstv-mtv:jungle_soul_torch", "quad-mstv-mtv:mangrove_soul_torch", "quad-mstv-mtv:spruce_soul_torch", "quad-mstv-mtv:warped_soul_torch"));
+    public Set<String> holdingItems = new HashSet<>(Arrays.asList("minecraft:clock", "minecraft:compass",
+            "minecraft:torch", "minecraft:lantern", "minecraft:soul_torch", "minecraft:soul_lantern",
+            "minecraft:recovery_compass", "quad-mstv-mtv:acacia_torch", "quad-mstv-mtv:bamboo_torch",
+            "quad-mstv-mtv:birch_torch", "quad-mstv-mtv:cherry_torch", "quad-mstv-mtv:crimson_torch",
+            "quad-mstv-mtv:dark_oak_torch", "quad-mstv-mtv:pale_oak_torch", "quad-mstv-mtv:jungle_torch",
+            "quad-mstv-mtv:mangrove_torch", "quad-mstv-mtv:spruce_torch", "quad-mstv-mtv:warped_torch",
+            "quad-mstv-mtv:acacia_soul_torch", "quad-mstv-mtv:bamboo_soul_torch", "quad-mstv-mtv:birch_soul_torch",
+            "quad-mstv-mtv:cherry_soul_torch", "quad-mstv-mtv:crimson_soul_torch", "quad-mstv-mtv:dark_oak_soul_torch",
+            "quad-mstv-mtv:pale_oak_soul_torch", "quad-mstv-mtv:jungle_soul_torch", "quad-mstv-mtv:mangrove_soul_torch",
+            "quad-mstv-mtv:spruce_soul_torch", "quad-mstv-mtv:warped_soul_torch"));
     public boolean enableAnimationSmoothing = true;
     public boolean enableInWorldMapRendering = true;
     public boolean enableOffhandHiding = true;
@@ -32,6 +38,7 @@ public class Config {
     public boolean dontHoldItemsInBed = true;
     public boolean freezeArmsInBed = true;
     public RotationLock rotationLock = RotationLock.NONE;
+    public boolean limitRotationLockToFP = true;
     public boolean showLastUsedSword = false;
     public Set<String> sheathSwords = new HashSet<>(Arrays.asList("minecraft:wooden_sword", "minecraft:stone_sword",
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));

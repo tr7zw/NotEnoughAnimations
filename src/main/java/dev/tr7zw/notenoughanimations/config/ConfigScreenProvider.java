@@ -71,6 +71,8 @@ public class ConfigScreenProvider {
                         b -> config.freezeArmsInBed = b));
                 options.add(getEnumOption("text.nea.rotationlock", RotationLock.class, () -> config.rotationLock,
                         b -> config.rotationLock = b));
+                options.add(getOnOffOption("text.nea.enable.limitRotationLockToFP", () -> config.limitRotationLockToFP,
+                        b -> config.limitRotationLockToFP = b));
                 options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> config.showLastUsedSword,
                         b -> config.showLastUsedSword = b));
                 options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class, () -> config.holdUpItemsMode,
