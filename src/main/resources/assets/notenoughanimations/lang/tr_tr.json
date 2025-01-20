@@ -77,5 +77,7 @@
     "text.nea.holdUpCameraOffset": "Tutma Hedefi Kayması",
     "text.nea.holdUpCameraOffset.tooltip": "Kamera modunda eşyaları tutarken kolun yana ne kadar kaydırılacağını değiştirin",
     "text.nea.enable.holdUpOnlySelf": "Yalnızca Kendine Tutma Hedefi",
-    "text.nea.enable.holdUpOnlySelf.tooltip": "Tutma hedefi efektini sadece kendi oyuncuna uygular, diğer oyunculara değil"
+    "text.nea.enable.holdUpOnlySelf.tooltip": "Tutma hedefi efektini sadece kendi oyuncuna uygular, diğer oyunculara değil",
+    "text.nea.enable.limitRotationLockToFP": "Rotasyon Kilidini Birinci Şahısa Sınırla",
+    "text.nea.enable.limitRotationLockToFP.tooltip": "Rotasyon kilidi etkisini yalnızca birinci şahıs görünümünde uygula"
 }
