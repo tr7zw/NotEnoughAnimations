@@ -51,13 +51,11 @@ public class HorseAnimation extends BasicAnimation {
         AbstractHorse horse = (AbstractHorse) entity.getVehicle();
         int id = horse.getPassengers().indexOf(entity);
         if (id == 0) {
-            // spotless:off
-        	//#if MC >= 11904
+            //#if MC >= 11904
             float rotation = -Mth.cos(horse.walkAnimation.position() * 0.3f);
             //#else
             //$$ float rotation = -Mth.cos(horse.animationPosition * 0.3f);
             //#endif
-            //spotless:on
             rotation *= 0.1;
             AnimationUtil.applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
         }

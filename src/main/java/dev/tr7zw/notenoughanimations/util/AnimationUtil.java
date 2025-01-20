@@ -55,13 +55,11 @@ public class AnimationUtil {
                     return ArmPose.THROW_SPEAR;
                 }
 
-                // spotless:off
-              //#if MC >= 11700
+                //#if MC >= 11700
                 if (useAction == ItemUseAnimation.SPYGLASS) {
                     return ArmPose.SPYGLASS;
                 }
-              //#endif
-              //spotless:on
+                //#endif
 
                 if (useAction == ItemUseAnimation.CROSSBOW
                         && hand.equals(abstractClientPlayerEntity.getUsedItemHand())) {

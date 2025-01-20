@@ -35,11 +35,9 @@ import dev.tr7zw.notenoughanimations.api.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-// spotless:off
 //#if MC >= 11700
 import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
 //#endif
-//spotless:on
 
 public class AnimationProvider {
 
@@ -115,11 +113,9 @@ public class AnimationProvider {
         addAnimation(new CustomBowAnimation());
         addAnimation(new ActionRotationLockAnimation());
         addAnimation(new BurningAnimation());
-        // spotless:off
         //#if MC >= 11700
         addAnimation(new FreezingAnimation());
         //#endif
-        //spotless:on
     }
 
     public void addAnimation(BasicAnimation animation) {

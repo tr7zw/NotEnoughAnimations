@@ -31,13 +31,11 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
     //#endif
 
     public PlayerEntityModelMixin() {
-        // spotless:off
-    	//#if MC >= 11700
-    	super(null);
-		//#else
-		//$$ super(0);
-		//#endif
-		//spotless:on
+        //#if MC >= 11700
+        super(null);
+        //#else
+        //$$ super(0);
+        //#endif
 
     }
 
@@ -47,6 +45,9 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
         PlayerModel model = (PlayerModel) (Object) this;
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) state).getEntity();
+        if (player == null) {
+            return;
+        }
         //#else
         //$$public void setupAnimHEAD(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks,
         //$$        float netHeadYaw, float headPitch, CallbackInfo info) {
@@ -57,13 +58,15 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
         NEAnimationsLoader.INSTANCE.playerTransformer.preUpdate(player, model, limbSwing, info);
     }
 
-    @SuppressWarnings("unchecked")
     //#if MC >= 12102
     @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "RETURN"))
     public void setupAnim(PlayerRenderState state, CallbackInfo info) {
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
         PlayerModel model = (PlayerModel) (Object) this;
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) state).getEntity();
+        if (player == null) {
+            return;
+        }
         //#else
         //$$@Inject(method = "setupAnim", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;copyFrom(Lnet/minecraft/client/model/geom/ModelPart;)V", ordinal = 0))
         //$$public void setupAnim(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks,
@@ -79,6 +82,9 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
     //#if MC >= 12102
     public void setupAnimEnd(PlayerRenderState state, CallbackInfo info) {
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) state).getEntity();
+        if (player == null) {
+            return;
+        }
         PlayerData data = (PlayerData) player;
         //#else
         //$$public void setupAnimEnd(T livingEntity, float limbSwing, float limbSwingAmount, float ageInTicks,

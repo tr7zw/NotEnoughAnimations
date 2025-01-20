@@ -35,13 +35,11 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         if (entity.onClimbable() && !entity.onGround() && entity.getLastClimbablePos().isPresent()) {
             for (Class<? extends Block> blocktype : ladderLikeBlocks) {
                 if (blocktype.isAssignableFrom(
-                        // spotless:off 
                         //#if MC >= 11800
                         entity.level().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
                     //#else
                     //$$ entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
                     //#endif
-                    //spotless:on
 
                     return true;
             }
@@ -87,13 +85,11 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         }
         if (part == BodyPart.BODY) {
             if (NEABaseMod.config.enableRotateToLadder) {
-                // spotless:off 
                 //#if MC >= 12005
                 BlockState blockState = entity.getInBlockState();
                 //#else
                 //$$ BlockState blockState = entity.getFeetBlockState();
                 //#endif
-                //spotless:on
                 if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
                     Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
                     data.setDisableBodyRotation(true);

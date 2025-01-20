@@ -9,7 +9,6 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.vehicle.Boat;
 
 public class BoatAnimation extends BasicAnimation {
 
@@ -20,7 +19,11 @@ public class BoatAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        return entity.isPassenger() && entity.getVehicle() instanceof Boat;
+        //#if MC > 12102
+        return entity.isPassenger() && entity.getVehicle() instanceof net.minecraft.world.entity.vehicle.AbstractBoat;
+        //#else
+        //$$ return entity.isPassenger() && entity.getVehicle() instanceof net.minecraft.world.entity.vehicle.Boat;
+        //#endif
     }
 
     private final BodyPart[] bothHands = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM };
@@ -48,7 +51,12 @@ public class BoatAnimation extends BasicAnimation {
             return;
         }
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        Boat boat = (Boat) entity.getVehicle();
+        //#if MC > 12102
+        net.minecraft.world.entity.vehicle.AbstractBoat boat = (net.minecraft.world.entity.vehicle.AbstractBoat) entity
+                .getVehicle();
+        //#else
+        //$$ net.minecraft.world.entity.vehicle.Boat boat = (net.minecraft.world.entity.vehicle.Boat) entity.getVehicle();
+        //#endif
         int id = boat.getPassengers().indexOf(entity);
         if (id == 0) {
             float paddle = boat.getRowingTime(arm == HumanoidArm.LEFT ? 0 : 1, delta);

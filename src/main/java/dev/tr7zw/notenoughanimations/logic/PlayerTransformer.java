@@ -7,6 +7,7 @@ import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.RotationLock;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -47,7 +48,8 @@ public class PlayerTransformer {
                     interpolate(model.rightLeg, last, ENTRY_SIZE * 3, timePassed, differentFrame, speed, deltaTick);
                 }
             }
-            if (entity == mc.cameraEntity && !data.isDisableBodyRotation()) {
+            if (entity == mc.cameraEntity && !data.isDisableBodyRotation() && (!NEABaseMod.config.limitRotationLockToFP
+                    || mc.options.getCameraType() == CameraType.FIRST_PERSON)) {
                 // For now located here due to smoothing logic being here.
 
                 if ((NEABaseMod.config.rotationLock == RotationLock.SMOOTH

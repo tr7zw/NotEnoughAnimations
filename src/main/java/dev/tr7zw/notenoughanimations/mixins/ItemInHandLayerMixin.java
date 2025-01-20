@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-// spotless:off
 //#if MC >= 12104
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import dev.tr7zw.notenoughanimations.access.ExtendedItemStackRenderState;
@@ -33,7 +32,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 //#else
 //$$ import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 //#endif
-//spotless:on
 
 @Mixin(ItemInHandLayer.class)
 //#if MC >= 12102

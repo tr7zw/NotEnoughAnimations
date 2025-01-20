@@ -35,11 +35,9 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-// spotless:off
 //#if MC >= 11700
 import net.minecraft.client.model.geom.ModelLayers;
 //#endif
-//spotless:on
 
 public class HeldItemHandler {
 
@@ -63,13 +61,11 @@ public class HeldItemHandler {
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
         if (bookModel == null) {
-            // spotless:off
-        	//#if MC >= 11700
+            //#if MC >= 11700
             bookModel = new BookModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.BOOK));
-    		//#else
-    		//$$ bookModel = new BookModel();
-    		//#endif
-    		//spotless:on
+            //#else
+            //$$ bookModel = new BookModel();
+            //#endif
         }
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
             if (NEABaseMod.config.dontHoldItemsInBed) {
@@ -195,13 +191,11 @@ public class HeldItemHandler {
             //$$vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, glow);
             //#endif
         }
-        // spotless:off
         //#if MC >= 12100
         bookModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, Integer.MAX_VALUE);
         //#else
         //$$ bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         //#endif
-        //spotless:on
         matrices.popPose();
         if (item == writtenBook) {
             matrices.pushPose();
