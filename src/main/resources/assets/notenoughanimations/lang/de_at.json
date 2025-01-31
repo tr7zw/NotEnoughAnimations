@@ -68,7 +68,7 @@
     "text.nea.enable.bowAnimation": "Bogen-Animation",
     "text.nea.enable.bowAnimation.tooltip": "Die Art der Bogenanimation, die verwendet werden soll",
     "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
-    "text.nea.enable.bowAnimation.CUSTOM_V1": "Angepasst V1"
+    "text.nea.enable.bowAnimation.CUSTOM_V1": "Angepasst V1",
     "text.nea.enable.burningAnimation": "Brennende Animation",
     "text.nea.enable.burningAnimation.tooltip": "Fügt eine Animation hinzu, wenn der Spieler in Flammen steht.",
     "text.nea.holdUpTarget": "Hochhalten-Ziel",
