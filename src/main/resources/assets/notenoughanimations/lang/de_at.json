@@ -1,4 +1,5 @@
 {
+    "modmenu.descriptionTranslation.notenoughanimations": "Diese Mod bringt viele fehlende Third-Person-Animationen aus der Ego-Perspektive ins Spiel und verbessert bestehende Animationen.",
     "text.nea.title": "Not Enough Animations Einstellungen",
     "text.nea.enable.animationsmoothing": "Animations Glättung",
     "text.nea.enable.animationsmoothing.tooltip": "Glättet die Animationen von Armen und Beinen, damit sie natürlicher und weniger sprunghaft aussehen",
