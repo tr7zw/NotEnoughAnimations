@@ -1,4 +1,5 @@
 {
+    "modmenu.descriptionTranslation.notenoughanimations": "添加和改进第三人称动画。",
     "text.nea.title": "Not Enough Animations 模组设置",
     "text.nea.enable.animationsmoothing": "平滑动画",
     "text.nea.enable.animationsmoothing.tooltip": "平滑手臂和腿部的动画，让它们看起来还更自然",
@@ -69,5 +70,17 @@
     "text.nea.enable.bowAnimation": "弓动画",
     "text.nea.enable.bowAnimation.tooltip": "弓使用的动画类型",
     "text.nea.enable.bowAnimation.VANILLA": "原版",
-    "text.nea.enable.bowAnimation.CUSTOM_V1": "自定义 V1"
+    "text.nea.enable.bowAnimation.CUSTOM_V1": "自定义 V1",
+    "text.nea.enable.burningAnimation": "燃烧动画",
+    "text.nea.enable.burningAnimation.tooltip": "为玩家处于着火状态时添加动画效果。",
+    "text.nea.holdUpTarget": "举起物品",
+    "text.nea.holdUpTarget.tooltip": "改变举起物品时的指向位置",
+    "text.nea.holdUpTarget.NONE": "无指向",
+    "text.nea.holdUpTarget.CAMERA": "摄像头",
+    "text.nea.holdUpCameraOffset": "举起摄像头偏移",
+    "text.nea.holdUpCameraOffset.tooltip": "修改在摄像头模式下举起物品时手臂向两侧的偏移量",
+    "text.nea.enable.holdUpOnlySelf": "仅玩家",
+    "text.nea.enable.holdUpOnlySelf.tooltip": "仅对玩家自身应用举起效果，不对其他玩家应用",
+    "text.nea.enable.limitRotationLockToFP": "限制旋转锁定到第一人称",
+    "text.nea.enable.limitRotationLockToFP.tooltip": "仅在第一人称视角中应用旋转锁定效果"
 }
