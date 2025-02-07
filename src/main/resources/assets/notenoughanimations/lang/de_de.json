@@ -1,4 +1,5 @@
 {
+    "modmenu.descriptionTranslation.notenoughanimations": "Diese Mod bringt viele fehlende Third-Person-Animationen aus der Ego-Perspektive ins Spiel und verbessert bestehende Animationen.",    
     "text.nea.title": "Not Enough Animations Einstellungen",
     "text.nea.enable.animationsmoothing": "Animations Glättung",
     "text.nea.enable.animationsmoothing.tooltip": "Glättet die Animationen von Armen und Beinen, damit sie natürlicher und weniger sprunghaft aussehen",
@@ -67,5 +68,17 @@
     "text.nea.enable.bowAnimation": "Bogen-Animation",
     "text.nea.enable.bowAnimation.tooltip": "Die Art der Bogenanimation, die verwendet werden soll",
     "text.nea.enable.bowAnimation.VANILLA": "Vanilla",
-    "text.nea.enable.bowAnimation.CUSTOM_V1": "Angepasst V1"
+    "text.nea.enable.bowAnimation.CUSTOM_V1": "Angepasst V1",
+    "text.nea.enable.burningAnimation": "Brennende Animation",
+    "text.nea.enable.burningAnimation.tooltip": "Fügt eine Animation hinzu, wenn der Spieler in Flammen steht.",
+    "text.nea.holdUpTarget": "Hochhalten-Ziel",
+    "text.nea.holdUpTarget.tooltip": "Ändert, wohin das Item zeigt, wenn es hochgehalten wird.",
+    "text.nea.holdUpTarget.NONE": "Keine",
+    "text.nea.holdUpTarget.CAMERA": "Kamera",
+    "text.nea.holdUpCameraOffset": "Kamera-Versatz beim Hochhalten",
+    "text.nea.holdUpCameraOffset.tooltip": "Ändert, wie weit der Arm zur Seite versetzt wird, wenn Items im Kameramodus hochgehalten werden.",
+    "text.nea.enable.holdUpOnlySelf": "Nur Eigenes Hochhalten",
+    "text.nea.enable.holdUpOnlySelf.tooltip": "Wendet den Hochhalten-Effekt nur auf den eigenen Spieler an, nicht auf andere.",
+    "text.nea.enable.limitRotationLockToFP": "Drehungssperre auf Ego-Perspektive begrenzen",
+    "text.nea.enable.limitRotationLockToFP.tooltip": "Wendet den Drehungssperren-Effekt nur in der Ego-Perspektive an."
 }
