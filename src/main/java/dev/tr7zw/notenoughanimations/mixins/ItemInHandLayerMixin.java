@@ -71,6 +71,9 @@ public abstract class ItemInHandLayerMixin<S extends LivingEntityRenderState, M 
         //#else
         //$$ private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, TransformType transformType, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
         //#endif
+        if (livingEntity == null) {
+            return;
+        }
         NEAnimationsLoader.INSTANCE.heldItemHandler.onRenderItem(livingEntity, this.getParentModel(), itemStack,
                 humanoidArm, poseStack, multiBufferSource, i, ci);
     }
