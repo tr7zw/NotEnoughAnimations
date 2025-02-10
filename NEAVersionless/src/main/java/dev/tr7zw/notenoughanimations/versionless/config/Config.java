@@ -35,6 +35,7 @@ public class Config {
     public boolean enableEatDrinkAnimation = true;
     public boolean enableRowBoatAnimation = true;
     public boolean enableHorseAnimation = true;
+    public boolean enableHorseLegAnimation = false;
     public boolean dontHoldItemsInBed = true;
     public boolean freezeArmsInBed = true;
     public RotationLock rotationLock = RotationLock.NONE;

@@ -1,4 +1,4 @@
-package dev.tr7zw.notenoughanimations.animations.hands;
+package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
@@ -24,10 +24,12 @@ public class HorseAnimation extends BasicAnimation {
     }
 
     private final BodyPart[] bothHands = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY };
+    private final BodyPart[] fullBody = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY,
+            BodyPart.LEFT_LEG, BodyPart.RIGHT_LEG };
 
     @Override
     public BodyPart[] getBodyParts(AbstractClientPlayer entity, PlayerData data) {
-        return bothHands;
+        return NEABaseMod.config.enableHorseLegAnimation ? fullBody : bothHands;
     }
 
     @Override
@@ -51,13 +53,21 @@ public class HorseAnimation extends BasicAnimation {
         AbstractHorse horse = (AbstractHorse) entity.getVehicle();
         int id = horse.getPassengers().indexOf(entity);
         if (id == 0) {
-            //#if MC >= 11904
-            float rotation = -Mth.cos(horse.walkAnimation.position() * 0.3f);
-            //#else
-            //$$ float rotation = -Mth.cos(horse.animationPosition * 0.3f);
-            //#endif
-            rotation *= 0.1;
-            AnimationUtil.applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
+            if (part == BodyPart.LEFT_LEG || part == BodyPart.RIGHT_LEG) {
+                if (horse.isStanding()) {
+                    AnimationUtil.applyTransforms(model, part, -0.8f, 0f, 0.8f);
+                } else {
+                    AnimationUtil.applyTransforms(model, part, -0.2f, 0f, 0.8f);
+                }
+            } else {
+                //#if MC >= 11904
+                float rotation = -Mth.cos(horse.walkAnimation.position() * 0.3f);
+                //#else
+                //$$ float rotation = -Mth.cos(horse.animationPosition * 0.3f);
+                //#endif
+                rotation *= 0.1;
+                AnimationUtil.applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
+            }
         }
     }
 

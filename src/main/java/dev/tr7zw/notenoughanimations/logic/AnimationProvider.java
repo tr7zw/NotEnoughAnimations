@@ -15,7 +15,6 @@ import dev.tr7zw.notenoughanimations.animations.fullbody.PassengerAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.BoatAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.CustomBowAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.EatDrinkAnimation;
-import dev.tr7zw.notenoughanimations.animations.hands.HorseAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.HugAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.ItemSwapAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.LookAtItemAnimation;
@@ -38,6 +37,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 //#if MC >= 11700
 import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
 //#endif
+import dev.tr7zw.notenoughanimations.animations.fullbody.HorseAnimation;
 
 public class AnimationProvider {
 

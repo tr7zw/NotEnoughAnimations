@@ -18,6 +18,8 @@
     "text.nea.enable.rowboatanimation.tooltip": "Adds an animation for rowing a boat",
     "text.nea.enable.horseanimation": "Horse Riding Animation",
     "text.nea.enable.horseanimation.tooltip": "Adds an animation for riding a horse",
+    "text.nea.enable.enableHorseLegAnimation": "Horse Riding Leg Animation",
+    "text.nea.enable.enableHorseLegAnimation.tooltip": "Animates the player's legs in a different pose when riding a horse",
     "text.nea.enable.dontholditemsinbed": "No Sleep Items",
     "text.nea.enable.dontholditemsinbed.tooltip": "Prevents the player from holding items while in bed",
     "text.nea.enable.freezearmsinbed": "No Sleep Movement",

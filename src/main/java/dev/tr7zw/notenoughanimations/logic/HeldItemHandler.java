@@ -93,8 +93,8 @@ public class HeldItemHandler {
                         matrices.mulPose(NMSHelper.YP.rotationDegrees(205.0f));
                         matrices.mulPose(NMSHelper.ZP.rotationDegrees(10.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
-                        matrices.translate((bl ? -1 : 1) / 16.0f,
-                                0.09 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0), -0.625);
+                        matrices.translate((bl ? -1 : 1) / 16.0f, 0.09 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0),
+                                -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,
                                 !entity.getOffhandItem().isEmpty(), entity.getMainArm() == HumanoidArm.LEFT);
                         matrices.popPose();

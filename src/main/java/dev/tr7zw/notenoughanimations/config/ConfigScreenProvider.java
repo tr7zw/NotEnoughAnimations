@@ -65,6 +65,8 @@ public class ConfigScreenProvider {
                         b -> config.enableRowBoatAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.horseanimation", () -> config.enableHorseAnimation,
                         b -> config.enableHorseAnimation = b));
+                options.add(getOnOffOption("text.nea.enable.enableHorseLegAnimation",
+                        () -> config.enableHorseLegAnimation, b -> config.enableHorseLegAnimation = b));
                 options.add(getOnOffOption("text.nea.enable.dontholditemsinbed", () -> config.dontHoldItemsInBed,
                         b -> config.dontHoldItemsInBed = b));
                 options.add(getOnOffOption("text.nea.enable.freezearmsinbed", () -> config.freezeArmsInBed,
