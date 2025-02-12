@@ -18,6 +18,8 @@
     "text.nea.enable.rowboatanimation.tooltip": "Tekne kürek çekmek için bir animasyon ekler",
     "text.nea.enable.horseanimation": "At Sürme Animasyonu",
     "text.nea.enable.horseanimation.tooltip": "At sürmek için bir animasyon ekler",
+    "text.nea.enable.enableHorseLegAnimation": "At Sürme Bacak Animasyonu",
+    "text.nea.enable.enableHorseLegAnimation.tooltip": "Oyuncunun bacaklarını at sürerken farklı bir pozda canlandırır",
     "text.nea.enable.dontholditemsinbed": "Uyku Sırasında Eşya Yok",
     "text.nea.enable.dontholditemsinbed.tooltip": "Oyuncunun yataktayken eşya tutmasını engeller",
     "text.nea.enable.freezearmsinbed": "Uyku Hareketi Yok",
