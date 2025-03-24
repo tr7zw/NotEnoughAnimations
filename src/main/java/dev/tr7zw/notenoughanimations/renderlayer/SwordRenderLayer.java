@@ -117,10 +117,14 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
         poseStack.mulPose(NMSHelper.XP.rotationDegrees(swordRotation));
         poseStack.mulPose(NMSHelper.YP.rotationDegrees(180.0F));
 
-        //#if MC >= 11904
+        //#if MC >= 12105
         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
                 lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
-                lefthanded, poseStack, multiBufferSource, light);
+                poseStack, multiBufferSource, light);
+        //#elseif MC >= 11904
+        //$$ Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
+        //$$         lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+        //$$        lefthanded, poseStack, multiBufferSource, light);
         //#elseif MC >= 11900
         //$$     Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
         //$$     poseStack, multiBufferSource, light);

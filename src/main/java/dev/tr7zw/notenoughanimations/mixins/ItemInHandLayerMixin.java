@@ -25,10 +25,14 @@ import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import dev.tr7zw.notenoughanimations.access.ExtendedLivingRenderState;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.resources.model.BakedModel;
+//#if MC < 12104
+//$$ import net.minecraft.client.resources.model.BakedModel;
+//#endif
 //#endif
 //#if MC >= 11904
-import net.minecraft.world.item.ItemDisplayContext;
+//#if MC < 12104
+//$$import net.minecraft.world.item.ItemDisplayContext;
+//#endif
 //#else
 //$$ import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 //#endif
