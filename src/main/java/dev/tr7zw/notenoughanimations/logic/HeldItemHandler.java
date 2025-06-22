@@ -15,7 +15,9 @@ import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.util.MapRenderer;
 import dev.tr7zw.notenoughanimations.util.NMSWrapper;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.GeneralUtil;
+import dev.tr7zw.transition.mc.ItemUtil;
+import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.BookModel;
@@ -41,18 +43,18 @@ import net.minecraft.client.model.geom.ModelLayers;
 
 public class HeldItemHandler {
 
-    private Item filledMap = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "filled_map"));
-    private Item book = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "book"));
-    private Item writtenBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "written_book"));
-    private Item writableBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "writable_book"));
-    private Item enchantedBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "enchanted_book"));
-    private Item knowledgeBook = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "knowledge_book"));
+    private Item filledMap = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "filled_map"));
+    private Item book = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "book"));
+    private Item writtenBook = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "written_book"));
+    private Item writableBook = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "writable_book"));
+    private Item enchantedBook = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "enchanted_book"));
+    private Item knowledgeBook = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "knowledge_book"));
     public Set<Item> books = new HashSet<>(
             Arrays.asList(writableBook, writtenBook, enchantedBook, knowledgeBook, book));
     @SuppressWarnings("serial")
     public Map<Item, ResourceLocation> bookTextures = new HashMap<Item, ResourceLocation>() {
         {
-            put(knowledgeBook, NMSHelper.getResourceLocation("notenoughanimations", "textures/recipe_book.png"));
+            put(knowledgeBook, GeneralUtil.getResourceLocation("notenoughanimations", "textures/recipe_book.png"));
         }
     };
     public Set<Item> glintingBooks = new HashSet<>(Arrays.asList(enchantedBook));
@@ -89,9 +91,9 @@ public class HeldItemHandler {
                                                                                                               // offhand
                         matrices.pushPose();
                         armedModel.translateToHand(arm, matrices);
-                        matrices.mulPose(NMSHelper.XP.rotationDegrees(-90.0f));
-                        matrices.mulPose(NMSHelper.YP.rotationDegrees(205.0f));
-                        matrices.mulPose(NMSHelper.ZP.rotationDegrees(10.0f));
+                        matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
+                        matrices.mulPose(MathUtil.YP.rotationDegrees(205.0f));
+                        matrices.mulPose(MathUtil.ZP.rotationDegrees(10.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
                         matrices.translate((bl ? -1 : 1) / 16.0f, 0.09 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0),
                                 -0.625);
@@ -105,8 +107,8 @@ public class HeldItemHandler {
                                                                                                              // offhand
                         matrices.pushPose();
                         armedModel.translateToHand(arm, matrices);
-                        matrices.mulPose(NMSHelper.XP.rotationDegrees(-90.0f));
-                        matrices.mulPose(NMSHelper.YP.rotationDegrees(200.0f));
+                        matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
+                        matrices.mulPose(MathUtil.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
                         matrices.translate((bl ? -1 : 1) / 16.0f, 0.125, -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true, false);
@@ -168,8 +170,8 @@ public class HeldItemHandler {
         matrices.pushPose();
         armedModel.translateToHand(arm, matrices);
 
-        matrices.mulPose(NMSHelper.YP.rotationDegrees(100));
-        matrices.mulPose(NMSHelper.ZP.rotationDegrees(-100));
+        matrices.mulPose(MathUtil.YP.rotationDegrees(100));
+        matrices.mulPose(MathUtil.ZP.rotationDegrees(-100));
         matrices.translate(-0.56, 0.34, 0);// arm == HumanoidArm.RIGHT ? 0 : 0.09);
 
         float g = entity.tickCount + delta;

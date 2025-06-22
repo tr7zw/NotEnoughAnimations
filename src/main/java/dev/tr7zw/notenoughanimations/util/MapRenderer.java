@@ -3,7 +3,8 @@ package dev.tr7zw.notenoughanimations.util;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.GeneralUtil;
+import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -20,31 +21,31 @@ import org.joml.Matrix4f;
 public class MapRenderer {
 
     private static final RenderType MAP_BACKGROUND = RenderType
-            .text(NMSHelper.getResourceLocation("textures/map/map_background.png"));
+            .text(GeneralUtil.getResourceLocation("textures/map/map_background.png"));
     private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
-            .text(NMSHelper.getResourceLocation("textures/map/map_background_checkerboard.png"));
+            .text(GeneralUtil.getResourceLocation("textures/map/map_background_checkerboard.png"));
 
     public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
             ItemStack stack, boolean small, boolean lefthanded) {
         Minecraft client = Minecraft.getInstance();
 
         if (small) {
-            matrices.mulPose(NMSHelper.YP.rotationDegrees(160.0f));
-            matrices.mulPose(NMSHelper.ZP.rotationDegrees(180.0f));
+            matrices.mulPose(MathUtil.YP.rotationDegrees(160.0f));
+            matrices.mulPose(MathUtil.ZP.rotationDegrees(180.0f));
             matrices.scale(0.38f, 0.38f, 0.38f);
 
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
         } else {
             if (lefthanded) {
-                matrices.mulPose(NMSHelper.YP.rotationDegrees(160.0f));
-                matrices.mulPose(NMSHelper.ZP.rotationDegrees(150.0f));
+                matrices.mulPose(MathUtil.YP.rotationDegrees(160.0f));
+                matrices.mulPose(MathUtil.ZP.rotationDegrees(150.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
 
                 matrices.translate(+0.5, -1.3, 0.0);
             } else {
-                matrices.mulPose(NMSHelper.YP.rotationDegrees(160.0f));
-                matrices.mulPose(NMSHelper.ZP.rotationDegrees(210.0f));
+                matrices.mulPose(MathUtil.YP.rotationDegrees(160.0f));
+                matrices.mulPose(MathUtil.ZP.rotationDegrees(210.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
 
                 matrices.translate(-1.0, -1.8, 0.0);

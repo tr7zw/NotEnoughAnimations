@@ -5,7 +5,7 @@ import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.EntityUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
@@ -65,8 +65,10 @@ public class EatDrinkAnimation extends BasicAnimation {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         float g = entity.getUseItemRemainingTicks() - delta + 1.0F;
         //        float h = g / entity.getUseItem().getUseDuration();
-        AnimationUtil.applyArmTransforms(model, arm, -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 1f, 2f))
-                + Mth.abs(Mth.cos(g / 4.0F * 3.1415927F) * 0.2F), -0.3f, 0.3f);
+        AnimationUtil.applyArmTransforms(model, arm,
+                -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 1f, 2f))
+                        + Mth.abs(Mth.cos(g / 4.0F * 3.1415927F) * 0.2F),
+                -0.3f, 0.3f);
     }
 
 }

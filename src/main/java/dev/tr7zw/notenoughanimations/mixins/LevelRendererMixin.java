@@ -7,12 +7,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import net.minecraft.client.Camera;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.LightTexture;
+
+//#if MC < 12106
+//$$import net.minecraft.client.renderer.GameRenderer;
+//$$import net.minecraft.client.renderer.LightTexture;
+//#endif
 
 //#if MC >= 12100
 import net.minecraft.client.DeltaTracker;
+
 //#if MC >= 12102
 import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 //#endif
@@ -22,6 +26,7 @@ import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 //#endif
 //#if MC >= 11903
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 //#else
 //$$ import com.mojang.math.Matrix4f;
 //#endif
@@ -40,14 +45,18 @@ public class LevelRendererMixin {
     //$$private void beforeRender(DeltaTracker deltaTracker, boolean bl, Camera camera, GameRenderer gameRenderer,
     //$$        LightTexture lightTexture, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
     //$$    float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
+    //#elseif MC < 12106
+    //$$private void beforeRender(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker,
+    //$$        boolean bl, Camera camera, GameRenderer gameRenderer,
+    //#if MC <= 12103
+    //$$LightTexture lightTexture, 
+    //#endif
+    //$$        Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
+    //$$     float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
     //#else
-
-    private void beforeRender(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker,
-            boolean bl, Camera camera, GameRenderer gameRenderer,
-            //#if MC <= 12103
-            //$$LightTexture lightTexture, 
-            //#endif
-            Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
+    public void renderLevel(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker, boolean bl,
+            Camera camera, Matrix4f matrix4f, Matrix4f matrix4f2,
+            com.mojang.blaze3d.buffers.GpuBufferSlice gpuBufferSlice, Vector4f vector4f, boolean bl2, CallbackInfo ci) {
         float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
         //#endif
         NEAnimationsLoader.INSTANCE.playerTransformer.setDeltaTick(tickDelta);

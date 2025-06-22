@@ -4,12 +4,15 @@
 //$$import net.minecraftforge.api.distmarker.Dist;
 //$$import net.minecraftforge.fml.DistExecutor;
 //$$import net.minecraftforge.fml.common.Mod;
+//$$import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+//$$import dev.tr7zw.transition.loader.ModLoaderUtil;
 //$$
 //$$@Mod("notenoughanimations")
 //$$public class NEABootstrap {
 //$$
-//$$	public NEABootstrap() {
-//$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> NEAnimationsMod::new);
+//$$	public NEABootstrap(FMLJavaModLoadingContext context) {
+//$$            ModLoaderUtil.setModLoadingContext(context);
+//$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new NEAnimationsMod().onInitializeClient());
 //$$	}
 //$$	
 //$$}
@@ -25,7 +28,7 @@
 //$$
 //$$	public NEABootstrap() {
 //$$            if(FMLEnvironment.dist == Dist.CLIENT) {
-//$$                new NEAnimationsMod();
+//$$                new NEAnimationsMod().onInitializeClient();
 //$$            }
 //$$	}
 //$$	

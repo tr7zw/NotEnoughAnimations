@@ -9,8 +9,9 @@ import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
-import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpTarget;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.EntityUtil;
+import dev.tr7zw.transition.mc.GeneralUtil;
+import dev.tr7zw.transition.mc.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -32,11 +33,11 @@ public class LookAtItemAnimation extends BasicAnimation {
 
     private void bind() {
         holdingItems.clear();
-        Item invalid = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "air"));
+        Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
         for (String itemId : NEABaseMod.config.holdingItems) {
             try {
-                Item item = NMSHelper
-                        .getItem(NMSHelper.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                Item item = ItemUtil
+                        .getItem(GeneralUtil.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
                 if (invalid != item)
                     holdingItems.add(item);
             } catch (Exception ex) {
@@ -100,7 +101,7 @@ public class LookAtItemAnimation extends BasicAnimation {
         switch (NEABaseMod.config.holdUpTarget) {
         case NONE:
             AnimationUtil.applyArmTransforms(model, arm, -NEABaseMod.config.holdUpItemOffset
-                    - (Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
+                    - (Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 1f, 1.5f)), -0.2f, 0.3f);
             break;
         case CAMERA:
             float invert = part == BodyPart.LEFT_ARM ? -1 : 1;
@@ -108,7 +109,6 @@ public class LookAtItemAnimation extends BasicAnimation {
                     Mth.clamp(NEABaseMod.config.holdUpCameraOffset + (model.head.yRot) * invert, -0.2f,
                             Math.max(0.2f, NEABaseMod.config.holdUpCameraOffset)),
                     0.1f);
-            //System.out.println(Mth.clamp((NEABaseMod.config.holdUpCameraOffset + model.head.yRot) * invert, -0.2f, 0.2f));
             break;
         }
     }

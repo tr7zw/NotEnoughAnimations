@@ -1,7 +1,9 @@
 package dev.tr7zw.notenoughanimations.util;
 
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.GeneralUtil;
+import dev.tr7zw.transition.mc.ItemUtil;
+import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -16,7 +18,7 @@ import net.minecraft.world.item.ItemUseAnimation;
 
 public class AnimationUtil {
 
-    private static Item crossbow = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "crossbow"));
+    private static Item crossbow = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "crossbow"));
 
     public static boolean isUsingboothHands(ArmPose pose) {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
@@ -121,8 +123,8 @@ public class AnimationUtil {
 
     public static void minMaxHeadRotation(Player livingEntity, PlayerModel model) {
         float value = legacyWrapDegrees(model.head.yRot);
-        float min = legacyWrapDegrees(model.body.yRot - NMSHelper.HALF_PI);
-        float max = legacyWrapDegrees(model.body.yRot + NMSHelper.HALF_PI);
+        float min = legacyWrapDegrees(model.body.yRot - MathUtil.HALF_PI);
+        float max = legacyWrapDegrees(model.body.yRot + MathUtil.HALF_PI);
         value = Math.min(value, max);
         value = Math.max(value, min);
         setHeadYRot(model, value);
@@ -141,10 +143,10 @@ public class AnimationUtil {
 
         float diff = wrappedEnd - wrappedStart;
 
-        if (diff > NMSHelper.PI) {
-            wrappedEnd -= NMSHelper.TWO_PI; // Ensure shortest path when difference is greater than PI
-        } else if (diff < -NMSHelper.PI) {
-            wrappedEnd += NMSHelper.TWO_PI; // Ensure shortest path when difference is less than -PI
+        if (diff > MathUtil.PI) {
+            wrappedEnd -= MathUtil.TWO_PI; // Ensure shortest path when difference is greater than PI
+        } else if (diff < -MathUtil.PI) {
+            wrappedEnd += MathUtil.TWO_PI; // Ensure shortest path when difference is less than -PI
         }
 
         return wrapDegrees(wrappedStart + (wrappedEnd - wrappedStart) * amount);
@@ -155,13 +157,13 @@ public class AnimationUtil {
         float wrappedEnd = wrapDegrees(end);
 
         float difference = wrappedEnd - wrappedStart;
-        float shortestPath = ((difference + NMSHelper.PI) % NMSHelper.TWO_PI) - NMSHelper.PI;
+        float shortestPath = ((difference + MathUtil.PI) % MathUtil.TWO_PI) - MathUtil.PI;
 
         return wrapDegrees(wrappedStart + shortestPath * delta);
     }
 
     public static float wrapDegrees(float angle) {
-        return ((angle + NMSHelper.PI) % NMSHelper.TWO_PI) - NMSHelper.PI;
+        return ((angle + MathUtil.PI) % MathUtil.TWO_PI) - MathUtil.PI;
     }
 
     public static float legacyWrapDegrees(float f) {

@@ -9,7 +9,9 @@ import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.util.NMSWrapper;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.EntityUtil;
+import dev.tr7zw.transition.mc.GeneralUtil;
+import dev.tr7zw.transition.mc.ItemUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
@@ -30,9 +32,9 @@ public class MapHoldingAnimation extends BasicAnimation {
 
     private void bind() {
         compatibleMaps.clear();
-        Item invalid = NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "air"));
-        compatibleMaps.add(NMSHelper.getItem(NMSHelper.getResourceLocation("minecraft", "filled_map")));
-        Item antiqueAtlas = NMSHelper.getItem(NMSHelper.getResourceLocation("antiqueatlas", "antique_atlas"));
+        Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
+        compatibleMaps.add(ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "filled_map")));
+        Item antiqueAtlas = ItemUtil.getItem(GeneralUtil.getResourceLocation("antiqueatlas", "antique_atlas"));
         if (invalid != antiqueAtlas) {
             compatibleMaps.add(antiqueAtlas);
             NEABaseMod.LOGGER.info("Added AntiqueAtlas support to Not Enough Animations!");
@@ -95,17 +97,17 @@ public class MapHoldingAnimation extends BasicAnimation {
         if (target == bothHands) {
             if (mainHand) {
                 AnimationUtil.applyArmTransforms(model, arm,
-                        -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 0.7f, 0.9f)),
-                        (Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, -0.3f, -0.2f)), 0.3f);
+                        -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 0.7f, 0.9f)),
+                        (Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, -0.3f, -0.2f)), 0.3f);
             } else {
                 AnimationUtil.applyArmTransforms(model, arm,
-                        -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 0.6f, 0.85f)),
-                        (Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, -0.2f, -0.1f)), 0.3f);
+                        -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 0.6f, 0.85f)),
+                        (Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, -0.2f, -0.1f)), 0.3f);
             }
             return;
         }
         AnimationUtil.applyArmTransforms(model, arm,
-                -(Mth.lerp(-1f * (NMSHelper.getXRot(entity) - 90f) / 180f, 0.5f, 1.5f)), 0f, 0.3f);
+                -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 0.5f, 1.5f)), 0f, 0.3f);
     }
 
 }

@@ -8,7 +8,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import dev.tr7zw.notenoughanimations.access.ExtendedLivingRenderState;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
-import dev.tr7zw.util.NMSHelper;
+import dev.tr7zw.transition.mc.GeneralUtil;
+import dev.tr7zw.transition.mc.ItemUtil;
+import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -114,8 +116,8 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
             offsetX *= -1d;
         }
         poseStack.translate(offsetX, 0.85D, 0.25D);
-        poseStack.mulPose(NMSHelper.XP.rotationDegrees(swordRotation));
-        poseStack.mulPose(NMSHelper.YP.rotationDegrees(180.0F));
+        poseStack.mulPose(MathUtil.XP.rotationDegrees(swordRotation));
+        poseStack.mulPose(MathUtil.YP.rotationDegrees(180.0F));
 
         //#if MC >= 12105
         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
@@ -138,8 +140,8 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
     private void init() {
         for (String itemKey : NEABaseMod.config.sheathSwords) {
             if (itemKey.contains(":")) {
-                Item item = NMSHelper
-                        .getItem(NMSHelper.getResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
+                Item item = ItemUtil
+                        .getItem(GeneralUtil.getResourceLocation(itemKey.split(":")[0], itemKey.split(":")[1]));
                 if (item != Items.AIR) {
                     items.add(item);
                 }

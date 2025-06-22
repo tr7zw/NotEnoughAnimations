@@ -10,7 +10,8 @@ import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.config.Config;
 import dev.tr7zw.notenoughanimations.versionless.config.ConfigUpgrader;
-import dev.tr7zw.util.ModLoaderUtil;
+import dev.tr7zw.transition.loader.ModLoaderEventUtil;
+import dev.tr7zw.transition.loader.ModLoaderUtil;
 
 public abstract class NEAnimationsLoader extends NEABaseMod {
 
@@ -24,7 +25,7 @@ public abstract class NEAnimationsLoader extends NEABaseMod {
         INSTANCE = this;
         ModLoaderUtil.disableDisplayTest();
         ModLoaderUtil.registerConfigScreen(ConfigScreenProvider::createConfigScreen);
-        ModLoaderUtil.registerClientSetupListener(this::onEnable);
+        ModLoaderEventUtil.registerClientSetupListener(this::onEnable);
     }
 
     public void onEnable() {
