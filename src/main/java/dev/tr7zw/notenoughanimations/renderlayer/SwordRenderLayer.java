@@ -66,8 +66,9 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
     //#if MC >= 12102
     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
             PlayerRenderState entityRenderState, float f, float g) {
-        AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
-                .getEntity();
+        if (!(((ExtendedLivingRenderState) entityRenderState).getEntity() instanceof AbstractClientPlayer player)) {
+            return;
+        }
         //#elseif MC >= 11904
         //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
         //$$        float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,

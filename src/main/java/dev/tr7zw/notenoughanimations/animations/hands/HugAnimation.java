@@ -33,8 +33,7 @@ public class HugAnimation extends BasicAnimation {
         AABB aABB = entity.getBoundingBox().expandTowards(vec32.scale(d)).inflate(1.0D, 1.0D, 1.0D);
         EntityHitResult entHit = ProjectileUtil.getEntityHitResult(entity, vec3, vec33, aABB, en -> (!en.isSpectator()),
                 d);
-        if (entHit != null && (entHit.getEntity().getType() == EntityType.PLAYER)) {
-            AbstractClientPlayer otherPlayer = (AbstractClientPlayer) entHit.getEntity();
+        if (entHit != null && entHit.getEntity() instanceof AbstractClientPlayer otherPlayer) {
             double dif = otherPlayer.getY() - entity.getY();
             if (otherPlayer.isCrouching() && Math.abs(dif) < 0.3) { // Making sure they are about on the same height
                 return true;
