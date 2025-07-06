@@ -14,6 +14,9 @@
 //$$            ModLoaderUtil.setModLoadingContext(context);
 //$$		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new NEAnimationsMod().onInitializeClient());
 //$$	}
+//$$    public NEABootstrap() {
+//$$        this(FMLJavaModLoadingContext.get());
+//$$    }
 //$$	
 //$$}
 //#elseif NEOFORGE
@@ -22,13 +25,14 @@
 //$$import net.neoforged.api.distmarker.Dist;
 //$$import net.neoforged.fml.loading.FMLEnvironment;
 //$$import net.neoforged.fml.common.Mod;
+//$$import dev.tr7zw.transition.loader.ModLoaderEventUtil;
 //$$
 //$$@Mod("notenoughanimations")
 //$$public class NEABootstrap {
 //$$
 //$$	public NEABootstrap() {
 //$$            if(FMLEnvironment.dist == Dist.CLIENT) {
-//$$                new NEAnimationsMod().onInitializeClient();
+//$$                    ModLoaderEventUtil.registerClientSetupListener(() -> new NEAnimationsMod().onInitializeClient());
 //$$            }
 //$$	}
 //$$	
