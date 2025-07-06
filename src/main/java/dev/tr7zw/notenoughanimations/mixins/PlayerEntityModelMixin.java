@@ -70,7 +70,11 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
     public void setupAnim(PlayerRenderState state, CallbackInfo info) {
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
         PlayerModel model = (PlayerModel) (Object) this;
-        AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) state).getEntity();
+        AbstractClientPlayer player = null;
+        if (((ExtendedLivingRenderState) state).getEntity() != null
+                && ((ExtendedLivingRenderState) state).getEntity() instanceof AbstractClientPlayer p) {
+            player = p;
+        }
         if (player == null) {
             return;
         }
@@ -88,7 +92,11 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
     @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "RETURN"))
     //#if MC >= 12102
     public void setupAnimEnd(PlayerRenderState state, CallbackInfo info) {
-        AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) state).getEntity();
+        AbstractClientPlayer player = null;
+        if (((ExtendedLivingRenderState) state).getEntity() != null
+                && ((ExtendedLivingRenderState) state).getEntity() instanceof AbstractClientPlayer p) {
+            player = p;
+        }
         if (player == null) {
             return;
         }
