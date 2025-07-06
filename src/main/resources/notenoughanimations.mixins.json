@@ -15,7 +15,8 @@
         "PlayerEntityModelMixin",
         "PlayerModelAccessor",
         "PlayerRendererMixin",
-        "ItemStackRenderStateMixin"
+        "ItemStackRenderStateMixin",
+        "ClientLevelMixin"
     ],
     "injectors": {
         "defaultRequire": 1
