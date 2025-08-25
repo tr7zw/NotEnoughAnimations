@@ -152,6 +152,21 @@ public class AnimationUtil {
         return wrapDegrees(wrappedStart + (wrappedEnd - wrappedStart) * amount);
     }
 
+    public static float interpolateRotation2(float start, float end, float amount) {
+        float wrappedStart = wrapDegrees2(start);
+        float wrappedEnd = wrapDegrees2(end);
+
+        float diff = wrappedEnd - wrappedStart;
+
+        if (diff > 180) {
+            wrappedEnd -= 360;
+        } else if (diff < -180) {
+            wrappedEnd += 360;
+        }
+
+        return wrapDegrees2(wrappedStart + (wrappedEnd - wrappedStart) * amount);
+    }  // this version uses the degree to degree wrap function. - EW
+
     public static float lerpAngle(float delta, float start, float end) {
         float wrappedStart = wrapDegrees(start);
         float wrappedEnd = wrapDegrees(end);

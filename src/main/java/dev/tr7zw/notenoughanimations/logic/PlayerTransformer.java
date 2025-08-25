@@ -1,5 +1,6 @@
 package dev.tr7zw.notenoughanimations.logic;
 
+import dev.tr7zw.transition.mc.MathUtil;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
@@ -151,10 +152,9 @@ public class PlayerTransformer {
         float amount = speed;
         amount = Math.min(amount, 1);
         entity.yBodyRotO = last[offset];
-        last[offset] += AnimationUtil.wrapDegrees2((entity.yHeadRot - last[offset]) * amount);
+        last[offset] = AnimationUtil.interpolateRotation2(last[offset], entity.yHeadRot, amount);
         entity.yBodyRot = (last[offset]);
         // entity.yBodyRotO = entity.yBodyRot;
-
     }
 
     /**
