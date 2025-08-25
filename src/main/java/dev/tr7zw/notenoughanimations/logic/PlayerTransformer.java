@@ -1,6 +1,5 @@
 package dev.tr7zw.notenoughanimations.logic;
 
-import dev.tr7zw.transition.mc.MathUtil;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
