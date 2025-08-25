@@ -93,7 +93,7 @@ public class MapHoldingAnimation extends BasicAnimation {
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
-        boolean mainHand = arm == entity.getMainArm();
+//        boolean mainHand = arm == entity.getMainArm();
         if (target == bothHands) {
             AnimationUtil.applyArmTransforms(model, arm,
                     -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 0.7f, 0.9f)),
