@@ -95,15 +95,9 @@ public class MapHoldingAnimation extends BasicAnimation {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         boolean mainHand = arm == entity.getMainArm();
         if (target == bothHands) {
-            if (mainHand) {
-                AnimationUtil.applyArmTransforms(model, arm,
-                        -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 0.7f, 0.9f)),
-                        (Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, -0.3f, -0.2f)), 0.3f);
-            } else {
-                AnimationUtil.applyArmTransforms(model, arm,
-                        -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 0.6f, 0.85f)),
-                        (Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, -0.2f, -0.1f)), 0.3f);
-            }
+            AnimationUtil.applyArmTransforms(model, arm,
+                    -(Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, 0.7f, 0.9f)),
+                    (Mth.lerp(-1f * (EntityUtil.getXRot(entity) - 90f) / 180f, -0.3f, -0.2f)), 0.3f);
             return;
         }
         AnimationUtil.applyArmTransforms(model, arm,

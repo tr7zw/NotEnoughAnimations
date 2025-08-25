@@ -26,7 +26,7 @@ public class MapRenderer {
             .text(GeneralUtil.getResourceLocation("textures/map/map_background_checkerboard.png"));
 
     public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
-            ItemStack stack, boolean small, boolean lefthanded) {
+            ItemStack stack, boolean small, boolean leftHanded) {
         Minecraft client = Minecraft.getInstance();
 
         if (small) {
@@ -37,9 +37,9 @@ public class MapRenderer {
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
         } else {
-            if (lefthanded) {
+            if (leftHanded) {
                 matrices.mulPose(MathUtil.YP.rotationDegrees(160.0f));
-                matrices.mulPose(MathUtil.ZP.rotationDegrees(150.0f));
+                matrices.mulPose(MathUtil.ZP.rotationDegrees(165.0f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
 
                 matrices.translate(+0.5, -1.3, 0.0);
