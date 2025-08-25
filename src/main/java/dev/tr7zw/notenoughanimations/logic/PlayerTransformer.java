@@ -144,7 +144,7 @@ public class PlayerTransformer {
             last[offset] = entity.yHeadRot;
             return;
         }
-        if (Math.abs(AnimationUtil.wrapDegrees2(entity.yHeadRot)) - Math.abs(AnimationUtil.wrapDegrees2(last[offset])) > 90) {
+        if (Math.abs(AnimationUtil.wrapDegrees2(entity.yHeadRot - last[offset])) > 90f) {
             speed *= 0.9f;
         }
         last[offset + 1] = last[offset];
