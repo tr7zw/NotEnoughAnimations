@@ -144,17 +144,14 @@ public class PlayerTransformer {
             last[offset] = entity.yHeadRot;
             return;
         }
-        if (entity.yHeadRot - last[offset] > 90) {
-            speed *= 0.9f;
-        }
-        if (entity.yHeadRot - last[offset] < -90) {
+        if (Math.abs(AnimationUtil.wrapDegrees2(entity.yHeadRot - last[offset])) > 90f) {
             speed *= 0.9f;
         }
         last[offset + 1] = last[offset];
         float amount = speed;
         amount = Math.min(amount, 1);
         entity.yBodyRotO = last[offset];
-        last[offset] += (entity.yHeadRot - last[offset]) * amount;
+        last[offset] = AnimationUtil.interpolateRotation2(last[offset], entity.yHeadRot, amount);
         entity.yBodyRot = (last[offset]);
         // entity.yBodyRotO = entity.yBodyRot;
     }

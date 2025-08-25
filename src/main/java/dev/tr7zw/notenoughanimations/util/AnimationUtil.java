@@ -152,6 +152,21 @@ public class AnimationUtil {
         return wrapDegrees(wrappedStart + (wrappedEnd - wrappedStart) * amount);
     }
 
+    public static float interpolateRotation2(float start, float end, float amount) {
+        float wrappedStart = wrapDegrees2(start);
+        float wrappedEnd = wrapDegrees2(end);
+
+        float diff = wrappedEnd - wrappedStart;
+
+        if (diff > 180) {
+            wrappedEnd -= 360;
+        } else if (diff < -180) {
+            wrappedEnd += 360;
+        }
+
+        return wrapDegrees2(wrappedStart + (wrappedEnd - wrappedStart) * amount);
+    }  // this version uses the degree to degree wrap function. - EW
+
     public static float lerpAngle(float delta, float start, float end) {
         float wrappedStart = wrapDegrees(start);
         float wrappedEnd = wrapDegrees(end);
@@ -164,7 +179,14 @@ public class AnimationUtil {
 
     public static float wrapDegrees(float angle) {
         return ((angle + MathUtil.PI) % MathUtil.TWO_PI) - MathUtil.PI;
-    }
+    }  // despite the name, this returns radians. should probably be renamed - EW
+
+    public static float wrapDegrees2(float angle) {
+        float wrapped = (angle + 180.0f) % 360.0f;
+        if (wrapped < 0) wrapped += 360.0f;
+        return wrapped - 180.0f;
+    }  // this takes in degrees and returns degrees - EW
+
 
     public static float legacyWrapDegrees(float f) {
         float g = f % 6.28318512f;
