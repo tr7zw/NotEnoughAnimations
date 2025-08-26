@@ -50,7 +50,6 @@ public class CustomBowAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
-        // TODO: Make this be smarter if possible. It animates both hands at the moment, old implementation did too.
         ModelPart mainArm = model.rightArm;
         ModelPart offArm = model.leftArm;
         int invert = 1;
@@ -61,10 +60,10 @@ public class CustomBowAnimation extends BasicAnimation {
             invert = -1;
         }  // code block above only runs if the current hand using the bow is the left hand
 
-        mainArm.yRot = invert * Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f);
-        offArm.yRot = invert * Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f);
-        mainArm.xRot = Mth.clamp(-1.5707964F + (invert * model.head.yRot), -2f, 0);
-        offArm.xRot = Mth.clamp(-1.5707964F + (invert * model.head.yRot) + 0.8f, -1.05f, -0.65f);
+        mainArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f));
+        offArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f));
+        mainArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot), -2f, 0));
+        offArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot) + 0.8f, -1.05f, -0.65f));
         mainArm.zRot += invert * 0.5F;
         offArm.zRot += invert * 0.5F;
     }
