@@ -65,14 +65,14 @@ public class CustomBowAnimation extends BasicAnimation {
         }  // code block above only runs if the current hand using the bow is the left hand
 
         if (part == mainPart) {
-            mainArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f));
-            mainArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot), -2f, 0));
+            mainArm.yRot = invert * Mth.clamp(-0.1F + AnimationUtil.wrapDegrees(-model.head.xRot), -1.25f, 0.5f);
+            mainArm.xRot = Mth.clamp(-1.5707964F + (invert * AnimationUtil.wrapDegrees(model.head.yRot)), -2f, 0);
             mainArm.zRot += invert * 1.5F;
         }
 
         if (part == offPart) {
-            offArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f));
-            offArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot) + 0.8f, -1.05f, -0.65f));
+            offArm.yRot = invert * Mth.clamp(0.1F + AnimationUtil.wrapDegrees(-model.head.xRot), -1.05f, 0.7f);
+            offArm.xRot = Mth.clamp(-1.5707964F + (invert * AnimationUtil.wrapDegrees(model.head.yRot)) + 0.8f, -1.05f, -0.65f);
             offArm.zRot += invert * 1.5F;
         }
     }
