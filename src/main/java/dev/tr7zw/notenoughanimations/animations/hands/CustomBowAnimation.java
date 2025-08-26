@@ -52,20 +52,29 @@ public class CustomBowAnimation extends BasicAnimation {
             float tickCounter) {
         ModelPart mainArm = model.rightArm;
         ModelPart offArm = model.leftArm;
+        BodyPart mainPart = BodyPart.RIGHT_ARM;
+        BodyPart offPart = BodyPart.LEFT_ARM;
         int invert = 1;
         if ((entity.getMainArm() == HumanoidArm.RIGHT && entity.getUsedItemHand() == InteractionHand.OFF_HAND) ||
                 (entity.getMainArm() == HumanoidArm.LEFT && entity.getUsedItemHand() == InteractionHand.MAIN_HAND)) {
             mainArm = model.leftArm;
             offArm = model.rightArm;
+            mainPart = BodyPart.LEFT_ARM;
+            offPart = BodyPart.RIGHT_ARM;
             invert = -1;
         }  // code block above only runs if the current hand using the bow is the left hand
 
-        mainArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f));
-        offArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f));
-        mainArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot), -2f, 0));
-        offArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot) + 0.8f, -1.05f, -0.65f));
-        mainArm.zRot += invert * 0.5F;
-        offArm.zRot += invert * 0.5F;
+        if (part == mainPart) {
+            mainArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(-0.1F + -model.head.xRot, -1.25f, 0.5f));
+            mainArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot), -2f, 0));
+            mainArm.zRot += invert * 1.5F;
+        }
+
+        if (part == offPart) {
+            offArm.yRot = invert * AnimationUtil.wrapDegrees(Mth.clamp(0.1F + -model.head.xRot, -1.05f, 0.7f));
+            offArm.xRot = AnimationUtil.wrapDegrees(Mth.clamp(-1.5707964F + (invert * model.head.yRot) + 0.8f, -1.05f, -0.65f));
+            offArm.zRot += invert * 1.5F;
+        }
     }
 
 }
