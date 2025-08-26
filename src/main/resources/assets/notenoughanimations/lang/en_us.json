@@ -90,5 +90,7 @@
     "text.nea.enable.holdUpOnlySelf": "Hold Up Only Self",
     "text.nea.enable.holdUpOnlySelf.tooltip": "Only apply the hold up effect to the own player, not other players",
     "text.nea.enable.limitRotationLockToFP": "Limit Rotation Lock To FP",
-    "text.nea.enable.limitRotationLockToFP.tooltip": "Only apply the rotation lock effect in first person"
+    "text.nea.enable.limitRotationLockToFP.tooltip": "Only apply the rotation lock effect in first person",
+	"text.nea.enable.customBowRotationLock": "Custom Bow Rotation Lock",
+	"text.nea.enable.customBowRotationLock.tooltip": "Puts the body at an angle while using the custom bow animation"
 }
