@@ -60,7 +60,7 @@ public class PlayerTransformer {
                         && differentFrame) {
                     entity.yBodyRot = entity.yHeadRot;
                     entity.yBodyRotO = entity.yHeadRotO;
-                } else {
+                } else if (differentFrame) {
                     last[ENTRY_SIZE * 4] = entity.yBodyRot;
                     last[ENTRY_SIZE * 4 + 1] = entity.yBodyRotO;
                 }
@@ -153,7 +153,7 @@ public class PlayerTransformer {
         entity.yBodyRotO = last[offset];
         last[offset] = AnimationUtil.interpolateRotation2(last[offset], entity.yHeadRot, amount);
         entity.yBodyRot = (last[offset]);
-        // entity.yBodyRotO = entity.yBodyRot;
+        // entity.yBodyRotO = entity.yBodyRot;   // don't uncomment, makes everything jittery
     }
 
     /**
