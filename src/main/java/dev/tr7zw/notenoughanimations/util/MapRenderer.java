@@ -36,19 +36,19 @@ public class MapRenderer {
 
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
-        } else {
+        } else {   // The values are now much better than they were before, but it could still be perfected.
             if (leftHanded) {
-                matrices.mulPose(MathUtil.YP.rotationDegrees(160.0f));
-                matrices.mulPose(MathUtil.ZP.rotationDegrees(165.0f));
+                matrices.mulPose(MathUtil.YP.rotationDegrees(154.5f));
+                matrices.mulPose(MathUtil.ZP.rotationDegrees(166.5f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
-
-                matrices.translate(+0.5, -1.3, 0.0);
+                // positive x = move right
+                matrices.translate(+0.585, -1.225, +0.15);
             } else {
-                matrices.mulPose(MathUtil.YP.rotationDegrees(160.0f));
-                matrices.mulPose(MathUtil.ZP.rotationDegrees(210.0f));
+                matrices.mulPose(MathUtil.YP.rotationDegrees(155.0f));
+                matrices.mulPose(MathUtil.ZP.rotationDegrees(213.5f));
                 matrices.scale(0.38f, 0.38f, 0.38f);
-
-                matrices.translate(-1.0, -1.8, 0.0);
+                // negative x = move left
+                matrices.translate(-0.955, -1.8, 0.0);
             }
 
             matrices.scale(0.0138125f, 0.0138125f, 0.0138125f);
