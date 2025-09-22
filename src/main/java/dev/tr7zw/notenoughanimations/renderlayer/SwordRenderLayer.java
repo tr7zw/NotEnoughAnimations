@@ -77,7 +77,7 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
         //$$     AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
         //$$    float paramFloat5, float paramFloat6) {
         //#endif
-        if (disabled) {
+        if (disabled || player == null) {
             return;
         }
         if (lazyInit) {
