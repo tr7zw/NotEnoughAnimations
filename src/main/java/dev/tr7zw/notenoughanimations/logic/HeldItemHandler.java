@@ -61,7 +61,14 @@ public class HeldItemHandler {
     private BookModel bookModel = null;
 
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
-            PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
+            PoseStack matrices,
+            //#if MC >= 12109
+            net.minecraft.client.renderer.SubmitNodeCollector vertexConsumers,
+            net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
+            //#else
+            //$$net.minecraft.client.renderer.MultiBufferSource vertexConsumers, 
+            //#endif
+            int light, CallbackInfo info) {
         if (bookModel == null) {
             //#if MC >= 11700
             bookModel = new BookModel(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.BOOK));
@@ -90,7 +97,11 @@ public class HeldItemHandler {
                                                                                                               // the
                                                                                                               // offhand
                         matrices.pushPose();
-                        armedModel.translateToHand(arm, matrices);
+                        //#if MC >= 12109
+                        armedModel.translateToHand(livingEntityRenderState, arm, matrices);
+                        //#else
+                        //$$armedModel.translateToHand(arm, matrices);
+                        //#endif
                         matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(MathUtil.YP.rotationDegrees(205.0f));
                         matrices.mulPose(MathUtil.ZP.rotationDegrees(10.0f));
@@ -106,7 +117,11 @@ public class HeldItemHandler {
                     if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only
                                                                                                              // offhand
                         matrices.pushPose();
-                        armedModel.translateToHand(arm, matrices);
+                        //#if MC >= 12109
+                        armedModel.translateToHand(livingEntityRenderState, arm, matrices);
+                        //#else
+                        //$$armedModel.translateToHand(arm, matrices);
+                        //#endif
                         matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(MathUtil.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
@@ -120,15 +135,21 @@ public class HeldItemHandler {
                 if (NEABaseMod.config.enableInWorldBookRendering) {
                     Item item = entity.getMainHandItem().getItem();
                     if (arm == entity.getMainArm() && books.contains(item)) {
-                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers, light, armedModel,
-                                glintingBooks.contains(item), item);
+                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers,
+                                //#if MC >= 12109
+                                livingEntityRenderState,
+                                //#endif
+                                light, armedModel, glintingBooks.contains(item), item);
                         info.cancel();
                         return;
                     }
                     item = entity.getOffhandItem().getItem();
                     if (arm != entity.getMainArm() && books.contains(item)) {
-                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers, light, armedModel,
-                                glintingBooks.contains(item), item);
+                        renderBook(entity, 0, itemStack, arm, matrices, vertexConsumers,
+                                //#if MC >= 12109
+                                livingEntityRenderState,
+                                //#endif
+                                light, armedModel, glintingBooks.contains(item), item);
                         info.cancel();
                         return;
                     }
@@ -166,43 +187,65 @@ public class HeldItemHandler {
     }
 
     private void renderBook(LivingEntity entity, float delta, ItemStack itemStack, HumanoidArm arm, PoseStack matrices,
-            MultiBufferSource vertexConsumers, int light, ArmedModel armedModel, boolean glow, Item item) {
+            //#if MC >= 12109
+            net.minecraft.client.renderer.SubmitNodeCollector vertexConsumers,
+            net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
+            //#else
+            //$$net.minecraft.client.renderer.MultiBufferSource vertexConsumers, 
+            //#endif
+            int light, ArmedModel armedModel, boolean glow, Item item) {
         matrices.pushPose();
-        armedModel.translateToHand(arm, matrices);
+        //#if MC >= 12109
+        armedModel.translateToHand(livingEntityRenderState, arm, matrices);
+        //#else
+        //$$armedModel.translateToHand(arm, matrices);
+        //#endif
 
         matrices.mulPose(MathUtil.YP.rotationDegrees(100));
         matrices.mulPose(MathUtil.ZP.rotationDegrees(-100));
         matrices.translate(-0.56, 0.34, 0);// arm == HumanoidArm.RIGHT ? 0 : 0.09);
 
         float g = entity.tickCount + delta;
-        float l = 0;// Mth.lerp(delta, enchantmentTableBlockEntity.oFlip,
-                    // enchantmentTableBlockEntity.flip);
+        float l = 0;
         float m = Mth.frac(l + 0.25F) * 1.6F - 0.3F;
         float n = Mth.frac(l + 0.75F) * 1.6F - 0.3F;
-        float o = 1;// Mth.lerp(delta, enchantmentTableBlockEntity.oOpen,
-                    // enchantmentTableBlockEntity.open);
-        this.bookModel.setupAnim(g, Mth.clamp(m, 0.0F, 1.0F), Mth.clamp(n, 0.0F, 1.0F), o);
-        VertexConsumer vertexConsumer;
-        if (bookTextures.containsKey(item)) {
-            vertexConsumer = ItemRenderer.getFoilBuffer(vertexConsumers, RenderType.entitySolid(bookTextures.get(item)),
-                    true, glow);
-        } else {
-            //#if MC >= 12102
-            vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, true,
-                    glow);
-            //#else
-            //$$vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, glow);
-            //#endif
-        }
-        //#if MC >= 12100
-        bookModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, Integer.MAX_VALUE);
+        float o = 1;
+        //#if MC >= 12109
+        var state = new BookModel.State(g, Mth.clamp(m, 0.0F, 1.0F), Mth.clamp(n, 0.0F, 1.0F), o);
+        this.bookModel.setupAnim(state);
+        //#else
+        //$$this.bookModel.setupAnim(g, Mth.clamp(m, 0.0F, 1.0F), Mth.clamp(n, 0.0F, 1.0F), o);
+        //#endif
+        //#if MC < 12109
+        //$$VertexConsumer vertexConsumer;
+        //$$if (bookTextures.containsKey(item)) {
+        //$$    vertexConsumer = ItemRenderer.getFoilBuffer(vertexConsumers, RenderType.entitySolid(bookTextures.get(item)),
+        //$$            true, glow);
+        //$$ } else {
+        //#if MC >= 12102
+        //$$     vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, true,
+        //$$             glow);
+        //#else
+        //$$vertexConsumer = EnchantTableRenderer.BOOK_LOCATION.buffer(vertexConsumers, RenderType::entitySolid, glow);
+        //#endif
+        //$$}
+        //#endif
+        //#if MC >= 12109
+        vertexConsumers.submitModel(this.bookModel, state, matrices, RenderType.entitySolid(bookTextures.get(item)),
+                light, OverlayTexture.NO_OVERLAY, -1, null, 0, null); //FIXME texture sprite?
+        //#elseif MC >= 12100
+        //$$bookModel.renderToBuffer(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, Integer.MAX_VALUE);
         //#else
         //$$ bookModel.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         //#endif
         matrices.popPose();
         if (item == writtenBook) {
             matrices.pushPose();
-            armedModel.translateToHand(arm, matrices);
+            //#if MC >= 12109
+            armedModel.translateToHand(livingEntityRenderState, arm, matrices);
+            //#else
+            //$$armedModel.translateToHand(arm, matrices);
+            //#endif
             renderText(entity, matrices, itemStack, armedModel, arm);
             matrices.popPose();
         }

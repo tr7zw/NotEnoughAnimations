@@ -9,21 +9,32 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import net.minecraft.client.renderer.ItemInHandRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.HumanoidArm;
 
 @Mixin(ItemInHandRenderer.class)
 public class ItemInHandRendererMixin {
 
     @Inject(method = "renderPlayerArm", at = @At("HEAD"))
-    private void renderPlayerArm(PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight,
-            float equippedProgress, float swingProgress, HumanoidArm humanoidArm, CallbackInfo info) {
+    //#if MC >= 12109
+    private void renderPlayerArm(PoseStack poseStack,
+            net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector, int i, float f, float g,
+            HumanoidArm humanoidArm, CallbackInfo info) {
+        //#else
+        //$$private void renderPlayerArm(PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, int packedLight,
+        //$$        float equippedProgress, float swingProgress, net.minecraft.world.entity.HumanoidArm humanoidArm, CallbackInfo info) {
+        //#endif
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(true);
     }
 
     @Inject(method = "renderPlayerArm", at = @At("RETURN"))
-    private void renderPlayerArmEnd(PoseStack poseStack, MultiBufferSource multiBufferSource, int packedLight,
-            float equippedProgress, float swingProgress, HumanoidArm humanoidArm, CallbackInfo info) {
+    //#if MC >= 12109
+    private void renderPlayerArmEnd(PoseStack poseStack,
+            net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector, int i, float f, float g,
+            HumanoidArm humanoidArm, CallbackInfo info) {
+        //#else
+        //$$private void renderPlayerArmEnd(PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, int packedLight,
+        //$$        float equippedProgress, float swingProgress, net.minecraft.world.entity.HumanoidArm humanoidArm, CallbackInfo info) {
+        //#endif
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(false);
     }
 

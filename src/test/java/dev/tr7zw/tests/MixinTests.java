@@ -11,7 +11,6 @@ import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.server.Bootstrap;
 
 public class MixinTests {
@@ -30,7 +29,11 @@ public class MixinTests {
         objenesis.newInstance(LevelRenderer.class);
         objenesis.newInstance(RemotePlayer.class);
         objenesis.newInstance(PlayerModel.class);
-        objenesis.newInstance(PlayerRenderer.class);
+        //#if MC >= 12109
+        objenesis.newInstance(net.minecraft.client.renderer.entity.player.AvatarRenderer.class);
+        //#else
+        //$$objenesis.newInstance(net.minecraft.client.renderer.entity.player.PlayerRenderer.class);
+        //#endif
         objenesis.newInstance(LevelRenderer.class);
     }
 

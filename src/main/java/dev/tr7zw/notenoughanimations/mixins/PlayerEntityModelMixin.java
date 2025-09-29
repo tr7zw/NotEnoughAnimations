@@ -2,7 +2,6 @@ package dev.tr7zw.notenoughanimations.mixins;
 
 //#if MC >= 12102
 import dev.tr7zw.notenoughanimations.access.ExtendedLivingRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 //#endif
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,8 +16,11 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 
 @Mixin(PlayerModel.class)
-//#if MC >= 12102
-public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderState> {
+//#if MC >= 12109
+public abstract class PlayerEntityModelMixin
+        extends HumanoidModel<net.minecraft.client.renderer.entity.state.AvatarRenderState> {
+    //#elseif MC >= 12102
+    //$$public abstract class PlayerEntityModelMixin extends HumanoidModel<net.minecraft.client.renderer.entity.state.PlayerRenderState> {
     //#else
     //$$public abstract class PlayerEntityModelMixin<T extends net.minecraft.world.entity.LivingEntity> extends HumanoidModel<T> {
     //#endif
@@ -41,7 +43,13 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
 
     @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "HEAD"))
     //#if MC >= 12102
-    public void setupAnimHEAD(PlayerRenderState state, CallbackInfo info) {
+    public void setupAnimHEAD(
+            //#if MC >= 12109
+            net.minecraft.client.renderer.entity.state.AvatarRenderState state,
+            //#else
+            //$$net.minecraft.client.renderer.entity.state.PlayerRenderState  state,
+            //#endif
+            CallbackInfo info) {
         if (state == null || !(state instanceof ExtendedLivingRenderState)) {
             return;
         }
@@ -67,7 +75,13 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
 
     //#if MC >= 12102
     @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "RETURN"))
-    public void setupAnim(PlayerRenderState state, CallbackInfo info) {
+    public void setupAnim(
+            //#if MC >= 12109
+            net.minecraft.client.renderer.entity.state.AvatarRenderState state,
+            //#else
+            //$$net.minecraft.client.renderer.entity.state.PlayerRenderState  state,
+            //#endif
+            CallbackInfo info) {
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
         PlayerModel model = (PlayerModel) (Object) this;
         AbstractClientPlayer player = null;
@@ -91,7 +105,13 @@ public abstract class PlayerEntityModelMixin extends HumanoidModel<PlayerRenderS
 
     @Inject(method = SETUP_ANIM_METHOD, at = @At(value = "RETURN"))
     //#if MC >= 12102
-    public void setupAnimEnd(PlayerRenderState state, CallbackInfo info) {
+    public void setupAnimEnd(
+            //#if MC >= 12109
+            net.minecraft.client.renderer.entity.state.AvatarRenderState state,
+            //#else
+            //$$net.minecraft.client.renderer.entity.state.PlayerRenderState state,
+            //#endif
+            CallbackInfo info) {
         AbstractClientPlayer player = null;
         if (((ExtendedLivingRenderState) state).getEntity() != null
                 && ((ExtendedLivingRenderState) state).getEntity() instanceof AbstractClientPlayer p) {

@@ -11,34 +11,37 @@ import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.transition.mc.GeneralUtil;
 import dev.tr7zw.transition.mc.ItemUtil;
 import dev.tr7zw.transition.mc.MathUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.MultiBufferSource;
+
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+//#if MC < 12109
+//$$import net.minecraft.client.renderer.MultiBufferSource;
+//$$import net.minecraft.client.model.PlayerModel;
+//$$import net.minecraft.client.Minecraft;
 //#if MC >= 11904
-import net.minecraft.world.item.ItemDisplayContext;
+//$$import net.minecraft.world.item.ItemDisplayContext;
 //#else
 //$$ import net.minecraft.client.renderer.block.model.ItemTransforms;
 //#endif
+//#endif
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
 //#if MC >= 12102
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 
-public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel> {
+public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidModel<HumanoidRenderState>> {
     //#else
     //$$public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     //#endif
 
     //#if MC >= 12102
-    public SwordRenderLayer(RenderLayerParent<PlayerRenderState, PlayerModel> renderer) {
+    public SwordRenderLayer(RenderLayerParent<HumanoidRenderState, HumanoidModel<HumanoidRenderState>> renderer) {
         super(renderer);
     }
     //#else
@@ -63,11 +66,16 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
     }
 
     @Override
-    //#if MC >= 12102
-    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
-            PlayerRenderState entityRenderState, float f, float g) {
+    //#if MC >= 12109
+    public void submit(PoseStack poseStack, net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector,
+            int i, HumanoidRenderState entityRenderState, float f, float g) {
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
                 .getEntity();
+        //#elseif MC >= 12102
+        //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
+        //$$        HumanoidRenderState entityRenderState, float f, float g) {
+        //$$    AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
+        //$$            .getEntity();
         //#elseif MC >= 11904
         //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
         //$$        float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
@@ -119,10 +127,13 @@ public class SwordRenderLayer extends RenderLayer<PlayerRenderState, PlayerModel
         poseStack.mulPose(MathUtil.XP.rotationDegrees(swordRotation));
         poseStack.mulPose(MathUtil.YP.rotationDegrees(180.0F));
 
-        //#if MC >= 12105
-        Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
-                lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
-                poseStack, multiBufferSource, light);
+        //#if MC >= 12109
+        //itemStackRenderState.submit(poseStack, submitNodeCollector, i, OverlayTexture.NO_OVERLAY,
+        //        armedEntityRenderState.outlineColor);
+        //#elseif MC >= 12105
+        //$$Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
+        //$$        lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+        //$$        poseStack, multiBufferSource, light);
         //#elseif MC >= 11904
         //$$ Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
         //$$         lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,

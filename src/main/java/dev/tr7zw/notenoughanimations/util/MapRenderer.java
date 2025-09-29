@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.tr7zw.transition.mc.GeneralUtil;
 import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
@@ -25,8 +24,14 @@ public class MapRenderer {
     private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
             .text(GeneralUtil.getResourceLocation("textures/map/map_background_checkerboard.png"));
 
-    public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
-            ItemStack stack, boolean small, boolean leftHanded) {
+    //#if MC >= 12109
+    public static void renderFirstPersonMap(PoseStack matrices,
+            net.minecraft.client.renderer.SubmitNodeCollector vertexConsumers, int light, ItemStack stack,
+            boolean small, boolean leftHanded) {
+        //#else
+        //$$public static void renderFirstPersonMap(PoseStack matrices, net.minecraft.client.renderer.MultiBufferSource vertexConsumers, int light,
+        //$$        ItemStack stack, boolean small, boolean leftHanded) {
+        //#endif
         Minecraft client = Minecraft.getInstance();
 
         if (small) {
@@ -60,19 +65,35 @@ public class MapRenderer {
                 .get(net.minecraft.core.component.DataComponents.MAP_ID);
         //#endif
         MapItemSavedData mapState = MapItem.getSavedData(stack, client.level);
-        com.mojang.blaze3d.vertex.VertexConsumer vertexConsumer = vertexConsumers
-                .getBuffer(mapState == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
-        Matrix4f matrix4f = matrices.last().pose();
-        addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 0, 1, light);
-        addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 1, 1, light);
-        addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 1, 0, light);
-        addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 0, 0, light);
-        // mirrored back site
-        vertexConsumer = vertexConsumers.getBuffer(MAP_BACKGROUND);
-        addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 0, 0, light);
-        addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 1, 0, light);
-        addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 1, 1, light);
-        addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 0, 1, light);
+        //#if MC >= 12109
+        RenderType renderType = mapState == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD;
+        vertexConsumers.submitCustomGeometry(matrices, renderType, (pose, vertexConsumer) -> {
+            vertexConsumer.addVertex(pose, -7.0F, 135.0F, 0.0F).setColor(-1).setUv(0.0F, 1.0F).setLight(light);
+            vertexConsumer.addVertex(pose, 135.0F, 135.0F, 0.0F).setColor(-1).setUv(1.0F, 1.0F).setLight(light);
+            vertexConsumer.addVertex(pose, 135.0F, -7.0F, 0.0F).setColor(-1).setUv(1.0F, 0.0F).setLight(light);
+            vertexConsumer.addVertex(pose, -7.0F, -7.0F, 0.0F).setColor(-1).setUv(0.0F, 0.0F).setLight(light);
+        });
+        vertexConsumers.submitCustomGeometry(matrices, MAP_BACKGROUND, (pose, vertexConsumer) -> {
+            vertexConsumer.addVertex(pose, -7.0f, -7.0f, 0.0f).setColor(-1).setUv(0, 0).setLight(light);
+            vertexConsumer.addVertex(pose, 135.0f, -7.0f, 0.0f).setColor(-1).setUv(1, 0).setLight(light);
+            vertexConsumer.addVertex(pose, 135.0f, 135.0f, 0.0f).setColor(-1).setUv(1, 1).setLight(light);
+            vertexConsumer.addVertex(pose, -7.0f, 135.0f, 0.0f).setColor(-1).setUv(0, 1).setLight(light);
+        });
+        //#else
+        //$$ com.mojang.blaze3d.vertex.VertexConsumer vertexConsumer = vertexConsumers
+        //$$         .getBuffer(mapState == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
+        //$$Matrix4f matrix4f = matrices.last().pose();
+        //$$addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 0, 1, light);
+        //$$addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 1, 1, light);
+        //$$addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 1, 0, light);
+        //$$addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 0, 0, light);
+        //$$// mirrored back site
+        //$$vertexConsumer = vertexConsumers.getBuffer(MAP_BACKGROUND);
+        //$$addVertex(vertexConsumer, matrix4f, -7.0f, -7.0f, 0.0f, 0, 0, light);
+        //$$addVertex(vertexConsumer, matrix4f, 135.0f, -7.0f, 0.0f, 1, 0, light);
+        //$$addVertex(vertexConsumer, matrix4f, 135.0f, 135.0f, 0.0f, 1, 1, light);
+        //$$addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 0, 1, light);
+        //#endif
 
         if (mapState != null) {
             //#if MC >= 12102
