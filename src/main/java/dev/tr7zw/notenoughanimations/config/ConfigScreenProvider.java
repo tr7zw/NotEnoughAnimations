@@ -89,8 +89,8 @@ public class ConfigScreenProvider {
                     b -> NEABaseMod.config.freezingAnimation = b));
             options.add(getEnumOption("text.nea.enable.bowAnimation", BowAnimation.class,
                     () -> NEABaseMod.config.bowAnimation, b -> NEABaseMod.config.bowAnimation = b));
-            options.add(getOnOffOption("text.nea.enable.customBowRotationLock", () -> NEABaseMod.config.customBowRotationLock,
-                    b -> NEABaseMod.config.customBowRotationLock = b));
+            options.add(getOnOffOption("text.nea.enable.customBowRotationLock",
+                    () -> NEABaseMod.config.customBowRotationLock, b -> NEABaseMod.config.customBowRotationLock = b));
 
             options.add(getOnOffOption("text.nea.enable.burningAnimation", () -> NEABaseMod.config.burningAnimation,
                     b -> NEABaseMod.config.burningAnimation = b));

@@ -36,7 +36,7 @@ public class MapRenderer {
 
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
-        } else {   // The values are now much better than they were before, but it could still be perfected.
+        } else { // The values are now much better than they were before, but it could still be perfected.
             if (leftHanded) {
                 matrices.mulPose(MathUtil.YP.rotationDegrees(154.5f));
                 matrices.mulPose(MathUtil.ZP.rotationDegrees(166.5f));

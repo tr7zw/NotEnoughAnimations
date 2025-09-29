@@ -55,8 +55,9 @@ public class CustomBowAnimation extends BasicAnimation {
         ModelPart offArm = model.leftArm;
         BodyPart mainPart = BodyPart.RIGHT_ARM;
         BodyPart offPart = BodyPart.LEFT_ARM;
-        boolean bowInLeftHand = (entity.getMainArm() == HumanoidArm.RIGHT && entity.getUsedItemHand() == InteractionHand.OFF_HAND) ||
-                (entity.getMainArm() == HumanoidArm.LEFT && entity.getUsedItemHand() == InteractionHand.MAIN_HAND); 
+        boolean bowInLeftHand = (entity.getMainArm() == HumanoidArm.RIGHT
+                && entity.getUsedItemHand() == InteractionHand.OFF_HAND)
+                || (entity.getMainArm() == HumanoidArm.LEFT && entity.getUsedItemHand() == InteractionHand.MAIN_HAND);
         if (bowInLeftHand) {
             mainArm = model.leftArm;
             offArm = model.rightArm;
@@ -73,12 +74,13 @@ public class CustomBowAnimation extends BasicAnimation {
 
         if (part == offPart) {
             offArm.yRot = invert * Mth.clamp(0.1F + AnimationUtil.wrapDegrees(-model.head.xRot), -1.05f, 0.7f);
-            offArm.xRot = Mth.clamp(-1.5707964F + (invert * AnimationUtil.wrapDegrees(model.head.yRot)) + 0.8f, -1.05f, -0.65f);
+            offArm.xRot = Mth.clamp(-1.5707964F + (invert * AnimationUtil.wrapDegrees(model.head.yRot)) + 0.8f, -1.05f,
+                    -0.65f);
             offArm.zRot += invert * 1.5F;
         }
-        
+
         if (part == BodyPart.BODY && NEABaseMod.config.customBowRotationLock) {
-            if(bowInLeftHand) {
+            if (bowInLeftHand) {
                 entity.yBodyRot = EntityUtil.getYRot(entity) + 40;
                 entity.yBodyRotO = entity.yRotO + 40;
             } else {
