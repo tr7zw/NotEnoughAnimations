@@ -26,10 +26,10 @@ public abstract class PlayerEntityModelMixin
     //#endif
 
     @Unique
-    //#if MC >= 12102
-    private static final String SETUP_ANIM_METHOD = "setupAnim(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;)V";
+    //#if MC >= 12102 && MC < 12109
+    //$$private static final String SETUP_ANIM_METHOD = "setupAnim(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;)V";
     //#else
-    //$$private static final String SETUP_ANIM_METHOD = "setupAnim";
+    private static final String SETUP_ANIM_METHOD = "setupAnim";
     //#endif
 
     public PlayerEntityModelMixin() {
