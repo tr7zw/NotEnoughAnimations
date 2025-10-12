@@ -158,8 +158,10 @@ public class ConfigScreenProvider {
                     b -> NEABaseMod.config.enableInWorldBookRendering = b));
             options.add(getOnOffOption("text.nea.enable.fallingAnimation", () -> NEABaseMod.config.fallingAnimation,
                     b -> NEABaseMod.config.fallingAnimation = b));
-            options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> NEABaseMod.config.showLastUsedSword,
-                    b -> NEABaseMod.config.showLastUsedSword = b));
+            //#if MC < 12109
+            //$$options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> NEABaseMod.config.showLastUsedSword,
+            //$$        b -> NEABaseMod.config.showLastUsedSword = b));
+            //#endif
 
             var optionList = createOptionList(options);
             optionList.setGap(-1);

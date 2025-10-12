@@ -55,7 +55,9 @@ public abstract class PlayerRendererMixin
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onCreate(CallbackInfo info) {
-        this.addLayer(new SwordRenderLayer(this));
+        //#if MC < 12109
+        //$$this.addLayer(new SwordRenderLayer(this));
+        //#endif
     }
 
     //#if MC >= 12109

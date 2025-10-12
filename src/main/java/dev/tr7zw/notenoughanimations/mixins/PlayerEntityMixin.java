@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
-import dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer;
 import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
 import lombok.Getter;
 import lombok.Setter;
@@ -58,7 +57,9 @@ public class PlayerEntityMixin implements PlayerData {
     }
 
     private void updateRenderLayerItems() {
-        SwordRenderLayer.update((Player) (Object) this);
+        //#if MC < 12109
+        //$$dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer.update((Player) (Object) this);
+        //#endif
     }
 
     @Override
