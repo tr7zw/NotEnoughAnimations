@@ -153,9 +153,6 @@ public class ConfigScreenProvider {
 
             options.add(getSplitLine(""));
             options.add(getSplitLine("text.nea.line.legacy"));
-            options.add(getOnOffOption("text.nea.enable.enableInWorldBookRendering",
-                    () -> NEABaseMod.config.enableInWorldBookRendering,
-                    b -> NEABaseMod.config.enableInWorldBookRendering = b));
             options.add(getOnOffOption("text.nea.enable.fallingAnimation", () -> NEABaseMod.config.fallingAnimation,
                     b -> NEABaseMod.config.fallingAnimation = b));
             //#if MC < 12109
