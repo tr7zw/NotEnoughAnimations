@@ -14,6 +14,7 @@ import dev.tr7zw.notenoughanimations.animations.fullbody.LadderAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.PassengerAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.BoatAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.CustomBowAnimation;
+// import dev.tr7zw.notenoughanimations.animations.hands.CustomCrossbowAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.EatDrinkAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.HugAnimation;
 import dev.tr7zw.notenoughanimations.animations.hands.ItemSwapAnimation;
@@ -113,6 +114,7 @@ public class AnimationProvider {
         addAnimation(new CustomBowAnimation());
         addAnimation(new ActionRotationLockAnimation());
         addAnimation(new BurningAnimation());
+        // addAnimation(new CustomCrossbowAnimation());
         //#if MC >= 11700
         addAnimation(new FreezingAnimation());
         //#endif

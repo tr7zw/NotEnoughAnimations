@@ -8,6 +8,7 @@ import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.RotationLock;
 import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
+// import dev.tr7zw.notenoughanimations.versionless.animations.CrossbowAnimation;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpTarget;
 import dev.tr7zw.notenoughanimations.versionless.config.Config;
@@ -91,6 +92,10 @@ public class ConfigScreenProvider {
                     () -> NEABaseMod.config.bowAnimation, b -> NEABaseMod.config.bowAnimation = b));
             options.add(getOnOffOption("text.nea.enable.customBowRotationLock",
                     () -> NEABaseMod.config.customBowRotationLock, b -> NEABaseMod.config.customBowRotationLock = b));
+
+            // This stuff is still a WIP, so let's not include it for now.
+            // options.add(getEnumOption("text.nea.enable.crossbowAnimation", CrossbowAnimation.class,
+            //         () -> NEABaseMod.config.crossbowAnimation, b -> NEABaseMod.config.crossbowAnimation = b));
 
             options.add(getOnOffOption("text.nea.enable.burningAnimation", () -> NEABaseMod.config.burningAnimation,
                     b -> NEABaseMod.config.burningAnimation = b));

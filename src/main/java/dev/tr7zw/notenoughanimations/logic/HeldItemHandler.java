@@ -20,6 +20,8 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.ShieldItem;
 
 public class HeldItemHandler {
 
@@ -93,32 +95,59 @@ public class HeldItemHandler {
             }
         }
 
-        if (NEABaseMod.config.enableOffhandHiding && entity instanceof AbstractClientPlayer player) {
-            ArmPose armPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
-            ArmPose armPose2 = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
-            if (!(AnimationUtil.isUsingboothHands(armPose) || AnimationUtil.isUsingboothHands(armPose2)))
+        if (NEABaseMod.config.enableOffhandHiding && entity instanceof AbstractClientPlayer player
+                && !(player.getMainHandItem().getItem() instanceof ShieldItem)) {
+            boolean mainHandProjectileWeapon = player.getMainHandItem().getItem() instanceof ProjectileWeaponItem;
+            boolean offHandProjectileWeapon = player.getOffhandItem().getItem() instanceof ProjectileWeaponItem;
+            if (!mainHandProjectileWeapon) {
+                mainHandProjectileWeapon = NEABaseMod.config.hideItemsForTheseBows
+                        .contains(player.getMainHandItem().getItem().toString());
+            } else if (!offHandProjectileWeapon) {
+                offHandProjectileWeapon = NEABaseMod.config.hideItemsForTheseBows
+                        .contains(player.getOffhandItem().getItem().toString());
+            }
+            boolean projectileWeaponEquipped = mainHandProjectileWeapon || offHandProjectileWeapon;
+            boolean mainHandCharged = AnimationUtil.isChargedCrossbow(player.getMainHandItem());
+            boolean offHandCharged = AnimationUtil.isChargedCrossbow(player.getOffhandItem());
+            boolean isUsingItem = player.isUsingItem();
+
+            ArmPose mainHandPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
+            ArmPose offHandPose = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
+            if (!(AnimationUtil.isUsingBothHands(mainHandPose) || AnimationUtil.isUsingBothHands(offHandPose)
+                    || (projectileWeaponEquipped && (mainHandCharged || offHandCharged || isUsingItem))))
                 return;
-            if (armPose.isTwoHanded()) {
-                armPose2 = player.getOffhandItem().isEmpty() ? ArmPose.EMPTY : ArmPose.ITEM;
+
+            if (mainHandPose.isTwoHanded()) {
+                offHandPose = player.getOffhandItem().isEmpty() ? ArmPose.EMPTY : ArmPose.ITEM;
             }
 
-            if (player.getMainArm() == HumanoidArm.RIGHT) {
-                if (arm == HumanoidArm.RIGHT && AnimationUtil.isUsingboothHands(armPose2)) {
+            HumanoidArm mainArm = HumanoidArm.RIGHT;
+            HumanoidArm offArm = HumanoidArm.LEFT;
+            if (player.getMainArm() == HumanoidArm.LEFT) {
+                mainArm = HumanoidArm.LEFT;
+                offArm = HumanoidArm.RIGHT;
+            }
+            if (arm == mainArm && AnimationUtil.isUsingBothHands(offHandPose)) {
+                info.cancel();
+                return;
+            } else if (arm == offArm && AnimationUtil.isUsingBothHands(mainHandPose)) {
+                info.cancel();
+                return;
+            } else if (projectileWeaponEquipped && (mainHandCharged || offHandCharged || isUsingItem)
+                    && !(AnimationUtil.isUsingBothHands(mainHandPose) || AnimationUtil.isUsingBothHands(offHandPose))) {
+                // Some mods like Archer have non-vanilla friendly animation systems that don't trigger
+                // our both hands check. So, we compromise. If all else fails, we do this hacky mess! - EW
+                // There is an edge case where this triggers even in vanilla. If you are charging a crossbow, and it is
+                // finished charging, but you haven't let go of M1 to change the state to charged, this will trigger.
+                if (arm == mainArm && offHandProjectileWeapon && !mainHandProjectileWeapon) {
                     info.cancel();
                     return;
-                } else if (arm == HumanoidArm.LEFT && AnimationUtil.isUsingboothHands(armPose)) {
-                    info.cancel();
-                    return;
-                }
-            } else {
-                if (arm == HumanoidArm.LEFT && AnimationUtil.isUsingboothHands(armPose2)) {
-                    info.cancel();
-                    return;
-                } else if (arm == HumanoidArm.RIGHT && AnimationUtil.isUsingboothHands(armPose)) {
+                } else if (arm == offArm && mainHandProjectileWeapon) {
                     info.cancel();
                     return;
                 }
             }
+
         }
     }
 

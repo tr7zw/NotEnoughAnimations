@@ -1,32 +1,34 @@
 package dev.tr7zw.notenoughanimations.animations.hands;
 
-import java.util.EnumSet;
-
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
-import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
+import dev.tr7zw.notenoughanimations.versionless.animations.CrossbowAnimation;
 import dev.tr7zw.transition.mc.EntityUtil;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class CustomBowAnimation extends BasicAnimation {
+import java.util.EnumSet;
+
+public class CustomCrossbowAnimation extends BasicAnimation {
 
     @Override
     public boolean isEnabled() {
-        return NEABaseMod.config.bowAnimation == BowAnimation.CUSTOM_V1;
+        return false;
     }
+    // @Override
+    // public boolean isEnabled() { return NEABaseMod.config.crossbowAnimation == CrossbowAnimation.CUSTOM_V1; }
 
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
-    private final EnumSet<ArmPose> twoHandedAnimations = EnumSet.of(ArmPose.BOW_AND_ARROW);
+    private final EnumSet<ArmPose> twoHandedAnimations = EnumSet.of(ArmPose.CROSSBOW_CHARGE, ArmPose.CROSSBOW_HOLD);
     private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY };
 
     @Override
@@ -51,6 +53,8 @@ public class CustomBowAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
+        // System.out.println(rightArmPose);
+        // System.out.println(leftArmPose);
         ModelPart mainArm = model.rightArm;
         ModelPart offArm = model.leftArm;
         BodyPart mainPart = BodyPart.RIGHT_ARM;

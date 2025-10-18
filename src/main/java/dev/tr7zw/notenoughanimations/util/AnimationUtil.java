@@ -20,7 +20,7 @@ public class AnimationUtil {
 
     private static Item crossbow = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "crossbow"));
 
-    public static boolean isUsingboothHands(ArmPose pose) {
+    public static boolean isUsingBothHands(ArmPose pose) {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
     }
 
