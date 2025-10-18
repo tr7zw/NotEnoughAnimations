@@ -6,7 +6,6 @@ import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.versionless.RotationLock;
 import dev.tr7zw.notenoughanimations.versionless.animations.BowAnimation;
-// import dev.tr7zw.notenoughanimations.versionless.animations.CrossbowAnimation;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpTarget;
 
@@ -59,8 +58,8 @@ public class Config {
     public boolean narutoRunning = false;
     public boolean disableLegSmoothing = false;
     public BowAnimation bowAnimation = BowAnimation.VANILLA;
-    // public CrossbowAnimation crossbowAnimation = CrossbowAnimation.VANILLA;
     public boolean customBowRotationLock = false;
+    public boolean clampCrossbowAnimations = false;
     public boolean burningAnimation = true;
     public Set<String> hideItemsForTheseBows = new HashSet<>();
 }

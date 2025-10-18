@@ -102,7 +102,8 @@ public class HeldItemHandler {
             if (!mainHandProjectileWeapon) {
                 mainHandProjectileWeapon = NEABaseMod.config.hideItemsForTheseBows
                         .contains(player.getMainHandItem().getItem().toString());
-            } else if (!offHandProjectileWeapon) {
+            }
+            if (!offHandProjectileWeapon) {
                 offHandProjectileWeapon = NEABaseMod.config.hideItemsForTheseBows
                         .contains(player.getOffhandItem().getItem().toString());
             }
