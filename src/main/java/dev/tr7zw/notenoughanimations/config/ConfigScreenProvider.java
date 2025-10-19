@@ -93,7 +93,8 @@ public class ConfigScreenProvider {
                     () -> NEABaseMod.config.customBowRotationLock, b -> NEABaseMod.config.customBowRotationLock = b));
 
             options.add(getOnOffOption("text.nea.enable.clampCrossbowAnimations",
-                     () -> NEABaseMod.config.clampCrossbowAnimations, b -> NEABaseMod.config.clampCrossbowAnimations = b));
+                    () -> NEABaseMod.config.clampCrossbowAnimations,
+                    b -> NEABaseMod.config.clampCrossbowAnimations = b));
 
             options.add(getOnOffOption("text.nea.enable.burningAnimation", () -> NEABaseMod.config.burningAnimation,
                     b -> NEABaseMod.config.burningAnimation = b));

@@ -10,8 +10,6 @@ import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.versionless.animations.HoldUpModes;
 import dev.tr7zw.transition.mc.EntityUtil;
-import dev.tr7zw.transition.mc.GeneralUtil;
-import dev.tr7zw.transition.mc.ItemUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -33,17 +31,7 @@ public class LookAtItemAnimation extends BasicAnimation {
 
     private void bind() {
         holdingItems.clear();
-        Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
-        for (String itemId : NEABaseMod.config.holdingItems) {
-            try {
-                Item item = ItemUtil
-                        .getItem(GeneralUtil.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
-                if (invalid != item)
-                    holdingItems.add(item);
-            } catch (Exception ex) {
-                NEABaseMod.LOGGER.info("Unknown item to add to the holding list: " + itemId);
-            }
-        }
+        holdingItems.addAll(AnimationUtil.parseItemList(NEABaseMod.config.holdingItems));
     }
 
     @Override

@@ -33,19 +33,9 @@ public class HeldItemHandler {
 
     public void onLoad() {
         hideItemsForTheseBows.clear();
-        Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
-        for (String itemId : NEABaseMod.config.hideItemsForTheseBows) {
-            try {
-                Item item = ItemUtil
-                        .getItem(GeneralUtil.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
-                if (invalid != item)
-                    hideItemsForTheseBows.add(item);
-            } catch (Exception ex) {
-                NEABaseMod.LOGGER.info("Unknown item to add to the bow list: " + itemId);
-            }
-        }
+        hideItemsForTheseBows.addAll(AnimationUtil.parseItemList(NEABaseMod.config.hideItemsForTheseBows));
     }
-    
+
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices,
             //#if MC >= 12109
@@ -119,7 +109,7 @@ public class HeldItemHandler {
             boolean mainHandProjectileWeapon = player.getMainHandItem().getItem() instanceof ProjectileWeaponItem;
             boolean offHandProjectileWeapon = player.getOffhandItem().getItem() instanceof ProjectileWeaponItem;
             if (!mainHandProjectileWeapon) {
-                mainHandProjectileWeapon =hideItemsForTheseBows.contains(player.getMainHandItem().getItem());
+                mainHandProjectileWeapon = hideItemsForTheseBows.contains(player.getMainHandItem().getItem());
             }
             if (!offHandProjectileWeapon) {
                 offHandProjectileWeapon = hideItemsForTheseBows.contains(player.getOffhandItem().getItem());

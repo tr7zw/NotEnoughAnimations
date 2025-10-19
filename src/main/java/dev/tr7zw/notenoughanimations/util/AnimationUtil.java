@@ -1,5 +1,10 @@
 package dev.tr7zw.notenoughanimations.util;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.transition.mc.GeneralUtil;
 import dev.tr7zw.transition.mc.ItemUtil;
@@ -19,6 +24,26 @@ import net.minecraft.world.item.ItemUseAnimation;
 public class AnimationUtil {
 
     private static Item crossbow = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "crossbow"));
+
+    public static Set<Item> parseItemList(Collection<String> list) {
+        Set<Item> items = new HashSet<>();
+        Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
+        for (String itemId : NEABaseMod.config.hideItemsForTheseBows) {
+            try {
+                String[] parts = itemId.split(":");
+                if (parts.length != 2) {
+                    NEABaseMod.LOGGER.info("Invalid item ID format (expected namespace:path): " + itemId);
+                    continue;
+                }
+                Item item = ItemUtil.getItem(GeneralUtil.getResourceLocation(parts[0], parts[1]));
+                if (invalid != item)
+                    items.add(item);
+            } catch (Exception ex) {
+                NEABaseMod.LOGGER.info("Unknown item to add to the bow list: " + itemId);
+            }
+        }
+        return items;
+    }
 
     public static boolean isUsingBothHands(ArmPose pose) {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
