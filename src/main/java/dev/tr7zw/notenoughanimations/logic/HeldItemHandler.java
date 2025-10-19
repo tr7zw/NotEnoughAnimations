@@ -24,6 +24,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ShieldItem;
 
 public class HeldItemHandler {
@@ -118,6 +119,16 @@ public class HeldItemHandler {
             boolean mainHandCharged = AnimationUtil.isChargedCrossbow(player.getMainHandItem());
             boolean offHandCharged = AnimationUtil.isChargedCrossbow(player.getOffhandItem());
             boolean isUsingItem = player.isUsingItem();
+            if (!mainHandCharged && isUsingItem) {
+                mainHandCharged = ((float) (player.getMainHandItem().getUseDuration(player)
+                        - player.getUseItemRemainingTicks())
+                        / (float) CrossbowItem.getChargeDuration(player.getMainHandItem(), player) >= 1.0f);
+            }
+            if (!offHandCharged && isUsingItem) {
+                offHandCharged = ((float) (player.getOffhandItem().getUseDuration(player)
+                        - player.getUseItemRemainingTicks())
+                        / (float) CrossbowItem.getChargeDuration(player.getOffhandItem(), player) >= 1.0f);
+            }
 
             ArmPose mainHandPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
             ArmPose offHandPose = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
@@ -142,11 +153,10 @@ public class HeldItemHandler {
                 info.cancel();
                 return;
             } else if (projectileWeaponEquipped && (mainHandCharged || offHandCharged || isUsingItem)
+                    && !((mainHandCharged || offHandCharged) && isUsingItem) // yay, 1.21.1 is weird!! ~ EW
                     && !(AnimationUtil.isUsingBothHands(mainHandPose) || AnimationUtil.isUsingBothHands(offHandPose))) {
                 // Some mods like Archer have non-vanilla friendly animation systems that don't trigger
                 // our both hands check. So, we compromise. If all else fails, we do this hacky mess! - EW
-                // There is an edge case where this triggers even in vanilla. If you are charging a crossbow, and it is
-                // finished charging, but you haven't let go of M1 to change the state to charged, this will trigger.
                 if (arm == mainArm && offHandProjectileWeapon && !mainHandProjectileWeapon) {
                     info.cancel();
                     return;
