@@ -52,6 +52,7 @@ public abstract class NEAnimationsLoader extends NEABaseMod {
         playerTransformer = new PlayerTransformer();
         heldItemHandler = new HeldItemHandler();
         animationProvider = new AnimationProvider();
+        heldItemHandler.onLoad();
     }
 
     private void lateInit() {

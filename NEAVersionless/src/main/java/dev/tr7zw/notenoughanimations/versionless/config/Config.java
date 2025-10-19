@@ -59,6 +59,7 @@ public class Config {
     public boolean disableLegSmoothing = false;
     public BowAnimation bowAnimation = BowAnimation.VANILLA;
     public boolean customBowRotationLock = false;
+    public boolean clampCrossbowAnimations = false;
     public boolean burningAnimation = true;
-
+    public Set<String> hideItemsForTheseBows = new HashSet<>();
 }
