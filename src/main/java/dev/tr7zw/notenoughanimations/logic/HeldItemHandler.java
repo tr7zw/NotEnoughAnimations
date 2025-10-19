@@ -119,6 +119,7 @@ public class HeldItemHandler {
             boolean mainHandCharged = AnimationUtil.isChargedCrossbow(player.getMainHandItem());
             boolean offHandCharged = AnimationUtil.isChargedCrossbow(player.getOffhandItem());
             boolean isUsingItem = player.isUsingItem();
+            //#if MC >= 12100
             if (!mainHandCharged && isUsingItem) {
                 mainHandCharged = ((float) (player.getMainHandItem().getUseDuration(player)
                         - player.getUseItemRemainingTicks())
@@ -129,6 +130,7 @@ public class HeldItemHandler {
                         - player.getUseItemRemainingTicks())
                         / (float) CrossbowItem.getChargeDuration(player.getOffhandItem(), player) >= 1.0f);
             }
+            //#endif
 
             ArmPose mainHandPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
             ArmPose offHandPose = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
