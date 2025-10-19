@@ -119,18 +119,28 @@ public class HeldItemHandler {
             boolean mainHandCharged = AnimationUtil.isChargedCrossbow(player.getMainHandItem());
             boolean offHandCharged = AnimationUtil.isChargedCrossbow(player.getOffhandItem());
             boolean isUsingItem = player.isUsingItem();
-            //#if MC >= 12100
             if (!mainHandCharged && isUsingItem) {
+                //#if MC >= 12100
                 mainHandCharged = ((float) (player.getMainHandItem().getUseDuration(player)
                         - player.getUseItemRemainingTicks())
                         / (float) CrossbowItem.getChargeDuration(player.getMainHandItem(), player) >= 1.0f);
+                //#else
+                //$$mainHandCharged = ((float) (player.getMainHandItem().getUseDuration()
+                //$$        - player.getUseItemRemainingTicks())
+                //$$        / (float) CrossbowItem.getChargeDuration(player.getMainHandItem()) >= 1.0f);
+                //#endif
             }
             if (!offHandCharged && isUsingItem) {
+                //#if MC >= 12100
                 offHandCharged = ((float) (player.getOffhandItem().getUseDuration(player)
                         - player.getUseItemRemainingTicks())
                         / (float) CrossbowItem.getChargeDuration(player.getOffhandItem(), player) >= 1.0f);
+                //#else
+                //$$offHandCharged = ((float) (player.getOffhandItem().getUseDuration()
+                //$$        - player.getUseItemRemainingTicks())
+                //$$        / (float) CrossbowItem.getChargeDuration(player.getOffhandItem()) >= 1.0f);
+                //#endif
             }
-            //#endif
 
             ArmPose mainHandPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);
             ArmPose offHandPose = AnimationUtil.getArmPose(player, InteractionHand.OFF_HAND);
