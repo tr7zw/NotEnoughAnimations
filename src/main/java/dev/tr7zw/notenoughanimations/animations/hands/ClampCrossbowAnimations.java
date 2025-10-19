@@ -22,7 +22,7 @@ public class ClampCrossbowAnimations extends BasicAnimation {
 
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
-    private final EnumSet<ArmPose> twoHandedAnimations = EnumSet.of(ArmPose.CROSSBOW_HOLD);
+    private final EnumSet<ArmPose> twoHandedAnimations = EnumSet.of(ArmPose.CROSSBOW_HOLD, ArmPose.CROSSBOW_CHARGE);
     private final BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM, BodyPart.BODY };
 
     @Override

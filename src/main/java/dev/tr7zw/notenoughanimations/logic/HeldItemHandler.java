@@ -1,5 +1,8 @@
 package dev.tr7zw.notenoughanimations.logic;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -26,7 +29,23 @@ import net.minecraft.world.item.ShieldItem;
 public class HeldItemHandler {
 
     private Item filledMap = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "filled_map"));
+    private Set<Item> hideItemsForTheseBows = new HashSet<>();
 
+    public void onLoad() {
+        hideItemsForTheseBows.clear();
+        Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
+        for (String itemId : NEABaseMod.config.hideItemsForTheseBows) {
+            try {
+                Item item = ItemUtil
+                        .getItem(GeneralUtil.getResourceLocation(itemId.split(":")[0], itemId.split(":")[1]));
+                if (invalid != item)
+                    hideItemsForTheseBows.add(item);
+            } catch (Exception ex) {
+                NEABaseMod.LOGGER.info("Unknown item to add to the bow list: " + itemId);
+            }
+        }
+    }
+    
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices,
             //#if MC >= 12109
@@ -100,12 +119,10 @@ public class HeldItemHandler {
             boolean mainHandProjectileWeapon = player.getMainHandItem().getItem() instanceof ProjectileWeaponItem;
             boolean offHandProjectileWeapon = player.getOffhandItem().getItem() instanceof ProjectileWeaponItem;
             if (!mainHandProjectileWeapon) {
-                mainHandProjectileWeapon = NEABaseMod.config.hideItemsForTheseBows
-                        .contains(player.getMainHandItem().getItem().toString());
+                mainHandProjectileWeapon =hideItemsForTheseBows.contains(player.getMainHandItem().getItem());
             }
             if (!offHandProjectileWeapon) {
-                offHandProjectileWeapon = NEABaseMod.config.hideItemsForTheseBows
-                        .contains(player.getOffhandItem().getItem().toString());
+                offHandProjectileWeapon = hideItemsForTheseBows.contains(player.getOffhandItem().getItem());
             }
             boolean projectileWeaponEquipped = mainHandProjectileWeapon || offHandProjectileWeapon;
             boolean mainHandCharged = AnimationUtil.isChargedCrossbow(player.getMainHandItem());
