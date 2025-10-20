@@ -39,7 +39,7 @@ public class AnimationUtil {
                 if (invalid != item)
                     items.add(item);
             } catch (Exception ex) {
-                NEABaseMod.LOGGER.info("Unknown item to add to the bow list: " + itemId);
+                NEABaseMod.LOGGER.info("Unknown item to add to the list: " + itemId);
             }
         }
         return items;
