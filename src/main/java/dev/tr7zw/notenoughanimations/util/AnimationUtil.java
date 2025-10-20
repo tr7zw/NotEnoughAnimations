@@ -28,7 +28,7 @@ public class AnimationUtil {
     public static Set<Item> parseItemList(Collection<String> list) {
         Set<Item> items = new HashSet<>();
         Item invalid = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "air"));
-        for (String itemId : NEABaseMod.config.hideItemsForTheseBows) {
+        for (String itemId : list) {
             try {
                 String[] parts = itemId.split(":");
                 if (parts.length != 2) {
