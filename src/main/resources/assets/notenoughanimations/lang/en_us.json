@@ -49,6 +49,7 @@
     "text.nea.holdUpItemsMode.ALL": "All Items",
     "text.nea.holdUpItemsMode.NONE": "No Items",
     "text.nea.holdUpItemsMode.CONFIG": "Only Config Items",
+    "text.nea.holdUpItemsMode.CONFIG_INVERTED": "Not Config Items",
     "text.nea.holdUpItemOffset": "Holding Up Offset",
     "text.nea.holdUpItemOffset.tooltip": "Modify how much the item is held up",
     "text.nea.ladderAnimationAmplifier": "Ladder Arm Amplifier",

@@ -44,10 +44,18 @@ public class LookAtItemAnimation extends BasicAnimation {
                 entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         ItemStack itemInLeftHand = entity.getItemInHand(
                 entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        boolean rightArm = holdingItems.contains(itemInRightHand.getItem()) || (allItems && !itemInRightHand.isEmpty()
-                && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
-        boolean leftArm = holdingItems.contains(itemInLeftHand.getItem()) || (allItems && !itemInLeftHand.isEmpty()
-                && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
+        boolean rightArm = (NEABaseMod.config.holdUpItemsMode == HoldUpModes.CONFIG
+                && holdingItems.contains(itemInRightHand.getItem()))
+                || (NEABaseMod.config.holdUpItemsMode == HoldUpModes.CONFIG_INVERTED
+                        && !holdingItems.contains(itemInRightHand.getItem()))
+                || (allItems && !itemInRightHand.isEmpty()
+                        && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
+        boolean leftArm = (NEABaseMod.config.holdUpItemsMode == HoldUpModes.CONFIG
+                && holdingItems.contains(itemInLeftHand.getItem()))
+                || (NEABaseMod.config.holdUpItemsMode == HoldUpModes.CONFIG_INVERTED
+                        && !holdingItems.contains(itemInLeftHand.getItem()))
+                || (allItems && !itemInLeftHand.isEmpty()
+                        && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
         if (rightArm && leftArm && !entity.swinging) { // can't be both hands while swinging
             target = bothHands;
             return true;
