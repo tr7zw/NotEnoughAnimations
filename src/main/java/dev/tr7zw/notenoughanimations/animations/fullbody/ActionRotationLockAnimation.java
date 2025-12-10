@@ -6,7 +6,6 @@ import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.world.item.ItemUseAnimation;
 
 public class ActionRotationLockAnimation extends BasicAnimation {
 
@@ -20,10 +19,10 @@ public class ActionRotationLockAnimation extends BasicAnimation {
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         if (entity.getUseItemRemainingTicks() > 0) {
-            ItemUseAnimation action = entity.getUseItem().getUseAnimation();
+            var action = entity.getUseItem().getUseAnimation();
             // Eating/Drinking
-            if (action == ItemUseAnimation.EAT || action == ItemUseAnimation.DRINK
-                    || action == ItemUseAnimation.BLOCK) {
+            // funky way of accessing the enum because it got renamed between versions
+            if (action == action.EAT || action == action.DRINK || action == action.BLOCK) {
                 return true;
             }
         }

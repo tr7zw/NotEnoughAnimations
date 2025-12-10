@@ -53,15 +53,17 @@ public class CrawlingAnimation extends BasicAnimation {
     @Override
     protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel model, float delta,
             float swing) {
-        //#if MC >= 12102
+        //? if >= 1.21.2 {
+
         RenderStateHolder.RenderStateData stateData = data.getData(RenderStateHolder.INSTANCE,
                 RenderStateHolder.RenderStateData::new);
         swimAmount = stateData.renderState.swimAmount;
         attackTime = stateData.renderState.attackTime;
-        //#else
-        //$$swimAmount = model.swimAmount;
-        //$$attackTime = model.attackTime;
-        //#endif
+        //? } else {
+        /*
+         swimAmount = model.swimAmount;
+         attackTime = model.attackTime;
+        *///? }
         if (swimAmount > 0.0F) {
             animationStep = swing * speedMul % 26.0F;
             animationStep2 = animationStep + 13F;

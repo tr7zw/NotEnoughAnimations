@@ -1,4 +1,5 @@
-//#if MC >= 11700
+//? if >= 1.17.0 {
+
 package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
@@ -6,6 +7,7 @@ import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
+import dev.tr7zw.transition.mc.*;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.HumanoidArm;
@@ -20,13 +22,16 @@ public class FreezingAnimation extends BasicAnimation {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        //#if MC >= 11800
-        return entity.canFreeze() && entity.level().getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
-                //#else
-                //$$ return entity.canFreeze() && entity.level.getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
-                //#endif
-                .anyMatch(blockState -> (blockState.is(Blocks.POWDER_SNOW)
-                        || blockState.is(Blocks.POWDER_SNOW_CAULDRON)));
+        //? if >= 1.18.0 {
+
+        return entity.canFreeze()
+                && GeneralUtil.getWorld().getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
+                        //? } else {
+
+                        // return entity.canFreeze() && entity.level.getBlockStatesIfLoaded(entity.getBoundingBox().deflate(1.0E-6D))
+                        //? }
+                        .anyMatch(blockState -> (blockState.is(Blocks.POWDER_SNOW)
+                                || blockState.is(Blocks.POWDER_SNOW_CAULDRON)));
     }
 
     private BodyPart[] parts = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.RIGHT_ARM };
@@ -56,4 +61,4 @@ public class FreezingAnimation extends BasicAnimation {
     }
 
 }
-//#endif
+//? }

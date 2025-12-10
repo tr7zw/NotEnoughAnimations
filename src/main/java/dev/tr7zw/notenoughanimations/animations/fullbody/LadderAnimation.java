@@ -7,10 +7,10 @@ import java.util.Set;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.api.PoseOverwrite;
-import dev.tr7zw.notenoughanimations.util.AnimationUtil;
-import dev.tr7zw.notenoughanimations.util.RenderStateHolder;
+import dev.tr7zw.notenoughanimations.util.*;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
+import dev.tr7zw.transition.mc.*;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Direction;
@@ -32,14 +32,16 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        if (entity.onClimbable() && !entity.onGround() && entity.getLastClimbablePos().isPresent()) {
+        if (entity.onClimbable() && !NMSWrapper.onGround(entity) && entity.getLastClimbablePos().isPresent()) {
             for (Class<? extends Block> blocktype : ladderLikeBlocks) {
                 if (blocktype.isAssignableFrom(
-                        //#if MC >= 11800
-                        entity.level().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
-                    //#else
-                    //$$ entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
-                    //#endif
+                        //? if >= 1.18.0 {
+
+                        GeneralUtil.getWorld().getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+                    //? } else {
+
+                    // entity.level.getBlockState(entity.getLastClimbablePos().get()).getBlock().getClass()))
+                    //? }
 
                     return true;
             }
@@ -85,11 +87,13 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         }
         if (part == BodyPart.BODY) {
             if (NEABaseMod.config.enableRotateToLadder) {
-                //#if MC >= 12005
+                //? if >= 1.20.5 {
+
                 BlockState blockState = entity.getInBlockState();
-                //#else
-                //$$ BlockState blockState = entity.getFeetBlockState();
-                //#endif
+                //? } else {
+                /*
+                 BlockState blockState = entity.getFeetBlockState();
+                *///? }
                 if (blockState.hasProperty(HorizontalDirectionalBlock.FACING)) {
                     Direction dir = blockState.getValue(HorizontalDirectionalBlock.FACING);
                     data.setDisableBodyRotation(true);
@@ -140,13 +144,15 @@ public class LadderAnimation extends BasicAnimation implements PoseOverwrite {
         if (entity.isCrouching() && isValid(entity, data)) {
             data.setPoseOverwrite(entity.getPose());
             entity.setPose(Pose.STANDING);
-            //#if MC >= 12102
+            //? if >= 1.21.2 {
+
             RenderStateHolder.RenderStateData stateData = data.getData(RenderStateHolder.INSTANCE,
                     RenderStateHolder.RenderStateData::new);
             stateData.renderState.isCrouching = false;
-            //#else
-            //$$playerModel.crouching = false;
-            //#endif
+            //? } else {
+            /*
+             playerModel.crouching = false;
+            *///? }
         }
     }
 

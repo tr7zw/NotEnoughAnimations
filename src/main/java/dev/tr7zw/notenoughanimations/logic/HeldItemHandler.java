@@ -39,12 +39,14 @@ public class HeldItemHandler {
 
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
             PoseStack matrices,
-            //#if MC >= 12109
+            //? if >= 1.21.9 {
+
             net.minecraft.client.renderer.SubmitNodeCollector vertexConsumers,
             net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
-            //#else
-            //$$net.minecraft.client.renderer.MultiBufferSource vertexConsumers, 
-            //#endif
+            //? } else {
+            /*
+                     net.minecraft.client.renderer.MultiBufferSource vertexConsumers, 
+                    *///? }
             int light, CallbackInfo info) {
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
             if (NEABaseMod.config.dontHoldItemsInBed) {
@@ -67,11 +69,13 @@ public class HeldItemHandler {
                                                                                                               // the
                                                                                                               // offhand
                         matrices.pushPose();
-                        //#if MC >= 12109
+                        //? if >= 1.21.9 {
+
                         armedModel.translateToHand(livingEntityRenderState, arm, matrices);
-                        //#else
-                        //$$armedModel.translateToHand(arm, matrices);
-                        //#endif
+                        //? } else {
+                        /*
+                         armedModel.translateToHand(arm, matrices);
+                        *///? }
                         matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(MathUtil.YP.rotationDegrees(205.0f));
                         matrices.mulPose(MathUtil.ZP.rotationDegrees(10.0f));
@@ -87,11 +91,13 @@ public class HeldItemHandler {
                     if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only
                                                                                                              // offhand
                         matrices.pushPose();
-                        //#if MC >= 12109
+                        //? if >= 1.21.9 {
+
                         armedModel.translateToHand(livingEntityRenderState, arm, matrices);
-                        //#else
-                        //$$armedModel.translateToHand(arm, matrices);
-                        //#endif
+                        //? } else {
+                        /*
+                         armedModel.translateToHand(arm, matrices);
+                        *///? }
                         matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(MathUtil.YP.rotationDegrees(200.0f));
                         boolean bl = arm == HumanoidArm.LEFT;
@@ -120,26 +126,30 @@ public class HeldItemHandler {
             boolean offHandCharged = AnimationUtil.isChargedCrossbow(player.getOffhandItem());
             boolean isUsingItem = player.isUsingItem();
             if (!mainHandCharged && isUsingItem) {
-                //#if MC >= 12100
+                //? if >= 1.21.0 {
+
                 mainHandCharged = ((float) (player.getMainHandItem().getUseDuration(player)
                         - player.getUseItemRemainingTicks())
                         / (float) CrossbowItem.getChargeDuration(player.getMainHandItem(), player) >= 1.0f);
-                //#else
-                //$$mainHandCharged = ((float) (player.getMainHandItem().getUseDuration()
-                //$$        - player.getUseItemRemainingTicks())
-                //$$        / (float) CrossbowItem.getChargeDuration(player.getMainHandItem()) >= 1.0f);
-                //#endif
+                //? } else {
+                /*
+                 mainHandCharged = ((float) (player.getMainHandItem().getUseDuration()
+                        - player.getUseItemRemainingTicks())
+                        / (float) CrossbowItem.getChargeDuration(player.getMainHandItem()) >= 1.0f);
+                *///? }
             }
             if (!offHandCharged && isUsingItem) {
-                //#if MC >= 12100
+                //? if >= 1.21.0 {
+
                 offHandCharged = ((float) (player.getOffhandItem().getUseDuration(player)
                         - player.getUseItemRemainingTicks())
                         / (float) CrossbowItem.getChargeDuration(player.getOffhandItem(), player) >= 1.0f);
-                //#else
-                //$$offHandCharged = ((float) (player.getOffhandItem().getUseDuration()
-                //$$        - player.getUseItemRemainingTicks())
-                //$$        / (float) CrossbowItem.getChargeDuration(player.getOffhandItem()) >= 1.0f);
-                //#endif
+                //? } else {
+                /*
+                 offHandCharged = ((float) (player.getOffhandItem().getUseDuration()
+                        - player.getUseItemRemainingTicks())
+                        / (float) CrossbowItem.getChargeDuration(player.getOffhandItem()) >= 1.0f);
+                *///? }
             }
 
             ArmPose mainHandPose = AnimationUtil.getArmPose(player, InteractionHand.MAIN_HAND);

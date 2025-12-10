@@ -19,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseAnimation;
 
 public class AnimationUtil {
 
@@ -39,7 +38,7 @@ public class AnimationUtil {
                 if (invalid != item)
                     items.add(item);
             } catch (Exception ex) {
-                NEABaseMod.LOGGER.info("Unknown item to add to the bow list: " + itemId);
+                NEABaseMod.LOGGER.info("Unknown item to add to the list: " + itemId);
             }
         }
         return items;
@@ -69,27 +68,28 @@ public class AnimationUtil {
         } else {
             if (abstractClientPlayerEntity.getUsedItemHand() == hand
                     && abstractClientPlayerEntity.getUseItemRemainingTicks() > 0) {
-                ItemUseAnimation useAction = itemStack.getUseAnimation();
-                if (useAction == ItemUseAnimation.BLOCK) {
+                var useAction = itemStack.getUseAnimation();
+                // funky way of accessing the enum because it got renamed between versions
+                if (useAction == useAction.BLOCK) {
                     return ArmPose.BLOCK;
                 }
 
-                if (useAction == ItemUseAnimation.BOW) {
+                if (useAction == useAction.BOW) {
                     return ArmPose.BOW_AND_ARROW;
                 }
 
-                if (useAction == ItemUseAnimation.SPEAR) {
+                if (useAction == useAction.SPEAR) {
                     return ArmPose.THROW_SPEAR;
                 }
 
-                //#if MC >= 11700
-                if (useAction == ItemUseAnimation.SPYGLASS) {
+                //? if >= 1.17.0 {
+
+                if (useAction == useAction.SPYGLASS) {
                     return ArmPose.SPYGLASS;
                 }
-                //#endif
+                //? }
 
-                if (useAction == ItemUseAnimation.CROSSBOW
-                        && hand.equals(abstractClientPlayerEntity.getUsedItemHand())) {
+                if (useAction == useAction.CROSSBOW && hand.equals(abstractClientPlayerEntity.getUsedItemHand())) {
                     return ArmPose.CROSSBOW_CHARGE;
                 }
             } else if (!abstractClientPlayerEntity.swinging && itemStack.getItem().equals(crossbow)
@@ -157,9 +157,10 @@ public class AnimationUtil {
 
     public static void setHeadYRot(PlayerModel model, float value) {
         model.head.yRot = value;
-        //#if MC < 12103
-        //$$ model.hat.yRot = value;
-        //#endif
+        //? if < 1.21.3 {
+        /*
+         model.hat.yRot = value;
+        *///? }
     }
 
     public static float interpolateRotation(float start, float end, float amount) {

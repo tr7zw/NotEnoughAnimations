@@ -20,36 +20,43 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-//#if MC < 12109
-//$$import net.minecraft.client.renderer.MultiBufferSource;
-//$$import net.minecraft.client.model.PlayerModel;
-//$$import net.minecraft.client.Minecraft;
-//#if MC >= 11904
-//$$import net.minecraft.world.item.ItemDisplayContext;
-//#else
-//$$ import net.minecraft.client.renderer.block.model.ItemTransforms;
-//#endif
-//#endif
+//? if < 1.21.9 {
+/*
+ import net.minecraft.client.renderer.MultiBufferSource;
+ import net.minecraft.client.model.PlayerModel;
+ import net.minecraft.client.Minecraft;
+ //? if >= 1.19.4 {
+
+  import net.minecraft.world.item.ItemDisplayContext;
+ //? } else {
+/^
+  import net.minecraft.client.renderer.block.model.ItemTransforms;
+ ^///? }
+*///? }
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-//#if MC >= 12102
+//? if >= 1.21.2 {
+
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 
 public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidModel<HumanoidRenderState>> {
-    //#else
-    //$$public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    //#endif
+    //? } else {
+    /*
+     public class SwordRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+    *///? }
 
-    //#if MC >= 12102
+    //? if >= 1.21.2 {
+
     public SwordRenderLayer(RenderLayerParent<HumanoidRenderState, HumanoidModel<HumanoidRenderState>> renderer) {
         super(renderer);
     }
-    //#else
-    //$$public SwordRenderLayer(
-    //$$        RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
-    //$$    super(renderLayerParent);
-    //$$}
-    //#endif
+    //? } else {
+    /*
+     public SwordRenderLayer(
+            RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent) {
+        super(renderLayerParent);
+     }
+    *///? }
 
     private boolean lazyInit = true;
     private static Set<Item> items = new HashSet<>();
@@ -66,25 +73,29 @@ public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidM
     }
 
     @Override
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     public void submit(PoseStack poseStack, net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector,
             int i, HumanoidRenderState entityRenderState, float f, float g) {
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
                 .getEntity();
-        //#elseif MC >= 12102
-        //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
-        //$$        HumanoidRenderState entityRenderState, float f, float g) {
-        //$$    AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
-        //$$            .getEntity();
-        //#elseif MC >= 11904
-        //$$public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
-        //$$        float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
-        //$$        float paramFloat6) {
-        //#else
-        //$$     public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
-        //$$     AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
-        //$$    float paramFloat5, float paramFloat6) {
-        //#endif
+        //? } else if >= 1.21.2 {
+/*
+         public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
+                HumanoidRenderState entityRenderState, float f, float g) {
+            AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
+                    .getEntity();
+        *///? } else if >= 1.19.4 {
+/*
+         public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
+                float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
+                float paramFloat6) {
+        *///? } else {
+        /*
+             public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
+             AbstractClientPlayer player, float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4,
+            float paramFloat5, float paramFloat6) {
+        *///? }
         if (disabled || player == null) {
             return;
         }
@@ -127,24 +138,27 @@ public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidM
         poseStack.mulPose(MathUtil.XP.rotationDegrees(swordRotation));
         poseStack.mulPose(MathUtil.YP.rotationDegrees(180.0F));
 
-        //#if MC >= 12109
-        //itemStackRenderState.submit(poseStack, submitNodeCollector, i, OverlayTexture.NO_OVERLAY,
-        //        armedEntityRenderState.outlineColor);
-        //#elseif MC >= 12105
-        //$$Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
-        //$$        lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
-        //$$        poseStack, multiBufferSource, light);
-        //#elseif MC >= 11904
-        //$$ Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
-        //$$         lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
-        //$$        lefthanded, poseStack, multiBufferSource, light);
-        //#elseif MC >= 11900
-        //$$     Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
-        //$$     poseStack, multiBufferSource, light);
-        //#else
-        //$$ Minecraft.getInstance().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
-        //$$  poseStack, multiBufferSource, light);
-        //#endif
+        //? if >= 1.21.9 {
+
+        //? } else if >= 1.21.5 {
+/*
+         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
+                lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+                poseStack, multiBufferSource, light);
+        *///? } else if >= 1.19.4 {
+/*
+         Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
+                 lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+                lefthanded, poseStack, multiBufferSource, light);
+        *///? } else if >= 1.19.0 {
+
+        //     Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
+        //     poseStack, multiBufferSource, light);
+        //? } else {
+        /*
+         Minecraft.getInstance().getItemInHandRenderer().renderItem(player, itemStack, lefthanded ? ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND : ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND, lefthanded,
+          poseStack, multiBufferSource, light);
+        *///? }
         poseStack.popPose();
     }
 

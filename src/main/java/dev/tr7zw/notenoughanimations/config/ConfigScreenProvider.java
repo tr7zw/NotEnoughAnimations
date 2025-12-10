@@ -159,10 +159,11 @@ public class ConfigScreenProvider {
             options.add(getSplitLine("text.nea.line.legacy"));
             options.add(getOnOffOption("text.nea.enable.fallingAnimation", () -> NEABaseMod.config.fallingAnimation,
                     b -> NEABaseMod.config.fallingAnimation = b));
-            //#if MC < 12109
-            //$$options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> NEABaseMod.config.showLastUsedSword,
-            //$$        b -> NEABaseMod.config.showLastUsedSword = b));
-            //#endif
+            //? if < 1.21.9 {
+            /*
+             options.add(getOnOffOption("text.nea.enable.showlastusedsword", () -> NEABaseMod.config.showLastUsedSword,
+                    b -> NEABaseMod.config.showLastUsedSword = b));
+            *///? }
 
             var optionList = createOptionList(options);
             optionList.setGap(-1);

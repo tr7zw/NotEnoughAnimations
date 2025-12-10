@@ -1,13 +1,15 @@
 package dev.tr7zw.notenoughanimations;
 
 public class NEAnimationsMod extends NEAnimationsLoader
-        //#if FABRIC
+        //? if fabric {
+
         implements net.fabricmc.api.ClientModInitializer
-//#endif
+//? }
 {
-    //#if FABRIC
+    //? if fabric {
+
     @Override
-    //#endif
+    //? }
     public void onInitializeClient() {
         onEnable();
     }

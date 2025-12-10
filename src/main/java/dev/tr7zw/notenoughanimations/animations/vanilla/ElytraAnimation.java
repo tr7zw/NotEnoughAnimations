@@ -70,13 +70,15 @@ public class ElytraAnimation extends BasicAnimation implements PoseOverwrite {
     @Override
     public void updateState(AbstractClientPlayer entity, PlayerData data, PlayerModel playerModel) {
         if (isValid(entity, data)) {
-            //#if MC >= 12102
+            //? if >= 1.21.2 {
+
             RenderStateHolder.RenderStateData stateData = data.getData(RenderStateHolder.INSTANCE,
                     RenderStateHolder.RenderStateData::new);
             stateData.renderState.isCrouching = false;
-            //#else
-            //$$playerModel.crouching = false;
-            //#endif
+            //? } else {
+            /*
+             playerModel.crouching = false;
+            *///? }
         }
     }
 

@@ -12,55 +12,68 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-//#if MC >= 12102
-import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-//#endif
-//#if MC >= 11700
-import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-//#else
-//$$ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-//#endif
+//? if >= 1.21.2 {
 
-//#if MC >= 12109
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+//? }
+//? if >= 1.17.0 {
+
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+//? } else {
+
+// import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+//? }
+
+//? if >= 1.21.9 {
+
 @Mixin(net.minecraft.client.renderer.entity.player.AvatarRenderer.class)
-//#else
-//$$@Mixin(net.minecraft.client.renderer.entity.player.PlayerRenderer.class)
-//#endif
-//#if MC >= 12102
+//? } else {
+/*
+ @Mixin(net.minecraft.client.renderer.entity.player.PlayerRenderer.class)
+*///? }
+   //? if >= 1.21.2 {
+
 public abstract class PlayerRendererMixin
         extends LivingEntityRenderer<AbstractClientPlayer, HumanoidRenderState, HumanoidModel<HumanoidRenderState>> {
-    //#else
-    //$$public abstract class PlayerRendererMixin
-    //$$        extends LivingEntityRenderer<AbstractClientPlayer, net.minecraft.client.model.PlayerModel<AbstractClientPlayer>> {
-    //#endif
+    //? } else {
+    /*
+     public abstract class PlayerRendererMixin
+            extends LivingEntityRenderer<AbstractClientPlayer, net.minecraft.client.model.PlayerModel<AbstractClientPlayer>> {
+    *///? }
 
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     public PlayerRendererMixin(Context context, HumanoidModel<HumanoidRenderState> model, float shadowRadius) {
         super(context, model, shadowRadius);
     }
-    //#elseif MC >= 12102
-    //$$public PlayerRendererMixin(Context context, net.minecraft.client.model.HumanoidModel model, float shadowRadius) {
-    //$$    super(context, model, shadowRadius);
-    //$$}
-    //#elseif MC >= 11700
-    //$$public PlayerRendererMixin(Context context, net.minecraft.client.model.PlayerModel<AbstractClientPlayer> entityModel, float f) {
-    //$$    super(context, entityModel, f);
-    //$$}
-    //#else
-    //$$     public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher,
-    //$$    net.minecraft.client.model.PlayerModel<AbstractClientPlayer> entityModel, float f) {
-    //$$    super(entityRenderDispatcher, entityModel, f);
-    //$$    }
-    //#endif
+    //? } else if >= 1.21.2 {
+/*
+     public PlayerRendererMixin(Context context, net.minecraft.client.model.HumanoidModel model, float shadowRadius) {
+        super(context, model, shadowRadius);
+     }
+    *///? } else if >= 1.17.0 {
+    /*
+     public PlayerRendererMixin(Context context, net.minecraft.client.model.PlayerModel<AbstractClientPlayer> entityModel, float f) {
+        super(context, entityModel, f);
+     }
+    *///? } else {
+
+    //     public PlayerRendererMixin(EntityRenderDispatcher entityRenderDispatcher,
+    //    net.minecraft.client.model.PlayerModel<AbstractClientPlayer> entityModel, float f) {
+    //    super(entityRenderDispatcher, entityModel, f);
+    //    }
+    //? }
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     public void onCreate(CallbackInfo info) {
-        //#if MC < 12109
-        //$$this.addLayer(new SwordRenderLayer(this));
-        //#endif
+        //? if < 1.21.9 {
+        /*
+         this.addLayer(new SwordRenderLayer(this));
+        *///? }
     }
 
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     @Inject(method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("HEAD"))
     private void includeData(net.minecraft.world.entity.Avatar abstractClientPlayer,
             net.minecraft.client.renderer.entity.state.AvatarRenderState playerRenderState, float f, CallbackInfo ci) {
@@ -70,16 +83,17 @@ public abstract class PlayerRendererMixin
             data.renderState = playerRenderState;
         }
     }
-    //#elseif MC >= 12102
-    //$$@Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V", at = @At("HEAD"))
-    //$$private void includeData(AbstractClientPlayer abstractClientPlayer, net.minecraft.client.renderer.entity.state.PlayerRenderState playerRenderState, float f,
-    //$$        CallbackInfo ci) {
-    //$$    if (abstractClientPlayer instanceof PlayerData playerData) {
-    //$$        RenderStateHolder.RenderStateData data = playerData.getData(RenderStateHolder.INSTANCE,
-    //$$                RenderStateHolder.RenderStateData::new);
-    //$$        data.renderState = playerRenderState;
-    //$$    }
-    //$$}
-    //#endif
+    //? } else if >= 1.21.2 {
+/*
+     @Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V", at = @At("HEAD"))
+     private void includeData(AbstractClientPlayer abstractClientPlayer, net.minecraft.client.renderer.entity.state.PlayerRenderState playerRenderState, float f,
+            CallbackInfo ci) {
+        if (abstractClientPlayer instanceof PlayerData playerData) {
+            RenderStateHolder.RenderStateData data = playerData.getData(RenderStateHolder.INSTANCE,
+                    RenderStateHolder.RenderStateData::new);
+            data.renderState = playerRenderState;
+        }
+     }
+    *///? }
 
 }

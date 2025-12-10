@@ -1,4 +1,5 @@
-//#if FABRIC
+//? if fabric {
+
 package dev.tr7zw.notenoughanimations;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
@@ -16,4 +17,4 @@ public class NEAModMenu implements ModMenuApi {
     }
 
 }
-//#endif
+//? }

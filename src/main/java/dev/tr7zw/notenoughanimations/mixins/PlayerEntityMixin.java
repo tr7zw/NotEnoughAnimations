@@ -57,9 +57,10 @@ public class PlayerEntityMixin implements PlayerData {
     }
 
     private void updateRenderLayerItems() {
-        //#if MC < 12109
-        //$$dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer.update((Player) (Object) this);
-        //#endif
+        //? if < 1.21.9 {
+        /*
+         dev.tr7zw.notenoughanimations.renderlayer.SwordRenderLayer.update((Player) (Object) this);
+        *///? }
     }
 
     @Override

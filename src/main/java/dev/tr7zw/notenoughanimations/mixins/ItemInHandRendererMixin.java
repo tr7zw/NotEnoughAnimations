@@ -15,26 +15,30 @@ import net.minecraft.world.entity.HumanoidArm;
 public class ItemInHandRendererMixin {
 
     @Inject(method = "renderPlayerArm", at = @At("HEAD"))
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     private void renderPlayerArm(PoseStack poseStack,
             net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector, int i, float f, float g,
             HumanoidArm humanoidArm, CallbackInfo info) {
-        //#else
-        //$$private void renderPlayerArm(PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, int packedLight,
-        //$$        float equippedProgress, float swingProgress, net.minecraft.world.entity.HumanoidArm humanoidArm, CallbackInfo info) {
-        //#endif
+        //? } else {
+        /*
+         private void renderPlayerArm(PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, int packedLight,
+                float equippedProgress, float swingProgress, net.minecraft.world.entity.HumanoidArm humanoidArm, CallbackInfo info) {
+        *///? }
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(true);
     }
 
     @Inject(method = "renderPlayerArm", at = @At("RETURN"))
-    //#if MC >= 12109
+    //? if >= 1.21.9 {
+
     private void renderPlayerArmEnd(PoseStack poseStack,
             net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector, int i, float f, float g,
             HumanoidArm humanoidArm, CallbackInfo info) {
-        //#else
-        //$$private void renderPlayerArmEnd(PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, int packedLight,
-        //$$        float equippedProgress, float swingProgress, net.minecraft.world.entity.HumanoidArm humanoidArm, CallbackInfo info) {
-        //#endif
+        //? } else {
+        /*
+         private void renderPlayerArmEnd(PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, int packedLight,
+                float equippedProgress, float swingProgress, net.minecraft.world.entity.HumanoidArm humanoidArm, CallbackInfo info) {
+        *///? }
         NEAnimationsLoader.INSTANCE.playerTransformer.renderingFirstPersonArm(false);
     }
 

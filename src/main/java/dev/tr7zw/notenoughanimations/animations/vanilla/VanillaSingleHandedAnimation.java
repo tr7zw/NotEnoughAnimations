@@ -21,11 +21,13 @@ public class VanillaSingleHandedAnimation extends BasicAnimation {
 
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
-    //#if MC >= 11700
+    //? if >= 1.17.0 {
+
     private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_SPEAR);
-    //#else
-    //$$ private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.THROW_SPEAR);
-    //#endif
+    //? } else {
+
+    // private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.THROW_SPEAR);
+    //? }
     private final BodyPart[] left = new BodyPart[] { BodyPart.LEFT_ARM, BodyPart.BODY };
     private final BodyPart[] right = new BodyPart[] { BodyPart.RIGHT_ARM, BodyPart.BODY };
 

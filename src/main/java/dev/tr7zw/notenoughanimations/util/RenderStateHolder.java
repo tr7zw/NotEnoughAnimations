@@ -7,10 +7,12 @@ public class RenderStateHolder implements DataHolder<RenderStateHolder.RenderSta
     public static final RenderStateHolder INSTANCE = new RenderStateHolder();
 
     public static class RenderStateData {
-        //#if MC >= 12109
+        //? if >= 1.21.9 {
+
         public net.minecraft.client.renderer.entity.state.AvatarRenderState renderState;
-        //#elseif MC >= 12102
-        //$$public net.minecraft.client.renderer.entity.state.PlayerRenderState renderState;
-        //#endif
+        //? } else if >= 1.21.2 {
+/*
+         public net.minecraft.client.renderer.entity.state.PlayerRenderState renderState;
+        *///? }
     }
 }

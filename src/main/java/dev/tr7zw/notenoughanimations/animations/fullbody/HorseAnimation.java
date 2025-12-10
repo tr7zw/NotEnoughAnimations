@@ -60,11 +60,13 @@ public class HorseAnimation extends BasicAnimation {
                     AnimationUtil.applyTransforms(model, part, -0.2f, 0f, 0.8f);
                 }
             } else {
-                //#if MC >= 11904
+                //? if >= 1.19.4 {
+
                 float rotation = -Mth.cos(horse.walkAnimation.position() * 0.3f);
-                //#else
-                //$$ float rotation = -Mth.cos(horse.animationPosition * 0.3f);
-                //#endif
+                //? } else {
+                /*
+                 float rotation = -Mth.cos(horse.animationPosition * 0.3f);
+                *///? }
                 rotation *= 0.1;
                 AnimationUtil.applyArmTransforms(model, arm, -1.1f - rotation, -0.2f, 0.3f);
             }

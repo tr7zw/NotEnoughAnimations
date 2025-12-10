@@ -2,6 +2,7 @@ package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
+import dev.tr7zw.notenoughanimations.util.*;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
@@ -20,11 +21,14 @@ public class FallingAnimation extends BasicAnimation
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
-        //#if MC >= 11700
-        if (!entity.isFallFlying() && !entity.onGround() && !entity.onClimbable() && !entity.getAbilities().flying
-        //#else
-        //$$ if (!entity.isFallFlying() && !entity.isOnGround() && !entity.onClimbable() && !entity.abilities.flying
-        //#endif
+        //? if >= 1.17.0 {
+
+        if (!entity.isFallFlying() && !NMSWrapper.onGround(entity) && !entity.onClimbable()
+                && !entity.getAbilities().flying
+                //? } else {
+
+                // if (!entity.isFallFlying() && !entity.isOnGround() && !entity.onClimbable() && !entity.abilities.flying
+                //? }
                 && !entity.isSwimming()) {
             FallingData fallData = data.getData(this, () -> new FallingData(entity.getY()));
             if (entity instanceof LocalPlayer) {

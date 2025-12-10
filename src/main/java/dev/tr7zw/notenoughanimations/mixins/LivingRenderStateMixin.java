@@ -5,7 +5,8 @@ import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-//#if MC >= 12102
+//? if >= 1.21.2 {
+
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 @Mixin(LivingEntityRenderState.class)
@@ -24,8 +25,9 @@ public class LivingRenderStateMixin implements ExtendedLivingRenderState {
         return entity;
     }
 }
-//#else
-//$$import net.minecraft.client.Minecraft;
-//$$@Mixin(Minecraft.class)
-//$$public class LivingRenderStateMixin {}
-//#endif
+//? } else {
+/*
+ import net.minecraft.client.Minecraft;
+ @Mixin(Minecraft.class)
+ public class LivingRenderStateMixin {}
+*///? }

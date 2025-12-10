@@ -29,11 +29,13 @@ public class MixinTests {
         objenesis.newInstance(LevelRenderer.class);
         objenesis.newInstance(RemotePlayer.class);
         objenesis.newInstance(PlayerModel.class);
-        //#if MC >= 12109
+        //? if >= 1.21.9 {
+
         objenesis.newInstance(net.minecraft.client.renderer.entity.player.AvatarRenderer.class);
-        //#else
-        //$$objenesis.newInstance(net.minecraft.client.renderer.entity.player.PlayerRenderer.class);
-        //#endif
+        //? } else {
+        /*
+         objenesis.newInstance(net.minecraft.client.renderer.entity.player.PlayerRenderer.class);
+        *///? }
         objenesis.newInstance(LevelRenderer.class);
     }
 

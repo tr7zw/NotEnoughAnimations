@@ -11,7 +11,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.item.ItemUseAnimation;
 
 public class EatDrinkAnimation extends BasicAnimation {
 
@@ -27,9 +26,10 @@ public class EatDrinkAnimation extends BasicAnimation {
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         if (entity.getUseItemRemainingTicks() > 0) {
-            ItemUseAnimation action = entity.getUseItem().getUseAnimation();
+            var action = entity.getUseItem().getUseAnimation();
             // Eating/Drinking
-            if (action == ItemUseAnimation.EAT || action == ItemUseAnimation.DRINK) {
+            // funky way of accessing the enum because it got renamed between versions
+            if (action == action.EAT || action == action.DRINK) {
                 if (entity.getUsedItemHand() == InteractionHand.MAIN_HAND) {
                     if (entity.getMainArm() == HumanoidArm.RIGHT) {
                         target = right;

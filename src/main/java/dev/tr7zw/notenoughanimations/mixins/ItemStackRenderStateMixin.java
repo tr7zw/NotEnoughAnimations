@@ -6,7 +6,8 @@ import dev.tr7zw.notenoughanimations.access.ExtendedItemStackRenderState;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.world.item.ItemStack;
-//#if MC >= 12104
+//? if >= 1.21.4 {
+
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 
 @Mixin(ItemStackRenderState.class)
@@ -17,7 +18,8 @@ public class ItemStackRenderStateMixin implements ExtendedItemStackRenderState {
     private ItemStack itemStack = null;
 
 }
-//#else
-//$$@Mixin(ItemStack.class)
-//$$public class ItemStackRenderStateMixin {}
-//#endif
+//? } else {
+/*
+ @Mixin(ItemStack.class)
+ public class ItemStackRenderStateMixin {}
+*///? }

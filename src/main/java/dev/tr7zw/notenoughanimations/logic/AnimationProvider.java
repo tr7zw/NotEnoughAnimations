@@ -35,9 +35,10 @@ import dev.tr7zw.notenoughanimations.api.PoseOverwrite;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-//#if MC >= 11700
+//? if >= 1.17.0 {
+
 import dev.tr7zw.notenoughanimations.animations.fullbody.FreezingAnimation;
-//#endif
+//? }
 import dev.tr7zw.notenoughanimations.animations.fullbody.HorseAnimation;
 
 public class AnimationProvider {
@@ -115,9 +116,10 @@ public class AnimationProvider {
         addAnimation(new ActionRotationLockAnimation());
         addAnimation(new BurningAnimation());
         addAnimation(new ClampCrossbowAnimations());
-        //#if MC >= 11700
+        //? if >= 1.17.0 {
+
         addAnimation(new FreezingAnimation());
-        //#endif
+        //? }
     }
 
     public void addAnimation(BasicAnimation animation) {
