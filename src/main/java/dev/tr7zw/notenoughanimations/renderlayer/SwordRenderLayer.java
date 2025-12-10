@@ -80,13 +80,13 @@ public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidM
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
                 .getEntity();
         //? } else if >= 1.21.2 {
-/*
+        /*
          public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
                 HumanoidRenderState entityRenderState, float f, float g) {
             AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
                     .getEntity();
         *///? } else if >= 1.19.4 {
-/*
+        /*
          public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, AbstractClientPlayer player,
                 float paramFloat1, float paramFloat2, float paramFloat3, float paramFloat4, float paramFloat5,
                 float paramFloat6) {
@@ -141,12 +141,12 @@ public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidM
         //? if >= 1.21.9 {
 
         //? } else if >= 1.21.5 {
-/*
+        /*
          Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
                 lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
                 poseStack, multiBufferSource, light);
         *///? } else if >= 1.19.4 {
-/*
+        /*
          Minecraft.getInstance().getEntityRenderDispatcher().getItemInHandRenderer().renderItem(player, itemStack,
                  lefthanded ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
                 lefthanded, poseStack, multiBufferSource, light);

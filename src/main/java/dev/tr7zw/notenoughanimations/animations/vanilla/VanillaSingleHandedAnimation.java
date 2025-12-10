@@ -7,7 +7,13 @@ import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -21,10 +27,13 @@ public class VanillaSingleHandedAnimation extends BasicAnimation {
 
     private ArmPose rightArmPose;
     private ArmPose leftArmPose;
-    //? if >= 1.17.0 {
+    //? if >= 1.21.11 {
 
+    private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_TRIDENT);
+    //? } else if >= 1.17.0 {
+    /*
     private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_SPEAR);
-    //? } else {
+    *///? } else {
 
     // private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.THROW_SPEAR);
     //? }

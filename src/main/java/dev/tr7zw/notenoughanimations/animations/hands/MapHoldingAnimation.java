@@ -12,7 +12,13 @@ import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.transition.mc.EntityUtil;
 import dev.tr7zw.transition.mc.GeneralUtil;
 import dev.tr7zw.transition.mc.ItemUtil;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;

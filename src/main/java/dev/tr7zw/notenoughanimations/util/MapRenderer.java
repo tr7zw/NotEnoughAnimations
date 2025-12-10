@@ -6,7 +6,15 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.tr7zw.transition.mc.GeneralUtil;
 import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.renderer.rendertype.*;
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
@@ -21,10 +29,20 @@ import org.joml.Matrix4f;
 
 public class MapRenderer {
 
-    private static final RenderType MAP_BACKGROUND = RenderType
+    //? if >= 1.21.11 {
+
+    private static final RenderType MAP_BACKGROUND = RenderTypes
             .text(GeneralUtil.getResourceLocation("textures/map/map_background.png"));
-    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
+    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderTypes
             .text(GeneralUtil.getResourceLocation("textures/map/map_background_checkerboard.png"));
+    //? } else {
+    /*
+            private static final RenderType MAP_BACKGROUND = RenderType
+                    .text(GeneralUtil.getResourceLocation("textures/map/map_background.png"));
+            private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
+                    .text(GeneralUtil.getResourceLocation("textures/map/map_background_checkerboard.png"));
+    
+    *///? }
 
     //? if >= 1.21.9 {
 

@@ -1,7 +1,13 @@
 package dev.tr7zw.notenoughanimations.api;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.client.player.AbstractClientPlayer;
 
 public interface PoseOverwrite {

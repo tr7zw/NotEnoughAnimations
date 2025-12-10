@@ -13,7 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.client.player.AbstractClientPlayer;
 
 @Mixin(PlayerModel.class)
@@ -22,7 +28,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 public abstract class PlayerEntityModelMixin
         extends HumanoidModel<net.minecraft.client.renderer.entity.state.AvatarRenderState> {
     //? } else if >= 1.21.2 {
-/*
+    /*
      public abstract class PlayerEntityModelMixin extends HumanoidModel<net.minecraft.client.renderer.entity.state.PlayerRenderState> {
     *///? } else {
     /*
@@ -31,7 +37,7 @@ public abstract class PlayerEntityModelMixin
 
     @Unique
     //? if >= 1.21.2 && < 1.21.9 {
-/*
+    /*
      private static final String SETUP_ANIM_METHOD = "setupAnim(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;)V";
     *///? } else {
 

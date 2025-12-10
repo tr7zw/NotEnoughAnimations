@@ -10,7 +10,13 @@ import dev.tr7zw.transition.mc.GeneralUtil;
 import dev.tr7zw.transition.mc.ItemUtil;
 import dev.tr7zw.transition.mc.MathUtil;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionHand;
@@ -78,9 +84,21 @@ public class AnimationUtil {
                     return ArmPose.BOW_AND_ARROW;
                 }
 
+                //? if >= 1.21.11 {
+
+                if (useAction == useAction.TRIDENT) {
+                    return ArmPose.THROW_TRIDENT;
+                }
+
+                if (useAction == useAction.SPEAR) {
+                    return ArmPose.SPEAR;
+                }
+                //? } else {
+                /*
                 if (useAction == useAction.SPEAR) {
                     return ArmPose.THROW_SPEAR;
                 }
+                *///? }
 
                 //? if >= 1.17.0 {
 

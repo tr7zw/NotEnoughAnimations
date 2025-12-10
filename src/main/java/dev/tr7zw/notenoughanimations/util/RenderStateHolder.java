@@ -11,7 +11,7 @@ public class RenderStateHolder implements DataHolder<RenderStateHolder.RenderSta
 
         public net.minecraft.client.renderer.entity.state.AvatarRenderState renderState;
         //? } else if >= 1.21.2 {
-/*
+        /*
          public net.minecraft.client.renderer.entity.state.PlayerRenderState renderState;
         *///? }
     }

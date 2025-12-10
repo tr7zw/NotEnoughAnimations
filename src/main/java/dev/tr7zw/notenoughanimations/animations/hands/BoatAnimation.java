@@ -5,7 +5,15 @@ import dev.tr7zw.notenoughanimations.api.BasicAnimation;
 import dev.tr7zw.notenoughanimations.util.AnimationUtil;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.world.entity.vehicle.boat.*;
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+import net.minecraft.world.entity.vehicle.*;
+*///? }
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
@@ -21,7 +29,7 @@ public class BoatAnimation extends BasicAnimation {
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         //? if > 1.21.2 {
 
-        return entity.isPassenger() && entity.getVehicle() instanceof net.minecraft.world.entity.vehicle.AbstractBoat;
+        return entity.isPassenger() && entity.getVehicle() instanceof AbstractBoat;
         //? } else {
         /*
          return entity.isPassenger() && entity.getVehicle() instanceof net.minecraft.world.entity.vehicle.Boat;
@@ -55,8 +63,7 @@ public class BoatAnimation extends BasicAnimation {
         HumanoidArm arm = part == BodyPart.LEFT_ARM ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
         //? if > 1.21.2 {
 
-        net.minecraft.world.entity.vehicle.AbstractBoat boat = (net.minecraft.world.entity.vehicle.AbstractBoat) entity
-                .getVehicle();
+        AbstractBoat boat = (AbstractBoat) entity.getVehicle();
         //? } else {
         /*
          net.minecraft.world.entity.vehicle.Boat boat = (net.minecraft.world.entity.vehicle.Boat) entity.getVehicle();

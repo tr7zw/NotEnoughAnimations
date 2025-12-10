@@ -6,7 +6,13 @@ import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
 import net.minecraft.SharedConstants;
-import net.minecraft.client.model.PlayerModel;
+//? if >= 1.21.11 {
+
+import net.minecraft.client.model.player.*;
+//? } else {
+/*
+import net.minecraft.client.model.*;
+*///? }
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.LevelRenderer;

@@ -24,15 +24,23 @@ public class LivingEntityRendererMixin {
             net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState, float f,
             CallbackInfo ci) {
         ((ExtendedLivingRenderState) livingEntityRenderState).setEntity(livingEntity);
-        //? if >= 1.21.4 {
+        //? if >= 1.21.11 {
 
+        if (livingEntityRenderState instanceof ArmedEntityRenderState armed) {
+            ((ExtendedItemStackRenderState) armed.leftHandItemState)
+                    .setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.LEFT));
+            ((ExtendedItemStackRenderState) armed.rightHandItemState)
+                    .setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.RIGHT));
+        }
+        //? } else if >= 1.21.4 {
+        /*
         if (livingEntityRenderState instanceof ArmedEntityRenderState armed) {
             ((ExtendedItemStackRenderState) armed.leftHandItem)
                     .setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.LEFT));
             ((ExtendedItemStackRenderState) armed.rightHandItem)
                     .setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.RIGHT));
         }
-        //? }
+        *///? }
     }
     //? }
 }

@@ -49,7 +49,7 @@ public abstract class ItemInHandLayerMixin<S extends net.minecraft.client.render
         super(renderer);
     }
     //? } else if >= 1.21.2 {
-/*
+    /*
      public abstract class ItemInHandLayerMixin<S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends EntityModel<S> & ArmedModel>
             extends RenderLayer<S, M> {
         public ItemInHandLayerMixin(RenderLayerParent<S, M> renderer) {
@@ -67,13 +67,21 @@ public abstract class ItemInHandLayerMixin<S extends net.minecraft.client.render
 
     @Inject(at = @At("HEAD"), method = "submitArmWithItem", cancellable = true)
     private void submitArmWithItem(S armedEntityRenderState, ItemStackRenderState itemStackRenderState,
+            //? if >= 1.21.11 {
+
+            ItemStack passedItem,
+            //? }
             HumanoidArm humanoidArm, PoseStack poseStack,
             net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
         LivingEntity livingEntity = ((ExtendedLivingRenderState) armedEntityRenderState).getEntity();
         ItemStack itemStack = null;
+        //? if >= 1.21.11 {
+
+        itemStack = passedItem;
+        //? }
         if (itemStackRenderState instanceof ExtendedItemStackRenderState ext && ext.getItemStack() != null) {
             itemStack = ext.getItemStack();
-        } else {
+        } else if (itemStack == null) {
             return;
         }
         NEAnimationsLoader.INSTANCE.heldItemHandler.onRenderItem(livingEntity, this.getParentModel(), itemStack,

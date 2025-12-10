@@ -47,7 +47,7 @@ public abstract class PlayerRendererMixin
         super(context, model, shadowRadius);
     }
     //? } else if >= 1.21.2 {
-/*
+    /*
      public PlayerRendererMixin(Context context, net.minecraft.client.model.HumanoidModel model, float shadowRadius) {
         super(context, model, shadowRadius);
      }
@@ -84,7 +84,7 @@ public abstract class PlayerRendererMixin
         }
     }
     //? } else if >= 1.21.2 {
-/*
+    /*
      @Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V", at = @At("HEAD"))
      private void includeData(AbstractClientPlayer abstractClientPlayer, net.minecraft.client.renderer.entity.state.PlayerRenderState playerRenderState, float f,
             CallbackInfo ci) {
