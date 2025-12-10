@@ -62,4 +62,5 @@ public class Config {
     public boolean clampCrossbowAnimations = false;
     public boolean burningAnimation = true;
     public Set<String> hideItemsForTheseBows = new HashSet<>();
+    public Set<String> mapHolding = new HashSet<>(Arrays.asList("minecraft:filled_map", "antiqueatlas:antique_atlas"));
 }
