@@ -48,6 +48,10 @@ public class HeldItemHandler {
                      net.minecraft.client.renderer.MultiBufferSource vertexConsumers, 
                     *///? }
             int light, CallbackInfo info) {
+        if (entity == null) {
+            // Can't really render an item if the entity doesn't exist can ya
+            return;
+        }
         if (entity.isSleeping()) { // Stop holding stuff in your sleep
             if (NEABaseMod.config.dontHoldItemsInBed) {
                 info.cancel();

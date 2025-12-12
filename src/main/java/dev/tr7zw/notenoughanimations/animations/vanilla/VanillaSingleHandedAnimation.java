@@ -29,7 +29,8 @@ public class VanillaSingleHandedAnimation extends BasicAnimation {
     private ArmPose leftArmPose;
     //? if >= 1.21.11 {
 
-    private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_TRIDENT, ArmPose.SPEAR);
+    private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_TRIDENT,
+            ArmPose.SPEAR);
     //? } else if >= 1.17.0 {
     /*
     private final EnumSet<ArmPose> singleHandedAnimatios = EnumSet.of(ArmPose.SPYGLASS, ArmPose.THROW_SPEAR);
