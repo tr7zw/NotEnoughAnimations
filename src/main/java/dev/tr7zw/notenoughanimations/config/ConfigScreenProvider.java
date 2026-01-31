@@ -124,6 +124,10 @@ public class ConfigScreenProvider {
             options.add(getSplitLine("text.nea.line.holdup"));
             options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class,
                     () -> NEABaseMod.config.holdUpItemsMode, b -> NEABaseMod.config.holdUpItemsMode = b));
+            //? if >= 1.21.11 {
+            options.add(getBooleanOption("text.nea.animateLanterns", () -> NEABaseMod.config.animateLanterns,
+                    b -> NEABaseMod.config.animateLanterns = b));
+            //? }
             options.add(getDoubleOption("text.nea.holdUpItemOffset", -0.5f, 0.4f, 0.1f,
                     () -> (double) NEABaseMod.config.holdUpItemOffset, (i) -> {
                         NEABaseMod.config.holdUpItemOffset = (float) i;
@@ -175,39 +179,80 @@ public class ConfigScreenProvider {
             List<Entry<ResourceKey<Item>, Item>> items = new ArrayList<>(ItemUtil.getItems());
             items.sort((a, b) -> getResourceString(a.getKey()).compareTo(getResourceString(b.getKey())));
 
-            WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> itemList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
-                    items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
-                        String key = getResourceString(s.getKey());
-                        l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
-                        l.setToolip(ComponentProvider.literal(key));
-                        l.setIcon(new ItemIcon(s.getValue()));
-                        l.setToggle(NEABaseMod.config.holdingItems.contains(key));
-                        l.setOnToggle(b -> {
-                            if (b) {
-                                NEABaseMod.config.holdingItems.add(key);
-                                NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
-                            } else {
-                                NEABaseMod.config.holdingItems.remove(key);
-                                NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
-                            }
-                            NEAnimationsLoader.INSTANCE.writeConfig();
+            {
+                WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> itemList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
+                        items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
+                            String key = getResourceString(s.getKey());
+                            l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
+                            l.setToolip(ComponentProvider.literal(key));
+                            l.setIcon(new ItemIcon(s.getValue()));
+                            l.setToggle(NEABaseMod.config.holdingItems.contains(key));
+                            l.setOnToggle(b -> {
+                                if (b) {
+                                    NEABaseMod.config.holdingItems.add(key);
+                                    NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                                } else {
+                                    NEABaseMod.config.holdingItems.remove(key);
+                                    NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                                }
+                                NEAnimationsLoader.INSTANCE.writeConfig();
+                            });
                         });
-                    });
-            itemList.setGap(-1);
-            itemList.setInsets(new Insets(2, 4));
-            WGridPanel itemTab = new WGridPanel(20);
-            itemTab.add(itemList, 0, 0, 17, 7);
-            WTextField searchField = new WTextField();
-            searchField.setChangedListener(s -> {
-                itemList.setFilter(e -> getResourceString(e.getKey()).toLowerCase().contains(s.toLowerCase()));
-                itemList.layout();
-            });
-            itemTab.add(searchField, 0, 7, 17, 1);
-            wTabPanel.add(itemTab, b -> b.title(ComponentProvider.translatable("text.nea.tab.holdup"))
-                    .icon(new ItemIcon(Items.TORCH)));
+                itemList.setGap(-1);
+                itemList.setInsets(new Insets(2, 4));
+                WGridPanel itemTab = new WGridPanel(20);
+                itemTab.add(itemList, 0, 0, 17, 7);
+                WTextField searchField = new WTextField();
+                searchField.setChangedListener(s -> {
+                    itemList.setFilter(e -> getResourceString(e.getKey()).toLowerCase().contains(s.toLowerCase()));
+                    itemList.layout();
+                });
+                itemTab.add(searchField, 0, 7, 17, 1);
+                wTabPanel.add(itemTab, b -> b.title(ComponentProvider.translatable("text.nea.tab.holdup"))
+                        .icon(new ItemIcon(Items.TORCH)));
 
-            wTabPanel.layout();
-            root.add(wTabPanel, 0, 2);
+                wTabPanel.layout();
+                root.add(wTabPanel, 0, 2);
+            }
+
+            //? if >= 1.21.11 {
+            {
+                // Lantern list
+                WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton> lanternList = new WListPanel<Entry<ResourceKey<Item>, Item>, WToggleButton>(
+                        items, () -> new WToggleButton(ComponentProvider.EMPTY), (s, l) -> {
+                            String key = getResourceString(s.getKey());
+                            l.setLabel(s.getValue().getName(s.getValue().getDefaultInstance()));
+                            l.setToolip(ComponentProvider.literal(key));
+                            l.setIcon(new ItemIcon(s.getValue()));
+                            l.setToggle(NEABaseMod.config.lanternItems.contains(key));
+                            l.setOnToggle(b -> {
+                                if (b) {
+                                    NEABaseMod.config.lanternItems.add(key);
+                                    NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                                } else {
+                                    NEABaseMod.config.lanternItems.remove(key);
+                                    NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                                }
+                                NEAnimationsLoader.INSTANCE.writeConfig();
+                            });
+                        });
+                lanternList.setGap(-1);
+                lanternList.setInsets(new Insets(2, 4));
+                WGridPanel lanternTab = new WGridPanel(20);
+                lanternTab.add(lanternList, 0, 0, 17, 7);
+                WTextField lanternField = new WTextField();
+                lanternField.setChangedListener(s -> {
+                    lanternList.setFilter(e -> getResourceString(e.getKey()).toLowerCase().contains(s.toLowerCase()));
+                    lanternList.layout();
+                });
+                lanternTab.add(lanternField, 0, 7, 17, 1);
+                wTabPanel.add(lanternTab, b -> b.title(ComponentProvider.translatable("text.nea.tab.lantern"))
+                        .icon(new ItemIcon(Items.LANTERN)));
+
+                wTabPanel.layout();
+                root.add(wTabPanel, 0, 2);
+            }
+            //? }
 
             WButton doneButton = new WButton(CommonComponents.GUI_DONE);
             doneButton.setOnClick(() -> {

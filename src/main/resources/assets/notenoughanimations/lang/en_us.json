@@ -2,6 +2,7 @@
     "text.nea.title": "Not Enough Animations Settings",
     "text.nea.tab.settings": "Settings",
     "text.nea.tab.holdup": "Hold Up Items",
+    "text.nea.tab.lantern": "Lanterns",
     "text.nea.line.legacy": "Unfinished/Deprecated",
     "text.nea.line.fun": "Fun",
     "text.nea.line.fixes": "Fixes",
@@ -95,5 +96,7 @@
     "text.nea.enable.limitRotationLockToFP": "Limit Rotation Lock To FP",
     "text.nea.enable.limitRotationLockToFP.tooltip": "Only apply the rotation lock effect in first person",
     "text.nea.enable.customBowRotationLock": "Custom Bow Rotation Lock",
-    "text.nea.enable.customBowRotationLock.tooltip": "Puts the body at an angle while using the custom bow animation"
+    "text.nea.enable.customBowRotationLock.tooltip": "Puts the body at an angle while using the custom bow animation",
+    "text.nea.animateLanterns": "Animate Lanterns",
+    "text.nea.animateLanterns.tooltip": "Adds a swinging animation to lanterns while held"
 }

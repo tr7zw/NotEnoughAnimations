@@ -3,6 +3,16 @@ package dev.tr7zw.notenoughanimations.logic;
 import java.util.HashSet;
 import java.util.Set;
 
+import dev.tr7zw.notenoughanimations.access.*;
+import dev.tr7zw.notenoughanimations.versionless.animations.*;
+import net.minecraft.client.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.*;
+import net.minecraft.core.particles.*;
+import net.minecraft.util.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.phys.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,20 +31,25 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.ShieldItem;
 
-public class HeldItemHandler {
+//? if >= 1.21.11 {
+
+import net.minecraft.client.renderer.entity.state.*;
+import org.joml.*;
+//? }
+
+public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState> {
 
     private Item filledMap = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "filled_map"));
     private Set<Item> hideItemsForTheseBows = new HashSet<>();
+    private Set<Item> lanternItems = new HashSet<>();
 
     public void onLoad() {
         hideItemsForTheseBows.clear();
         hideItemsForTheseBows.addAll(AnimationUtil.parseItemList(NEABaseMod.config.hideItemsForTheseBows));
+
+        lanternItems.clear();
+        lanternItems.addAll(AnimationUtil.parseItemList(NEABaseMod.config.lanternItems));
     }
 
     public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
@@ -112,6 +127,16 @@ public class HeldItemHandler {
                         return;
                     }
                 }
+                // Lantern animation
+                //? if >= 1.21.11 {
+                if (NEABaseMod.config.animateLanterns && entity instanceof PlayerData playerData
+                        && lanternItems.contains(itemStack.getItem())) {
+                    lanternAnimation(entity, playerData, itemStack, arm, matrices, vertexConsumers,
+                            livingEntityRenderState, armedModel);
+                    info.cancel();
+                    return;
+                }
+                //? }
             }
         }
 
@@ -191,7 +216,93 @@ public class HeldItemHandler {
                     return;
                 }
             }
+        }
+    }
 
+    //? if >= 1.21.11 {
+    private void lanternAnimation(LivingEntity entity, PlayerData playerData, ItemStack itemStack, HumanoidArm arm,
+            PoseStack matrices, SubmitNodeCollector vertexConsumers, LivingEntityRenderState livingEntityRenderState,
+            ArmedModel armedModel) {
+        matrices.pushPose();
+        //? if >= 1.21.9 {
+
+        armedModel.translateToHand(livingEntityRenderState, arm, matrices);
+        //? } else {
+        /*
+         armedModel.translateToHand(arm, matrices);
+        *///? }
+
+        // Scale down
+        matrices.scale(0.6f, 0.6f, 0.6f);
+
+        HeldItemState state = playerData.getData(this, () -> new HeldItemState(entity));
+
+        float chainOffset = 0.5F;
+        float chainYOffset = 0.6F;
+        // Apply offsets
+        matrices.translate(arm == HumanoidArm.LEFT ? -0.45 : -0.5, 0.4, -0.3);
+        // Move pivot to top of chain
+        matrices.translate(chainOffset, chainYOffset, chainOffset);
+
+        // Calculate difference
+        Vec3 camPos = Minecraft.getInstance().getEntityRenderDispatcher().camera.position();
+        Vector4f origin = new Vector4f(0, 0, 0, 1f);
+        origin.mul(matrices.last().pose());
+        Vec3 curPos = camPos.add(origin.x, origin.y, origin.z);
+        matrices.mulPose(MathUtil.XP.rotationDegrees(-90));
+
+        float yawRad = entity.getYRot() * Mth.DEG_TO_RAD;
+        float pitchRad = entity.getXRot() * Mth.DEG_TO_RAD;
+
+        Vec3 forward = new Vec3(-Mth.sin(yawRad) * Mth.cos(pitchRad), -Mth.sin(pitchRad),
+                Mth.cos(yawRad) * Mth.cos(pitchRad));
+
+        Vec3 right = new Vec3(Mth.cos(yawRad), 0, Mth.sin(yawRad));
+
+        float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(true);
+        Vec3 lerpedVelocity = state.lastLanternVelocity
+                .add(state.lanternVelocity.subtract(state.lastLanternVelocity).multiply(delta, delta, delta));
+
+        double forwardVel = lerpedVelocity.dot(forward);
+        double rightVel = lerpedVelocity.dot(right);
+        float swingAngleX = Mth.clamp((float) forwardVel * 90f, -90f, 90f);
+        float swingAngleZ = Mth.clamp((float) -rightVel * 90f, -90f, 90f);
+        swingAngleX -= entity.getXRot() * 0.25f;
+
+        double stiffness = 0.15;
+        double damping = 0.95;
+
+        Vec3 displacement = state.lanternPos.subtract(curPos);
+        Vec3 acceleration = displacement.scale(-stiffness);
+
+        if (entity.tickCount != state.lanternLastTick) {
+            state.lanternLastTick = entity.tickCount;
+            state.lastLanternVelocity = state.lanternVelocity;
+            state.lanternVelocity = state.lanternVelocity.add(acceleration);
+            state.lanternVelocity = state.lanternVelocity.scale(damping);
+            state.lanternPos = state.lanternPos.add(state.lanternVelocity);
+        }
+        matrices.mulPose(MathUtil.XP.rotationDegrees(swingAngleX));
+        matrices.mulPose(MathUtil.ZP.rotationDegrees(swingAngleZ));
+
+        // Return pivot
+        matrices.translate(-chainOffset, -chainYOffset, -chainOffset);
+
+        vertexConsumers.submitBlock(matrices, Block.byItem(itemStack.getItem()).defaultBlockState(),
+                LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);
+        matrices.popPose();
+    }
+    //? }
+
+    public static class HeldItemState {
+        public int lanternLastTick = 0;
+        public Vec3 lanternPos;
+        public Vec3 lanternVelocity = Vec3.ZERO;
+        public Vec3 lastLanternVelocity = Vec3.ZERO;
+
+        public HeldItemState(LivingEntity entity) {
+            lanternLastTick = entity.tickCount;
+            lanternPos = new Vec3(entity.getX(), entity.getY(), entity.getZ());
         }
     }
 

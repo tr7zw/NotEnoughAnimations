@@ -22,7 +22,10 @@ public class Config {
             "quad-mstv-mtv:acacia_soul_torch", "quad-mstv-mtv:bamboo_soul_torch", "quad-mstv-mtv:birch_soul_torch",
             "quad-mstv-mtv:cherry_soul_torch", "quad-mstv-mtv:crimson_soul_torch", "quad-mstv-mtv:dark_oak_soul_torch",
             "quad-mstv-mtv:pale_oak_soul_torch", "quad-mstv-mtv:jungle_soul_torch", "quad-mstv-mtv:mangrove_soul_torch",
-            "quad-mstv-mtv:spruce_soul_torch", "quad-mstv-mtv:warped_soul_torch"));
+            "quad-mstv-mtv:spruce_soul_torch", "quad-mstv-mtv:warped_soul_torch", "minecraft:copper_lantern",
+            "minecraft:exposed_copper_lantern", "minecraft:waxed_copper_lantern",
+            "minecraft:waxed_exposed_copper_lantern", "minecraft:waxed_oxidized_copper_lantern",
+            "minecraft:weathered_copper_lantern", "minecraft:waxed_weathered_copper_lantern"));
     public boolean enableAnimationSmoothing = true;
     public boolean enableInWorldMapRendering = true;
     public boolean enableOffhandHiding = true;
@@ -63,4 +66,10 @@ public class Config {
     public boolean burningAnimation = true;
     public Set<String> hideItemsForTheseBows = new HashSet<>();
     public Set<String> mapHolding = new HashSet<>(Arrays.asList("minecraft:filled_map", "antiqueatlas:antique_atlas"));
+    public boolean animateLanterns = true;
+    public Set<String> lanternItems = new HashSet<>(Arrays.asList("minecraft:waxed_copper_lantern",
+            "minecraft:waxed_exposed_copper_lantern", "minecraft:soul_lantern",
+            "minecraft:waxed_oxidized_copper_lantern", "minecraft:exposed_copper_lantern", "minecraft:lantern",
+            "minecraft:waxed_weathered_copper_lantern", "minecraft:weathered_copper_lantern",
+            "minecraft:oxidized_copper_lantern", "minecraft:copper_lantern"));
 }

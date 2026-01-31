@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dev.tr7zw.notenoughanimations.*;
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.animations.fullbody.ActionRotationLockAnimation;
 import dev.tr7zw.notenoughanimations.animations.fullbody.BurningAnimation;
@@ -136,6 +137,7 @@ public class AnimationProvider {
     public void refreshEnabledAnimations() {
         enabledBasicAnimations.clear();
         enabledPoseOverwrites.clear();
+        NEAnimationsMod.INSTANCE.heldItemHandler.onLoad();
         for (BasicAnimation basicAnimation : basicAnimations) {
             if (basicAnimation.isEnabled()) {
                 enabledBasicAnimations.add(basicAnimation);
