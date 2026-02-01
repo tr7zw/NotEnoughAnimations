@@ -1,5 +1,6 @@
 package dev.tr7zw.notenoughanimations.logic;
 
+import java.lang.Math;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -244,20 +245,36 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
         // Move pivot to top of chain
         matrices.translate(chainOffset, chainYOffset, chainOffset);
 
-        // Calculate difference
         Vec3 camPos = Minecraft.getInstance().getEntityRenderDispatcher().camera.position();
         Vector4f origin = new Vector4f(0, 0, 0, 1f);
         origin.mul(matrices.last().pose());
-        Vec3 curPos = camPos.add(origin.x, origin.y, origin.z);
+        Vec3 rawCurPos = camPos.add(origin.x, origin.y, origin.z);
+
+        if (state.smoothedHandPos == null) {
+            state.smoothedHandPos = rawCurPos;
+        }
+
+        double rawDelta = state.smoothedHandPos.distanceToSqr(rawCurPos);
+        if (rawDelta > 4.0) {
+            // More than 2 blocks = likely shader artifact
+            // Ignore this frame's position, keep previous
+            // Do nothing - don't update smoothedHandPos
+        } else {
+            double alpha = 0.3;
+            state.smoothedHandPos = new Vec3(Mth.lerp(alpha, state.smoothedHandPos.x, rawCurPos.x),
+                    Mth.lerp(alpha, state.smoothedHandPos.y, rawCurPos.y),
+                    Mth.lerp(alpha, state.smoothedHandPos.z, rawCurPos.z));
+        }
+
+        Vec3 curPos = state.smoothedHandPos;
+
         matrices.mulPose(MathUtil.XP.rotationDegrees(-90));
 
         float yawRad = entity.getYRot() * Mth.DEG_TO_RAD;
         float pitchRad = entity.getXRot() * Mth.DEG_TO_RAD;
 
-        Vec3 forward = new Vec3(-Mth.sin(yawRad) * Mth.cos(pitchRad), -Mth.sin(pitchRad),
-                Mth.cos(yawRad) * Mth.cos(pitchRad));
-
-        Vec3 right = new Vec3(Mth.cos(yawRad), 0, Mth.sin(yawRad));
+        Vec3 forward = new Vec3(-Mth.sin(yawRad), 0, Mth.cos(yawRad)).normalize();
+        Vec3 right = new Vec3(forward.z, 0, -forward.x);
 
         float delta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(true);
         Vec3 lerpedVelocity = state.lastLanternVelocity
@@ -265,6 +282,11 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
 
         double forwardVel = lerpedVelocity.dot(forward);
         double rightVel = lerpedVelocity.dot(right);
+
+        // add Y movement influence
+        double verticalInfluence = -lerpedVelocity.y * Mth.cos(pitchRad) * 0.6;
+        forwardVel += verticalInfluence;
+
         float swingAngleX = Mth.clamp((float) forwardVel * 90f, -90f, 90f);
         float swingAngleZ = Mth.clamp((float) -rightVel * 90f, -90f, 90f);
         swingAngleX -= entity.getXRot() * 0.25f;
@@ -277,10 +299,19 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
 
         if (entity.tickCount != state.lanternLastTick) {
             state.lanternLastTick = entity.tickCount;
-            state.lastLanternVelocity = state.lanternVelocity;
-            state.lanternVelocity = state.lanternVelocity.add(acceleration);
-            state.lanternVelocity = state.lanternVelocity.scale(damping);
-            state.lanternPos = state.lanternPos.add(state.lanternVelocity);
+
+            // Reset if too far
+            if (displacement.lengthSqr() > 100) {
+                state.lastLanternVelocity = state.lanternVelocity;
+                state.lanternVelocity = acceleration;
+                state.lanternPos = curPos;
+            } else {
+                // Standard physics update (full tick, no delta!)
+                state.lastLanternVelocity = state.lanternVelocity;
+                state.lanternVelocity = state.lanternVelocity.add(acceleration);
+                state.lanternVelocity = state.lanternVelocity.scale(damping);
+                state.lanternPos = state.lanternPos.add(state.lanternVelocity);
+            }
         }
         matrices.mulPose(MathUtil.XP.rotationDegrees(swingAngleX));
         matrices.mulPose(MathUtil.ZP.rotationDegrees(swingAngleZ));
@@ -299,6 +330,7 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
         public Vec3 lanternPos;
         public Vec3 lanternVelocity = Vec3.ZERO;
         public Vec3 lastLanternVelocity = Vec3.ZERO;
+        public Vec3 smoothedHandPos = null;
 
         public HeldItemState(LivingEntity entity) {
             lanternLastTick = entity.tickCount;
