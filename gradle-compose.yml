@@ -3,7 +3,7 @@ source: "https://github.com/tr7zw/ProcessedModTemplate/tree/stonecutter"
 replacements:
   name: "NotEnoughAnimations"
   id: "notenoughanimations"
-  version: "1.11.1"
+  version: "1.11.2"
   description: "Adding and improving animations in Third-Person."
   homepageUrl: "https://modrinth.com/mod/not-enough-animations"
   sourcesUrl: "https://github.com/tr7zw/NotEnoughAnimations"
