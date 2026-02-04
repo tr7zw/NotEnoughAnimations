@@ -27,7 +27,7 @@ import net.minecraft.world.phys.Vec3;
 public class PetAnimation extends BasicAnimation {
 
     private Entity targetPet = null;
-    //    private double posDif = 0;
+    // private double posDif = 0;
 
     @Override
     public boolean isEnabled() {
@@ -46,13 +46,12 @@ public class PetAnimation extends BasicAnimation {
         AABB aABB = entity.getBoundingBox().expandTowards(vec32.scale(d)).inflate(1.0D, 1.0D, 1.0D);
         EntityHitResult entHit = ProjectileUtil.getEntityHitResult(entity, vec3, vec33, aABB, en -> (!en.isSpectator()),
                 d);
-        if (entHit != null && (entHit.getEntity().getType() == EntityType.WOLF
-                || entHit.getEntity().getType() == EntityType.CAT)) {
-            TamableAnimal pet = (TamableAnimal) entHit.getEntity();
-            double dif = pet.getY() - entity.getY();
+        if (entHit != null && entHit.getEntity().getType().getCategory().isFriendly()) {
+            Entity entityToBeTargetted = (Entity) entHit.getEntity();
+            double dif = entityToBeTargetted.getY() - entity.getY();
             if (Math.abs(dif) < 0.6) { // Making sure they are about on the same height
-                targetPet = pet;
-                //                posDif = dif;
+                targetPet = entityToBeTargetted;
+                // posDif = dif;
                 return true;
             }
         }
