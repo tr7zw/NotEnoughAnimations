@@ -117,6 +117,8 @@ public class ConfigScreenProvider {
                     b -> NEABaseMod.config.rotationLock = b));
             options.add(getOnOffOption("text.nea.enable.limitRotationLockToFP",
                     () -> NEABaseMod.config.limitRotationLockToFP, b -> NEABaseMod.config.limitRotationLockToFP = b));
+            options.add(getOnOffOption("text.nea.enable.applyRotationLockToEveryone",
+                    () -> NEABaseMod.config.applyRotationLockToEveryone, b -> NEABaseMod.config.applyRotationLockToEveryone = b));
             options.add(getOnOffOption("text.nea.enable.rotationlocking", () -> NEABaseMod.config.enableRotationLocking,
                     b -> NEABaseMod.config.enableRotationLocking = b));
 

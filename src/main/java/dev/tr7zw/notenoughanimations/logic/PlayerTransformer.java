@@ -55,8 +55,9 @@ public class PlayerTransformer {
                     interpolate(model.rightLeg, last, ENTRY_SIZE * 3, timePassed, differentFrame, speed, deltaTick);
                 }
             }
-            if (entity == GeneralUtil.getCameraEntity() && !data.isDisableBodyRotation()
-                    && (!NEABaseMod.config.limitRotationLockToFP
+            boolean isCameraEntity = entity == GeneralUtil.getCameraEntity();
+            if ((isCameraEntity || NEABaseMod.config.applyRotationLockToEveryone) && !data.isDisableBodyRotation()
+                    && (!isCameraEntity || !NEABaseMod.config.limitRotationLockToFP
                             || mc.options.getCameraType() == CameraType.FIRST_PERSON)) {
                 // For now located here due to smoothing logic being here.
 
