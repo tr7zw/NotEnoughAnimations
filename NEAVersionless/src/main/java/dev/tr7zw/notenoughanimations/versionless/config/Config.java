@@ -43,6 +43,7 @@ public class Config {
     public boolean freezeArmsInBed = true;
     public RotationLock rotationLock = RotationLock.NONE;
     public boolean limitRotationLockToFP = true;
+    public boolean applyRotationLockToEveryone = false;
     public boolean showLastUsedSword = false;
     public Set<String> sheathSwords = new HashSet<>(Arrays.asList("minecraft:wooden_sword", "minecraft:stone_sword",
             "minecraft:golden_sword", "minecraft:iron_sword", "minecraft:diamond_sword", "minecraft:netherite_sword"));

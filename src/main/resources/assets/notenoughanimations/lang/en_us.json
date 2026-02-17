@@ -98,5 +98,7 @@
     "text.nea.enable.customBowRotationLock": "Custom Bow Rotation Lock",
     "text.nea.enable.customBowRotationLock.tooltip": "Puts the body at an angle while using the custom bow animation",
     "text.nea.animateLanterns": "Animate Lanterns",
-    "text.nea.animateLanterns.tooltip": "Adds a swinging animation to lanterns while held"
+    "text.nea.animateLanterns.tooltip": "Adds a swinging animation to lanterns while held",
+    "text.nea.enable.applyRotationLockToEveryone": "Apply Rotation Lock To Everyone",
+    "text.nea.enable.applyRotationLockToEveryone.tooltip": "Apply rotation lock to everyone and not just the player"
 }
