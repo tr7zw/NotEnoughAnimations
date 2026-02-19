@@ -4,7 +4,7 @@ package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
-import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.util.*;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 import dev.tr7zw.transition.mc.*;
@@ -55,7 +55,9 @@ public class FreezingAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
-
+        if (entity.swinging && NMSWrapper.getArm(entity, entity.swingingArm) == part) {
+            return;
+        }
         if (part == BodyPart.LEFT_ARM) {
             float position = (float) (Math.random() / 10 + -1.3f);
             AnimationUtil.applyArmTransforms(model, HumanoidArm.LEFT, -0.6f, 0.2f, position);

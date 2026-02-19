@@ -2,7 +2,7 @@ package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
-import dev.tr7zw.notenoughanimations.util.AnimationUtil;
+import dev.tr7zw.notenoughanimations.util.*;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 //? if >= 1.21.11 {
@@ -14,6 +14,7 @@ import net.minecraft.client.model.*;
 *///? }
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.*;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.level.block.Blocks;
@@ -47,6 +48,9 @@ public class BurningAnimation extends BasicAnimation {
             float tickCounter) {
         if (part == BodyPart.HEAD) {
             AnimationUtil.setHeadYRot(model, model.head.yRot + Mth.sin(entity.tickCount) * 0.1f);
+            return;
+        }
+        if (entity.swinging && NMSWrapper.getArm(entity, entity.swingingArm) == part) {
             return;
         }
         float armHeight = Mth.sin(entity.tickCount) * 0.1f;

@@ -1,5 +1,8 @@
 package dev.tr7zw.notenoughanimations.util;
 
+import dev.tr7zw.notenoughanimations.versionless.animations.*;
+import net.minecraft.client.player.*;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 
@@ -23,6 +26,14 @@ public class NMSWrapper {
         /*
         return entity.isOnGround();
         *///? }
+    }
+
+    public static BodyPart getArm(AbstractClientPlayer entity, InteractionHand hand) {
+        if(hand == InteractionHand.MAIN_HAND) {
+            return entity.getMainArm() == HumanoidArm.RIGHT ? BodyPart.RIGHT_ARM : BodyPart.LEFT_ARM;
+        } else {
+            return entity.getMainArm() == HumanoidArm.RIGHT ? BodyPart.LEFT_ARM : BodyPart.RIGHT_ARM;
+        }
     }
 
 }
