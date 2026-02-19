@@ -77,12 +77,18 @@ public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidM
 
     public void submit(PoseStack poseStack, net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector,
             int i, HumanoidRenderState entityRenderState, float f, float g) {
+        if (!(((ExtendedLivingRenderState) entityRenderState).getEntity() instanceof AbstractClientPlayer)) {
+            return;
+        }
         AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
                 .getEntity();
         //? } else if >= 1.21.2 {
         /*
          public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int light,
                 HumanoidRenderState entityRenderState, float f, float g) {
+            if (!(((ExtendedLivingRenderState) entityRenderState).getEntity() instanceof AbstractClientPlayer)) {
+                return;
+            }
             AbstractClientPlayer player = (AbstractClientPlayer) ((ExtendedLivingRenderState) entityRenderState)
                     .getEntity();
         *///? } else if >= 1.19.4 {
