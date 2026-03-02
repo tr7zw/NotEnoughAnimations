@@ -29,7 +29,7 @@ public class NMSWrapper {
     }
 
     public static BodyPart getArm(AbstractClientPlayer entity, InteractionHand hand) {
-        if(hand == InteractionHand.MAIN_HAND) {
+        if (hand == InteractionHand.MAIN_HAND) {
             return entity.getMainArm() == HumanoidArm.RIGHT ? BodyPart.RIGHT_ARM : BodyPart.LEFT_ARM;
         } else {
             return entity.getMainArm() == HumanoidArm.RIGHT ? BodyPart.LEFT_ARM : BodyPart.RIGHT_ARM;
