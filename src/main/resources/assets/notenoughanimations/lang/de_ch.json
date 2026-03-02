@@ -36,7 +36,7 @@
     "text.nea.enable.rotatetoladder.tooltip": "Dreht den Körper des Spielers so, dass er beim Klettern die Leiter anschaut",
     "text.nea.holdUpItemsMode": "Hochhalte-Modus",
     "text.nea.holdUpItemsMode.tooltip": "Bringt den Spieler dazu, Gegenstände hochzuhalten (als ob er sie ansieht/vor sich hält)",
-    "text.nea.holdUpItemsMode.ALL": "Alla Items",
+    "text.nea.holdUpItemsMode.ALL": "Alle Items",
     "text.nea.holdUpItemsMode.NONE": "Keine Items",
     "text.nea.holdUpItemsMode.CONFIG": "Nur Konfig-Items",
     "text.nea.holdUpItemOffset": "Aufrechterhaltung des Versatzes",
