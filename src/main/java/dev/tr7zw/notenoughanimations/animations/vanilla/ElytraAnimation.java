@@ -36,7 +36,7 @@ public class ElytraAnimation extends BasicAnimation implements PoseOverwrite {
 
     @Override
     public int getPriority(AbstractClientPlayer entity, PlayerData data) {
-        return 3600;
+        return 3000;
     }
 
     @Override
