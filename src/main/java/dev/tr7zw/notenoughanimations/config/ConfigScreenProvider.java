@@ -123,6 +123,20 @@ public class ConfigScreenProvider {
             options.add(getOnOffOption("text.nea.enable.rotationlocking", () -> NEABaseMod.config.enableRotationLocking,
                     b -> NEABaseMod.config.enableRotationLocking = b));
 
+            //? if >= 1.20.4 {
+            options.add(getSplitLine(""));
+            options.add(getSplitLine("text.nea.line.rotationAngle"));
+            options.add(getDoubleOption("text.nea.maxNormalAngle", 0.0f, 50.0f, 0.1f,
+                    () -> (double) NEABaseMod.config.maxNormalAngle, (i) -> {
+                        NEABaseMod.config.maxNormalAngle = (float) i;
+                    }));
+
+            options.add(getDoubleOption("text.nea.maxBlockingAngle", 0.0f, 15.0f, 0.1f,
+                    () -> (double) NEABaseMod.config.maxBlockingAngle, (i) -> {
+                        NEABaseMod.config.maxBlockingAngle = (float) i;
+                    }));
+            //? }
+
             options.add(getSplitLine(""));
             options.add(getSplitLine("text.nea.line.holdup"));
             options.add(getEnumOption("text.nea.holdUpItemsMode", HoldUpModes.class,

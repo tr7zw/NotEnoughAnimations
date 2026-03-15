@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
+import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,11 +43,20 @@ public class PlayerEntityMixin implements PlayerData {
     private Pose poseOverwrite = null;
     private Map<DataHolder<?>, Object> animationData = new HashMap<>();
 
+
     @Inject(method = "tick", at = @At("RETURN"))
     public void tick(CallbackInfo info) {
         updateRenderLayerItems();
         setRotateBodyToHead(false);
     }
+
+    //? if >= 1.20.4 {
+    @WrapMethod(method= "getMaxHeadRotationRelativeToBody")
+    protected float overrideMaxHeadRoationRelativeToBody(Operation<Float> original) {
+        Player player = (Player)(Object)this;
+        return player.isBlocking() ? NEABaseMod.config.maxBlockingAngle : NEABaseMod.config.maxNormalAngle;
+    }
+    //? }
 
     @Override
     public int isUpdated(int frameId) {

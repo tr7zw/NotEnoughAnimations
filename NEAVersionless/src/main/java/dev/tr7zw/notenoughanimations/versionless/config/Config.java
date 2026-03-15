@@ -73,4 +73,6 @@ public class Config {
             "minecraft:waxed_oxidized_copper_lantern", "minecraft:exposed_copper_lantern", "minecraft:lantern",
             "minecraft:waxed_weathered_copper_lantern", "minecraft:weathered_copper_lantern",
             "minecraft:oxidized_copper_lantern", "minecraft:copper_lantern"));
+    public float maxBlockingAngle = 15.0f;
+    public float maxNormalAngle = 50.0f;
 }
