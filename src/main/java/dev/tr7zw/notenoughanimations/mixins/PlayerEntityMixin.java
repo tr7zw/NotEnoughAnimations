@@ -4,14 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-//? if >= 1.20.4 {
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-//? }
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
@@ -52,10 +49,8 @@ public class PlayerEntityMixin implements PlayerData {
     }
 
     //? if >= 1.20.4 {
-    @WrapMethod(method = "getMaxHeadRotationRelativeToBody")
-    protected float overrideMaxHeadRoationRelativeToBody(Operation<Float> original) {
-        Player player = (Player) (Object) this;
-
+    @Inject(method = "getMaxHeadRotationRelativeToBody", at = @At("HEAD"), cancellable = true)
+    protected void overrideMaxHeadRoationRelativeToBody(CallbackInfoReturnable<Float> ci) {
         if (NEABaseMod.config.maxBlockingAngle < 0.0f || NEABaseMod.config.maxBlockingAngle > 15.0f) {
             NEABaseMod.config.maxBlockingAngle = 15.0f;
         }
@@ -64,7 +59,8 @@ public class PlayerEntityMixin implements PlayerData {
             NEABaseMod.config.maxNormalAngle = 50.0f;
         }
 
-        return player.isBlocking() ? NEABaseMod.config.maxBlockingAngle : NEABaseMod.config.maxNormalAngle;
+        Player player = (Player) (Object) this;
+        ci.setReturnValue(player.isBlocking() ? NEABaseMod.config.maxBlockingAngle : NEABaseMod.config.maxNormalAngle);
     }
     //? }
 
