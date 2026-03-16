@@ -56,21 +56,15 @@ public class PlayerEntityMixin implements PlayerData {
     protected float overrideMaxHeadRoationRelativeToBody(Operation<Float> original) {
         Player player = (Player) (Object) this;
 
-        float blocking_angle = NEABaseMod.config.maxBlockingAngle;
-        if (blocking_angle < 0) {
-            blocking_angle = 0;
-        } else if (blocking_angle > 15) {
-            blocking_angle = 15;
+        if (NEABaseMod.config.maxBlockingAngle < 0.0f && NEABaseMod.config.maxBlockingAngle > 15.0f) {
+            NEABaseMod.config.maxBlockingAngle = 15.0f;
         }
 
-        float normal_angle = NEABaseMod.config.maxNormalAngle;
-        if (normal_angle < 0) {
-            normal_angle = 0;
-        } else if (normal_angle > 50) {
-            normal_angle = 50;
+        if (NEABaseMod.config.maxNormalAngle < 0.0f && NEABaseMod.config.maxNormalAngle > 50.0f) {
+            NEABaseMod.config.maxNormalAngle = 50.0f;
         }
 
-        return player.isBlocking() ? blocking_angle : normal_angle;
+        return player.isBlocking() ? NEABaseMod.config.maxBlockingAngle : NEABaseMod.config.maxNormalAngle;
     }
     //? }
 
