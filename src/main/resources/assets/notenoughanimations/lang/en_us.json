@@ -10,6 +10,7 @@
     "text.nea.line.rotation": "Rotation",
     "text.nea.line.smoothing": "Smoothing",
     "text.nea.line.animations": "Animations",
+    "text.nea.line.rotationAngle": "Rotation Angle",
     "text.nea.enable.animationsmoothing": "Animation Smoothing",
     "text.nea.enable.animationsmoothing.tooltip": "Smooths out the arm/leg animations to make them look more natural and less jumpy",
     "text.nea.smoothingSpeed": "Smoothing Amount",
@@ -100,5 +101,9 @@
     "text.nea.animateLanterns": "Animate Lanterns",
     "text.nea.animateLanterns.tooltip": "Adds a swinging animation to lanterns while held",
     "text.nea.enable.applyRotationLockToEveryone": "Apply Rotation Lock To Everyone",
-    "text.nea.enable.applyRotationLockToEveryone.tooltip": "Apply rotation lock to everyone and not just the player"
+    "text.nea.enable.applyRotationLockToEveryone.tooltip": "Apply rotation lock to everyone and not just the player",
+    "text.nea.maxNormalAngle": "Normal Angle",
+    "text.nea.maxNormalAngle.tooltip": "Set your normal rotation lock angle. Only works in None mode.",
+    "text.nea.maxBlockingAngle": "Blocking Angle",
+    "text.nea.maxBlockingAngle.tooltip": "Set your blocking rotation lock angle. Only works in None mode."
 }
