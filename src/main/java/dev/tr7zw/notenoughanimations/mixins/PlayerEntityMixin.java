@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+//? if >= 1.20.4 {
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+//? }
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -43,7 +45,6 @@ public class PlayerEntityMixin implements PlayerData {
     private Pose poseOverwrite = null;
     private Map<DataHolder<?>, Object> animationData = new HashMap<>();
 
-
     @Inject(method = "tick", at = @At("RETURN"))
     public void tick(CallbackInfo info) {
         updateRenderLayerItems();
@@ -51,10 +52,25 @@ public class PlayerEntityMixin implements PlayerData {
     }
 
     //? if >= 1.20.4 {
-    @WrapMethod(method= "getMaxHeadRotationRelativeToBody")
+    @WrapMethod(method = "getMaxHeadRotationRelativeToBody")
     protected float overrideMaxHeadRoationRelativeToBody(Operation<Float> original) {
-        Player player = (Player)(Object)this;
-        return player.isBlocking() ? NEABaseMod.config.maxBlockingAngle : NEABaseMod.config.maxNormalAngle;
+        Player player = (Player) (Object) this;
+
+        float blocking_angle = NEABaseMod.config.maxBlockingAngle;
+        if (blocking_angle < 0) {
+            blocking_angle = 0;
+        } else if (blocking_angle > 15) {
+            blocking_angle = 15;
+        }
+
+        float normal_angle = NEABaseMod.config.maxNormalAngle;
+        if (normal_angle < 0) {
+            normal_angle = 0;
+        } else if (normal_angle > 50) {
+            normal_angle = 50;
+        }
+
+        return player.isBlocking() ? blocking_angle : normal_angle;
     }
     //? }
 
