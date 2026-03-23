@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import dev.tr7zw.notenoughanimations.access.*;
+import dev.tr7zw.notenoughanimations.mixins.*;
 import dev.tr7zw.notenoughanimations.versionless.animations.*;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
@@ -319,8 +320,19 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
         // Return pivot
         matrices.translate(-chainOffset, -chainYOffset, -chainOffset);
 
+        // the 26.1+ version is technically not correct for how stuff should be done
+        //? if >= 26.0 {
+
+        var blockState = new net.minecraft.client.renderer.block.BlockModelRenderState();
+        ((EntityRenderDispatcherAccessor) Minecraft.getInstance().getEntityRenderDispatcher())
+                .nea$getBlockModelResolver().update(blockState, Block.byItem(itemStack.getItem()).defaultBlockState(),
+                        net.minecraft.client.renderer.block.model.BlockDisplayContext.create());
+        blockState.submit(matrices, vertexConsumers, 15728880, OverlayTexture.NO_OVERLAY, 0);
+        //? } else {
+        /*
         vertexConsumers.submitBlock(matrices, Block.byItem(itemStack.getItem()).defaultBlockState(),
                 LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0);
+        *///? }
         matrices.popPose();
     }
     //? }

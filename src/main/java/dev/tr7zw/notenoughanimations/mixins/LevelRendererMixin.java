@@ -30,8 +30,7 @@ import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
 *///? }
    //? if >= 1.19.3 {
 
-import org.joml.Matrix4f;
-import org.joml.Vector4f;
+import org.joml.*;
 //? } else {
 /*
  import com.mojang.math.Matrix4f;
@@ -41,13 +40,21 @@ import org.joml.Vector4f;
 public class LevelRendererMixin {
 
     @Inject(method = "renderLevel", at = @At("HEAD"))
-    //? if >= 1.21.9 {
+    //? if >= 26.0 {
 
-    public void renderLevel(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker, boolean bl,
+    public void renderLevel(final GraphicsResourceAllocator resourceAllocator, final DeltaTracker deltaTracker,
+            final boolean renderOutline, final net.minecraft.client.renderer.state.level.CameraRenderState cameraState,
+            final Matrix4fc modelViewMatrix, final com.mojang.blaze3d.buffers.GpuBufferSlice terrainFog,
+            final Vector4f fogColor, final boolean shouldRenderSky,
+            final net.minecraft.client.renderer.chunk.ChunkSectionsToRender chunkSectionsToRender, CallbackInfo ci) {
+        float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
+        //? } else if >= 1.21.9 {
+        /*
+        public void renderLevel(GraphicsResourceAllocator graphicsResourceAllocator, DeltaTracker deltaTracker, boolean bl,
             Camera camera, Matrix4f matrix4f, Matrix4f matrix4f2, Matrix4f matrix4f3,
             com.mojang.blaze3d.buffers.GpuBufferSlice gpuBufferSlice, Vector4f vector4f, boolean bl2, CallbackInfo ci) {
         float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
-        //? } else if <= 1.20.4 {
+        *///? } else if <= 1.20.4 {
         /*
           private void beforeRender(PoseStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline,
                   Camera camera, GameRenderer gameRenderer, LightTexture lightmapTextureManager, Matrix4f matrix4f, CallbackInfo ci) {

@@ -29,7 +29,7 @@ public abstract class PlayerEntityModelMixin
         extends HumanoidModel<net.minecraft.client.renderer.entity.state.AvatarRenderState> {
     //? } else if >= 1.21.2 {
     /*
-     public abstract class PlayerEntityModelMixin extends HumanoidModel<net.minecraft.client.renderer.entity.state.PlayerRenderState> {
+     public abstract class PlayerEntityModelMixin extends HumanoidModel<net.minecraft.client.renderer.entity.state.AvatarRenderState> {
     *///? } else {
     /*
      public abstract class PlayerEntityModelMixin<T extends net.minecraft.world.entity.LivingEntity> extends HumanoidModel<T> {
@@ -38,7 +38,7 @@ public abstract class PlayerEntityModelMixin
     @Unique
     //? if >= 1.21.2 && < 1.21.9 {
     /*
-     private static final String SETUP_ANIM_METHOD = "setupAnim(Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;)V";
+     private static final String SETUP_ANIM_METHOD = "setupAnim(Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;)V";
     *///? } else {
 
     private static final String SETUP_ANIM_METHOD = "setupAnim";
@@ -64,7 +64,7 @@ public abstract class PlayerEntityModelMixin
             net.minecraft.client.renderer.entity.state.AvatarRenderState state,
             //? } else {
             /*
-                     net.minecraft.client.renderer.entity.state.PlayerRenderState  state,
+                     net.minecraft.client.renderer.entity.state.AvatarRenderState  state,
                     *///? }
             CallbackInfo info) {
         if (state == null || !(state instanceof ExtendedLivingRenderState)) {
@@ -100,7 +100,7 @@ public abstract class PlayerEntityModelMixin
             net.minecraft.client.renderer.entity.state.AvatarRenderState state,
             //? } else {
             /*
-                     net.minecraft.client.renderer.entity.state.PlayerRenderState  state,
+                     net.minecraft.client.renderer.entity.state.AvatarRenderState  state,
                     *///? }
             CallbackInfo info) {
         float limbSwing = state.walkAnimationPos; // makes total sense :thumbs_up:
@@ -134,7 +134,7 @@ public abstract class PlayerEntityModelMixin
             net.minecraft.client.renderer.entity.state.AvatarRenderState state,
             //? } else {
             /*
-                     net.minecraft.client.renderer.entity.state.PlayerRenderState state,
+                     net.minecraft.client.renderer.entity.state.AvatarRenderState state,
                     *///? }
             CallbackInfo info) {
         AbstractClientPlayer player = null;

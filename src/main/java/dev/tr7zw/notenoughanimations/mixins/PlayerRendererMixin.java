@@ -85,8 +85,8 @@ public abstract class PlayerRendererMixin
     }
     //? } else if >= 1.21.2 {
     /*
-     @Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V", at = @At("HEAD"))
-     private void includeData(AbstractClientPlayer abstractClientPlayer, net.minecraft.client.renderer.entity.state.PlayerRenderState playerRenderState, float f,
+     @Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V", at = @At("HEAD"))
+     private void includeData(AbstractClientPlayer abstractClientPlayer, net.minecraft.client.renderer.entity.state.AvatarRenderState playerRenderState, float f,
             CallbackInfo ci) {
         if (abstractClientPlayer instanceof PlayerData playerData) {
             RenderStateHolder.RenderStateData data = playerData.getData(RenderStateHolder.INSTANCE,
