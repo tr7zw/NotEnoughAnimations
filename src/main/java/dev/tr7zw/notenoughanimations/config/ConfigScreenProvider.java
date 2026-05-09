@@ -193,19 +193,19 @@ public class ConfigScreenProvider {
             wTabPanel.add(optionList, b -> b.title(ComponentProvider.translatable("text.nea.tab.settings"))
                     .icon(new ItemIcon(Items.FILLED_MAP)));
 
-
             {
-                var itemTab = createItemTab(key -> NEABaseMod.config.holdingItems.contains(getResourceString(key.getKey())), (b, i) -> {
-                    String key = getResourceString(i.getKey());
-                    if (b) {
-                        NEABaseMod.config.holdingItems.add(key);
-                        NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
-                    } else {
-                        NEABaseMod.config.holdingItems.remove(key);
-                        NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
-                    }
-                    NEAnimationsLoader.INSTANCE.writeConfig();
-                });
+                var itemTab = createItemTab(
+                        key -> NEABaseMod.config.holdingItems.contains(getResourceString(key.getKey())), (b, i) -> {
+                            String key = getResourceString(i.getKey());
+                            if (b) {
+                                NEABaseMod.config.holdingItems.add(key);
+                                NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                            } else {
+                                NEABaseMod.config.holdingItems.remove(key);
+                                NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                            }
+                            NEAnimationsLoader.INSTANCE.writeConfig();
+                        });
                 wTabPanel.add(itemTab, b -> b.title(ComponentProvider.translatable("text.nea.tab.holdup"))
                         .icon(new ItemIcon(Items.TORCH)));
                 wTabPanel.layout();
@@ -215,17 +215,18 @@ public class ConfigScreenProvider {
             //? if >= 1.21.11 {
             {
                 // Lantern list
-                var lanternTab = createItemTab(key -> NEABaseMod.config.lanternItems.contains(getResourceString(key.getKey())), (b, i) -> {
-                    String key = getResourceString(i.getKey());
-                    if (b) {
-                        NEABaseMod.config.lanternItems.add(key);
-                        NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
-                    } else {
-                        NEABaseMod.config.lanternItems.remove(key);
-                        NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
-                    }
-                    NEAnimationsLoader.INSTANCE.writeConfig();
-                });
+                var lanternTab = createItemTab(
+                        key -> NEABaseMod.config.lanternItems.contains(getResourceString(key.getKey())), (b, i) -> {
+                            String key = getResourceString(i.getKey());
+                            if (b) {
+                                NEABaseMod.config.lanternItems.add(key);
+                                NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                            } else {
+                                NEABaseMod.config.lanternItems.remove(key);
+                                NEAnimationsLoader.INSTANCE.animationProvider.refreshEnabledAnimations();
+                            }
+                            NEAnimationsLoader.INSTANCE.writeConfig();
+                        });
                 wTabPanel.add(lanternTab, b -> b.title(ComponentProvider.translatable("text.nea.tab.lantern"))
                         .icon(new ItemIcon(Items.LANTERN)));
                 wTabPanel.layout();
