@@ -123,6 +123,20 @@ public class AnimationUtil {
         return CrossbowItem.isCharged(item);
     }
 
+    public static boolean hasUsePriority(ItemStack itemStack) {
+        // Spears/tridents in the mainhand consume the clicks, so an offhand crossbow never
+        // gets to fire and the mainhand item stays usable
+        var useAction = itemStack.getUseAnimation();
+        // funky way of accessing the enum because it got renamed between versions
+        //? if >= 1.21.11 {
+
+        return useAction == useAction.SPEAR || useAction == useAction.TRIDENT;
+        //? } else {
+        /*
+        return useAction == useAction.SPEAR;
+        *///? }
+    }
+
     public static void applyArmTransforms(PlayerModel model, HumanoidArm arm, float pitch, float yaw, float roll) {
         ModelPart part = arm == HumanoidArm.RIGHT ? model.rightArm : model.leftArm;
         part.xRot = pitch;

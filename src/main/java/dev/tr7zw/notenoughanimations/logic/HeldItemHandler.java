@@ -143,7 +143,8 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
         }
 
         if (NEABaseMod.config.enableOffhandHiding && entity instanceof AbstractClientPlayer player
-                && !(player.getMainHandItem().getItem() instanceof ShieldItem)) {
+                && !(player.getMainHandItem().getItem() instanceof ShieldItem)
+                && !AnimationUtil.hasUsePriority(player.getMainHandItem())) { // Don't hide still usable weapons
             boolean mainHandProjectileWeapon = player.getMainHandItem().getItem() instanceof ProjectileWeaponItem;
             boolean offHandProjectileWeapon = player.getOffhandItem().getItem() instanceof ProjectileWeaponItem;
             if (!mainHandProjectileWeapon) {
