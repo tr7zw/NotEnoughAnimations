@@ -247,10 +247,7 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
         // Move pivot to top of chain
         matrices.translate(chainOffset, chainYOffset, chainOffset);
 
-        Vec3 camPos = Minecraft.getInstance().getEntityRenderDispatcher().camera.position();
-        Vector4f origin = new Vector4f(0, 0, 0, 1f);
-        origin.mul(matrices.last().pose());
-        Vec3 rawCurPos = camPos.add(origin.x, origin.y, origin.z);
+        Vec3 rawCurPos = MathUtil.getWorldSpacePosition(matrices.last().pose());
 
         if (state.smoothedHandPos == null) {
             state.smoothedHandPos = rawCurPos;
