@@ -54,16 +54,37 @@ public class AnimationUtil {
         return pose == ArmPose.BOW_AND_ARROW || pose == ArmPose.CROSSBOW_CHARGE || pose == ArmPose.CROSSBOW_HOLD;
     }
 
+    public static boolean isSwingingArm(AbstractClientPlayer player) {
+        //? if >= 26.3 {
+        return player.isSwinging();
+        //? } else {
+        /*
+        return player.swinging;
+         */
+        //? }
+    }
+
+    public static InteractionHand getSwingingHand(AbstractClientPlayer player) {
+        //? if >= 26.3 {
+        return player.getCurrentSwing().hand();
+        //? } else {
+        /*
+        return player.swingingArm;
+         */
+        //? }
+    }
+
     public static boolean isSwingingArm(AbstractClientPlayer player, BodyPart arm) {
-        if (!player.swinging) {
+        if (!isSwingingArm(player)) {
             return false;
         }
         if (arm == BodyPart.LEFT_ARM) {
-            return (player.getMainArm() == HumanoidArm.LEFT && player.swingingArm == InteractionHand.MAIN_HAND)
-                    || (player.getMainArm() == HumanoidArm.RIGHT && player.swingingArm == InteractionHand.OFF_HAND);
+            return (player.getMainArm() == HumanoidArm.LEFT && getSwingingHand(player) == InteractionHand.MAIN_HAND)
+                    || (player.getMainArm() == HumanoidArm.RIGHT
+                            && getSwingingHand(player) == InteractionHand.OFF_HAND);
         } else {
-            return (player.getMainArm() == HumanoidArm.RIGHT && player.swingingArm == InteractionHand.MAIN_HAND)
-                    || (player.getMainArm() == HumanoidArm.LEFT && player.swingingArm == InteractionHand.OFF_HAND);
+            return (player.getMainArm() == HumanoidArm.RIGHT && getSwingingHand(player) == InteractionHand.MAIN_HAND)
+                    || (player.getMainArm() == HumanoidArm.LEFT && getSwingingHand(player) == InteractionHand.OFF_HAND);
         }
     }
 
@@ -110,7 +131,7 @@ public class AnimationUtil {
                 if (useAction == useAction.CROSSBOW && hand.equals(abstractClientPlayerEntity.getUsedItemHand())) {
                     return ArmPose.CROSSBOW_CHARGE;
                 }
-            } else if (!abstractClientPlayerEntity.swinging && itemStack.getItem().equals(crossbow)
+            } else if (!isSwingingArm(abstractClientPlayerEntity) && itemStack.getItem().equals(crossbow)
                     && isChargedCrossbow(itemStack)) {
                 return ArmPose.CROSSBOW_HOLD;
             }

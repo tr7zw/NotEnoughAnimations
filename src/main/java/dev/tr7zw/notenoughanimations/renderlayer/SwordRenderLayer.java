@@ -141,8 +141,12 @@ public class SwordRenderLayer extends RenderLayer<HumanoidRenderState, HumanoidM
             offsetX *= -1d;
         }
         poseStack.translate(offsetX, 0.85D, 0.25D);
+        //? if < 26.3 {
+        /*
         poseStack.mulPose(MathUtil.XP.rotationDegrees(swordRotation));
         poseStack.mulPose(MathUtil.YP.rotationDegrees(180.0F));
+         */
+        //? }
 
         //? if >= 1.21.9 {
 

@@ -2,7 +2,7 @@ package dev.tr7zw.notenoughanimations.animations.fullbody;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.api.BasicAnimation;
-import dev.tr7zw.notenoughanimations.util.RenderStateHolder;
+import dev.tr7zw.notenoughanimations.util.*;
 import dev.tr7zw.notenoughanimations.versionless.NEABaseMod;
 import dev.tr7zw.notenoughanimations.versionless.animations.BodyPart;
 //? if >= 1.21.11 {
@@ -59,12 +59,20 @@ public class CrawlingAnimation extends BasicAnimation {
     @Override
     protected void precalculate(AbstractClientPlayer entity, PlayerData data, PlayerModel model, float delta,
             float swing) {
-        //? if >= 1.21.2 {
+        //? if >= 26.3 {
 
         RenderStateHolder.RenderStateData stateData = data.getData(RenderStateHolder.INSTANCE,
                 RenderStateHolder.RenderStateData::new);
         swimAmount = stateData.renderState.swimAmount;
+        attackTime = stateData.renderState.swingAnimation;
+
+        //? } else if >= 1.21.2 {
+        /*
+        RenderStateHolder.RenderStateData stateData = data.getData(RenderStateHolder.INSTANCE,
+                RenderStateHolder.RenderStateData::new);
+        swimAmount = stateData.renderState.swimAmount;
         attackTime = stateData.renderState.attackTime;
+         */
         //? } else {
         /*
          swimAmount = model.swimAmount;
@@ -144,9 +152,10 @@ public class CrawlingAnimation extends BasicAnimation {
         return -65.0F * f + f * f;
     }
 
-    private HumanoidArm getAttackArm(Player livingEntity) {
+    private HumanoidArm getAttackArm(AbstractClientPlayer livingEntity) {
         HumanoidArm humanoidArm = livingEntity.getMainArm();
-        return (livingEntity.swingingArm == InteractionHand.MAIN_HAND) ? humanoidArm : humanoidArm.getOpposite();
+        return (AnimationUtil.getSwingingHand(livingEntity) == InteractionHand.MAIN_HAND) ? humanoidArm
+                : humanoidArm.getOpposite();
     }
 
 }

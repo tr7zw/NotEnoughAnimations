@@ -97,9 +97,18 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
                         /*
                          armedModel.translateToHand(arm, matrices);
                         *///? }
+                           //? if >= 26.3 {
+
+                        matrices.rotate(MathUtil.XP.rotationDegrees(-90.0f));
+                        matrices.rotate(MathUtil.YP.rotationDegrees(205.0f));
+                        matrices.rotate(MathUtil.ZP.rotationDegrees(10.0f));
+                        //? } else {
+                        /*
                         matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(MathUtil.YP.rotationDegrees(205.0f));
                         matrices.mulPose(MathUtil.ZP.rotationDegrees(10.0f));
+                         */
+                        //? }
                         boolean bl = arm == HumanoidArm.LEFT;
                         matrices.translate((bl ? -1 : 1) / 16.0f, 0.09 + (entity.getOffhandItem().isEmpty() ? 0.15 : 0),
                                 -0.625);
@@ -119,8 +128,16 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
                         /*
                          armedModel.translateToHand(arm, matrices);
                         *///? }
+                           //? if >= 26.3 {
+
+                        matrices.rotate(MathUtil.XP.rotationDegrees(-90.0f));
+                        matrices.rotate(MathUtil.YP.rotationDegrees(200.0f));
+                        //? } else {
+                        /*
                         matrices.mulPose(MathUtil.XP.rotationDegrees(-90.0f));
                         matrices.mulPose(MathUtil.YP.rotationDegrees(200.0f));
+                         */
+                        //? }
                         boolean bl = arm == HumanoidArm.LEFT;
                         matrices.translate((bl ? -1 : 1) / 16.0f, 0.125, -0.625);
                         MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true, false);
@@ -267,7 +284,14 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
 
         Vec3 curPos = state.smoothedHandPos;
 
+        //? if >= 26.3 {
+
+        matrices.rotate(MathUtil.XP.rotationDegrees(-90));
+        //? } else {
+        /*
         matrices.mulPose(MathUtil.XP.rotationDegrees(-90));
+         */
+        //? }
 
         float yawRad = entity.getYRot() * Mth.DEG_TO_RAD;
         float pitchRad = entity.getXRot() * Mth.DEG_TO_RAD;
@@ -312,8 +336,16 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
                 state.lanternPos = state.lanternPos.add(state.lanternVelocity);
             }
         }
+        //? if >= 26.3 {
+
+        matrices.rotate(MathUtil.XP.rotationDegrees(swingAngleX));
+        matrices.rotate(MathUtil.ZP.rotationDegrees(swingAngleZ));
+        //? } else {
+        /*
         matrices.mulPose(MathUtil.XP.rotationDegrees(swingAngleX));
         matrices.mulPose(MathUtil.ZP.rotationDegrees(swingAngleZ));
+         */
+        //? }
 
         // Return pivot
         matrices.translate(-chainOffset, -chainYOffset, -chainOffset);

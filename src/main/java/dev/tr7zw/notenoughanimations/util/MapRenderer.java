@@ -57,22 +57,43 @@ public class MapRenderer {
         Minecraft client = Minecraft.getInstance();
 
         if (small) {
+            //? if >= 26.3 {
+            matrices.rotate(MathUtil.YP.rotationDegrees(160.0f));
+            matrices.rotate(MathUtil.ZP.rotationDegrees(180.0f));
+            //? } else {
+            /*
             matrices.mulPose(MathUtil.YP.rotationDegrees(160.0f));
             matrices.mulPose(MathUtil.ZP.rotationDegrees(180.0f));
+             */
+            //? }
             matrices.scale(0.38f, 0.38f, 0.38f);
 
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
         } else { // The values are now much better than they were before, but it could still be perfected.
             if (leftHanded) {
+                //? if >= 26.3 {
+                matrices.rotate(MathUtil.YP.rotationDegrees(154.5f));
+                matrices.rotate(MathUtil.ZP.rotationDegrees(166.5f));
+                //? } else {
+                /*
                 matrices.mulPose(MathUtil.YP.rotationDegrees(154.5f));
                 matrices.mulPose(MathUtil.ZP.rotationDegrees(166.5f));
+                 */
+                //? }
                 matrices.scale(0.38f, 0.38f, 0.38f);
                 // positive x = move right
                 matrices.translate(+0.585, -1.225, +0.15);
             } else {
+                //? if >= 26.3 {
+                matrices.rotate(MathUtil.YP.rotationDegrees(155.0f));
+                matrices.rotate(MathUtil.ZP.rotationDegrees(213.5f));
+                //? } else {
+                /*
                 matrices.mulPose(MathUtil.YP.rotationDegrees(155.0f));
                 matrices.mulPose(MathUtil.ZP.rotationDegrees(213.5f));
+                 */
+                //? }
                 matrices.scale(0.38f, 0.38f, 0.38f);
                 // negative x = move left
                 matrices.translate(-0.955, -1.8, 0.0);

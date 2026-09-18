@@ -55,25 +55,25 @@ public class LookAtItemAnimation extends BasicAnimation {
                 || (NEABaseMod.config.holdUpItemsMode == HoldUpModes.CONFIG_INVERTED
                         && !holdingItems.contains(itemInRightHand.getItem()))
                 || (allItems && !itemInRightHand.isEmpty()
-                        && (!entity.swinging || entity.getMainArm() != HumanoidArm.RIGHT));
+                        && (!AnimationUtil.isSwingingArm(entity) || entity.getMainArm() != HumanoidArm.RIGHT));
         boolean leftArm = (NEABaseMod.config.holdUpItemsMode == HoldUpModes.CONFIG
                 && holdingItems.contains(itemInLeftHand.getItem()))
                 || (NEABaseMod.config.holdUpItemsMode == HoldUpModes.CONFIG_INVERTED
                         && !holdingItems.contains(itemInLeftHand.getItem()))
                 || (allItems && !itemInLeftHand.isEmpty()
-                        && (!entity.swinging || entity.getMainArm() != HumanoidArm.LEFT));
-        if (rightArm && leftArm && !entity.swinging) { // can't be both hands while swinging
+                        && (!AnimationUtil.isSwingingArm(entity) || entity.getMainArm() != HumanoidArm.LEFT));
+        if (rightArm && leftArm && !AnimationUtil.isSwingingArm(entity)) { // can't be both hands while swinging
             target = bothHands;
             return true;
         }
-        if (rightArm && !(entity.swinging
-                && entity.swingingArm == (entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND
+        if (rightArm && !(AnimationUtil.isSwingingArm(entity) && AnimationUtil
+                .getSwingingHand(entity) == (entity.getMainArm() == HumanoidArm.LEFT ? InteractionHand.OFF_HAND
                         : InteractionHand.MAIN_HAND))) {
             target = right;
             return true;
         }
-        if (leftArm && !(entity.swinging
-                && entity.swingingArm == (entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND
+        if (leftArm && !(AnimationUtil.isSwingingArm(entity) && AnimationUtil
+                .getSwingingHand(entity) == (entity.getMainArm() == HumanoidArm.RIGHT ? InteractionHand.OFF_HAND
                         : InteractionHand.MAIN_HAND))) {
             target = left;
             return true;

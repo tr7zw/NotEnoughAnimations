@@ -50,7 +50,8 @@ public class BurningAnimation extends BasicAnimation {
             AnimationUtil.setHeadYRot(model, model.head.yRot + Mth.sin(entity.tickCount) * 0.1f);
             return;
         }
-        if (entity.swinging && NMSWrapper.getArm(entity, entity.swingingArm) == part) {
+        if (AnimationUtil.isSwingingArm(entity)
+                && NMSWrapper.getArm(entity, AnimationUtil.getSwingingHand(entity)) == part) {
             return;
         }
         float armHeight = Mth.sin(entity.tickCount) * 0.1f;

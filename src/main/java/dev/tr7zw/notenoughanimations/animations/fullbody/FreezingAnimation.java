@@ -55,7 +55,8 @@ public class FreezingAnimation extends BasicAnimation {
     @Override
     public void apply(AbstractClientPlayer entity, PlayerData data, PlayerModel model, BodyPart part, float delta,
             float tickCounter) {
-        if (entity.swinging && NMSWrapper.getArm(entity, entity.swingingArm) == part) {
+        if (AnimationUtil.isSwingingArm(entity)
+                && NMSWrapper.getArm(entity, AnimationUtil.getSwingingHand(entity)) == part) {
             return;
         }
         if (part == BodyPart.LEFT_ARM) {

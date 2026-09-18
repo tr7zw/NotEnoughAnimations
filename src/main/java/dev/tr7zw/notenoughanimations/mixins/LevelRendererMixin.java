@@ -1,13 +1,12 @@
 package dev.tr7zw.notenoughanimations.mixins;
 
-import net.minecraft.client.renderer.chunk.*;
+import net.minecraft.client.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.tr7zw.notenoughanimations.NEAnimationsLoader;
-import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.LevelRenderer;
 
 //? if < 1.21.6 {
@@ -17,8 +16,6 @@ import net.minecraft.client.renderer.LevelRenderer;
 *///? }
 
 //? if >= 1.21.0 {
-
-import net.minecraft.client.DeltaTracker;
 
 //? if >= 1.21.2 {
 
@@ -41,13 +38,21 @@ import org.joml.*;
 public class LevelRendererMixin {
 
     @Inject(method = /*? >= 26.2 {*/ "render" /*?} else {*/ /*"renderLevel" *//*?}*/, at = @At("HEAD"))
-    //? if >= 26.2 {
+    //? if >= 26.3 {
 
-    public void render(final GraphicsResourceAllocator resourceAllocator, final DeltaTracker deltaTracker,
+    public void render(final GraphicsResourceAllocator resourceAllocator, final boolean renderOutline,
+            final net.minecraft.client.renderer.state.level.CameraRenderState cameraState,
+            final com.mojang.renderpearl.api.buffers.GpuBufferSlice terrainFog, final Vector4f fogColor,
+            final boolean shouldRenderSky, final boolean consistentDepthRequired, CallbackInfo ci) {
+        float tickDelta = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
+        //? } else  if >= 26.2 {
+        /*
+        public void render(final GraphicsResourceAllocator resourceAllocator, final DeltaTracker deltaTracker,
             final boolean renderOutline, final net.minecraft.client.renderer.state.level.CameraRenderState cameraState,
             final Matrix4fc modelViewMatrix, final com.mojang.blaze3d.buffers.GpuBufferSlice terrainFog,
             final Vector4f fogColor, final boolean shouldRenderSky, CallbackInfo ci) {
         float tickDelta = deltaTracker.getGameTimeDeltaPartialTick(false);
+         */
         //? } else if >= 26.0 {
 
         /*public void renderLevel(final GraphicsResourceAllocator resourceAllocator, final DeltaTracker deltaTracker,

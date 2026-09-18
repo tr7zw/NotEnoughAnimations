@@ -14,7 +14,6 @@ import net.minecraft.client.model.player.*;
 import net.minecraft.client.model.*;
 *///? }
 import net.minecraft.client.player.RemotePlayer;
-import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.server.Bootstrap;
@@ -31,7 +30,11 @@ public class MixinTests {
     public void testMixins() {
         Objenesis objenesis = new ObjenesisStd();
         objenesis.newInstance(ItemInHandLayer.class);
-        objenesis.newInstance(ItemInHandRenderer.class);
+        //? if < 26.3 {
+        /*
+        objenesis.newInstance(net.minecraft.client.renderer.ItemInHandRenderer.class);
+         */
+        //? }
         objenesis.newInstance(LevelRenderer.class);
         objenesis.newInstance(RemotePlayer.class);
         objenesis.newInstance(PlayerModel.class);
