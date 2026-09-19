@@ -78,7 +78,7 @@ public class CrawlingAnimation extends BasicAnimation {
          swimAmount = model.swimAmount;
          attackTime = model.attackTime;
         *///? }
-        if (swimAmount > 0.0F) {
+        if (swimAmount > 0.0F && AnimationUtil.isSwingingArm(entity)) {
             animationStep = swing * speedMul % 26.0F;
             animationStep2 = animationStep + 13F;
             animationStep2 %= 26F;
