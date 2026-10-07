@@ -23,28 +23,21 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.ItemStack;
 
 public class MapHoldingAnimation extends BasicAnimation {
 
-    private Set<Item> compatibleMaps = new HashSet<>();
-
     @Override
     public boolean isEnabled() {
-        bind();
-        return NEABaseMod.config.enableInWorldMapRendering || !compatibleMaps.isEmpty();
-    }
-
-    private void bind() {
-        compatibleMaps.clear();
-        compatibleMaps.addAll(AnimationUtil.parseItemList(NEAnimationsMod.config.mapHolding));
+        return NEABaseMod.config.enableInWorldMapRendering;
     }
 
     @Override
     public boolean isValid(AbstractClientPlayer entity, PlayerData data) {
         ItemStack itemInMainHand = entity.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack itemInOffHand = entity.getItemInHand(InteractionHand.OFF_HAND);
-        if (compatibleMaps.contains(itemInMainHand.getItem()) && itemInOffHand.isEmpty()) {
+        if (itemInMainHand.getItem() instanceof MapItem && itemInOffHand.isEmpty()) {
             if (NMSWrapper.hasCustomModel(itemInMainHand)) {
                 return false;
             } else {
@@ -52,7 +45,7 @@ public class MapHoldingAnimation extends BasicAnimation {
                 return true;
             }
         }
-        if (compatibleMaps.contains(itemInMainHand.getItem()) && !itemInOffHand.isEmpty()) {
+        if (itemInMainHand.getItem() instanceof MapItem && !itemInOffHand.isEmpty()) {
             if (NMSWrapper.hasCustomModel(itemInMainHand)) {
                 return false;
             } else {
@@ -61,7 +54,7 @@ public class MapHoldingAnimation extends BasicAnimation {
             }
 
         }
-        if (compatibleMaps.contains(itemInOffHand.getItem()) && !itemInOffHand.isEmpty()) {
+        if (itemInOffHand.getItem() instanceof MapItem && !itemInOffHand.isEmpty()) {
             if (NMSWrapper.hasCustomModel(itemInOffHand)) {
                 return false;
             } else {

@@ -41,8 +41,6 @@ import org.joml.*;
 //? }
 
 public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState> {
-
-    private Item filledMap = ItemUtil.getItem(GeneralUtil.getResourceLocation("minecraft", "filled_map"));
     private Set<Item> hideItemsForTheseBows = new HashSet<>();
     private Set<Item> lanternItems = new HashSet<>();
 
@@ -83,12 +81,8 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
             if ((arm == HumanoidArm.RIGHT && humanoid.rightArm.visible)
                     || (arm == HumanoidArm.LEFT && humanoid.leftArm.visible)) {
                 if (NEABaseMod.config.enableInWorldMapRendering) {
-                    if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(filledMap)) { // Mainhand
-                                                                                                              // with
-                                                                                                              // or
-                                                                                                              // without
-                                                                                                              // the
-                                                                                                              // offhand
+                    // Mainhand with or without the offhand
+                    if (arm == entity.getMainArm() && entity.getMainHandItem().getItem() instanceof MapItem) {
                         matrices.pushPose();
                         //? if >= 1.21.9 {
 
@@ -118,8 +112,8 @@ public class HeldItemHandler implements DataHolder<HeldItemHandler.HeldItemState
                         info.cancel();
                         return;
                     }
-                    if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(filledMap)) { // Only
-                                                                                                             // offhand
+                    // Only offhand
+                    if (arm != entity.getMainArm() && entity.getOffhandItem().getItem() instanceof MapItem) {
                         matrices.pushPose();
                         //? if >= 1.21.9 {
 

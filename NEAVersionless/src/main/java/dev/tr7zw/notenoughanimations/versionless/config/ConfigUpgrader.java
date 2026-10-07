@@ -52,6 +52,10 @@ public class ConfigUpgrader {
             config.animationSmoothingSpeed = 0.2f; // 0.2 instead of 0.5, what was I thinking
             changed = true;
         }
+        if (config.configVersion <= 11) {
+            config.configVersion = 12;
+            changed = true;
+        }
         // check for more changes here
 
         return changed;
