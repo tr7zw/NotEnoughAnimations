@@ -7,8 +7,10 @@ import java.util.function.Supplier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import dev.tr7zw.notenoughanimations.access.PlayerData;
 import dev.tr7zw.notenoughanimations.logic.PlayerTransformer;
@@ -17,6 +19,12 @@ import dev.tr7zw.notenoughanimations.versionless.animations.DataHolder;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.world.entity.Pose;
+//? if >= 1.21.9 {
+import net.minecraft.world.entity.Avatar;
+//? } else if >= 1.20.4 {
+/*
+import net.minecraft.world.entity.LivingEntity;
+*///? }
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -49,12 +57,24 @@ public class PlayerEntityMixin implements PlayerData {
     }
 
     //? if >= 1.20.4 {
-    @Inject(method = "getMaxHeadRotationRelativeToBody", at = @At("HEAD"), cancellable = true)
-    protected void overrideMaxHeadRoationRelativeToBody(CallbackInfoReturnable<Float> ci) {
-        Player player = (Player) (Object) this;
-        ci.setReturnValue(player.isBlocking() ? NEABaseMod.config.maxBlockingAngle : NEABaseMod.config.maxNormalAngle);
+    @ModifyConstant(method = "getMaxHeadRotationRelativeToBody", constant = @Constant(floatValue = 15.0F))
+    protected float blockingMaxHeadRotationRelativeToBody(float value) {
+        return NEABaseMod.config.maxBlockingAngle;
     }
     //? }
+
+    //? if >= 1.21.9 {
+    @Redirect(method = "getMaxHeadRotationRelativeToBody", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Avatar;getMaxHeadRotationRelativeToBody()F"))
+    protected float normalMaxHeadRotationRelativeToBody(Avatar avatar) {
+        return NEABaseMod.config.maxNormalAngle;
+    }
+    //? } else if >= 1.20.4 {
+    /*
+    @Redirect(method = "getMaxHeadRotationRelativeToBody", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getMaxHeadRotationRelativeToBody()F"))
+    protected float normalMaxHeadRotationRelativeToBody(LivingEntity livingEntity) {
+     return NEABaseMod.config.maxNormalAngle;
+    }
+    *///? }
 
     @Override
     public int isUpdated(int frameId) {
