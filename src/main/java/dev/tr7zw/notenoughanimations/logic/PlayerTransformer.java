@@ -65,10 +65,12 @@ public class PlayerTransformer {
                         || (NEABaseMod.config.rotationLock == RotationLock.NONE && data.isRotateBodyToHead()))
                         && entity.getVehicle() == null) {
                     interpolateYawBodyHead(entity, last, ENTRY_SIZE * 4, timePassed, differentFrame, 0.5f);
+                    data.skipNextTickHeadTurn();
                 } else if (NEABaseMod.config.rotationLock == RotationLock.FIXED && entity.getVehicle() == null
                         && differentFrame) {
                     entity.yBodyRot = entity.yHeadRot;
                     entity.yBodyRotO = entity.yHeadRotO;
+                    data.skipNextTickHeadTurn();
                 } else if (differentFrame) {
                     last[ENTRY_SIZE * 4] = entity.yBodyRot;
                     last[ENTRY_SIZE * 4 + 1] = entity.yBodyRotO;

@@ -28,7 +28,7 @@ public class LivingEntityMixin {
         *///? }
         if (this instanceof PlayerData) {
             PlayerData data = (PlayerData) this;
-            if (data.isDisableBodyRotation()) {
+            if (data.isDisableBodyRotation() || data.shouldSkipNextTickHeadTurn()) {
                 data.setDisableBodyRotation(false);
                 //? if < 1.21.5 {
                 /*

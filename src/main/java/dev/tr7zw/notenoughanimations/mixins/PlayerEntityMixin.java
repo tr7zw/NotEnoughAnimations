@@ -51,6 +51,7 @@ public class PlayerEntityMixin implements PlayerData {
     private int lastAnimationSwapTick = -1;
     private Pose poseOverwrite = null;
     private Map<DataHolder<?>, Object> animationData = new HashMap<>();
+    private boolean skipNextTickHeadTurn = false;
 
     @Inject(method = "tick", at = @At("RETURN"))
     public void tick(CallbackInfo info) {
@@ -86,6 +87,18 @@ public class PlayerEntityMixin implements PlayerData {
     @Override
     public void setUpdated(int frameId) {
         armsUpdated = frameId;
+    }
+
+    @Override
+    public void skipNextTickHeadTurn() {
+        this.skipNextTickHeadTurn = true;
+    }
+
+    @Override
+    public boolean shouldSkipNextTickHeadTurn() {
+        boolean val = skipNextTickHeadTurn;
+        skipNextTickHeadTurn = false;
+        return val;
     }
 
     private void updateRenderLayerItems() {

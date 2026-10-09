@@ -27,6 +27,10 @@ public interface PlayerData {
 
     public boolean isDisableBodyRotation();
 
+    void skipNextTickHeadTurn();
+
+    boolean shouldSkipNextTickHeadTurn();
+
     /**
      * Overwrites rotationlocking to be active
      * 
