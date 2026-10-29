@@ -14,12 +14,6 @@ import java.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
 
-//? if >= 1.21.11 {
-
-import net.minecraft.client.renderer.entity.state.*;
-import org.joml.*;
-//? }
-
 public class HeldItemHandler {
 
     private final List<HeldAnimation> heldAnimations = Arrays.asList(new OffhandHidingAnimation(), new MapAnimation(),

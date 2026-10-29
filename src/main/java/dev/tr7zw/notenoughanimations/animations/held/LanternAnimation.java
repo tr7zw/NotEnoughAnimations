@@ -9,6 +9,7 @@ import dev.tr7zw.notenoughanimations.util.*;
 import dev.tr7zw.notenoughanimations.versionless.*;
 import dev.tr7zw.notenoughanimations.versionless.animations.*;
 import dev.tr7zw.transition.mc.*;
+import lombok.*;
 import net.minecraft.client.*;
 import net.minecraft.client.model.*;
 import net.minecraft.client.renderer.*;
@@ -53,6 +54,10 @@ public class LanternAnimation implements DataHolder<LanternAnimation.HeldItemSta
             PoseStack matrices, SubmitNodeCollector vertexConsumers, LivingEntityRenderState livingEntityRenderState,
             ArmedModel armedModel) {
         matrices.pushPose();
+
+        Vec3 matrixPos = MathUtil.getWorldSpacePosition(matrices.last().pose());
+        Vec3 cameraPos = GeneralUtil.getCameraPos();
+
         //? if >= 1.21.9 {
 
         armedModel.translateToHand(livingEntityRenderState, arm, matrices);
@@ -61,37 +66,22 @@ public class LanternAnimation implements DataHolder<LanternAnimation.HeldItemSta
          armedModel.translateToHand(arm, matrices);
         *///? }
 
-        // Scale down
-        matrices.scale(0.6f, 0.6f, 0.6f);
-
         HeldItemState state = playerData.getData(this, () -> new HeldItemState(entity));
 
+        if (matrixPos.distanceToSqr(cameraPos) < 20 * 20 || entity.tickCount != state.lanternLastTick) {
+            // only update the data if the matrix nearby the camera pos, not a far away entity, some hud rendering or shader pass
+            // alternativly, when the entity is rendering but no valid matrix is found over the ticks, then use whatever we got
+            updateData(entity, matrices, state);
+        }
+
+        // Scale down
+        matrices.scale(0.6f, 0.6f, 0.6f);
         float chainOffset = 0.5F;
         float chainYOffset = 0.6F;
         // Apply offsets
         matrices.translate(arm == HumanoidArm.LEFT ? -0.45 : -0.5, 0.4, -0.3);
         // Move pivot to top of chain
         matrices.translate(chainOffset, chainYOffset, chainOffset);
-
-        Vec3 rawCurPos = MathUtil.getWorldSpacePosition(matrices.last().pose());
-
-        if (state.smoothedHandPos == null) {
-            state.smoothedHandPos = rawCurPos;
-        }
-
-        double rawDelta = state.smoothedHandPos.distanceToSqr(rawCurPos);
-        if (rawDelta > 4.0) {
-            // More than 2 blocks = likely shader artifact
-            // Ignore this frame's position, keep previous
-            // Do nothing - don't update smoothedHandPos
-        } else {
-            double alpha = 0.3;
-            state.smoothedHandPos = new Vec3(Mth.lerp(alpha, state.smoothedHandPos.x, rawCurPos.x),
-                    Mth.lerp(alpha, state.smoothedHandPos.y, rawCurPos.y),
-                    Mth.lerp(alpha, state.smoothedHandPos.z, rawCurPos.z));
-        }
-
-        Vec3 curPos = state.smoothedHandPos;
 
         //? if >= 26.3 {
 
@@ -102,6 +92,7 @@ public class LanternAnimation implements DataHolder<LanternAnimation.HeldItemSta
          */
         //? }
 
+        // calculate the actual swing rotations
         float yawRad = entity.getYRot() * Mth.DEG_TO_RAD;
         float pitchRad = entity.getXRot() * Mth.DEG_TO_RAD;
 
@@ -115,36 +106,10 @@ public class LanternAnimation implements DataHolder<LanternAnimation.HeldItemSta
         double forwardVel = lerpedVelocity.dot(forward);
         double rightVel = lerpedVelocity.dot(right);
 
-        // add Y movement influence
-        double verticalInfluence = -lerpedVelocity.y * Mth.cos(pitchRad) * 0.6;
-        forwardVel += verticalInfluence;
-
         float swingAngleX = Mth.clamp((float) forwardVel * 90f, -90f, 90f);
         float swingAngleZ = Mth.clamp((float) -rightVel * 90f, -90f, 90f);
         swingAngleX -= entity.getXRot() * 0.25f;
 
-        double stiffness = 0.15;
-        double damping = 0.95;
-
-        Vec3 displacement = state.lanternPos.subtract(curPos);
-        Vec3 acceleration = displacement.scale(-stiffness);
-
-        if (entity.tickCount != state.lanternLastTick) {
-            state.lanternLastTick = entity.tickCount;
-
-            // Reset if too far
-            if (displacement.lengthSqr() > 100) {
-                state.lastLanternVelocity = state.lanternVelocity;
-                state.lanternVelocity = acceleration;
-                state.lanternPos = curPos;
-            } else {
-                // Standard physics update (full tick, no delta!)
-                state.lastLanternVelocity = state.lanternVelocity;
-                state.lanternVelocity = state.lanternVelocity.add(acceleration);
-                state.lanternVelocity = state.lanternVelocity.scale(damping);
-                state.lanternPos = state.lanternPos.add(state.lanternVelocity);
-            }
-        }
         //? if >= 26.3 {
 
         matrices.rotate(MathUtil.XP.rotationDegrees(swingAngleX));
@@ -175,6 +140,44 @@ public class LanternAnimation implements DataHolder<LanternAnimation.HeldItemSta
         matrices.popPose();
     }
 
+    private static void updateData(LivingEntity entity, PoseStack matrices, HeldItemState state) {
+        Vec3 rawCurPos = MathUtil.getWorldSpacePosition(matrices.last().pose());
+
+        if (rawCurPos.distanceTo(state.lanternPos) > 10) {
+            state.lanternPos = rawCurPos;
+        }
+
+        Vec3 curPos = rawCurPos;
+
+        double stiffness = 0.15;
+        double damping = 0.95;
+
+        Vec3 displacement = state.lanternPos.subtract(curPos);
+        // add Y movement influence, so the lantern moves when jumping/falling straight, rotated to the player
+        var yawRad = entity.getYRot() * Mth.DEG_TO_RAD;
+        var forward = new Vec3(-Mth.sin(yawRad), 0, Mth.cos(yawRad)).normalize();
+        var right = new Vec3(forward.z, 0, -forward.x);
+        displacement = displacement.add(displacement.y() * 0.1 * right.x, 0, displacement.y() * 0.1 * right.z);
+        Vec3 acceleration = displacement.scale(-stiffness);
+
+        if (entity.tickCount != state.lanternLastTick) {
+            state.lanternLastTick = entity.tickCount;
+
+            // Reset if too far
+            if (displacement.lengthSqr() > 10) {
+                state.lastLanternVelocity = state.lanternVelocity;
+                state.lanternVelocity = acceleration;
+                state.lanternPos = curPos;
+            } else {
+                // Standard physics update (full tick, no delta!)
+                state.lastLanternVelocity = state.lanternVelocity;
+                state.lanternVelocity = state.lanternVelocity.add(acceleration);
+                state.lanternVelocity = state.lanternVelocity.scale(damping);
+                state.lanternPos = state.lanternPos.add(state.lanternVelocity);
+            }
+        }
+    }
+
     //? } else {
     /*
     @Override
@@ -189,7 +192,6 @@ public class LanternAnimation implements DataHolder<LanternAnimation.HeldItemSta
         public Vec3 lanternPos;
         public Vec3 lanternVelocity = Vec3.ZERO;
         public Vec3 lastLanternVelocity = Vec3.ZERO;
-        public Vec3 smoothedHandPos = null;
 
         public HeldItemState(LivingEntity entity) {
             lanternLastTick = entity.tickCount;
